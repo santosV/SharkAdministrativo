@@ -37,8 +37,6 @@ namespace SharkAdministrativo.Vista
         }
 
         public void addProveedor(string name, string empresa) {
-            grupo.obtenerTodos();
-            grupo.obtenerTodos();
             hasChanged = "Yes";
             this.proveedor = proveedor.obtener(name);
             txtNombreP.Text = proveedor.nombre;
