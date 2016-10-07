@@ -1,0 +1,99 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="SharkAdministrativo.Vista.GestionPresentaciones"
+        Title="Gestión De Presentaciones" WindowStartupLocation="CenterScreen" Height="674" ResizeMode="NoResize">
+    <Grid>
+
+        <dxlc:LayoutControl Margin="0" Padding="0" Orientation="Vertical">
+            <dxr:RibbonControl x:Name="Control_menu" RibbonStyle="Office2010" Margin="0,0,-2,0">
+                <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                    <dxr:RibbonPage x:Name="general" Caption="GENERAL">
+                        <dxr:RibbonPageGroup Caption="{x:Null}">
+                            <dxb:BarButtonItem x:Name="GuardarSalir" Content="Guardar &amp; Cerrar" ItemClick="AddList_ItemClick" IsVisible="True" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Archivo">
+                            <dxb:BarButtonItem Content="Cancelar Operación" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/ViewReset_32x32.png"/>
+                            <dxb:BarButtonItem Content="Eliminar"  ItemClick="EliminarPresentacion_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png" Glyph="{dx:DXImage Image=Close_16x16.png}"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Mostrar">
+                            <dxb:BarButtonItem ItemClick="BarButtonItem_ItemClick" Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/NewOpportunities_32x32.png"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Exportar">
+                            <dxb:BarButtonItem ItemClick="presentaciones_ExportToExcel_ItemClick" Content="Excel" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}"/>
+                            <dxb:BarButtonItem ItemClick="proveedores_ExportToPDF_ItemClick" Content="PDF" Glyph="{dx:DXImageGrayscale Image=ExportToPDF_32x32.png}"/>
+                            <dxb:BarButtonItem ItemClick="proveedores_ExportToPNG_ItemClick" Content="PNG" Glyph="{dx:DXImageGrayscale Image=InsertImage_32x32.png}"/>
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>
+
+                </dxr:RibbonDefaultPageCategory>
+            </dxr:RibbonControl>
+            <TextBlock x:Name="title" TextWrapping="Wrap" Text="Gestión de Presentaciones" Padding="5" UseLayoutRounding="True" TextAlignment="Center" Background="#FF046AA6" Foreground="White" FontSize="16" VerticalAlignment="Top"/>
+            <dxlc:LayoutGroup x:Name="vista_registrodepresentaciones" Visibility="Visible" dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                <dxg:GridControl x:Name="tblPresentaciones" AutoGenerateColumns="AddNew"  EnableSmartColumnsGeneration="True" VerticalAlignment="Top" Margin="0" Height="347">
+                    <dxg:GridControl.View>
+                        <dxg:TableView x:Name="tablaPresentaciones" AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+                <dxlc:LayoutGroup View="GroupBox" Header="Nueva Presentación" Margin="0" Orientation="Vertical" Padding="13,10,10,10">
+                    <dxlc:LayoutItem Label="Insumo:">
+                        <dxe:ComboBoxEdit x:Name="cbxInsumoBase" SelectedIndexChanged="cbxInsumoBase_SelectedIndexChanged" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Descripción:">
+                        <dxe:TextEdit x:Name="txtDescripcion"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Ultimo Costo:">
+                        <dxe:TextEdit x:Name="txtUcosto" KeyDown="SoloNumeros_KeyDown" KeyUp="txtUCosto_KeyUp"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Costo Promedio:">
+                        <dxe:TextEdit x:Name="txtCPromedio" KeyDown="SoloNumeros_KeyDown"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Porcentaje IVA:">
+                        <dxe:TextEdit x:Name="txtIVA" KeyDown="SoloNumeros_KeyDown" KeyUp="txtUCosto_KeyUp" EditValue="16"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Costo c/ Impuesto:">
+                        <dxe:TextEdit x:Name="txtCCImpuesto" KeyDown="SoloNumeros_KeyDown"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Rendimiento:" Margin="0">
+                            <dxe:TextEdit x:Name="txtRendimiento" KeyDown="SoloNumeros_KeyDown"/>
+                        </dxlc:LayoutItem>
+                        <TextBlock x:Name="txtUnidadDeMedida" HorizontalAlignment="Left" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Margin="0,2,30,0" FontSize="14"/>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="Cantidad:">
+                        <dxe:TextEdit x:Name="txtCantidad" KeyDown="SoloNumeros_KeyDown"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Proveedor:">
+                        <dxe:ComboBoxEdit x:Name="cbxProveedor" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Almacén:">
+                        <dxe:ComboBoxEdit x:Name="cbxAlmacen" SelectedIndexChanged="cbxAlmacen_SelectedIndexChanged" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup x:Name="groupAlmacen" Header="Nuevo Almacén" Visibility="Collapsed" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutItem Label="Nombre:">
+                            <dxe:TextEdit x:Name="txtAlmacen"/>
+                        </dxlc:LayoutItem>
+                        <Button x:Name="addAlmacen" Content="Guardar" Click="addAlmacen_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1,0,0,0"/>
+                    </dxlc:LayoutGroup>
+                    <Button x:Name="addPresentacion" Click="addPresentacion_Click" Content="AGREGAR A LA LISTA" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                </dxlc:LayoutGroup>
+
+
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutGroup x:Name="vista_seleccionpresentaciones" Visibility="Collapsed" dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                <dxg:GridControl x:Name="tblPresentacionesRegistradas" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" VerticalAlignment="Top" Margin="0" Height="322">
+                    <dxg:GridControl.View>
+                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+
+
+            </dxlc:LayoutGroup>
+
+            <TextBlock TextWrapping="Wrap" Padding="5" Text="PUEDES UTILIZAR NUESTRO MÓDULO DE REGISTRO A PARTIR DE TU FACTURA XML DE COMPRA"  UseLayoutRounding="True" TextAlignment="Center" Background="#FF1F1F1F" Foreground="White" VerticalAlignment="Bottom" FontSize="9"/>
+
+        </dxlc:LayoutControl>
+
+    </Grid>
+</Window>

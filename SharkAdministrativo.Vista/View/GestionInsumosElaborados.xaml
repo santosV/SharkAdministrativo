@@ -1,0 +1,239 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="SharkAdministrativo.Vista.GestionInsumosElaborados"
+        Title="Insumos Elaborados" Height="665" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+    <dxlc:LayoutControl Margin="0" Padding="0" Orientation="Vertical">
+        <dxr:RibbonControl RibbonStyle="Office2010" Margin="0,3,-4,-4">
+            <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                <dxr:RibbonPage x:Name="btnGeneral" Caption="GENERAL">
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Guardar &amp; Cerrar" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Archivo" ShowCaptionButton="False">
+                        <dxb:BarButtonItem Content="Nuevo" ItemClick="Nuevo_ItemClick" LargeGlyph="{dx:DXImageOffice2013 Image=Add_32x32.png}" RibbonStyle="SmallWithText" Glyph="{dx:DXImageOffice2013 Image=Add_32x32.png}"/>
+                        <dxb:BarButtonItem Content="Guardar &amp; nuevo" x:Name="SaveAndNew" ItemClick="SaveAndNew_ItemClick" Glyph="{dx:DXImageOffice2013 Image=SaveAs_32x32.png}"/>
+                        <dxb:BarButtonItem x:Name="btnEliminar" ItemClick="btnEliminar_ItemClick" Content="Eliminar" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png" Glyph="{dx:DXImage Image=Close_16x16.png}"/>
+                        <dxb:BarButtonItem x:Name="goToAddRecipe" ItemClick="goToAddRecipe_ItemClick" Content="Agregar Receta" LargeGlyph="{dx:DXImage Image=NewTableStyle_32x32.png}" Glyph="{dx:DXImage Image=NewTableStyle_16x16.png}"/>
+
+                    </dxr:RibbonPageGroup>
+                   
+                    <dxr:RibbonPageGroup Caption="Exportar">
+                        <dxb:BarButtonItem Content="Excel" ItemClick="insumosElaborados_ExportToExcel_ItemClick" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}"/>
+                        <dxb:BarButtonItem Content="PDF" ItemClick="insumosElaborados_ExportToPDF_ItemClick" Glyph="{dx:DXImageGrayscale Image=ExportToPDF_32x32.png}"/>
+                        <dxb:BarButtonItem Content="PNG" ItemClick="insumosElaborados_ExportToPNG_ItemClick" Glyph="{dx:DXImageGrayscale Image=InsertImage_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+                <dxr:RibbonPage x:Name="btnADDRECETAMENU" IsVisible="True" Caption="Elaborando Receta">
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem x:Name="btnListo" ItemClick="btnListo_ItemClick" Content="Listo" LargeGlyph="{dx:DXImageOffice2013 Image=Apply_32x32.png}"/>
+                        <dxb:BarButtonItem Content="Cancelar &amp; Volver" ItemClick="btnListo_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Redo_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Receta">
+                        <dxb:BarButtonItem Content="Eliminar Ingrediente" ItemClick="EliminarIngredienteDeReceta_ItemClick" LargeGlyph="{dx:DXImageOffice2013 Image=Cancel_32x32.png}" Glyph="{dx:DXImageOffice2013 Image=Close_32x32.png}" RibbonStyle="SmallWithText"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Mostrar">
+                        <dxb:BarButtonItem ItemClick="btnRecipeReport_ItemClick" Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+                <dxr:RibbonPage x:Name="btnProducto"  IsVisible="True" Caption="PRODUCTO">
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Guardar &amp; Salir" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Guardar &amp; Nuevo" ItemClick="GuardarYNuevo_ItemClick" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Save_32x32.png"/>
+                        <dxb:BarButtonItem Content="Nuevo" ItemClick="NuevoProducto_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="eliminarProducto_ItemClick" Content="Eliminar Producto" LargeGlyph="{dx:DXImageOffice2013 Image=Close_32x32.png}" Glyph="{dx:DXImageOffice2013 Image=Close_32x32.png}" RibbonStyle="Large"/>
+
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Agregar Receta" ItemClick="goToAddRecipeFromProducts_ItemClick" LargeGlyph="{dx:DXImage Image=NewTableStyle_32x32.png}" Glyph="{dx:DXImage Image=NewTableStyle_16x16.png}"/>
+                        
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Mostrar">
+                        <dxb:BarButtonItem ItemClick="btnProductReport_ItemClick" Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Exportar">
+                        <dxb:BarButtonItem Content="Excel" ItemClick="productos_ExportToExcel_ItemClick" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}"/>
+                        <dxb:BarButtonItem Content="PDF" ItemClick="productos_ExportToPDF_ItemClick" LargeGlyph="{dx:DXImage Image=ExportToPDF_32x32.png}" Glyph="{dx:DXImage Image=ExportToPDF_16x16.png}" RibbonStyle="SmallWithText"/>
+                        <dxb:BarButtonItem Content="PNG" ItemClick="productos_ExportToPNG_ItemClick" Glyph="{dx:DXImageGrayscale Image=InsertImage_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+        <TextBlock x:Name="Title" TextWrapping="Wrap" Text="Gestión De Insumos Elaborados" Padding="5" UseLayoutRounding="True" TextAlignment="Center" Background="#FF046AA6" Foreground="White" FontSize="16" VerticalAlignment="Top" Margin="0,0,0,-1"/>
+        <dxlc:LayoutGroup x:Name="vista_InsumosElaborados" Visibility="Visible" Height="417" Orientation="Vertical">
+            <dxlc:LayoutGroup x:Name="groupInsumoElaborado" View="GroupBox" Header="Nuevo Insumo Elaborado" Orientation="Vertical" Margin="0">
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Grupo:">
+                        <dxe:ComboBoxEdit x:Name="cbxGrupos"  SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem Label="Descripción:">
+                        <dxe:TextEdit x:Name="txtDescripcion"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Ingresa El Nombre:">
+                        <dxe:TextEdit x:Name="txtnombreGrupo"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Categoria: ">
+                        <dxe:ComboBoxEdit x:Name="cbxCategoria" SelectedIndexChanged="cbxCategoria_SelectedIndexChanged"/>
+                    </dxlc:LayoutItem>
+                    <Button Content="Guardar" x:Name="btnGuardarGrupo" Click="btnGuardarGrupo_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    <dxlc:LayoutGroup x:Name="groupCategoria" Visibility="Collapsed" Header="Nueva Categoría" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutItem Label="Nombre:">
+                            <dxe:TextEdit x:Name="txtCategoria"/>
+                        </dxlc:LayoutItem>
+                        <Button Content="Guardar" x:Name="btnGuardarCategoria" Click="btnGuardarCategoria_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Ultimo Costo:">
+                        <dxe:TextEdit x:Name="txtUCosto" KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostos_KeyUp"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Costo Promedio:">
+                        <dxe:TextEdit x:Name="txtCpromedio" KeyDown="SoloNumeros_KeyDown"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Costo Estandar:">
+                        <dxe:TextEdit x:Name="txtEstandar"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Inventariable:">
+                        <dxe:ComboBoxEdit x:Name="cbxInventariable" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Rendimiento">
+                        <dxe:TextEdit x:Name="txtRendimiento"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Cantidad:">
+                        <dxe:TextEdit/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Unidad De Medida:">
+                        <dxe:ComboBoxEdit x:Name="cbxUmedida" SelectedIndexChanged="cbxUmedida_SelectedIndexChanged" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutItem Label="Entrada Automática:">
+                    <dxe:CheckEdit x:Name="chksAutomatico"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup x:Name="groupUnidades" Visibility="Collapsed" Header="Nueva Unidad De Medida" View="GroupBox" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutItem Label="Nombre:">
+                        <dxe:TextEdit x:Name="txtNombreUnidad"/>
+                    </dxlc:LayoutItem>
+                    <Button Content="Guardar" x:Name="btnGuardarUnidad" Click="btnGuardarUnidad_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                </dxlc:LayoutGroup>
+
+            </dxlc:LayoutGroup>
+            <dxg:GridControl x:Name="tblIElaborados" MouseDoubleClick="tblIElaborados_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Margin="0">
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="tablaIElaborado" AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </dxlc:LayoutGroup>
+
+
+        <dxlc:LayoutControl x:Name="vista_Receta" Visibility="Collapsed" Orientation="Vertical" Padding="0">
+            <dxlc:LayoutGroup View="GroupBox" HorizontalAlignment="Stretch" Header="Indicación de Insumo" Margin="10,0" Orientation="Vertical">
+                <dxlc:LayoutItem Label="Ingrediente">
+                    <dxe:ComboBoxEdit x:Name="cbxIngredientes" SelectedIndexChanged="cbxIngredientes_SelectedIndexChanged" AutoComplete="True"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Cantidad">
+                        <dxe:TextEdit x:Name="txtCantidadR"/>
+                    </dxlc:LayoutItem>
+                    <TextBlock x:Name="txtUnidadMedida" HorizontalAlignment="Left" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" FontFamily="Century Gothic" FontSize="16"/>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutItem Label="Almacén(es) de descarga:">
+                    <dxe:ComboBoxEdit x:Name="cbxAlmacenes" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+
+                        <dxe:ComboBoxEdit.StyleSettings>
+                            <dxe:CheckedComboBoxStyleSettings/>
+                        </dxe:ComboBoxEdit.StyleSettings>
+                    </dxe:ComboBoxEdit>
+                </dxlc:LayoutItem>
+                <Button x:Name="btnAdd" Content="Guardar" Click="btnAdd_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </dxlc:LayoutGroup>
+            <dxg:GridControl x:Name="tblReceta" AutoGenerateColumns="AddNew" MouseDoubleClick="tblReceta_MouseDoubleClick" EnableSmartColumnsGeneration="True" Margin="10,0">
+                <dxg:GridControl.View>
+                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+            <TextBlock x:Name="txtCostoReceta" TextWrapping="Wrap" Text="Costo De Receta: $0" Margin="10,0" Background="#FFD93B06" Foreground="White" Padding="5" FontFamily="Century Gothic" VerticalAlignment="Top" TextAlignment="Right"/>
+        </dxlc:LayoutControl>
+
+        <dxlc:LayoutControl x:Name="vista_Producto" Visibility="Visible" Padding="0" Orientation="Vertical">
+            <dxlc:LayoutGroup x:Name="groupProducto" Header="Nuevo Producto" View="GroupBox" HorizontalAlignment="Stretch">
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Background="#FFD93B06">
+                        <Image  x:Name="img" OpacityMask="Black" Width="120" Height="100" Stretch="Fill" Source="/SharkAdministrativo.Vista;component/Assets/sin.jpg"/>
+
+                    </dxlc:LayoutItem>
+                    <TextBlock x:Name="txtCortoName" TextWrapping="Wrap" Text="Sin Nombre Disponible" Width="120" Height="51" TextAlignment="Center"/>
+                </dxlc:LayoutGroup>
+                <Button Content="..." Click="SeleccionarImagen_Click" x:Name="SeleccionarImagen" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Descripción:">
+                            <dxe:TextEdit x:Name="txtDescripcionP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Nombre Para Botón:">
+                            <dxe:TextEdit x:Name="txtNombreP" KeyUp="txtNombreP_KeyUp"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Ultimo Precio: $">
+                            <dxe:TextEdit x:Name="txtUPrecioP" KeyUp="ObtenerCostosProductos_KeyUp"  KeyDown="SoloNumeros_KeyDown"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Porcentaje IVA:">
+                            <dxe:TextEdit x:Name="txtIVAP" KeyUp="ObtenerCostosProductos_KeyUp" EditValue="16" KeyDown="SoloNumeros_KeyDown"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Precio C/ Impuesto:">
+                            <dxe:TextEdit x:Name="txtPCImpuestoP" KeyDown="SoloNumeros_KeyDown"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Áreas De Preparación:">
+                                <dxe:ComboBoxEdit x:Name="cbxPreparacion" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+
+                                    <dxe:ComboBoxEdit.StyleSettings>
+                                        <dxe:CheckedComboBoxStyleSettings/>
+                                    </dxe:ComboBoxEdit.StyleSettings>
+                                </dxe:ComboBoxEdit>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutGroup x:Name="vistaNAP" Visibility="Collapsed" Header="Nueva Área De Preparación:" View="GroupBox" HorizontalAlignment="Stretch" Background="{x:Null}">
+                                <dxlc:LayoutItem Label="Nombre:">
+                                    <dxe:TextEdit x:Name="txtNombreArea"/>
+                                </dxlc:LayoutItem>
+                                <Button Content="Guardar" x:Name="btnGuardarArea" Click="btnGuardarArea_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Century Gothic"/>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                        <Button Content="Nuevo" x:Name="btnNuevaArea" Click="btnNuevaArea_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Century Gothic"/>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="Disponible En:">
+                        <dxe:ComboBoxEdit x:Name="cbxAreaDisponible" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+                            <dxe:ComboBoxEdit.StyleSettings>
+                                <dxe:CheckedComboBoxStyleSettings/>
+                            </dxe:ComboBoxEdit.StyleSettings>
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxg:GridControl x:Name="tblProductos" MouseDoubleClick="tblProductos_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="tablaProductos" AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+
+
+        </dxlc:LayoutControl>
+
+
+        <TextBlock TextWrapping="Wrap" Padding="5" Text="Copyright © 2016 Shark . Todos los derechos reservados."  UseLayoutRounding="True" TextAlignment="Center" Background="#FF1F1F1F" Foreground="White" VerticalAlignment="Bottom" FontSize="9" Margin="0"/>
+
+    </dxlc:LayoutControl>
+</Window>

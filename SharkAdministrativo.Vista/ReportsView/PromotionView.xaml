@@ -1,0 +1,11 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing" x:Class="SharkAdministrativo.Vista.ReportsView.PromotionView"
+        Title="Reporte De Promociones" Height="300" Width="300" WindowState="Maximized">
+    <Grid>
+
+        <dxp:DocumentPreviewControl x:Name="promotionViewer"/>
+
+    </Grid>
+</Window>

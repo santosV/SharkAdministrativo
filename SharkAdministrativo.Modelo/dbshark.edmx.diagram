@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30725c607c1a458e8e3c46472c972e58" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="bdsharkModel.Almacen" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bdsharkModel.AreaProduccion" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Categoria" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Empresa" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="bdsharkModel.EntradaPresentacion" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Factura" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Grupo" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Insumo" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="bdsharkModel.InsumoElaborado" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Presentacion" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="bdsharkModel.ProductoPromocion" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Producto" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Promocion" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Proveedor" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Receta" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Salida_almacen" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Tipo_movimiento" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Unidad_Medida" Width="1.5" PointX="10.75" PointY="9.75" />
+        <AssociationConnector Association="bdsharkModel.AlmacenPresentacion" />
+        <AssociationConnector Association="bdsharkModel.AlmacenEntradaPresentacion" />
+        <AssociationConnector Association="bdsharkModel.PresentacionEntradaPresentacion" />
+        <AssociationConnector Association="bdsharkModel.CategoriaGrupo" />
+        <AssociationConnector Association="bdsharkModel.GrupoInsumo" />
+        <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumo" />
+        <AssociationConnector Association="bdsharkModel.GrupoInsumoElaborado" />
+        <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumoElaborado" />
+        <AssociationConnector Association="bdsharkModel.ProveedorPresentacion" />
+        <AssociationConnector Association="bdsharkModel.InsumoPresentacion" />
+        <AssociationConnector Association="bdsharkModel.FacturaPresentacion" />
+        <AssociationConnector Association="bdsharkModel.AlmacenPresentacion1" />
+        <AssociationConnector Association="bdsharkModel.ProductoProductoPromocion" />
+        <AssociationConnector Association="bdsharkModel.PromocionProductoPromocion" />
+        <AssociationConnector Association="bdsharkModel.EmpresaProveedor" />
+        <AssociationConnector Association="bdsharkModel.InsumoReceta" />
+        <AssociationConnector Association="bdsharkModel.ProductoReceta" />
+        <AssociationConnector Association="bdsharkModel.InsumoElaboradoReceta" />
+        <AssociationConnector Association="bdsharkModel.InsumoSalida_almacen" />
+        <AssociationConnector Association="bdsharkModel.Tipo_movimientoSalida_almacen" />
+        <AssociationConnector Association="bdsharkModel.AlmacenSalida_almacen" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,137 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="SharkAdministrativo.Vista.Promociones"
+        Title="Promociones" Height="770" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <dxr:RibbonControl x:Name="Control_menu" VerticalAlignment="Top" RibbonStyle="Office2010">
+            <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                <dxr:RibbonPage x:Name="btnGeneral" Caption="GENERAL">
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Guardar &amp; Salir" LargeGlyph="{dx:DXImageOffice2013 Image=SaveAndClose_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Archivo">
+                        <dxb:BarButtonItem Content="Guardar &amp; Nuevo" ItemClick="BarButtonItem_ItemClick" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="NuevoPromo_ItemClick_1" Content="Nuevo" Glyph="{dx:DXImage Image=New_32x32.png}" LargeGlyph="{dx:DXImage Image=New_32x32.png}" RibbonStyle="SmallWithText"/>
+                        <dxb:BarButtonItem ItemClick="eliminarPromocion_ItemClick" Content="Eliminar" LargeGlyph="{dx:DXImageOffice2013 Image=Close_32x32.png}" RibbonStyle="SmallWithText" Glyph="{dx:DXImageOffice2013 Image=Close_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem ItemClick="btnDetalle_ItemClick" Content="Indicar Productos" LargeGlyph="{dx:DXImageOffice2013 Image=CheckBox_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Mostrar">
+                        <dxb:BarButtonItem ItemClick="PromotionsReport_ItemClick_1" Content="Repote" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+                <dxr:RibbonPage x:Name="btnDetalle" IsVisible="True" Caption="DETALLES DE PROMOCION">
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem ItemClick="btnListo_ItemClick" Content="Listo" LargeGlyph="{dx:DXImageOffice2013 Image=Apply_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="btnListo_ItemClick" Content="Cancelar" LargeGlyph="{dx:DXImageOffice2013 Image=Reset_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="ARCHIVO">
+                        <dxb:BarButtonItem ItemClick="nuevoProducto_ItemClick_1" Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=AddFile_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="eliminarProductoDePromocion_ItemClick_1" Content="Eliminar Producto" Glyph="{dx:DXImageOffice2013 Image=Close_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+        <dxlc:LayoutControl Margin="0,150,0,0" Padding="0" Background="{x:Null}" Orientation="Vertical">
+            <TextBlock x:Name="Title" TextWrapping="Wrap" Text="Gestión De Promociones" Padding="5" UseLayoutRounding="True" TextAlignment="Center" Background="#FF046AA6" Foreground="White" FontSize="16" Margin="0,-1,0,0" VerticalAlignment="Top"/>
+            <dxlc:LayoutControl x:Name="vista_promocion" Visibility="Visible" Padding="0" Orientation="Vertical">
+                <dxlc:LayoutGroup x:Name="groupPromocion" Header="Nueva Promoción" View="GroupBox" Margin="0" Padding="0">
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem HorizontalAlignment="Left" Background="#FFD93B06">
+                            <Image  x:Name="img"  OpacityMask="Black" Width="120" Height="100" Stretch="Fill" Source="/SharkAdministrativo.Vista;component/Assets/sin.jpg"/>
+
+                        </dxlc:LayoutItem>
+                        <TextBlock x:Name="txtCortoName" TextWrapping="Wrap" Text="Sin Nombre Disponible" Width="120" Height="51" TextAlignment="Center"/>
+                    </dxlc:LayoutGroup>
+                    <Button Content="..." Click="SeleccionarImagen_Click" x:Name="SeleccionarImagen" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Descripción:">
+                                <dxe:TextEdit x:Name="txtDescripcion"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Nombre Para Botón:">
+                                <dxe:TextEdit x:Name="txtNombre" KeyUp="txtNombreP_KeyUp"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Precio:">
+                                <dxe:TextEdit x:Name="txtPrecio"  KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostosPromociones_KeyUp"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Porcentaje IVA:">
+                                <dxe:TextEdit x:Name="txtIVA" KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostosPromociones_KeyUp" EditValue="16"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Precio Con Impiuesto:">
+                                <dxe:TextEdit x:Name="txtPCImpuesto" KeyDown="SoloNumeros_KeyDown"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Disponible En:">
+                                <dxe:ComboBoxEdit x:Name="cbxDisponible" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+                                    <dxe:ComboBoxEdit.StyleSettings>
+                                        <dxe:CheckedComboBoxStyleSettings/>
+                                    </dxe:ComboBoxEdit.StyleSettings>
+                                </dxe:ComboBoxEdit>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Días Disponibles:">
+                                <dxe:ComboBoxEdit x:Name="cbxDiasDisponibles" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+
+                                    <dxe:ComboBoxEdit.StyleSettings>
+                                        <dxe:CheckedComboBoxStyleSettings/>
+                                    </dxe:ComboBoxEdit.StyleSettings>
+                                </dxe:ComboBoxEdit>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Hora De Inicio">
+                                <dxe:ComboBoxEdit x:Name="cbxHInicio" AutoComplete="True"/>
+
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Hora De Finalización:">
+                                <dxe:ComboBoxEdit x:Name="cbxHFinalizacion" AutoComplete="True"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Fecha De Inicio:">
+                                <dxe:DateEdit x:Name="cbxFInicio"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="Fecha De Finalización:">
+                            <dxe:DateEdit x:Name="cbxFFinalizacion"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxg:GridControl x:Name="tblPromociones" MouseDoubleClick="tblPromociones_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+                    <dxg:GridControl.View>
+                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+
+            </dxlc:LayoutControl>
+
+            <dxlc:LayoutControl x:Name="vista_detalle" Visibility="Visible" Panel.ZIndex="1" Padding="0" Orientation="Vertical">
+
+                <dxlc:LayoutGroup Header="Detalles" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical" Margin="15,0">
+                    <dxlc:LayoutItem Label="Producto">
+                        <dxe:ComboBoxEdit x:Name="cbxProductos" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Cantidad:">
+                        <dxe:TextEdit x:Name="txtCantidadP" KeyDown="SoloNumeros_KeyDown"/>
+                    </dxlc:LayoutItem>
+                    <Button Content="Agregar" Click="addProduct_Click" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </dxlc:LayoutGroup>
+
+                <dxg:GridControl x:Name="tblProductos" MouseDoubleClick="tblProductos_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Margin="15,0">
+                    <dxg:GridControl.View>
+                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+                <TextBlock x:Name="txtTotal" TextWrapping="Wrap" Text="Total Promoción: $0, Total En Producto: $0" VerticalAlignment="Top" Margin="15,0" FontFamily="Century Gothic" TextAlignment="Right" Padding="10,3" ScrollViewer.CanContentScroll="True" Background="#FFD93B06" Foreground="White"/>
+
+            </dxlc:LayoutControl>
+            <TextBlock TextWrapping="Wrap" Padding="5" Text="Copyright © 2016 Shark . Todos los derechos reservados."  UseLayoutRounding="True" TextAlignment="Center" Background="#FF1F1F1F" Foreground="White" VerticalAlignment="Bottom" FontSize="9" Margin="0"/>
+
+        </dxlc:LayoutControl>
+    </Grid>
+</Window>

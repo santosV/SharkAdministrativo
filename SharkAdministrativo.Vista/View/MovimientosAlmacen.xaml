@@ -1,0 +1,58 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" x:Class="SharkAdministrativo.Vista.View.MovimientosAlmacen"
+        Title="Movimientos De Almacén" WindowStartupLocation="CenterScreen" Height="437">
+    <Grid>
+
+        <dxr:RibbonControl>
+            <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                <dxr:RibbonPage Caption="GENERAL">
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem Content="Guardar &amp; Nuevo" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
+                        <dxb:BarButtonItem Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=AddFile_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+
+        <dxlc:LayoutControl Margin="0,151,0,0" Padding="0" Orientation="Vertical">
+            <dxlc:LayoutGroup Header="Movimiento" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="{x:Null}">
+                <dxlc:LayoutItem Label="Movimiento:">
+                    <dxe:ComboBoxEdit SelectedIndexChanged="cbxMovimiento_SelectedIndexChanged" x:Name="cbxMovimiento" AutoComplete="True"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem x:Name="vista_almacenAfectado" Label="Alacén Afectado:">
+                    <dxe:ComboBoxEdit x:Name="cbxAlamcenAfectado" AutoComplete="True"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup x:Name="vista_nuevoMovimiento" Header="Nuevo Movimiento" Visibility="Collapsed" View="GroupBox" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutItem Label="Razón:">
+                        <dxe:TextEdit x:Name="txtRazon"/>
+                    </dxlc:LayoutItem>
+                    <Button Content="Guardar" Panel.ZIndex="5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup x:Name="vista_Alamcenes" View="GroupBox" Visibility="Collapsed" Header="Traspaso De Alamcén" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutItem Label="Almacén origen:">
+                        <dxe:ComboBoxEdit x:Name="cbxAOrigen" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Almacén destino:">
+                        <dxe:ComboBoxEdit x:Name="cbxADestino" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Insumo:">
+                        <dxe:ComboBoxEdit SelectedIndexChanged="cbxInsumo_SelectedIndexChanged" x:Name="cbxInsumo" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Cantidad:">
+                        <dxe:TextEdit x:Name="txtCantidad"/>
+                    </dxlc:LayoutItem>
+                    <TextBlock x:Name="txtMedida" HorizontalAlignment="Left" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Margin="0,1,0,0" FontSize="16"/>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <TextBlock TextWrapping="Wrap" Padding="5" UseLayoutRounding="True" Text="Copyright © 2016 Shark . Todos los derechos reservados." TextAlignment="Center" Background="#FF1F1F1F" Foreground="White" VerticalAlignment="Bottom" FontSize="9" Margin="0,0,0,-0.03"/>
+        </dxlc:LayoutControl>
+
+    </Grid>
+</Window>

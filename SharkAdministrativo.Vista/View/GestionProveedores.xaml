@@ -1,0 +1,118 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" x:Class="SharkAdministrativo.Vista.GestionProveedores"
+        Title="GestionProveedores" WindowStartupLocation="CenterScreen" Height="585">
+    <Grid>
+
+        <dxlc:LayoutControl Margin="0" Padding="0" Orientation="Vertical">
+            <dxr:RibbonControl RibbonStyle="Office2010" Margin="0,1,0,-1">
+                <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                    <dxr:RibbonPage Caption="GENERAL">
+                        <dxr:RibbonPageGroup Caption="{x:Null}">
+                            <dxb:BarButtonItem Content="Guardar &amp; Cerrar" ItemClick="btnGuardar_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Archivo">
+                            <dxb:BarButtonItem Content="Guardar &amp; nuevo" ItemClick="BarButtonItem_ItemClick" Glyph="{dx:DXImageOffice2013 Image=SaveAs_32x32.png}"/>
+                            <dxb:BarButtonItem Content="Copiar a Nuevo" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Meeting_32x32.png"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Mostrar">
+                            <dxb:BarButtonItem Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/NewOpportunities_32x32.png"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Exportar">
+                            <dxb:BarButtonItem Content="Excel" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}"/>
+                            <dxb:BarButtonItem Content="PDF" Glyph="{dx:DXImageGrayscale Image=ExportToPDF_32x32.png}"/>
+                            <dxb:BarButtonItem Content="PNG" Glyph="{dx:DXImageGrayscale Image=InsertImage_32x32.png}"/>
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>
+                </dxr:RibbonDefaultPageCategory>
+            </dxr:RibbonControl>
+
+            <Rectangle Fill="#FF046AA6" Height="30" VerticalAlignment="Top"/>
+            <TextBlock x:Name="titleProveedor" TextWrapping="Wrap" Text="Registro De Nuevo Proveedor" Foreground="White" Margin="0,-27,0,0" FontFamily="Century gothic" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <dxlc:LayoutGroup Header="General" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch" Padding="0" Margin="0,15,0,0">
+                <dxlc:LayoutItem Label="Nombre:">
+                    <dxe:TextEdit x:Name="txtNombreP"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Grupos Que Provee">
+                        <dxe:ComboBoxEdit x:Name="cbxGrupos" SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+
+                            <dxe:ComboBoxEdit.StyleSettings>
+                                <dxe:CheckedComboBoxStyleSettings/>
+                            </dxe:ComboBoxEdit.StyleSettings>
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="RFC:">
+                        <dxe:TextEdit x:Name="txtRFC"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Ingresa El Nombre:">
+                        <dxe:TextEdit x:Name="txtnombreGrupo"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Categoria: ">
+                        <dxe:ComboBoxEdit x:Name="cbxCategoria" SelectedIndexChanged="cbxCategoria_SelectedIndexChanged"/>
+                    </dxlc:LayoutItem>
+                    <Button Content="Guardar" x:Name="btnGuardarGrupo" Click="btnGuardarGrupo_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    <dxlc:LayoutGroup x:Name="groupCategoria" Visibility="Collapsed" Header="Nueva Categoría" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutItem Label="Nombre:">
+                            <dxe:TextEdit x:Name="txtCategoria"/>
+                        </dxlc:LayoutItem>
+                        <Button Content="Guardar" x:Name="btnGuardarCategoria" Click="btnGuardarCategoria_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Razón Social">
+                        <dxe:TextEdit x:Name="txtRazonP"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Empresa Que Proverá:">
+                        <dxe:ComboBoxEdit x:Name="cbxEmpresa" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="Domicilio Fiscal" View="GroupBox" Margin="0,0,0,-2">
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Calle">
+                            <dxe:TextEdit x:Name="txtCalleP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Colonia">
+                            <dxe:TextEdit x:Name="txtColoniaP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Localidad">
+                            <dxe:TextEdit x:Name="txtLocalidadP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Estado">
+                            <dxe:TextEdit x:Name="txtEstadoP"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="No. Exterior">
+                            <dxe:TextEdit x:Name="txtNoExteriorP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Código Postal">
+                            <dxe:TextEdit x:Name="txtCodigoPostalP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Municipio">
+                            <dxe:TextEdit x:Name="txtMunicipioP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="País">
+                            <dxe:TextEdit x:Name="txtPaisP"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup" VerticalAlignment="Bottom">
+                    <dxlc:LayoutItem Label="Sucursal (Opcional):" VerticalAlignment="Bottom">
+                        <dxe:TextEdit x:Name="txtSucursalP"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Teléfono:">
+                        <dxe:TextEdit x:Name="txtTelefono"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+
+
+            <TextBlock TextWrapping="Wrap" Text="PUEDES UTILIZAR NUESTRO MÓDULO DE REGISTRO A PARTIR DE TU FACTURA XML DE COMPRA" Foreground="White" Margin="0,5,0,0" FontFamily="Century gothic" VerticalAlignment="Bottom" FontSize="10" Background="#FF1F1F1F" TextAlignment="Center" Padding="5,5,5,3" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
+        </dxlc:LayoutControl>
+
+    </Grid>
+</Window>

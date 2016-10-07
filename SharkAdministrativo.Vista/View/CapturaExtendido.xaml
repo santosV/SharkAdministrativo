@@ -1,0 +1,164 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Name="ventana" x:Class="SharkAdministrativo.Vista.CapturaExtendido"
+        Title="CapturaExtendido" WindowStartupLocation="CenterScreen" Height="727">
+    <Grid>
+
+        <dxlc:LayoutControl Margin="0" Padding="0" Orientation="Vertical">
+
+            <dxr:RibbonControl RibbonStyle="Office2010" ShowApplicationButton="True" MinimizationButtonVisibility="Visible" PageCategoryAlignment="Left" ToolbarShowMode="ShowAbove" Height="139" Margin="0,0,0,-2">
+                <dxr:RibbonControl.ApplicationMenu>
+                    <dxr:ApplicationMenu/>
+                </dxr:RibbonControl.ApplicationMenu>
+                <dxr:RibbonControl.ToolbarItems>
+                    <dxb:BarButtonItemLink BarItemName="biOpen"/>
+                    <dxb:BarButtonItemLink BarItemName="biNew"/>
+                </dxr:RibbonControl.ToolbarItems>
+                <dxr:RibbonDefaultPageCategory>
+                    <dxr:RibbonPage Caption="General">
+                        <dxr:RibbonPageGroup Caption="Archivos">
+                            <dxb:BarButtonItem x:Name="btnSaveAndClose" ItemClick="btnSaveAndClose_ItemClick" Content="Guardar &amp; Cerrar" Glyph="{dx:DXImage Image=SaveAndClose_32x32.png}" LargeGlyph="{dx:DXImage Image=SaveAndClose_32x32.png}"/>
+                            <dxb:BarButtonItem x:Name="biNew" Content="Guardar &amp; nuevo" Glyph="{dx:DXImage Image=SaveAndNew_32x32.png}" LargeGlyph="{dx:DXImage Image=SaveAndNew_32x32.png}" RibbonStyle="SmallWithText"/>
+                            <dxb:BarButtonItem Content="Copiar a nuevo" RibbonStyle="Large" Glyph="{dx:DXImage Image=Copy_32x32.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Mostrar">
+                            <dxb:BarButtonItem Content="Resumen" RibbonStyle="Large" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="Exportar">
+                            <dxb:BarButtonItem Content="Excel" RibbonStyle="Large" Glyph="{dx:DXImage Image=ExportToXLS_32x32.png}" LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}"/>
+                            <dxb:BarButtonItem Content="PDF" Glyph="{dx:DXImage Image=ExportToPDF_32x32.png}" LargeGlyph="{dx:DXImage Image=ExportToPDF_32x32.png}" RibbonStyle="SmallWithText"/>
+                            <dxb:BarButtonItem Content="Word" Glyph="{dx:DXImage Image=ExportToDOC_32x32.png}" LargeGlyph="{dx:DXImage Image=ExportToDOC_32x32.png}" RibbonStyle="SmallWithText"/>
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>
+                </dxr:RibbonDefaultPageCategory>
+            </dxr:RibbonControl>
+
+            <dxlc:LayoutGroup Header="Tools" View="Tabs" Margin="0,-20,0,0" Background="#FFE8E8E8" Padding="0">
+                <dxlc:LayoutGroup Header="Insumos" Orientation="Vertical">
+                    <dxlc:LayoutGroup Header="Detalles de Insumo" View="GroupBox" Orientation="Vertical">
+                        <dxlc:LayoutItem Label="Insumo Base:">
+                            <dxe:ComboBoxEdit x:Name="cbxInsumos" SelectedIndexChanged="cbxInsumos_SelectedIndexChanged" KeyDown="ObtenerCostos_KeyUp" AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Descripción">
+                            <dxe:TextEdit x:Name="txtDescripcion"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem x:Name="txtCreferencia" Label="Ultimo Costo:">
+                                <dxe:TextEdit x:Name="txtCostoUnitario" KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostos_KeyUp"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Costo Promedio:">
+                                <dxe:TextEdit x:Name="txtCpromedio" KeyDown="SoloNumeros_KeyDown"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Porcentaje IVA:">
+                                <dxe:TextEdit x:Name="txtIVA" EditValue="16" KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostos_KeyUp"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Costo C/ Impuesto:">
+                                <dxe:TextEdit x:Name="txtCCimpuesto" KeyDown="SoloNumeros_KeyDown"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="Rendimiento:">
+                                <dxe:TextEdit x:Name="txtRendimiento" KeyDown="SoloNumeros_KeyDown"/>
+                            </dxlc:LayoutItem>
+                            <TextBlock x:Name="txtUnidad" TextWrapping="Wrap" Text="..." FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <dxlc:LayoutItem Label="Cantidad:" Margin="44,0,0,0">
+                                <dxe:TextEdit x:Name="txtCantidad" KeyDown="SoloNumeros_KeyDown"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="Almacén:" Margin="30,0,0,0">
+                            <dxe:ComboBoxEdit x:Name="cbxAlmacen"  AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                        <Button x:Name="btnGuardarList" Content="Listo" HorizontalAlignment="Center" VerticalAlignment="Top" Click="btnGuardarList_Click" KeyDown="btnGuardarList_KeyDown"/>
+                    </dxlc:LayoutGroup>
+                    <dxg:GridControl x:Name="tblInsumos" MouseDown="tblInsumos_MouseDown"  AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Margin="0" Panel.ZIndex="5">
+                        <dxg:GridControl.View>
+                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="Proveedor" View="Group">
+                    <dxlc:LayoutGroup Header="Proveedor" View="GroupBox" Background="{x:Null}" Margin="0,0,0,-292" Orientation="Vertical">
+                        <dxlc:LayoutItem Label="Razón Social">
+                            <dxe:TextEdit x:Name="txtRazonSocialP"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                            <dxlc:LayoutItem Label="RFC" LabelVerticalAlignment="Stretch" LabelHorizontalAlignment="Stretch">
+                                <dxe:TextEdit x:Name="txtRfcP"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="Sucursal">
+                                <dxe:TextEdit x:Name="txtSucursalP"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup Header="Domicilio Fiscal" View="GroupBox">
+                            <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                                <dxlc:LayoutItem Label="Calle">
+                                    <dxe:TextEdit x:Name="txtCalleP"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="Colonia">
+                                    <dxe:TextEdit x:Name="txtColoniaP"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="Localidad">
+                                    <dxe:TextEdit x:Name="txtLocalidadP"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="Estado">
+                                    <dxe:TextEdit x:Name="txtEstadoP"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                                <dxlc:LayoutItem Label="No. Exterior">
+                                    <dxe:TextEdit x:Name="txtNoExteriorP"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="Código Postal">
+                                    <dxe:TextEdit x:Name="txtCodigoPostalP"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="Municipio">
+                                    <dxe:TextEdit x:Name="txtMunicipioP"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="País">
+                                    <dxe:TextEdit x:Name="txtPaisP"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup View="GroupBox" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0">
+                <dxlc:LayoutGroup.Background>
+                    <SolidColorBrush Color="#FFE8E8E8" Opacity="0.03"/>
+                </dxlc:LayoutGroup.Background>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Entrega Doc">
+                        <dxe:DateEdit x:Name="txtFechaF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Divisa">
+                        <dxe:TextEdit x:Name="txtMonedaF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Tipo De Comprobante">
+                        <dxe:TextEdit x:Name="txtTipoComprobanteF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Tipo De Cambio">
+                        <dxe:TextEdit x:Name="txtTipoCambioF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Forma De Pago" LabelHorizontalAlignment="Stretch">
+                        <dxe:TextEdit x:Name="txtFormaPagoF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="SubTotal">
+                        <dxe:TextEdit x:Name="txtSubTotalF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Total">
+                        <dxe:TextEdit x:Name="txtTotalF" IsReadOnly="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+
+        </dxlc:LayoutControl>
+
+    </Grid>
+</Window>

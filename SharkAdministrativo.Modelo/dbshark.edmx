@@ -1,0 +1,1146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bdsharkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almacenes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AreasProduccion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Empresas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="rfc" Type="nchar" MaxLength="15" />
+          <Property Name="calle" Type="varchar" MaxLength="50" />
+          <Property Name="noExterior" Type="nchar" MaxLength="10" />
+          <Property Name="codigo_postal" Type="nchar" MaxLength="10" />
+          <Property Name="colonia" Type="varchar" MaxLength="50" />
+          <Property Name="localidad" Type="varchar" MaxLength="50" />
+          <Property Name="municipio" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="varchar" MaxLength="50" />
+          <Property Name="pais" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EntradasPresentaciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="presentacion_id" Type="int" Nullable="false" />
+          <Property Name="almacen_id" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="float" />
+          <Property Name="fecha_registro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Facturas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="folio" Type="varchar" MaxLength="10" />
+          <Property Name="fecha_emision" Type="smalldatetime" Nullable="false" />
+          <Property Name="tipo_comprobante" Type="varchar" MaxLength="200" />
+          <Property Name="lugar_expedicion" Type="varchar" MaxLength="200" />
+          <Property Name="forma_pago" Type="varchar" MaxLength="150" />
+          <Property Name="moneda" Type="varchar" MaxLength="30" />
+          <Property Name="procesada" Type="int" />
+          <Property Name="tipo_cambio" Type="varchar" MaxLength="50" />
+          <Property Name="subtotal" Type="varchar" MaxLength="30" />
+          <Property Name="total" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Grupos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+          <Property Name="categoria_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Insumos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="ultimo_costo" Type="float" />
+          <Property Name="costo_promedio" Type="float" />
+          <Property Name="IVA" Type="float" />
+          <Property Name="costo_con_impuesto" Type="float" />
+          <Property Name="inventariable" Type="varchar" MaxLength="5" />
+          <Property Name="minimo" Type="float" />
+          <Property Name="maximo" Type="float" />
+          <Property Name="grupo_id" Type="int" Nullable="false" />
+          <Property Name="unidad_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InsumosElaborados">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="insumos" Type="varchar" MaxLength="300" />
+          <Property Name="rendimiento" Type="float" />
+          <Property Name="grupo_id" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="unidad_id" Type="int" Nullable="false" />
+          <Property Name="costo_unitario" Type="float" />
+          <Property Name="costo_promedio" Type="float" />
+          <Property Name="costo_estandar" Type="float" />
+          <Property Name="inventariable" Type="varchar" MaxLength="10" />
+          <Property Name="entrada_automatica" Type="int" />
+          <Property Name="existencia" Type="float" />
+        </EntityType>
+        <EntityType Name="Presentaciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="ultimo_costo" Type="float" />
+          <Property Name="costo_promedio" Type="float" />
+          <Property Name="IVA" Type="float" />
+          <Property Name="costo_con_impuesto" Type="float" />
+          <Property Name="rendimiento" Type="float" />
+          <Property Name="minimo" Type="int" Nullable="false" />
+          <Property Name="proveedor_id" Type="int" Nullable="false" />
+          <Property Name="insumo_id" Type="int" Nullable="false" />
+          <Property Name="factura_id" Type="int" Nullable="false" />
+          <Property Name="almacen_id" Type="int" Nullable="false" />
+          <Property Name="noIdentificacion" Type="varchar" MaxLength="50" />
+          <Property Name="costo_unitario" Type="float" />
+          <Property Name="cantidad" Type="float" />
+          <Property Name="existencia" Type="float" />
+        </EntityType>
+        <EntityType Name="ProductoPromocion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="producto_id" Type="int" Nullable="false" />
+          <Property Name="promocion_id" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="float" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="ultimoPrecio" Type="float" />
+          <Property Name="IVA" Type="float" />
+          <Property Name="precioConImpuesto" Type="float" />
+          <Property Name="areasPreparacion" Type="varchar" MaxLength="50" />
+          <Property Name="disponlibleEn" Type="varchar" MaxLength="50" />
+          <Property Name="imagen" Type="image" />
+        </EntityType>
+        <EntityType Name="Promociones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="ultimoPrecio" Type="float" />
+          <Property Name="IVA" Type="float" />
+          <Property Name="precioConImpuesto" Type="float" />
+          <Property Name="areasDisponibles" Type="varchar" MaxLength="100" />
+          <Property Name="imagen" Type="image" />
+          <Property Name="diasDisponibles" Type="varchar" MaxLength="20" />
+          <Property Name="hora_inicio" Type="varchar" MaxLength="50" />
+          <Property Name="hora_fin" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_inicio" Type="datetime" />
+          <Property Name="fecha_fin" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+          <Property Name="razon_social" Type="varchar" MaxLength="250" />
+          <Property Name="RFC" Type="varchar" MaxLength="30" />
+          <Property Name="calle" Type="varchar" MaxLength="50" />
+          <Property Name="NoExterior" Type="varchar" MaxLength="10" />
+          <Property Name="codigo_postal" Type="varchar" MaxLength="10" />
+          <Property Name="colonia" Type="varchar" MaxLength="100" />
+          <Property Name="localidad" Type="varchar" MaxLength="150" />
+          <Property Name="municipio" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="varchar" MaxLength="150" />
+          <Property Name="pais" Type="varchar" MaxLength="150" />
+          <Property Name="telefono" Type="varchar" MaxLength="15" />
+          <Property Name="fecha_registro" Type="smalldatetime" Nullable="false" />
+          <Property Name="empresa_id" Type="int" Nullable="false" />
+          <Property Name="sucursal" Type="varchar" MaxLength="50" />
+          <Property Name="tipos_proveedor" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Recetas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="insumo_id" Type="int" Nullable="false" />
+          <Property Name="producto_id" Type="int" Nullable="false" />
+          <Property Name="insumoElaborado_id" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="float" />
+          <Property Name="almacenes_id" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Salidas_almacen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="insumo_id" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="float" />
+          <Property Name="tipo_movimiento_id" Type="int" Nullable="false" />
+          <Property Name="almacen_salida" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_movimientos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Unidades_Medida">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityContainer Name="bdsharkModelStoreContainer">
+          <EntitySet Name="Almacenes" EntityType="Self.Almacenes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AreasProduccion" EntityType="Self.AreasProduccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntradasPresentaciones" EntityType="Self.EntradasPresentaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facturas" EntityType="Self.Facturas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupos" EntityType="Self.Grupos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Insumos" EntityType="Self.Insumos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InsumosElaborados" EntityType="Self.InsumosElaborados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Presentaciones" EntityType="Self.Presentaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductoPromocion" EntityType="Self.ProductoPromocion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promociones" EntityType="Self.Promociones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recetas" EntityType="Self.Recetas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salidas_almacen" EntityType="Self.Salidas_almacen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_movimientos" EntityType="Self.Tipo_movimientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidades_Medida" EntityType="Self.Unidades_Medida" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bdsharkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="bdsharkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Almacenes" EntityType="bdsharkModel.Almacen" />
+          <EntitySet Name="AreasProduccion" EntityType="bdsharkModel.AreaProduccion" />
+          <EntitySet Name="Categorias" EntityType="bdsharkModel.Categoria" />
+          <EntitySet Name="Empresas" EntityType="bdsharkModel.Empresa" />
+          <EntitySet Name="EntradasPresentaciones" EntityType="bdsharkModel.EntradaPresentacion" />
+          <EntitySet Name="Facturas" EntityType="bdsharkModel.Factura" />
+          <EntitySet Name="Grupos" EntityType="bdsharkModel.Grupo" />
+          <EntitySet Name="Insumos" EntityType="bdsharkModel.Insumo" />
+          <EntitySet Name="InsumosElaborados" EntityType="bdsharkModel.InsumoElaborado" />
+          <EntitySet Name="Presentaciones" EntityType="bdsharkModel.Presentacion" />
+          <EntitySet Name="ProductoPromocion" EntityType="bdsharkModel.ProductoPromocion" />
+          <EntitySet Name="Productos" EntityType="bdsharkModel.Producto" />
+          <EntitySet Name="Promociones" EntityType="bdsharkModel.Promocion" />
+          <EntitySet Name="Proveedores" EntityType="bdsharkModel.Proveedor" />
+          <EntitySet Name="Recetas" EntityType="bdsharkModel.Receta" />
+          <EntitySet Name="Salidas_almacen" EntityType="bdsharkModel.Salida_almacen" />
+          <EntitySet Name="Tipo_movimientos" EntityType="bdsharkModel.Tipo_movimiento" />
+          <EntitySet Name="Unidades_Medida" EntityType="bdsharkModel.Unidad_Medida" />
+          <AssociationSet Name="AlmacenPresentacion" Association="bdsharkModel.AlmacenPresentacion">
+            <End Role="Almacen" EntitySet="Almacenes" />
+            <End Role="Presentacion" EntitySet="Presentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="AlmacenEntradaPresentacion" Association="bdsharkModel.AlmacenEntradaPresentacion">
+            <End Role="Almacen" EntitySet="Almacenes" />
+            <End Role="EntradaPresentacion" EntitySet="EntradasPresentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="PresentacionEntradaPresentacion" Association="bdsharkModel.PresentacionEntradaPresentacion">
+            <End Role="Presentacion" EntitySet="Presentaciones" />
+            <End Role="EntradaPresentacion" EntitySet="EntradasPresentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriaGrupo" Association="bdsharkModel.CategoriaGrupo">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Grupo" EntitySet="Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="GrupoInsumo" Association="bdsharkModel.GrupoInsumo">
+            <End Role="Grupo" EntitySet="Grupos" />
+            <End Role="Insumo" EntitySet="Insumos" />
+          </AssociationSet>
+          <AssociationSet Name="Unidad_MedidaInsumo" Association="bdsharkModel.Unidad_MedidaInsumo">
+            <End Role="Unidad_Medida" EntitySet="Unidades_Medida" />
+            <End Role="Insumo" EntitySet="Insumos" />
+          </AssociationSet>
+          <AssociationSet Name="GrupoInsumoElaborado" Association="bdsharkModel.GrupoInsumoElaborado">
+            <End Role="Grupo" EntitySet="Grupos" />
+            <End Role="InsumoElaborado" EntitySet="InsumosElaborados" />
+          </AssociationSet>
+          <AssociationSet Name="Unidad_MedidaInsumoElaborado" Association="bdsharkModel.Unidad_MedidaInsumoElaborado">
+            <End Role="Unidad_Medida" EntitySet="Unidades_Medida" />
+            <End Role="InsumoElaborado" EntitySet="InsumosElaborados" />
+          </AssociationSet>
+          <AssociationSet Name="ProveedorPresentacion" Association="bdsharkModel.ProveedorPresentacion">
+            <End Role="Proveedor" EntitySet="Proveedores" />
+            <End Role="Presentacion" EntitySet="Presentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="InsumoPresentacion" Association="bdsharkModel.InsumoPresentacion">
+            <End Role="Insumo" EntitySet="Insumos" />
+            <End Role="Presentacion" EntitySet="Presentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FacturaPresentacion" Association="bdsharkModel.FacturaPresentacion">
+            <End Role="Factura" EntitySet="Facturas" />
+            <End Role="Presentacion" EntitySet="Presentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="AlmacenPresentacion1" Association="bdsharkModel.AlmacenPresentacion1">
+            <End Role="Almacen" EntitySet="Almacenes" />
+            <End Role="Presentacion" EntitySet="Presentaciones" />
+          </AssociationSet>
+          <AssociationSet Name="ProductoProductoPromocion" Association="bdsharkModel.ProductoProductoPromocion">
+            <End Role="Producto" EntitySet="Productos" />
+            <End Role="ProductoPromocion" EntitySet="ProductoPromocion" />
+          </AssociationSet>
+          <AssociationSet Name="PromocionProductoPromocion" Association="bdsharkModel.PromocionProductoPromocion">
+            <End Role="Promocion" EntitySet="Promociones" />
+            <End Role="ProductoPromocion" EntitySet="ProductoPromocion" />
+          </AssociationSet>
+          <AssociationSet Name="EmpresaProveedor" Association="bdsharkModel.EmpresaProveedor">
+            <End Role="Empresa" EntitySet="Empresas" />
+            <End Role="Proveedor" EntitySet="Proveedores" />
+          </AssociationSet>
+          <AssociationSet Name="InsumoReceta" Association="bdsharkModel.InsumoReceta">
+            <End Role="Insumo" EntitySet="Insumos" />
+            <End Role="Receta" EntitySet="Recetas" />
+          </AssociationSet>
+          <AssociationSet Name="ProductoReceta" Association="bdsharkModel.ProductoReceta">
+            <End Role="Producto" EntitySet="Productos" />
+            <End Role="Receta" EntitySet="Recetas" />
+          </AssociationSet>
+          <AssociationSet Name="InsumoElaboradoReceta" Association="bdsharkModel.InsumoElaboradoReceta">
+            <End Role="InsumoElaborado" EntitySet="InsumosElaborados" />
+            <End Role="Receta" EntitySet="Recetas" />
+          </AssociationSet>
+          <AssociationSet Name="InsumoSalida_almacen" Association="bdsharkModel.InsumoSalida_almacen">
+            <End Role="Insumo" EntitySet="Insumos" />
+            <End Role="Salida_almacen" EntitySet="Salidas_almacen" />
+          </AssociationSet>
+          <AssociationSet Name="Tipo_movimientoSalida_almacen" Association="bdsharkModel.Tipo_movimientoSalida_almacen">
+            <End Role="Tipo_movimiento" EntitySet="Tipo_movimientos" />
+            <End Role="Salida_almacen" EntitySet="Salidas_almacen" />
+          </AssociationSet>
+          <AssociationSet Name="AlmacenSalida_almacen" Association="bdsharkModel.AlmacenSalida_almacen">
+            <End Role="Almacen" EntitySet="Almacenes" />
+            <End Role="Salida_almacen" EntitySet="Salidas_almacen" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.AlmacenPresentacion" FromRole="Almacen" ToRole="Presentacion" />
+          <NavigationProperty Name="EntradaPresentacion" Relationship="bdsharkModel.AlmacenEntradaPresentacion" FromRole="Almacen" ToRole="EntradaPresentacion" />
+          <NavigationProperty Name="Presentacion1" Relationship="bdsharkModel.AlmacenPresentacion1" FromRole="Almacen" ToRole="Presentacion" />
+          <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.AlmacenSalida_almacen" FromRole="Almacen" ToRole="Salida_almacen" />
+        </EntityType>
+        <EntityType Name="AreaProduccion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grupo" Relationship="bdsharkModel.CategoriaGrupo" FromRole="Categoria" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="rfc" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="calle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="noExterior" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="codigo_postal" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="colonia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="localidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="municipio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Proveedor" Relationship="bdsharkModel.EmpresaProveedor" FromRole="Empresa" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="EntradaPresentacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="presentacion_id" Type="Int32" Nullable="false" />
+          <Property Name="almacen_id" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Double" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Almacen" Relationship="bdsharkModel.AlmacenEntradaPresentacion" FromRole="EntradaPresentacion" ToRole="Almacen" />
+          <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.PresentacionEntradaPresentacion" FromRole="EntradaPresentacion" ToRole="Presentacion" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="folio" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_emision" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="tipo_comprobante" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="lugar_expedicion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="forma_pago" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="moneda" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="procesada" Type="Int32" />
+          <Property Name="tipo_cambio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="subtotal" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.FacturaPresentacion" FromRole="Factura" ToRole="Presentacion" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="categoria_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="bdsharkModel.CategoriaGrupo" FromRole="Grupo" ToRole="Categoria" />
+          <NavigationProperty Name="Insumo" Relationship="bdsharkModel.GrupoInsumo" FromRole="Grupo" ToRole="Insumo" />
+          <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.GrupoInsumoElaborado" FromRole="Grupo" ToRole="InsumoElaborado" />
+        </EntityType>
+        <EntityType Name="Insumo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ultimo_costo" Type="Double" />
+          <Property Name="costo_promedio" Type="Double" />
+          <Property Name="IVA" Type="Double" />
+          <Property Name="costo_con_impuesto" Type="Double" />
+          <Property Name="inventariable" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="minimo" Type="Double" />
+          <Property Name="maximo" Type="Double" />
+          <Property Name="grupo_id" Type="Int32" Nullable="false" />
+          <Property Name="unidad_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="bdsharkModel.GrupoInsumo" FromRole="Insumo" ToRole="Grupo" />
+          <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Insumo" ToRole="Unidad_Medida" />
+          <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Insumo" ToRole="Presentacion" />
+          <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoReceta" FromRole="Insumo" ToRole="Receta" />
+          <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Insumo" ToRole="Salida_almacen" />
+        </EntityType>
+        <EntityType Name="InsumoElaborado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="insumos" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="rendimiento" Type="Double" />
+          <Property Name="grupo_id" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unidad_id" Type="Int32" Nullable="false" />
+          <Property Name="costo_unitario" Type="Double" />
+          <Property Name="costo_promedio" Type="Double" />
+          <Property Name="costo_estandar" Type="Double" />
+          <Property Name="inventariable" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="entrada_automatica" Type="Int32" />
+          <Property Name="existencia" Type="Double" />
+          <NavigationProperty Name="Grupo" Relationship="bdsharkModel.GrupoInsumoElaborado" FromRole="InsumoElaborado" ToRole="Grupo" />
+          <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="InsumoElaborado" ToRole="Unidad_Medida" />
+          <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoElaboradoReceta" FromRole="InsumoElaborado" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Presentacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ultimo_costo" Type="Double" />
+          <Property Name="costo_promedio" Type="Double" />
+          <Property Name="IVA" Type="Double" />
+          <Property Name="costo_con_impuesto" Type="Double" />
+          <Property Name="rendimiento" Type="Double" />
+          <Property Name="minimo" Type="Int32" Nullable="false" />
+          <Property Name="proveedor_id" Type="Int32" Nullable="false" />
+          <Property Name="insumo_id" Type="Int32" Nullable="false" />
+          <Property Name="factura_id" Type="Int32" Nullable="false" />
+          <Property Name="almacen_id" Type="Int32" Nullable="false" />
+          <Property Name="noIdentificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="costo_unitario" Type="Double" />
+          <Property Name="cantidad" Type="Double" />
+          <Property Name="existencia" Type="Double" />
+          <NavigationProperty Name="Almacen" Relationship="bdsharkModel.AlmacenPresentacion" FromRole="Presentacion" ToRole="Almacen" />
+          <NavigationProperty Name="EntradaPresentacion" Relationship="bdsharkModel.PresentacionEntradaPresentacion" FromRole="Presentacion" ToRole="EntradaPresentacion" />
+          <NavigationProperty Name="Proveedor" Relationship="bdsharkModel.ProveedorPresentacion" FromRole="Presentacion" ToRole="Proveedor" />
+          <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Presentacion" ToRole="Insumo" />
+          <NavigationProperty Name="Factura" Relationship="bdsharkModel.FacturaPresentacion" FromRole="Presentacion" ToRole="Factura" />
+          <NavigationProperty Name="Almacen1" Relationship="bdsharkModel.AlmacenPresentacion1" FromRole="Presentacion" ToRole="Almacen" />
+        </EntityType>
+        <EntityType Name="ProductoPromocion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="producto_id" Type="Int32" Nullable="false" />
+          <Property Name="promocion_id" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Double" />
+          <NavigationProperty Name="Producto" Relationship="bdsharkModel.ProductoProductoPromocion" FromRole="ProductoPromocion" ToRole="Producto" />
+          <NavigationProperty Name="Promocion" Relationship="bdsharkModel.PromocionProductoPromocion" FromRole="ProductoPromocion" ToRole="Promocion" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ultimoPrecio" Type="Double" />
+          <Property Name="IVA" Type="Double" />
+          <Property Name="precioConImpuesto" Type="Double" />
+          <Property Name="areasPreparacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="disponlibleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="ProductoPromocion" Relationship="bdsharkModel.ProductoProductoPromocion" FromRole="Producto" ToRole="ProductoPromocion" />
+          <NavigationProperty Name="Receta" Relationship="bdsharkModel.ProductoReceta" FromRole="Producto" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Promocion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ultimoPrecio" Type="Double" />
+          <Property Name="IVA" Type="Double" />
+          <Property Name="precioConImpuesto" Type="Double" />
+          <Property Name="areasDisponibles" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="diasDisponibles" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="hora_inicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hora_fin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_inicio" Type="DateTime" Precision="3" />
+          <Property Name="fecha_fin" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductoPromocion" Relationship="bdsharkModel.PromocionProductoPromocion" FromRole="Promocion" ToRole="ProductoPromocion" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="razon_social" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RFC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="calle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NoExterior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_postal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="colonia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="localidad" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="municipio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="pais" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="empresa_id" Type="Int32" Nullable="false" />
+          <Property Name="sucursal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipos_proveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.ProveedorPresentacion" FromRole="Proveedor" ToRole="Presentacion" />
+          <NavigationProperty Name="Empresa" Relationship="bdsharkModel.EmpresaProveedor" FromRole="Proveedor" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="insumo_id" Type="Int32" Nullable="false" />
+          <Property Name="producto_id" Type="Int32" Nullable="false" />
+          <Property Name="insumoElaborado_id" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Double" />
+          <Property Name="almacenes_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoReceta" FromRole="Receta" ToRole="Insumo" />
+          <NavigationProperty Name="Producto" Relationship="bdsharkModel.ProductoReceta" FromRole="Receta" ToRole="Producto" />
+          <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.InsumoElaboradoReceta" FromRole="Receta" ToRole="InsumoElaborado" />
+        </EntityType>
+        <EntityType Name="Salida_almacen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="insumo_id" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Double" />
+          <Property Name="tipo_movimiento_id" Type="Int32" Nullable="false" />
+          <Property Name="almacen_salida" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Salida_almacen" ToRole="Insumo" />
+          <NavigationProperty Name="Tipo_movimiento" Relationship="bdsharkModel.Tipo_movimientoSalida_almacen" FromRole="Salida_almacen" ToRole="Tipo_movimiento" />
+          <NavigationProperty Name="Almacen" Relationship="bdsharkModel.AlmacenSalida_almacen" FromRole="Salida_almacen" ToRole="Almacen" />
+        </EntityType>
+        <EntityType Name="Tipo_movimiento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.Tipo_movimientoSalida_almacen" FromRole="Tipo_movimiento" ToRole="Salida_almacen" />
+        </EntityType>
+        <EntityType Name="Unidad_Medida">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Insumo" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Unidad_Medida" ToRole="Insumo" />
+          <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="Unidad_Medida" ToRole="InsumoElaborado" />
+        </EntityType>
+        <Association Name="AlmacenPresentacion">
+          <End Type="bdsharkModel.Almacen" Role="Almacen" Multiplicity="1" />
+          <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Presentacion">
+              <PropertyRef Name="almacen_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AlmacenEntradaPresentacion">
+          <End Type="bdsharkModel.Almacen" Role="Almacen" Multiplicity="1" />
+          <End Type="bdsharkModel.EntradaPresentacion" Role="EntradaPresentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntradaPresentacion">
+              <PropertyRef Name="almacen_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PresentacionEntradaPresentacion">
+          <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="1" />
+          <End Type="bdsharkModel.EntradaPresentacion" Role="EntradaPresentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Presentacion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntradaPresentacion">
+              <PropertyRef Name="presentacion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoriaGrupo">
+          <End Type="bdsharkModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="bdsharkModel.Grupo" Role="Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="categoria_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GrupoInsumo">
+          <End Type="bdsharkModel.Grupo" Role="Grupo" Multiplicity="1" />
+          <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Insumo">
+              <PropertyRef Name="grupo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Unidad_MedidaInsumo">
+          <End Type="bdsharkModel.Unidad_Medida" Role="Unidad_Medida" Multiplicity="1" />
+          <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Medida">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Insumo">
+              <PropertyRef Name="unidad_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GrupoInsumoElaborado">
+          <End Type="bdsharkModel.Grupo" Role="Grupo" Multiplicity="1" />
+          <End Type="bdsharkModel.InsumoElaborado" Role="InsumoElaborado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InsumoElaborado">
+              <PropertyRef Name="grupo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Unidad_MedidaInsumoElaborado">
+          <End Type="bdsharkModel.Unidad_Medida" Role="Unidad_Medida" Multiplicity="1" />
+          <End Type="bdsharkModel.InsumoElaborado" Role="InsumoElaborado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Medida">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InsumoElaborado">
+              <PropertyRef Name="unidad_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProveedorPresentacion">
+          <End Type="bdsharkModel.Proveedor" Role="Proveedor" Multiplicity="1" />
+          <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Presentacion">
+              <PropertyRef Name="proveedor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InsumoPresentacion">
+          <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="1" />
+          <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Presentacion">
+              <PropertyRef Name="insumo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FacturaPresentacion">
+          <End Type="bdsharkModel.Factura" Role="Factura" Multiplicity="1" />
+          <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Presentacion">
+              <PropertyRef Name="factura_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AlmacenPresentacion1">
+          <End Type="bdsharkModel.Almacen" Role="Almacen" Multiplicity="1" />
+          <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Presentacion">
+              <PropertyRef Name="almacen_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductoProductoPromocion">
+          <End Type="bdsharkModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="bdsharkModel.ProductoPromocion" Role="ProductoPromocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductoPromocion">
+              <PropertyRef Name="producto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PromocionProductoPromocion">
+          <End Type="bdsharkModel.Promocion" Role="Promocion" Multiplicity="1" />
+          <End Type="bdsharkModel.ProductoPromocion" Role="ProductoPromocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promocion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductoPromocion">
+              <PropertyRef Name="promocion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpresaProveedor">
+          <End Type="bdsharkModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="bdsharkModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="empresa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InsumoReceta">
+          <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="1" />
+          <End Type="bdsharkModel.Receta" Role="Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="insumo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductoReceta">
+          <End Type="bdsharkModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="bdsharkModel.Receta" Role="Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="producto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InsumoElaboradoReceta">
+          <End Type="bdsharkModel.InsumoElaborado" Role="InsumoElaborado" Multiplicity="1" />
+          <End Type="bdsharkModel.Receta" Role="Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InsumoElaborado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="insumoElaborado_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InsumoSalida_almacen">
+          <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="1" />
+          <End Type="bdsharkModel.Salida_almacen" Role="Salida_almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Salida_almacen">
+              <PropertyRef Name="insumo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Tipo_movimientoSalida_almacen">
+          <End Type="bdsharkModel.Tipo_movimiento" Role="Tipo_movimiento" Multiplicity="1" />
+          <End Type="bdsharkModel.Salida_almacen" Role="Salida_almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_movimiento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Salida_almacen">
+              <PropertyRef Name="tipo_movimiento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AlmacenSalida_almacen">
+          <End Type="bdsharkModel.Almacen" Role="Almacen" Multiplicity="1" />
+          <End Type="bdsharkModel.Salida_almacen" Role="Salida_almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Salida_almacen">
+              <PropertyRef Name="almacen_salida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bdsharkModelStoreContainer" CdmEntityContainer="bdsharkEntities">
+          <EntitySetMapping Name="Almacenes">
+            <EntityTypeMapping TypeName="bdsharkModel.Almacen">
+              <MappingFragment StoreEntitySet="Almacenes">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AreasProduccion">
+            <EntityTypeMapping TypeName="bdsharkModel.AreaProduccion">
+              <MappingFragment StoreEntitySet="AreasProduccion">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="bdsharkModel.Categoria">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresas">
+            <EntityTypeMapping TypeName="bdsharkModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="municipio" ColumnName="municipio" />
+                <ScalarProperty Name="localidad" ColumnName="localidad" />
+                <ScalarProperty Name="colonia" ColumnName="colonia" />
+                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+                <ScalarProperty Name="noExterior" ColumnName="noExterior" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntradasPresentaciones">
+            <EntityTypeMapping TypeName="bdsharkModel.EntradaPresentacion">
+              <MappingFragment StoreEntitySet="EntradasPresentaciones">
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="almacen_id" ColumnName="almacen_id" />
+                <ScalarProperty Name="presentacion_id" ColumnName="presentacion_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facturas">
+            <EntityTypeMapping TypeName="bdsharkModel.Factura">
+              <MappingFragment StoreEntitySet="Facturas">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="tipo_cambio" ColumnName="tipo_cambio" />
+                <ScalarProperty Name="procesada" ColumnName="procesada" />
+                <ScalarProperty Name="moneda" ColumnName="moneda" />
+                <ScalarProperty Name="forma_pago" ColumnName="forma_pago" />
+                <ScalarProperty Name="lugar_expedicion" ColumnName="lugar_expedicion" />
+                <ScalarProperty Name="tipo_comprobante" ColumnName="tipo_comprobante" />
+                <ScalarProperty Name="fecha_emision" ColumnName="fecha_emision" />
+                <ScalarProperty Name="folio" ColumnName="folio" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupos">
+            <EntityTypeMapping TypeName="bdsharkModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupos">
+                <ScalarProperty Name="categoria_id" ColumnName="categoria_id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Insumos">
+            <EntityTypeMapping TypeName="bdsharkModel.Insumo">
+              <MappingFragment StoreEntitySet="Insumos">
+                <ScalarProperty Name="unidad_id" ColumnName="unidad_id" />
+                <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+                <ScalarProperty Name="maximo" ColumnName="maximo" />
+                <ScalarProperty Name="minimo" ColumnName="minimo" />
+                <ScalarProperty Name="inventariable" ColumnName="inventariable" />
+                <ScalarProperty Name="costo_con_impuesto" ColumnName="costo_con_impuesto" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="costo_promedio" ColumnName="costo_promedio" />
+                <ScalarProperty Name="ultimo_costo" ColumnName="ultimo_costo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InsumosElaborados">
+            <EntityTypeMapping TypeName="bdsharkModel.InsumoElaborado">
+              <MappingFragment StoreEntitySet="InsumosElaborados">
+                <ScalarProperty Name="existencia" ColumnName="existencia" />
+                <ScalarProperty Name="entrada_automatica" ColumnName="entrada_automatica" />
+                <ScalarProperty Name="inventariable" ColumnName="inventariable" />
+                <ScalarProperty Name="costo_estandar" ColumnName="costo_estandar" />
+                <ScalarProperty Name="costo_promedio" ColumnName="costo_promedio" />
+                <ScalarProperty Name="costo_unitario" ColumnName="costo_unitario" />
+                <ScalarProperty Name="unidad_id" ColumnName="unidad_id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+                <ScalarProperty Name="rendimiento" ColumnName="rendimiento" />
+                <ScalarProperty Name="insumos" ColumnName="insumos" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Presentaciones">
+            <EntityTypeMapping TypeName="bdsharkModel.Presentacion">
+              <MappingFragment StoreEntitySet="Presentaciones">
+                <ScalarProperty Name="existencia" ColumnName="existencia" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="costo_unitario" ColumnName="costo_unitario" />
+                <ScalarProperty Name="noIdentificacion" ColumnName="noIdentificacion" />
+                <ScalarProperty Name="almacen_id" ColumnName="almacen_id" />
+                <ScalarProperty Name="factura_id" ColumnName="factura_id" />
+                <ScalarProperty Name="insumo_id" ColumnName="insumo_id" />
+                <ScalarProperty Name="proveedor_id" ColumnName="proveedor_id" />
+                <ScalarProperty Name="minimo" ColumnName="minimo" />
+                <ScalarProperty Name="rendimiento" ColumnName="rendimiento" />
+                <ScalarProperty Name="costo_con_impuesto" ColumnName="costo_con_impuesto" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="costo_promedio" ColumnName="costo_promedio" />
+                <ScalarProperty Name="ultimo_costo" ColumnName="ultimo_costo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoPromocion">
+            <EntityTypeMapping TypeName="bdsharkModel.ProductoPromocion">
+              <MappingFragment StoreEntitySet="ProductoPromocion">
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="promocion_id" ColumnName="promocion_id" />
+                <ScalarProperty Name="producto_id" ColumnName="producto_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="bdsharkModel.Producto">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="disponlibleEn" ColumnName="disponlibleEn" />
+                <ScalarProperty Name="areasPreparacion" ColumnName="areasPreparacion" />
+                <ScalarProperty Name="precioConImpuesto" ColumnName="precioConImpuesto" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="ultimoPrecio" ColumnName="ultimoPrecio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promociones">
+            <EntityTypeMapping TypeName="bdsharkModel.Promocion">
+              <MappingFragment StoreEntitySet="Promociones">
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
+                <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+                <ScalarProperty Name="diasDisponibles" ColumnName="diasDisponibles" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="areasDisponibles" ColumnName="areasDisponibles" />
+                <ScalarProperty Name="precioConImpuesto" ColumnName="precioConImpuesto" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="ultimoPrecio" ColumnName="ultimoPrecio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedores">
+            <EntityTypeMapping TypeName="bdsharkModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="tipos_proveedor" ColumnName="tipos_proveedor" />
+                <ScalarProperty Name="sucursal" ColumnName="sucursal" />
+                <ScalarProperty Name="empresa_id" ColumnName="empresa_id" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="municipio" ColumnName="municipio" />
+                <ScalarProperty Name="localidad" ColumnName="localidad" />
+                <ScalarProperty Name="colonia" ColumnName="colonia" />
+                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+                <ScalarProperty Name="NoExterior" ColumnName="NoExterior" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="razon_social" ColumnName="razon_social" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recetas">
+            <EntityTypeMapping TypeName="bdsharkModel.Receta">
+              <MappingFragment StoreEntitySet="Recetas">
+                <ScalarProperty Name="almacenes_id" ColumnName="almacenes_id" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="insumoElaborado_id" ColumnName="insumoElaborado_id" />
+                <ScalarProperty Name="producto_id" ColumnName="producto_id" />
+                <ScalarProperty Name="insumo_id" ColumnName="insumo_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salidas_almacen">
+            <EntityTypeMapping TypeName="bdsharkModel.Salida_almacen">
+              <MappingFragment StoreEntitySet="Salidas_almacen">
+                <ScalarProperty Name="almacen_salida" ColumnName="almacen_salida" />
+                <ScalarProperty Name="tipo_movimiento_id" ColumnName="tipo_movimiento_id" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="insumo_id" ColumnName="insumo_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_movimientos">
+            <EntityTypeMapping TypeName="bdsharkModel.Tipo_movimiento">
+              <MappingFragment StoreEntitySet="Tipo_movimientos">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unidades_Medida">
+            <EntityTypeMapping TypeName="bdsharkModel.Unidad_Medida">
+              <MappingFragment StoreEntitySet="Unidades_Medida">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
