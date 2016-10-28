@@ -126,6 +126,9 @@
     <Compile Include="ReportsView\InputsView.xaml.cs">
       <DependentUpon>InputsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View.Contpaqi\StartWindow.xaml.cs">
+      <DependentUpon>StartWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CapturaExtendido.xaml.cs">
       <DependentUpon>CapturaExtendido.xaml</DependentUpon>
     </Compile>
@@ -212,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReportsView\InputsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View.Contpaqi\StartWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
