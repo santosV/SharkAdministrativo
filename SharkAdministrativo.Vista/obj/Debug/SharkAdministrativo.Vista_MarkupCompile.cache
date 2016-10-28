@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\
+C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\
 SharkAdministrativo.Vista
 none
 false
 DEBUG;TRACE
-C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\App.xaml
+C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\App.xaml
 19-484239912
 
 37-1968508524
-67-1931798679
+671848786452
 ReportsView\BarcodeView.xaml;ReportsView\InputsView.xaml;View\CapturaExtendido.xaml;View\EntradasAlamcen.xaml;View\GestionDeProductos.xaml;View\GestionInsumos.xaml;View\GestionInsumosElaborados.xaml;View\GestionPresentaciones.xaml;View\GestionProductos.xaml;View\GestionProveedores.xaml;View\MainWindow.xaml;View\MovimientosAlmacen.xaml;View\Promociones.xaml;View\RegistrosRapidos.xaml;ReportsView\PresentationView.xaml;ReportsView\ProductView.xaml;ReportsView\PromotionView.xaml;ReportsView\ProviderView.xaml;ReportsView\RecipeView.xaml;
 
 False
