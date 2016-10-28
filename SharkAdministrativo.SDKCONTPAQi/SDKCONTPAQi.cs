@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharkAdministrativo.SDKCONTPAQi
 {
-    class SDKCONTPAQi
+     class SDKCONTPAQi
     {
-    }
+         }
 }
