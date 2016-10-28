@@ -376,6 +376,10 @@
       <Project>{a67729c3-dafa-4430-8e50-90b544ae9d63}</Project>
       <Name>SharkAdministrativo.Modelo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharkAdministrativo.SDKCONTPAQi\SharkAdministrativo.SDKCONTPAQi.csproj">
+      <Project>{13b6d2f7-764c-480e-a580-2938c5f16144}</Project>
+      <Name>SharkAdministrativo.SDKCONTPAQi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

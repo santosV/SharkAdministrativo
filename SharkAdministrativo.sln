@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkAdministrativo.Vista",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkAdministrativo.Modelo", "SharkAdministrativo.Modelo\SharkAdministrativo.Modelo.csproj", "{A67729C3-DAFA-4430-8E50-90B544AE9D63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharkAdministrativo.SDKCONTPAQi", "SharkAdministrativo.SDKCONTPAQi\SharkAdministrativo.SDKCONTPAQi.csproj", "{13B6D2F7-764C-480E-A580-2938C5F16144}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A67729C3-DAFA-4430-8E50-90B544AE9D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A67729C3-DAFA-4430-8E50-90B544AE9D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A67729C3-DAFA-4430-8E50-90B544AE9D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B6D2F7-764C-480E-A580-2938C5F16144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B6D2F7-764C-480E-A580-2938C5F16144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B6D2F7-764C-480E-A580-2938C5F16144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B6D2F7-764C-480E-A580-2938C5F16144}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
