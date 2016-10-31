@@ -12,6 +12,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
         <dxr:RibbonControl x:Name="Control_menu"  Grid.Row="0" RibbonStyle="Office2007" SelectedPageChanged="RibbonControl_SelectedPageChanged" Margin="0" ToolbarShowMode="Hide" PageCategoryAlignment="Left" ShowApplicationButton="True" MinimizationButtonVisibility="Collapsed" Background="DarkRed">
             <dxr:RibbonControl.ApplicationMenu>
                 <dxr:ApplicationMenu/>
@@ -92,6 +93,7 @@
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
         </dxr:RibbonControl>
+
         <Grid x:Name="Vista1_facturas" Grid.Row="1" Visibility="Collapsed">
             <dxg:GridControl x:Name="tblFacturas" SelectionMode="Row" KeyUp="tblFacturas_PreviewKeyDown"  AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Margin="0,25,0,-5">
                 <dxg:GridControl.View >
@@ -115,6 +117,7 @@
             <TextBlock x:Name="txtShark" TextWrapping="Wrap" Text="Gestiónamientos Administrativos" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2"/>
 
         </Grid>
+        <TextBlock x:Name="lblEmpresa" Text="Sin Empresa" Margin="0" Background="#FF272727" VerticalAlignment="Bottom" Foreground="White" FontFamily="Century Gothic" FontStretch="Condensed" TextAlignment="Center" Grid.Row="2"/>
 
     </Grid>
 </dxr:DXRibbonWindow>

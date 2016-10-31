@@ -51,6 +51,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
      public class SDK
     {
         public static string companyRoute { get; set; }
+        public static string companyName { get; set; }
         public static string systemRoute = @"C:\Program Files (x86)\Compac\COMERCIAL";
         public static string systemName = "CONTPAQ I COMERCIAL";
 

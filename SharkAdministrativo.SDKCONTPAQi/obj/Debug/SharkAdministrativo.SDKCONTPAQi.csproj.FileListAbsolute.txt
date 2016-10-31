@@ -3,3 +3,6 @@ C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkA
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.csprojResolveAssemblyReference.cache
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.dll
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.pdb
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\bin\Debug\SharkAdministrativo.SDKCONTPAQi.dll.config
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\bin\Debug\EntityFramework.dll
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\bin\Debug\EntityFramework.xml

@@ -41,6 +41,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         {
              if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
             {
+                 /*
                 SDK.companyRoute = txtRutaEmpresa.Text;
                 StringBuilder sMensaje = new StringBuilder(512);
                 //Indica el directorio activo.
@@ -56,12 +57,25 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
                 }
                 else {
-                    MessageBox.Show("Entramos al directorio");
-                    openCompany(txtRutaEmpresa.Text);
-                    closeCompany();
-                    closeSession();
-                    MessageBox.Show("Se inicio todo bien");
-                }
+                    int error = SDK.fAbreEmpresa(txtRutaEmpresa.Text);
+                    if (error != 0)
+                    {
+                        SDK.rError(error);
+                    }
+                    else
+                    {
+                       
+                       
+                    }
+                }*/
+
+                MainWindow view = new MainWindow();
+                SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
+                view.lblEmpresa.Text = "@"+SDK.companyName;
+                view.Show();
+                this.Close();
+
+
             }          
         }
 
