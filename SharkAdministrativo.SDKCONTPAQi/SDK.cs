@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
+
 
 namespace SharkAdministrativo.SDKCONTPAQi
 {
-     public class SDKCONTPAQi_COMERCIAL
-    {
-       string companyRoute {get; set;}
-
-        public class constantes // Declaración de constantes
+    public class constantes // Declaración de constantes
     {
         public const int kLongFecha = 24;
         public const int kLongSerie = 12;
@@ -51,8 +48,12 @@ namespace SharkAdministrativo.SDKCONTPAQi
     }//Fin constantes
 
 
-    class SDK
+     public class SDK
     {
+        public static string companyRoute { get; set; }
+        public static string systemRoute = @"C:\Program Files (x86)\Compac\COMERCIAL";
+        public static string systemName = "CONTPAQ I COMERCIAL";
+
 
         // Declaración de la estructura del producto
 
@@ -278,6 +279,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
             }
         }
 
-       
-    }
-}
+
+
+    }//Fin clase SDK
+}//Fin namespace

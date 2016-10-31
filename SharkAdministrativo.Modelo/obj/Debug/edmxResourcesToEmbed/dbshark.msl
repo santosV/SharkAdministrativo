@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bdsharkModelStoreContainer" CdmEntityContainer="bdsharkEntities">
+    <EntitySetMapping Name="Almacenes">
+      <EntityTypeMapping TypeName="bdsharkModel.Almacen">
+        <MappingFragment StoreEntitySet="Almacenes">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AreasProduccion">
+      <EntityTypeMapping TypeName="bdsharkModel.AreaProduccion">
+        <MappingFragment StoreEntitySet="AreasProduccion">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="bdsharkModel.Categoria">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresas">
+      <EntityTypeMapping TypeName="bdsharkModel.Empresa">
+        <MappingFragment StoreEntitySet="Empresas">
+          <ScalarProperty Name="pais" ColumnName="pais" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="municipio" ColumnName="municipio" />
+          <ScalarProperty Name="localidad" ColumnName="localidad" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+          <ScalarProperty Name="noExterior" ColumnName="noExterior" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="rfc" ColumnName="rfc" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntradasPresentaciones">
+      <EntityTypeMapping TypeName="bdsharkModel.EntradaPresentacion">
+        <MappingFragment StoreEntitySet="EntradasPresentaciones">
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="almacen_id" ColumnName="almacen_id" />
+          <ScalarProperty Name="presentacion_id" ColumnName="presentacion_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facturas">
+      <EntityTypeMapping TypeName="bdsharkModel.Factura">
+        <MappingFragment StoreEntitySet="Facturas">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+          <ScalarProperty Name="tipo_cambio" ColumnName="tipo_cambio" />
+          <ScalarProperty Name="procesada" ColumnName="procesada" />
+          <ScalarProperty Name="moneda" ColumnName="moneda" />
+          <ScalarProperty Name="forma_pago" ColumnName="forma_pago" />
+          <ScalarProperty Name="lugar_expedicion" ColumnName="lugar_expedicion" />
+          <ScalarProperty Name="tipo_comprobante" ColumnName="tipo_comprobante" />
+          <ScalarProperty Name="fecha_emision" ColumnName="fecha_emision" />
+          <ScalarProperty Name="folio" ColumnName="folio" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grupos">
+      <EntityTypeMapping TypeName="bdsharkModel.Grupo">
+        <MappingFragment StoreEntitySet="Grupos">
+          <ScalarProperty Name="categoria_id" ColumnName="categoria_id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Insumos">
+      <EntityTypeMapping TypeName="bdsharkModel.Insumo">
+        <MappingFragment StoreEntitySet="Insumos">
+          <ScalarProperty Name="unidad_id" ColumnName="unidad_id" />
+          <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+          <ScalarProperty Name="maximo" ColumnName="maximo" />
+          <ScalarProperty Name="minimo" ColumnName="minimo" />
+          <ScalarProperty Name="inventariable" ColumnName="inventariable" />
+          <ScalarProperty Name="costo_con_impuesto" ColumnName="costo_con_impuesto" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="costo_promedio" ColumnName="costo_promedio" />
+          <ScalarProperty Name="ultimo_costo" ColumnName="ultimo_costo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InsumosElaborados">
+      <EntityTypeMapping TypeName="bdsharkModel.InsumoElaborado">
+        <MappingFragment StoreEntitySet="InsumosElaborados">
+          <ScalarProperty Name="existencia" ColumnName="existencia" />
+          <ScalarProperty Name="entrada_automatica" ColumnName="entrada_automatica" />
+          <ScalarProperty Name="inventariable" ColumnName="inventariable" />
+          <ScalarProperty Name="costo_estandar" ColumnName="costo_estandar" />
+          <ScalarProperty Name="costo_promedio" ColumnName="costo_promedio" />
+          <ScalarProperty Name="costo_unitario" ColumnName="costo_unitario" />
+          <ScalarProperty Name="unidad_id" ColumnName="unidad_id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+          <ScalarProperty Name="rendimiento" ColumnName="rendimiento" />
+          <ScalarProperty Name="insumos" ColumnName="insumos" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Presentaciones">
+      <EntityTypeMapping TypeName="bdsharkModel.Presentacion">
+        <MappingFragment StoreEntitySet="Presentaciones">
+          <ScalarProperty Name="existencia" ColumnName="existencia" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="costo_unitario" ColumnName="costo_unitario" />
+          <ScalarProperty Name="noIdentificacion" ColumnName="noIdentificacion" />
+          <ScalarProperty Name="almacen_id" ColumnName="almacen_id" />
+          <ScalarProperty Name="factura_id" ColumnName="factura_id" />
+          <ScalarProperty Name="insumo_id" ColumnName="insumo_id" />
+          <ScalarProperty Name="proveedor_id" ColumnName="proveedor_id" />
+          <ScalarProperty Name="minimo" ColumnName="minimo" />
+          <ScalarProperty Name="rendimiento" ColumnName="rendimiento" />
+          <ScalarProperty Name="costo_con_impuesto" ColumnName="costo_con_impuesto" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="costo_promedio" ColumnName="costo_promedio" />
+          <ScalarProperty Name="ultimo_costo" ColumnName="ultimo_costo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductoPromocion">
+      <EntityTypeMapping TypeName="bdsharkModel.ProductoPromocion">
+        <MappingFragment StoreEntitySet="ProductoPromocion">
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="promocion_id" ColumnName="promocion_id" />
+          <ScalarProperty Name="producto_id" ColumnName="producto_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="bdsharkModel.Producto">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="imagen" ColumnName="imagen" />
+          <ScalarProperty Name="disponlibleEn" ColumnName="disponlibleEn" />
+          <ScalarProperty Name="areasPreparacion" ColumnName="areasPreparacion" />
+          <ScalarProperty Name="precioConImpuesto" ColumnName="precioConImpuesto" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="ultimoPrecio" ColumnName="ultimoPrecio" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promociones">
+      <EntityTypeMapping TypeName="bdsharkModel.Promocion">
+        <MappingFragment StoreEntitySet="Promociones">
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
+          <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+          <ScalarProperty Name="diasDisponibles" ColumnName="diasDisponibles" />
+          <ScalarProperty Name="imagen" ColumnName="imagen" />
+          <ScalarProperty Name="areasDisponibles" ColumnName="areasDisponibles" />
+          <ScalarProperty Name="precioConImpuesto" ColumnName="precioConImpuesto" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="ultimoPrecio" ColumnName="ultimoPrecio" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proveedores">
+      <EntityTypeMapping TypeName="bdsharkModel.Proveedor">
+        <MappingFragment StoreEntitySet="Proveedores">
+          <ScalarProperty Name="tipos_proveedor" ColumnName="tipos_proveedor" />
+          <ScalarProperty Name="sucursal" ColumnName="sucursal" />
+          <ScalarProperty Name="empresa_id" ColumnName="empresa_id" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="pais" ColumnName="pais" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="municipio" ColumnName="municipio" />
+          <ScalarProperty Name="localidad" ColumnName="localidad" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+          <ScalarProperty Name="NoExterior" ColumnName="NoExterior" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="RFC" ColumnName="RFC" />
+          <ScalarProperty Name="razon_social" ColumnName="razon_social" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Recetas">
+      <EntityTypeMapping TypeName="bdsharkModel.Receta">
+        <MappingFragment StoreEntitySet="Recetas">
+          <ScalarProperty Name="almacenes_id" ColumnName="almacenes_id" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="insumoElaborado_id" ColumnName="insumoElaborado_id" />
+          <ScalarProperty Name="producto_id" ColumnName="producto_id" />
+          <ScalarProperty Name="insumo_id" ColumnName="insumo_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Salidas_almacen">
+      <EntityTypeMapping TypeName="bdsharkModel.Salida_almacen">
+        <MappingFragment StoreEntitySet="Salidas_almacen">
+          <ScalarProperty Name="almacen_salida" ColumnName="almacen_salida" />
+          <ScalarProperty Name="tipo_movimiento_id" ColumnName="tipo_movimiento_id" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="insumo_id" ColumnName="insumo_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_movimientos">
+      <EntityTypeMapping TypeName="bdsharkModel.Tipo_movimiento">
+        <MappingFragment StoreEntitySet="Tipo_movimientos">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Unidades_Medida">
+      <EntityTypeMapping TypeName="bdsharkModel.Unidad_Medida">
+        <MappingFragment StoreEntitySet="Unidades_Medida">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

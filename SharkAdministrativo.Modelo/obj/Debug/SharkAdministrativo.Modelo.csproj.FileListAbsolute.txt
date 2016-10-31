@@ -8,3 +8,13 @@ C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\S
 C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\obj\Debug\SharkAdministrativo.Modelo.pdb
 C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\DevExpress.Xpf.Themes.Office2016White.v16.1.dll
 C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\obj\Debug\SharkAdministrativo.Modelo.dll.licenses
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\SharkAdministrativo.Modelo.dll.config
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\SharkAdministrativo.Modelo.dll
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\SharkAdministrativo.Modelo.pdb
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\DevExpress.Xpf.Themes.Office2016White.v16.1.dll
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\EntityFramework.dll
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\bin\Debug\EntityFramework.xml
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\obj\Debug\SharkAdministrativo.Modelo.csprojResolveAssemblyReference.cache
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\obj\Debug\SharkAdministrativo.Modelo.dll.licenses
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\obj\Debug\SharkAdministrativo.Modelo.dll
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Modelo\obj\Debug\SharkAdministrativo.Modelo.pdb
