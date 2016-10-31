@@ -65,3 +65,4 @@ C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\S
 C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View\MovimientosAlmacen.g.cs
 C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View.Contpaqi\StartWindow.baml
 C:\Users\Santos Vega\documents\visual studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View.Contpaqi\StartWindow.g.cs
+C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Vista.exe.config
