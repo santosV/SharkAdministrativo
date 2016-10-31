@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SharkAdministrativo.SDKCONTPAQi;
+
 
 namespace SharkAdministrativo.Vista.View.Contpaqi
 {
@@ -38,7 +38,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
-            SDKCONTPAQi.
+             if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
+            {
+                SDKCONTPAQi.SDKCONTPAQi_COMERCIAL SDK = new SharkAdministrativo.SDKCONTPAQi.SDKCONTPAQi_COMERCIAL();
+                
+            }       
      
            
         }

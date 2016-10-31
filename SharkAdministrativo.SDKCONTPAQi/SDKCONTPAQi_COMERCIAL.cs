@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SharkAdministrativo.SDKCONTPAQi
 {
-     class SDKCONTPAQi
+     public class SDKCONTPAQi_COMERCIAL
     {
-         }
+       string companyRoute {get; set;}
+
+
+       
+    }
 }
