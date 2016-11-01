@@ -5,7 +5,7 @@
         xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
         xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="SharkAdministrativo.Vista.MainWindow" Height="450" Width="725" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="SharkAdministrativo.Vista.MainWindow" WindowStartupLocation="Manual" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -110,7 +110,7 @@
                 </dxg:GridControl.View>
             </dxg:GridControl>
             <Rectangle Fill="#FF046AA6" Height="25" Margin="0" VerticalAlignment="Top"/>
-            <TextBlock x:Name="txtProveedoresTitle" HorizontalAlignment="Center" Margin="0,4,0,0" TextWrapping="Wrap" Text="Proveedores (0)" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White"/>
+            <TextBlock x:Name="txtProveedoresTitle" HorizontalAlignment="Center" Margin="0,4,0,0" TextWrapping="Wrap" Text="Proveedores Registrados (0)" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White"/>
         </Grid>
         <Grid x:Name="vista3_shark" Visibility="Collapsed" Margin="0,0,0,0" Grid.Row="1">
             <Image Margin="0,25,0,0" Grid.Row="1" Width="780" Source="/SharkAdministrativo.Vista;component/Assets/061ba27 (1).png"/>

@@ -37,26 +37,30 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         }
 
+        /// <summary>
+        /// Accede o niega el acceso al sistema, probando la conexión con contpaqi comercial.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
              if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
             {
-                 /*
-                SDK.companyRoute = txtRutaEmpresa.Text;
-                StringBuilder sMensaje = new StringBuilder(512);
-                //Indica el directorio activo.
-
-                //Indica el directorio activo.
+                
+                SDK.companyRoute = txtRutaEmpresa.Text; 
                 SDK.SetCurrentDirectory(SDK.systemRoute);
 
                 int lResult = SDK.fSetNombrePAQ(SDK.systemName);
                 if (lResult != 0)
                 {
+
+                    StringBuilder sMensaje = new StringBuilder(512);
                     SDK.rError(lResult);
                     Console.WriteLine(sMensaje.ToString());
 
                 }
                 else {
+                    /*
                     int error = SDK.fAbreEmpresa(txtRutaEmpresa.Text);
                     if (error != 0)
                     {
@@ -64,52 +68,26 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                     }
                     else
                     {
+                        SDK.fCierraEmpresa();
+                        SDK.fTerminaSDK();
                        
                        
                     }
-                }*/
-
-                MainWindow view = new MainWindow();
-                SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
-                view.lblEmpresa.Text = "@"+SDK.companyName;
-                view.Show();
-                this.Close();
-
-
+                    */
+                    MessageBox.Show("fierro");
+                    MainWindow view = new MainWindow();
+                    SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
+                    view.lblEmpresa.Text = "@" + SDK.companyName;
+                    view.Show();
+                    this.Close();
+                }
+                
             }          
         }
 
-        public void openCompany(string directory)
-        {
-            //función que abre la empresa.
-            int error = SDK.fAbreEmpresa(directory);
-            if (error != 0)
-            {
-                SDK.rError(error);
-            }
-            else
-            {
-                Console.WriteLine("Se abrió la empresa ubicada en: {0}", directory);
-            }
-        }
+      
 
-        public void closeCompany()
-        {
-            //Función que cierra la empresa.
-            SDK.fCierraEmpresa();
-            Console.WriteLine("Se cerró la empresa");
-        }
-
-        /// <summary>
-        /// Cierra la sesión del SDK.
-        /// </summary>
-        /// <param name="system"></param>
-
-        public void closeSession()
-        {
-            //Termina Cierra el SDK.
-            SDK.fTerminaSDK();
-        }
+       
 
     }
 }

@@ -372,7 +372,11 @@ namespace SharkAdministrativo.Vista
             {
                 dtProveedores.Rows.Add(item.id,item.nombre,item.tipos_proveedor,item.calle,item.colonia,item.NoExterior,item.municipio,item.estado,item.pais,item.codigo_postal, item.Empresa.nombre);   
             }
-            txtProveedoresTitle.Text = "Proveedores Registrados (" + dtProveedores.Rows.Count+")";
+            if (dtProveedores.Rows.Count>0)
+            {
+                txtProveedoresTitle.Text = "Proveedores Registrados (" + dtProveedores.Rows.Count + ")";
+            }
+            
         }
 
         
