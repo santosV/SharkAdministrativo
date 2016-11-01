@@ -224,7 +224,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern void fTerminaSDK();
 
         [DllImport("mgwservicios.DLL")]
-        public static extern int fSetNombrePAQ(string aNombrePAQ);
+        public static extern Int32 fSetNombrePAQ(string aNombrePAQ);
 
         [DllImport("mgwservicios.dll")]
         public static extern int fAbreEmpresa(string Directorio);
