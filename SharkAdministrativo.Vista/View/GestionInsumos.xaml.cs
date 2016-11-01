@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using SharkAdministrativo.Modelo;
 using System.Text.RegularExpressions;
 using System.Data;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -41,6 +42,7 @@ namespace SharkAdministrativo.Vista
             {
                 llenarInsumos();
             }
+            loadRatings();
         }
 
         public void llenarInsumos() {
@@ -450,9 +452,30 @@ namespace SharkAdministrativo.Vista
             clearFields();
         }
 
+        private void loadRatings() {
+            int error = SDK.startSDK();
+            if (error==0)
+            {
+                for (int i = 1; i <=6; i++)
+                {
+
+                     SDK.fBuscaClasificacion(5, i);
+                     StringBuilder nombreClasificacion = new StringBuilder(512);
+                     StringBuilder codigoClasificacion = new StringBuilder(512);
+                     SDK.fLeeDatoClasificacion("CNOMBRECLASIFICACION", nombreClasificacion, 512);
+                     SDK.fLeeDatoClasificacion("CIDCLASIFICACION", codigoClasificacion, 512);
+                     cbxClasificacion.Items.Add(codigoClasificacion+" - "+nombreClasificacion);
+                }
+                SDK.closeSDK();
+            }
+        }
+
+
+
         private void SaveAndNew_ItemClick_2(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             exit = false;
+         
             guardarModificar();
         }
 

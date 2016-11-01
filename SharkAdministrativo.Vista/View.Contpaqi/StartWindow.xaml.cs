@@ -50,7 +50,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                 SDK.companyRoute = txtRutaEmpresa.Text; 
                 SDK.SetCurrentDirectory(SDK.systemRoute);
 
-                int lResult = SDK.fSetNombrePAQ(SDK.systemName);
+                int lResult = 0;// SDK.fSetNombrePAQ(SDK.systemName);
                 if (lResult != 0)
                 {
 
@@ -60,6 +60,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
                 }
                 else {
+                    //SDK.fTerminaSDK();
                     /*
                     int error = SDK.fAbreEmpresa(txtRutaEmpresa.Text);
                     if (error != 0)
@@ -74,12 +75,13 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                        
                     }
                     */
-                    MessageBox.Show("fierro");
                     MainWindow view = new MainWindow();
-                    SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
+                    SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
                     view.lblEmpresa.Text = "@" + SDK.companyName;
                     view.Show();
+
                     this.Close();
+                    
                 }
                 
             }          

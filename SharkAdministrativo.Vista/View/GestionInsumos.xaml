@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" x:Class="SharkAdministrativo.Vista.GestionInsumos"
-        Title="Gestion De Insumos" Height="605" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Gestion De Insumos" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Height="765">
     <Grid>
 
 
@@ -19,7 +19,7 @@
                             <dxb:BarButtonItem Content="Guardar &amp; nuevo" ItemClick="SaveAndNew_ItemClick_2" Glyph="{dx:DXImageOffice2013 Image=SaveAs_32x32.png}"/>
                             <dxb:BarButtonItem ItemClick="EliminarPresentacion_ItemClick" Content="Eliminar" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png"/>
                             <dxb:BarButtonItem Content="Agregar Presentacioes" ItemClick="BarButtonItem_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Sales/SalesPeriodYear_32x32.png"/>
-                            
+
 
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Mostrar">
@@ -94,6 +94,11 @@
                             <dxe:TextEdit x:Name="txtNombreUnidad"/>
                         </dxlc:LayoutItem>
                         <Button Content="Guardar" x:Name="btnGuardarUnidad" Click="btnGuardarUnidad_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutItem Label="Clasificación especificada: ">
+                            <dxe:ComboBoxEdit x:Name="cbxClasificacion" AutoComplete="True"/>
+                        </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Header="CANTIDADES PERMITIDAS EN BASE A LA UNIDAD DE MEDIDA SELECCIONADA" View="GroupBox" HorizontalAlignment="Stretch">
                         <dxlc:LayoutItem Label="Mínimo:">

@@ -158,6 +158,17 @@ namespace SharkAdministrativo.SDKCONTPAQi
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
+        public struct ValorClasificacion
+        {
+          public int  cClasificacionDe;
+          public int  cNumClasificacion;
+          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+          public string cCodigoValorClasificacion;
+          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongDescripcion)]
+          public string cValorClasificacion;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tMovimiento
         {
             public int aConsecutivo;
@@ -202,11 +213,18 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("KERNEL32")]
         public static extern int SetCurrentDirectory(string pPtrDirActual);
 
+         [DllImport("MGWSERVICIOS.dll")]
+         public static extern int fBuscaClasificacion   ( int aClasificacionDe, int aNumClasificacion );
+         [DllImport("MGWSERVICIOS.dll")]
+         public static extern Int32 fPosUltimoClasificacion();
+         [DllImport("MGWSERVICIOS.dll")]
+         public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
+
         [DllImport("mgwservicios.dll")]
         public static extern void fTerminaSDK();
 
         [DllImport("mgwservicios.DLL")]
-        public static extern int fSetNombrePAQ(String aNombrePAQ);
+        public static extern int fSetNombrePAQ(string aNombrePAQ);
 
         [DllImport("mgwservicios.dll")]
         public static extern int fAbreEmpresa(string Directorio);
@@ -280,6 +298,31 @@ namespace SharkAdministrativo.SDKCONTPAQi
             }
         }
 
+         public static int startSDK(){
+             int success = 1;
+            SetCurrentDirectory(SDK.systemRoute);
+            int error = SDK.fSetNombrePAQ(SDK.systemName);
+            if (error != 0)
+            {
+                rError(error);
+            }
+            else {
+                error = SDK.fAbreEmpresa(SDK.companyRoute);
+                if (error != 0)
+                {
+                    rError(error);
+                }
+                else {
+                    success = 0;
+                }
+            }
+            return success;
+         }
+
+         public static void closeSDK() {
+             fCierraEmpresa();
+             fTerminaSDK();
+         }
 
 
     }//Fin clase SDK
