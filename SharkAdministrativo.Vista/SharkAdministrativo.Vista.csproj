@@ -126,6 +126,7 @@
     <Compile Include="ReportsView\InputsView.xaml.cs">
       <DependentUpon>InputsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="View.Contpaqi\StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
