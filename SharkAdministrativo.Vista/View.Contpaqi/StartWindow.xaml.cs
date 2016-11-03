@@ -34,7 +34,17 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             carpeta.SelectedPath = @"C:\Compac\Empresas\";
             carpeta.ShowDialog();
             txtRutaEmpresa.Text = carpeta.SelectedPath;
+            if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
+            {
 
+                SDK.companyRoute = txtRutaEmpresa.Text;
+                int error = SDK.startSDK();
+                if (error == 0)
+                {
+
+                    SDK.closeSDK();
+                }
+            }
         }
 
         /// <summary>
@@ -44,48 +54,14 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
-             if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
-            {
+            MainWindow view = new MainWindow();
+            SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
+            view.lblEmpresa.Text = "@" + SDK.companyName;
+            view.Show();
+            this.Close();
                 
-                SDK.companyRoute = txtRutaEmpresa.Text; 
-                SDK.SetCurrentDirectory(SDK.systemRoute);
-
-                int lResult = 0;// SDK.fSetNombrePAQ(SDK.systemName);
-                if (lResult != 0)
-                {
-
-                    StringBuilder sMensaje = new StringBuilder(512);
-                    SDK.rError(lResult);
-                    Console.WriteLine(sMensaje.ToString());
-
-                }
-                else {
-                    //SDK.fTerminaSDK();
-                    /*
-                    int error = SDK.fAbreEmpresa(txtRutaEmpresa.Text);
-                    if (error != 0)
-                    {
-                        SDK.rError(error);
-                    }
-                    else
-                    {
-                        SDK.fCierraEmpresa();
-                        SDK.fTerminaSDK();
-                       
-                       
-                    }
-                    */
-                    MainWindow view = new MainWindow();
-                    SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
-                    view.lblEmpresa.Text = "@" + SDK.companyName;
-                    view.Show();
-
-                    this.Close();
-                    
-                }
-                
-            }          
-        }
+        }          
+        
 
       
 
