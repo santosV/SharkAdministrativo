@@ -43,6 +43,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                 {
                     btnIngresar.IsEnabled = true;
                     SDK.closeSDK();
+                    
                 }
             }
         }
@@ -54,6 +55,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
+            
             MainWindow view = new MainWindow();
             SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
             view.lblEmpresa.Text = "@" + SDK.companyName;
