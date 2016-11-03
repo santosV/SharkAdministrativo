@@ -114,7 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataReports\Barcode.cs" />
+    <Compile Include="DataReports\Barcode.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\Barcode.Designer.cs">
       <DependentUpon>Barcode.cs</DependentUpon>
     </Compile>
@@ -131,27 +133,39 @@
     <Compile Include="View\CapturaExtendido.xaml.cs">
       <DependentUpon>CapturaExtendido.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataReports\InputData.cs" />
+    <Compile Include="DataReports\InputData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\InputData.Designer.cs">
       <DependentUpon>InputData.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataReports\PresaentationData.cs" />
+    <Compile Include="DataReports\PresaentationData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\PresaentationData.Designer.cs">
       <DependentUpon>PresaentationData.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataReports\ProductData.cs" />
+    <Compile Include="DataReports\ProductData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\ProductData.Designer.cs">
       <DependentUpon>ProductData.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataReports\PromotionData.cs" />
+    <Compile Include="DataReports\PromotionData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\PromotionData.Designer.cs">
       <DependentUpon>PromotionData.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataReports\ProviderData.cs" />
+    <Compile Include="DataReports\ProviderData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\ProviderData.Designer.cs">
       <DependentUpon>ProviderData.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataReports\RecipeData.cs" />
+    <Compile Include="DataReports\RecipeData.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataReports\RecipeData.Designer.cs">
       <DependentUpon>RecipeData.cs</DependentUpon>
     </Compile>
@@ -329,7 +343,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -41,7 +41,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                 int error = SDK.startSDK();
                 if (error == 0)
                 {
-
+                    btnIngresar.IsEnabled = true;
                     SDK.closeSDK();
                 }
             }

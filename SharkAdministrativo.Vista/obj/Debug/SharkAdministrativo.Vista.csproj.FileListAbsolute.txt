@@ -131,3 +131,5 @@ C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkA
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.exe.licenses
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.exe
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.pdb
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.dll
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.pdb

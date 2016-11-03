@@ -301,7 +301,8 @@ namespace SharkAdministrativo.SDKCONTPAQi
          public static int startSDK(){
              int success = 1;
             SetCurrentDirectory(SDK.systemRoute);
-            int error = SDK.fSetNombrePAQ(SDK.systemName);
+            int error = 0;
+             SDK.fSetNombrePAQ(SDK.systemName);
             if (error != 0)
             {
                 rError(error);

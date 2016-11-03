@@ -11,7 +11,7 @@
                     <dxe:TextEdit x:Name="txtRutaEmpresa" IsReadOnly="True"/>
                 </dxlc:LayoutItem>
                 <Button x:Name="btnSeleccionar" Click="btnSeleccionar_Click" Content="Seleccionar " HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button x:Name="btnIngresar" Click="btnIngresar_Click" Content="Entrar" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-405,40,0,0"/>
+                <Button x:Name="btnIngresar" IsEnabled="False" Click="btnIngresar_Click" Content="Entrar" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-405,40,0,0"/>
             </dxlc:LayoutGroup>
         </dxlc:LayoutGroup>
 
