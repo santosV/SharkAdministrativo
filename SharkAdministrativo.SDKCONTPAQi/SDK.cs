@@ -308,6 +308,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
                 rError(error);
             }
             else {
+                /*
                 error = SDK.fAbreEmpresa(SDK.companyRoute);
                 if (error != 0)
                 {
@@ -315,13 +316,14 @@ namespace SharkAdministrativo.SDKCONTPAQi
                 }
                 else {
                     success = 0;
-                }
+                }*/
+                success = 0;
             }
             return success;
          }
 
          public static void closeSDK() {
-             fCierraEmpresa();
+             //fCierraEmpresa();
              fTerminaSDK();
          }
 
