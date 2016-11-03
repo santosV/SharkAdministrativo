@@ -283,7 +283,17 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fGuardaDocumento();
 
+        [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
 
+
+
+        public static void alzheimer()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+        }
 
         // Función para el manejo de errores en SDK
         public static void rError(int iError)
@@ -302,28 +312,28 @@ namespace SharkAdministrativo.SDKCONTPAQi
              int success = 1;
             SetCurrentDirectory(SDK.systemRoute);
             int error = 0;
-             SDK.fSetNombrePAQ(SDK.systemName);
+             error = SDK.fSetNombrePAQ(SDK.systemName);
             if (error != 0)
             {
                 rError(error);
             }
             else {
-                /*
+                
                 error = SDK.fAbreEmpresa(SDK.companyRoute);
                 if (error != 0)
                 {
                     rError(error);
                 }
                 else {
+                    SDK.alzheimer();
                     success = 0;
-                }*/
-                success = 0;
+                }
             }
             return success;
          }
 
          public static void closeSDK() {
-             //fCierraEmpresa();
+             fCierraEmpresa();
              fTerminaSDK();
          }
 

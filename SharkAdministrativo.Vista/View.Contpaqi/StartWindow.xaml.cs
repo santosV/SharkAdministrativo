@@ -55,7 +55,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
-            
+            SDK.alzheimer();
             MainWindow view = new MainWindow();
             SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
             view.lblEmpresa.Text = "@" + SDK.companyName;
