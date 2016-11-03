@@ -340,9 +340,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\cpg-foods-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\fast-food-99179_640.png" />
   </ItemGroup>
   <ItemGroup>
