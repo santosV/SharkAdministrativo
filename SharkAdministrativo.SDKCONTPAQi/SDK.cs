@@ -325,7 +325,6 @@ namespace SharkAdministrativo.SDKCONTPAQi
                     rError(error);
                 }
                 else {
-                    SDK.alzheimer();
                     success = 0;
                 }
             }

@@ -38,11 +38,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             {
 
                 SDK.companyRoute = txtRutaEmpresa.Text;
-                int error = SDK.startSDK();
+                int error = 0;//SDK.startSDK();
                 if (error == 0)
                 {
                     btnIngresar.IsEnabled = true;
-                    SDK.closeSDK();
+                    //SDK.closeSDK();
                     
                 }
             }
