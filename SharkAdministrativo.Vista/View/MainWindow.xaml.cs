@@ -483,6 +483,7 @@ namespace SharkAdministrativo.Vista
             if (rs2 == MessageBoxResult.Yes)
             {
                 SDK.closeSDK();
+                System.Diagnostics.Process.Start(@"C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.exe");
             }
         }
 

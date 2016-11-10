@@ -220,16 +220,16 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
 
-        [DllImport("mgwservicios.dll")]
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern void fTerminaSDK();
 
-        [DllImport("mgwservicios.DLL")]
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern int fSetNombrePAQ(string aNombrePAQ);
 
-        [DllImport("mgwservicios.dll")]
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern int fAbreEmpresa(string Directorio);
 
-        [DllImport("mgwservicios.dll")]
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern void fCierraEmpresa();
 
         [DllImport("mgwservicios.dll")]
