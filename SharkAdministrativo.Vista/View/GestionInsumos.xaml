@@ -83,11 +83,11 @@
                     <dxlc:LayoutItem Label="Costo c/ Impuesto:">
                         <dxe:TextEdit x:Name="txtCCimpuesto" KeyDown="SoloNumeros_KeyDown"/>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="Inventariable:">
-                        <dxe:ComboBoxEdit x:Name="cbxInventariable" AutoComplete="True"/>
-                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Unidad De Medida:">
                         <dxe:ComboBoxEdit x:Name="cbxUmedida" SelectedIndexChanged="cbxUmedida_SelectedIndexChanged" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Inventariable:">
+                        <dxe:ComboBoxEdit x:Name="cbxInventariable" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupUnidades" Visibility="Collapsed" Header="Nueva Unidad De Medida" View="GroupBox" HorizontalAlignment="Stretch">
                         <dxlc:LayoutItem Label="Nombre:">
@@ -95,9 +95,12 @@
                         </dxlc:LayoutItem>
                         <Button Content="Guardar" x:Name="btnGuardarUnidad" Click="btnGuardarUnidad_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                     </dxlc:LayoutGroup>
-                    <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                         <dxlc:LayoutItem Label="Clasificación especificada: ">
-                            <dxe:ComboBoxEdit x:Name="cbxClasificacion" AutoComplete="True"/>
+                            <dxe:ComboBoxEdit x:Name="cbxClasificacion" SelectedIndexChanged="cbxClasificacion_SelectedIndexChanged"  AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Valor:">
+                            <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones" AutoComplete="True"/>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Header="CANTIDADES PERMITIDAS EN BASE A LA UNIDAD DE MEDIDA SELECCIONADA" View="GroupBox" HorizontalAlignment="Stretch">

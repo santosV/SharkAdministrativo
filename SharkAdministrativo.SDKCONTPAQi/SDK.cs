@@ -281,6 +281,17 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fEditarDocumento();
 
         [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosPrimerValorClasif();
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosSiguienteValorClasif();
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLeeDatoValorClasif( string aCampo, StringBuilder aValor, int aLen );
+
+
+
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fGuardaDocumento();
 
         [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]

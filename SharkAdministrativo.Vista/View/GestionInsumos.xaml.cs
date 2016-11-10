@@ -478,13 +478,12 @@ namespace SharkAdministrativo.Vista
 
                 SDK.fBuscaClasificacion(5, i);
                 StringBuilder nombreClasificacion = new StringBuilder(512);
-                StringBuilder codigoClasificacion = new StringBuilder(512);
+
                 SDK.fLeeDatoClasificacion("CNOMBRECLASIFICACION", nombreClasificacion, 512);
-                SDK.fLeeDatoClasificacion("CIDCLASIFICACION", codigoClasificacion, 512);
                 string nameRating = nombreClasificacion.ToString();
                 if (nameRating != "Clasificacion " + i + " del Producto")
                 {
-                    cbxClasificacion.Items.Add(codigoClasificacion + " | " + nombreClasificacion);
+                    cbxClasificacion.Items.Add(i + " | " + nombreClasificacion);
                 }
             }
         }
@@ -493,25 +492,8 @@ namespace SharkAdministrativo.Vista
 
         private void SaveAndNew_ItemClick_2(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-            exit = false;
-            int error = SDK.startSDK();
-            if (error == 0)
-            {
-                for (int i = 1; i <= 6; i++)
-                {
 
-                    SDK.fBuscaClasificacion(5, i);
-                    StringBuilder nombreClasificacion = new StringBuilder(512);
-                    StringBuilder codigoClasificacion = new StringBuilder(512);
-                    SDK.fLeeDatoClasificacion("CNOMBRECLASIFICACION", nombreClasificacion, 512);
-                    SDK.fLeeDatoClasificacion("CIDCLASIFICACION", codigoClasificacion, 512);
-                    cbxClasificacion.Items.Add(codigoClasificacion + " - " + nombreClasificacion);
-                }
-                SDK.closeSDK();
-            }
-
-            MessageBox.Show("Sale mijo");
-            //guardarModificar();
+            guardarModificar();
         }
 
         public void exportTo(string exportTo, DevExpress.Xpf.Grid.TableView view, string name)
@@ -577,6 +559,41 @@ namespace SharkAdministrativo.Vista
         {
             exportTo(".png", tablaInsumos, "InsumosElaborados");
         }
+
+        private void cbxClasificacion_SelectedIndexChanged(object sender, RoutedEventArgs e)
+        {
+            if (cbxClasificacion.SelectedItem != null)
+            {
+                String[] substrings = cbxClasificacion.SelectedItem.ToString().Split('|');
+                int numClasificacion = Convert.ToInt32(substrings[0].Trim());
+                SDK.fBuscaClasificacion(5, numClasificacion);
+                int error = SDK.fPosPrimerValorClasif();
+                if (error == 0)
+                {
+                    do
+                    {
+                        StringBuilder codValorClasificacion = new StringBuilder(512);
+                        StringBuilder nomValorClasificacion = new StringBuilder(512);
+                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 512);
+                        SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 512);
+                        cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                        error = SDK.fPosSiguienteValorClasif();
+                        if (error != 0)
+                        {
+                            SDK.rError(error);
+                        }
+                    } while (error != 0);
+                }
+                else {
+                    cbxValoresDeClasificaciones.Items.Add("No hay valores para mostrar :(");
+                }
+
+            }
+        }
+
+
+
+
 
 
     }

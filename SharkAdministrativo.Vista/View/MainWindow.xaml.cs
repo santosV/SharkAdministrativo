@@ -590,5 +590,10 @@ namespace SharkAdministrativo.Vista
             vista.Show();
         }
 
+        private void closeSession_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

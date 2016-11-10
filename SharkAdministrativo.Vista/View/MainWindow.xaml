@@ -48,6 +48,9 @@
                     <dxr:RibbonPageGroup Caption="Errores">
                         <dxb:BarButtonItem Content="Facturas No Cargadas" x:Name="btnErrores" Glyph="{dx:DXImage Image=ErrorBarsNone_32x32.png}" LargeGlyph="{dx:DXImage Image=ErrorBarsNone_32x32.png}"/>
                     </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="{x:Null}">
+                        <dxb:BarButtonItem ItemClick="closeSession_ItemClick_1" Content="Cerrar Empresa" LargeGlyph="{dx:DXImageGrayscale Image=ProtectDocument_32x32.png}"/>
+                    </dxr:RibbonPageGroup>
 
                 </dxr:RibbonPage>
                 <dxr:RibbonPage x:Name="vista_proveedores" Caption="Proveedores">
