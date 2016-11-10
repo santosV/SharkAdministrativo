@@ -16,6 +16,7 @@ using System.Data;
 using Microsoft.Win32;
 using System.Xml;
 using SharkAdministrativo.Modelo;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -474,6 +475,15 @@ namespace SharkAdministrativo.Vista
             GestionInsumosElaborados vista = new GestionInsumosElaborados();
             vista.showView(3);
             vista.Show();
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult rs2 = MessageBox.Show("¿ESTÁS SEGURO QUE DESEAS TERMINAR LA SESIÓN EN SHARK POS", "TERMINAR SESIÓN", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (rs2 == MessageBoxResult.Yes)
+            {
+                SDK.closeSDK();
+            }
         }
 
         public void exportTo(string exportTo, DevExpress.Xpf.Grid.TableView view, string name)

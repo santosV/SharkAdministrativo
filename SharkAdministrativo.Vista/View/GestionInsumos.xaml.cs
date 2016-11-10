@@ -38,32 +38,34 @@ namespace SharkAdministrativo.Vista
             InitializeComponent();
             cargarCombos();
             Titles();
-            if (insumo_activo.id==0)
+            if (insumo_activo.id == 0)
             {
                 llenarInsumos();
             }
-            
+            loadRatings();
+
         }
 
-        public void llenarInsumos() {
+        public void llenarInsumos()
+        {
             dt.Rows.Clear();
             List<Insumo> insumos = insumo_activo.obtenerTodos();
             foreach (var insumo in insumos)
             {
-                dt.Rows.Add(insumo.id,insumo.Grupo.nombre,insumo.descripcion,insumo.ultimo_costo,insumo.costo_promedio,insumo.IVA,insumo.costo_con_impuesto, insumo.inventariable,insumo.Unidad_Medida.nombre, insumo.minimo,insumo.maximo);   
+                dt.Rows.Add(insumo.id, insumo.Grupo.nombre, insumo.descripcion, insumo.ultimo_costo, insumo.costo_promedio, insumo.IVA, insumo.costo_con_impuesto, insumo.inventariable, insumo.Unidad_Medida.nombre, insumo.minimo, insumo.maximo);
             }
         }
 
         private void tblInsumos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
+
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblLista.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
-                groupInsumo.Header = "Modificando '" + seleccion.Row.ItemArray[2].ToString()+"'";
+                groupInsumo.Header = "Modificando '" + seleccion.Row.ItemArray[2].ToString() + "'";
                 txtDescripcion.Text = seleccion.Row.ItemArray[2].ToString();
                 cbxGrupos.SelectedItem = seleccion.Row.ItemArray[1].ToString();
-                txtUCosto.Text= seleccion.Row.ItemArray[3].ToString();
+                txtUCosto.Text = seleccion.Row.ItemArray[3].ToString();
                 txtCpromedio.Text = seleccion.Row.ItemArray[4].ToString();
                 txtIva.Text = seleccion.Row.ItemArray[5].ToString();
                 txtCCimpuesto.Text = seleccion.Row.ItemArray[6].ToString();
@@ -75,7 +77,8 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        public void Titles() {
+        public void Titles()
+        {
             dt.Columns.Add("id");
             dt.Columns.Add("Grupo");
             dt.Columns.Add("Descripción");
@@ -92,8 +95,9 @@ namespace SharkAdministrativo.Vista
             tblLista.Columns[0].Visible = false;
         }
 
-        
-        public void indicarEstado(string estatus) {
+
+        public void indicarEstado(string estatus)
+        {
             estado_de_insumo = estatus;
         }
 
@@ -103,8 +107,11 @@ namespace SharkAdministrativo.Vista
             guardarModificar();
         }
 
-        public void guardarModificar() {
-            if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtCCimpuesto.Text) && cbxInventariable.SelectedItem!=null && !String.IsNullOrEmpty(txtUCosto.Text) && cbxGrupos.SelectedItem!=null && cbxUmedida.SelectedItem !=null)
+
+
+        public void guardarModificar()
+        {
+            if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtCCimpuesto.Text) && cbxInventariable.SelectedItem != null && !String.IsNullOrEmpty(txtUCosto.Text) && cbxGrupos.SelectedItem != null && cbxUmedida.SelectedItem != null)
             {
                 insumo_activo.descripcion = txtDescripcion.Text;
                 insumo_activo.costo_promedio = float.Parse(txtCpromedio.Text);
@@ -139,7 +146,8 @@ namespace SharkAdministrativo.Vista
                         this.Close();
                     }
                 }
-                else {
+                else
+                {
                     System.Data.DataRowView seleccion = (System.Data.DataRowView)tblLista.SelectedItem;
                     insumo_activo.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
                     insumo_activo.modificar(insumo_activo);
@@ -161,33 +169,38 @@ namespace SharkAdministrativo.Vista
                     }
                 }
             }
-            else {
+            else
+            {
                 if (!String.IsNullOrEmpty(txtDescripcion.Text) || !String.IsNullOrEmpty(txtUCosto.Text))
                 {
                     MessageBox.Show("¡AVISO! \n > Falta Ingresar Algunos Campos Importantes \n    Es Necesario Ingresarlos");
                 }
-                else {
+                else
+                {
                     if (exit == true)
                     {
                         this.Close();
                     }
-                    else {
-                       
+                    else
+                    {
+
                         clearFields();
                     }
                 }
-               
+
             }
         }
 
-        private void cargarCombos() {
+        private void cargarCombos()
+        {
             cbxInventariable.Items.Add("Si");
             cbxInventariable.Items.Add("No");
             llenarGrupos();
             llenarUnidades();
         }
 
-        private void llenarGrupos() {
+        private void llenarGrupos()
+        {
             cbxGrupos.Items.Clear();
             List<Grupo> grupos = grupo.obtenerTodos();
             cbxGrupos.Items.Add("Nuevo");
@@ -207,12 +220,14 @@ namespace SharkAdministrativo.Vista
                 cbxCategoria.Clear();
                 cargarvista("grupo");
             }
-            else {
+            else
+            {
                 groupGrupo.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void llenarUnidades() {
+        private void llenarUnidades()
+        {
             cbxUmedida.Clear();
             cbxUmedida.Items.Clear();
             List<Unidad_Medida> unidades = unidad.obtenerTodos();
@@ -225,7 +240,7 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        
+
         public void selectGrupo(Grupo grupo)
         {
             cbxGrupos.Items.Clear();
@@ -235,7 +250,7 @@ namespace SharkAdministrativo.Vista
 
         public void cargarvista(string vista)
         {
-           
+
             if (vista == "grupo")
             {
                 cbxCategoria.Items.Clear();
@@ -272,7 +287,8 @@ namespace SharkAdministrativo.Vista
                 cargarvista("categoria");
                 groupGrupo.Visibility = Visibility.Visible;
             }
-            else {
+            else
+            {
                 btnGuardarGrupo.Visibility = Visibility.Visible;
                 cargarvista("grupo");
                 groupCategoria.Visibility = Visibility.Collapsed;
@@ -336,7 +352,7 @@ namespace SharkAdministrativo.Vista
                 grupo.nombre = txtnombreGrupo.Text;
                 grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
                 grupo.registrar(grupo);
-                if (grupo.id>0)
+                if (grupo.id > 0)
                 {
                     llenarGrupos();
                     cbxGrupos.SelectedItem = grupo.nombre;
@@ -345,7 +361,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void llenarCategorias() {
+        public void llenarCategorias()
+        {
             List<Categoria> categorias = categoria.obtenerTodos();
             foreach (var catego in categorias)
             {
@@ -359,11 +376,11 @@ namespace SharkAdministrativo.Vista
             {
                 categoria.nombre = txtCategoria.Text;
                 categoria.registrar(categoria);
-                if (categoria.id>0)
+                if (categoria.id > 0)
                 {
                     cargarvista("grupo");
                 }
-                groupCategoria.Visibility = Visibility.Collapsed;  
+                groupCategoria.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -379,11 +396,11 @@ namespace SharkAdministrativo.Vista
 
                 medida.nombre = txtNombreUnidad.Text;
                 medida.registrar(medida);
-                if (medida.id>0)
+                if (medida.id > 0)
                 {
                     llenarUnidades();
                     cbxUmedida.SelectedItem = medida.nombre;
-                    groupUnidades.Visibility = Visibility.Collapsed;   
+                    groupUnidades.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -394,7 +411,8 @@ namespace SharkAdministrativo.Vista
             {
                 groupUnidades.Visibility = Visibility.Visible;
             }
-            else {
+            else
+            {
                 groupUnidades.Visibility = Visibility.Collapsed;
             }
 
@@ -402,7 +420,7 @@ namespace SharkAdministrativo.Vista
 
         private void ObtenerCostos_KeyUp(object sender, KeyEventArgs e)
         {
-            
+
             if (!String.IsNullOrEmpty(txtUCosto.Text) && !String.IsNullOrEmpty(txtIva.Text))
             {
                 string value_ucosto = txtUCosto.Text;
@@ -413,7 +431,7 @@ namespace SharkAdministrativo.Vista
                 }
                 if (value_iva[0].ToString() == ",")
                 {
-                    txtIva.Text = "0,";  
+                    txtIva.Text = "0,";
                 }
                 double ultimo_costo = Convert.ToDouble(txtUCosto.Text);
                 double costo_promedio = Convert.ToDouble(txtUCosto.Text); ;
@@ -422,12 +440,13 @@ namespace SharkAdministrativo.Vista
                 txtCCimpuesto.Text = Convert.ToString((ultimo_costo * IVA) + ultimo_costo);
                 txtCpromedio.Text = Convert.ToString(ultimo_costo);
             }
-            else {
+            else
+            {
                 txtCpromedio.Clear();
                 txtCCimpuesto.Clear();
             }
-         
-            
+
+
         }
 
         private void BarButtonItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -439,12 +458,12 @@ namespace SharkAdministrativo.Vista
         private void SoloNumeros_KeyDown(object sender, KeyEventArgs e)
         {
 
-           
+
             if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.OemComma || e.Key == Key.Tab)
                 e.Handled = false;
             else
                 e.Handled = true;
-          
+
         }
 
         private void BarButtonItem_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -452,21 +471,21 @@ namespace SharkAdministrativo.Vista
             clearFields();
         }
 
-        private void loadRatings() {
-            int error = SDK.startSDK();
-            if (error==0)
+        private void loadRatings()
+        {
+            for (int i = 1; i <= 6; i++)
             {
-                for (int i = 1; i <=6; i++)
-                {
 
-                     SDK.fBuscaClasificacion(5, i);
-                     StringBuilder nombreClasificacion = new StringBuilder(512);
-                     StringBuilder codigoClasificacion = new StringBuilder(512);
-                     SDK.fLeeDatoClasificacion("CNOMBRECLASIFICACION", nombreClasificacion, 512);
-                     SDK.fLeeDatoClasificacion("CIDCLASIFICACION", codigoClasificacion, 512);
-                     cbxClasificacion.Items.Add(codigoClasificacion+" - "+nombreClasificacion);
+                SDK.fBuscaClasificacion(5, i);
+                StringBuilder nombreClasificacion = new StringBuilder(512);
+                StringBuilder codigoClasificacion = new StringBuilder(512);
+                SDK.fLeeDatoClasificacion("CNOMBRECLASIFICACION", nombreClasificacion, 512);
+                SDK.fLeeDatoClasificacion("CIDCLASIFICACION", codigoClasificacion, 512);
+                string nameRating = nombreClasificacion.ToString();
+                if (nameRating != "Clasificacion " + i + " del Producto")
+                {
+                    cbxClasificacion.Items.Add(codigoClasificacion + " | " + nombreClasificacion);
                 }
-                SDK.closeSDK();
             }
         }
 

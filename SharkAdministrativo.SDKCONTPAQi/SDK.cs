@@ -48,7 +48,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
     }//Fin constantes
 
 
-     public class SDK
+    public class SDK
     {
         public static string companyRoute { get; set; }
         public static string companyName { get; set; }
@@ -160,12 +160,12 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct ValorClasificacion
         {
-          public int  cClasificacionDe;
-          public int  cNumClasificacion;
-          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
-          public string cCodigoValorClasificacion;
-          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongDescripcion)]
-          public string cValorClasificacion;
+            public int cClasificacionDe;
+            public int cNumClasificacion;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongDescripcion)]
+            public string cValorClasificacion;
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
@@ -213,18 +213,18 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("KERNEL32")]
         public static extern int SetCurrentDirectory(string pPtrDirActual);
 
-         [DllImport("MGWSERVICIOS.dll")]
-         public static extern int fBuscaClasificacion   ( int aClasificacionDe, int aNumClasificacion );
-         [DllImport("MGWSERVICIOS.dll")]
-         public static extern Int32 fPosUltimoClasificacion();
-         [DllImport("MGWSERVICIOS.dll")]
-         public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern int fBuscaClasificacion(int aClasificacionDe, int aNumClasificacion);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosUltimoClasificacion();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
 
         [DllImport("mgwservicios.dll")]
         public static extern void fTerminaSDK();
 
         [DllImport("mgwservicios.DLL")]
-        public static extern Int32 fSetNombrePAQ(string aNombrePAQ);
+        public static extern int fSetNombrePAQ(string aNombrePAQ);
 
         [DllImport("mgwservicios.dll")]
         public static extern int fAbreEmpresa(string Directorio);
@@ -251,7 +251,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fEntregEnDiscoXML([MarshalAs(UnmanagedType.LPStr)] string aCodConcepto, [MarshalAs(UnmanagedType.LPStr)] string aSerie, double aFolio, int aFormato, string aFormatoAmigable);
 
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fAltaProducto(ref Int32 aldProducto,ref tProduto astProducto);
+        public static extern Int32 fAltaProducto(ref Int32 aldProducto, ref tProduto astProducto);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaProducto(string aCodProducto);
 
@@ -268,9 +268,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoProducto(string aCampo, StringBuilder aValor, int longitud);
-      
 
-        
+
+
         [DllImport("MGWSERVICIOS.DLL")]
         public static extern int fDocumentoUUID(StringBuilder aCodigoConcepto, StringBuilder aSerie, double aFolio, StringBuilder atPtrCFDIUUID);
 
@@ -286,6 +286,18 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
 
+        [DllImport("msvcrt.dll", CallingConvention = CallingConvention.Cdecl)]
+        extern static uint _controlfp(uint newcw, uint mask);
+
+        const uint _MCW_EM = 0x0008001f;
+        const uint _EM_INVALID = 0x00000010;
+
+        public static void FixFPU()
+        {
+            {
+                _controlfp(_MCW_EM, _EM_INVALID);
+            }
+        }
 
 
         public static void alzheimer()
@@ -303,38 +315,49 @@ namespace SharkAdministrativo.SDKCONTPAQi
             if (iError != 0)
             {
                 SDK.fError(iError, sMensaje, 512);
-                System.Windows.Forms.MessageBox.Show("Error: " + sMensaje,"Aviso Shark");   
-           
+                System.Windows.Forms.MessageBox.Show("Error: " + sMensaje, "Aviso Shark");
+
             }
         }
 
-         public static int startSDK(){
-             int success = 1;
+        public static int startSDK()
+        {
+            int success = 1;
             SetCurrentDirectory(SDK.systemRoute);
             int error = int.MinValue;
-             error = SDK.fSetNombrePAQ(SDK.systemName);
-            if (error != 0)
+            try
             {
-                rError(error);
-            }
-            else {
-                
-                error = SDK.fAbreEmpresa(SDK.companyRoute);
+                error = SDK.fSetNombrePAQ(SDK.systemName);
                 if (error != 0)
                 {
                     rError(error);
                 }
-                else {
-                    success = 0;
-                }
-            }
-            return success;
-         }
+                else
+                {
 
-         public static void closeSDK() {
-             fCierraEmpresa();
-             fTerminaSDK();
-         }
+                    error = SDK.fAbreEmpresa(SDK.companyRoute);
+                    if (error != 0)
+                    {
+                        rError(error);
+                    }
+                    else
+                    {
+                        success = 0;
+                    }
+                }
+                throw new Exception("Ignora los FPu");
+            }catch(Exception ex){}
+            return success;
+        }
+
+        public static void closeSDK()
+        {
+            fCierraEmpresa();
+            fTerminaSDK();
+        }
+
+
+
 
 
 

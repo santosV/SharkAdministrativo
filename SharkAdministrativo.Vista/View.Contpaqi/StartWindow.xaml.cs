@@ -37,8 +37,9 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             /*
              La siguiente línea evade la excepción de error con los FPU al utilizar la librería de contpaqi en C.
              */
-            try {
-                throw new Exception("Ignore this please, resetting the FPU");//ignora la excepción de FPU.
+            try
+            {
+
                 if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
                 {
                     SDK.companyRoute = txtRutaEmpresa.Text;
@@ -46,12 +47,13 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                     if (error == 0)
                     {
                         btnIngresar.IsEnabled = true;
-                        SDK.closeSDK();
-                    
+                        //SDK.closeSDK();
+
                     }
                 }
+                throw new Exception("Ignore this please, resetting the FPU");//ignoramos la excepción de FPU.
             }
-            catch (Exception ex) {}
+            catch (Exception ex) { }
         }
 
         /// <summary>
@@ -65,13 +67,13 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
             view.lblEmpresa.Text = "@" + SDK.companyName;
             view.Show();
-            this.Close();  
-        }          
-        
+            this.Close();
+        }
 
-      
 
-       
+
+
+
 
     }
 }
