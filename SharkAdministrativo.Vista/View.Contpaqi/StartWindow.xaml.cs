@@ -38,11 +38,12 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             {
 
                 SDK.companyRoute = txtRutaEmpresa.Text;
-                int error = 0;//SDK.startSDK();
+                int error = SDK.startSDK();
                 if (error == 0)
                 {
                     btnIngresar.IsEnabled = true;
-                    //SDK.closeSDK();
+                    SDK.closeSDK();
+                    //SDK.FixFPU();
                     
                 }
             }
@@ -55,12 +56,13 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
-            SDK.alzheimer();
+            SDK.FixFPU();
             MainWindow view = new MainWindow();
-            SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
+            //SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
             view.lblEmpresa.Text = "@" + SDK.companyName;
             view.Show();
             this.Close();
+
                 
         }          
         
