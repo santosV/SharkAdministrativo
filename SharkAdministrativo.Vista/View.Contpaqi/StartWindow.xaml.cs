@@ -34,19 +34,24 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             carpeta.SelectedPath = @"C:\Compac\Empresas\";
             carpeta.ShowDialog();
             txtRutaEmpresa.Text = carpeta.SelectedPath;
-            if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
-            {
-
-                SDK.companyRoute = txtRutaEmpresa.Text;
-                int error = SDK.startSDK();
-                if (error == 0)
+            /*
+             La siguiente línea evade la excepción de error con los FPU al utilizar la librería de contpaqi en C.
+             */
+            try {
+                throw new Exception("Ignore this please, resetting the FPU");//ignora la excepción de FPU.
+                if (txtRutaEmpresa.Text != @"C:\Compac\Empresas")
                 {
-                    btnIngresar.IsEnabled = true;
-                    SDK.closeSDK();
-                    //SDK.FixFPU();
+                    SDK.companyRoute = txtRutaEmpresa.Text;
+                    int error = SDK.startSDK();
+                    if (error == 0)
+                    {
+                        btnIngresar.IsEnabled = true;
+                        SDK.closeSDK();
                     
+                    }
                 }
             }
+            catch (Exception ex) {}
         }
 
         /// <summary>
@@ -56,14 +61,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
-            SDK.FixFPU();
             MainWindow view = new MainWindow();
-            //SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
+            SDK.companyName = txtRutaEmpresa.Text.Remove(0, 19);
             view.lblEmpresa.Text = "@" + SDK.companyName;
             view.Show();
-            this.Close();
-
-                
+            this.Close();  
         }          
         
 

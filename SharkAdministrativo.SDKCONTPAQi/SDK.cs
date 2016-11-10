@@ -336,18 +336,6 @@ namespace SharkAdministrativo.SDKCONTPAQi
              fTerminaSDK();
          }
 
-        [DllImport("msvcrt.dll", CallingConvention = CallingConvention.Cdecl)]
-        extern static uint _controlfp(uint newcw,uint mask);
-
-        const uint _MCW_EM=0x0008001f;
-        const uint _EM_INVALID=0x00000010;
-
-        public static void FixFPU()
-        {
-            {
-                _controlfp(_MCW_EM, _EM_INVALID);
-            }
-        }
 
 
     }//Fin clase SDK
