@@ -47,6 +47,9 @@
                     <dxlc:LayoutItem Label="Grupo:">
                         <dxe:ComboBoxEdit x:Name="cbxGrupos"  SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" AutoComplete="True"/>
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Código de insumo">
+                        <dxe:TextEdit x:Name="txtCodigoInsumo"/>
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                         <dxlc:LayoutItem Label="Ingresa El Nombre:">
                             <dxe:TextEdit x:Name="txtnombreGrupo"/>
@@ -96,10 +99,7 @@
                         <Button Content="Guardar" x:Name="btnGuardarUnidad" Click="btnGuardarUnidad_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
-                        <dxlc:LayoutItem Label="Clasificación especificada: ">
-                            <dxe:ComboBoxEdit x:Name="cbxClasificacion" SelectedIndexChanged="cbxClasificacion_SelectedIndexChanged"  AutoComplete="True"/>
-                        </dxlc:LayoutItem>
-                        <dxlc:LayoutItem Label="Valor:">
+                        <dxlc:LayoutItem Label="Clasificación: ">
                             <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones" AutoComplete="True"/>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>

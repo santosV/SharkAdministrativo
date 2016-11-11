@@ -168,6 +168,19 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public string cValorClasificacion;
         }
 
+  
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
+        public struct tUnidad
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongNombre)]
+            public string cNombreUnidad;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongAbreviatura)]
+            public string cAbreviatura;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongAbreviatura)]
+            public string cDespliegue;
+        }
+
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tMovimiento
         {
@@ -252,6 +265,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fAltaProducto(ref Int32 aldProducto, ref tProduto astProducto);
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fAltaUnidad(ref Int32 aldUnidad, ref tUnidad astUnidad);
+
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaProducto(string aCodProducto);
 
@@ -264,10 +281,22 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fGuardaProducto();
 
         [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosPrimerUnidad();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosSiguienteUnidad(); 
+
+
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fSetDatoProducto(string aCampo, string aValor);
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoProducto(string aCampo, StringBuilder aValor, int longitud);
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLeeDatoUnidad(string aCampo, StringBuilder aValor, int longitud);
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fBuscaValorClasif(int aClasificacionDe, int aNumClasificacion, string aCodValorClasif);
 
 
 

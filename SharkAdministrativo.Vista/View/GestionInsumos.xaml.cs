@@ -42,8 +42,7 @@ namespace SharkAdministrativo.Vista
             {
                 llenarInsumos();
             }
-            loadRatings();
-
+            cargarClasificaciones();
         }
 
         public void llenarInsumos()
@@ -113,6 +112,9 @@ namespace SharkAdministrativo.Vista
         {
             if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtCCimpuesto.Text) && cbxInventariable.SelectedItem != null && !String.IsNullOrEmpty(txtUCosto.Text) && cbxGrupos.SelectedItem != null && cbxUmedida.SelectedItem != null)
             {
+                SDK.tProduto cProducto = new SDK.tProduto();
+                cProducto.cDescripcionProducto = txtDescripcion.Text;
+                cProducto.cImpuesto1 = Double.Parse(txtIva.Text);
                 insumo_activo.descripcion = txtDescripcion.Text;
                 insumo_activo.costo_promedio = float.Parse(txtCpromedio.Text);
                 insumo_activo.costo_con_impuesto = float.Parse(txtCCimpuesto.Text);
@@ -228,14 +230,23 @@ namespace SharkAdministrativo.Vista
 
         private void llenarUnidades()
         {
-            cbxUmedida.Clear();
+            
             cbxUmedida.Items.Clear();
-            List<Unidad_Medida> unidades = unidad.obtenerTodos();
             cbxUmedida.Items.Add("Nuevo");
-            foreach (var medida in unidades)
+            int error = SDK.fPosPrimerUnidad();
+            while (error == 0)
             {
-                cbxUmedida.Items.Add(medida.nombre);
+                StringBuilder codUnidad = new StringBuilder(11);
+                StringBuilder nomUnidad = new StringBuilder(11);
+                SDK.fLeeDatoUnidad("CIDUNIDAD", codUnidad, 11);
+                SDK.fLeeDatoUnidad("CNOMBREUNIDAD", nomUnidad, 11);
 
+                if (nomUnidad.ToString() != "(Ninguno)")
+                {
+
+                    cbxUmedida.Items.Add(codUnidad + " | " + nomUnidad);
+                }
+                error = SDK.fPosSiguienteUnidad();
             }
 
         }
@@ -393,13 +404,17 @@ namespace SharkAdministrativo.Vista
             if (txtNombreUnidad.Text != "")
             {
                 Unidad_Medida medida = new Unidad_Medida();
-
+                SDK.tUnidad unidadDeMedida = new SDK.tUnidad();
+                unidadDeMedida.cNombreUnidad = txtNombreUnidad.Text;
+                unidadDeMedida.cAbreviatura = txtNombreUnidad.Text.Substring(0, 1);
                 medida.nombre = txtNombreUnidad.Text;
                 medida.registrar(medida);
                 if (medida.id > 0)
                 {
+                    Int32 cIdUnidadDeMedida = 0;
+                    SDK.fAltaUnidad( ref cIdUnidadDeMedida,ref unidadDeMedida);
                     llenarUnidades();
-                    cbxUmedida.SelectedItem = medida.nombre;
+                    cbxUmedida.SelectedItem = cIdUnidadDeMedida+" | "+unidadDeMedida.cNombreUnidad;
                     groupUnidades.Visibility = Visibility.Collapsed;
                 }
             }
@@ -471,22 +486,6 @@ namespace SharkAdministrativo.Vista
             clearFields();
         }
 
-        private void loadRatings()
-        {
-            for (int i = 1; i <= 6; i++)
-            {
-
-                SDK.fBuscaClasificacion(5, i);
-                StringBuilder nombreClasificacion = new StringBuilder(512);
-
-                SDK.fLeeDatoClasificacion("CNOMBRECLASIFICACION", nombreClasificacion, 512);
-                string nameRating = nombreClasificacion.ToString();
-                if (nameRating != "Clasificacion " + i + " del Producto")
-                {
-                    cbxClasificacion.Items.Add(i + " | " + nombreClasificacion);
-                }
-            }
-        }
 
 
 
@@ -560,36 +559,27 @@ namespace SharkAdministrativo.Vista
             exportTo(".png", tablaInsumos, "InsumosElaborados");
         }
 
-        private void cbxClasificacion_SelectedIndexChanged(object sender, RoutedEventArgs e)
+        private void cargarClasificaciones()
         {
-            if (cbxClasificacion.SelectedItem != null)
+            int error = SDK.fPosPrimerValorClasif();
+            while (error == 0)
             {
-                String[] substrings = cbxClasificacion.SelectedItem.ToString().Split('|');
-                int numClasificacion = Convert.ToInt32(substrings[0].Trim());
-                SDK.fBuscaClasificacion(5, numClasificacion);
-                int error = SDK.fPosPrimerValorClasif();
-                if (error == 0)
-                {
-                    do
-                    {
-                        StringBuilder codValorClasificacion = new StringBuilder(512);
-                        StringBuilder nomValorClasificacion = new StringBuilder(512);
-                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 512);
-                        SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 512);
-                        cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
-                        error = SDK.fPosSiguienteValorClasif();
-                        if (error != 0)
-                        {
-                            SDK.rError(error);
-                        }
-                    } while (error != 0);
-                }
-                else {
-                    cbxValoresDeClasificaciones.Items.Add("No hay valores para mostrar :(");
-                }
+                StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder nomValorClasificacion = new StringBuilder(11);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 11);
 
+                if (nomValorClasificacion.ToString() != "(Ninguna)")
+                {
+
+                    cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                }
+                error = SDK.fPosSiguienteValorClasif();
             }
+
         }
+
+
 
 
 
