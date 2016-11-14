@@ -16,6 +16,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using DevExpress.XtraEditors.Repository;
 using System.Windows.Media;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -47,6 +48,7 @@ namespace SharkAdministrativo.Vista
             loadTitlesRecipe();
             cargarTitlesProducts();
             cargarAreas();
+            cargarClasificaciones();
         
         }
 
@@ -113,6 +115,26 @@ namespace SharkAdministrativo.Vista
            
         }
 
+        private void cargarClasificaciones()
+        {
+            int error = SDK.fPosPrimerValorClasif();
+            while (error == 0)
+            {
+                StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder nomValorClasificacion = new StringBuilder(11);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 11);
+
+                if (nomValorClasificacion.ToString() != "(Ninguna)")
+                {
+
+                    cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                }
+                error = SDK.fPosSiguienteValorClasif();
+            }
+
+        }
+
         void cargarProductos() { 
             Producto producto = new Producto();
             List<Producto> productos = producto.obtenerTodos();
@@ -177,14 +199,24 @@ namespace SharkAdministrativo.Vista
             if (txtNombreUnidad.Text != "")
             {
                 Unidad_Medida medida = new Unidad_Medida();
-
+                SDK.tUnidad unidadDeMedida = new SDK.tUnidad();
+                unidadDeMedida.cNombreUnidad = txtNombreUnidad.Text;
+                unidadDeMedida.cAbreviatura = txtNombreUnidad.Text.Substring(0, 1);
                 medida.nombre = txtNombreUnidad.Text;
-                medida.registrar(medida);
-                if (medida.id > 0)
+                Int32 cIdUnidadDeMedida = 0;
+                int error = SDK.fAltaUnidad(ref cIdUnidadDeMedida, ref unidadDeMedida);
+
+                if (error == 0)
                 {
+
+                    medida.registrar(medida);
                     llenarUnidades();
-                    cbxUmedida.SelectedItem = medida.nombre;
+                    cbxUmedida.SelectedItem = unidadDeMedida.cNombreUnidad;
                     groupUnidades.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    SDK.rError(error);
                 }
             }
         }
@@ -203,6 +235,18 @@ namespace SharkAdministrativo.Vista
             {
                 if (validarCampos())
                 {
+                    SDK.tProduto cProducto = new SDK.tProduto();
+                    cProducto.cNombreProducto = txtDescripcion.Text;
+                    cProducto.cCodigoProducto = txtCodigo.Text;
+                    cProducto.cDescripcionProducto = txtDescripcion.Text;
+                    cProducto.cTipoProducto = 1;
+                    cProducto.cMetodoCosteo = 1;
+                    cProducto.cCodigoUnidadBase = cbxUmedida.SelectedItem.ToString();
+                    cProducto.cPrecio1 = Double.Parse(txtUCosto.Text);
+                    String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
+                    string codigoClasificacion = clasificacion[0].Trim();
+                    cProducto.cCodigoValorClasificacion1 = codigoClasificacion;
+
                     InsumoElaborado insumo = new InsumoElaborado();
                     insumo.descripcion = txtDescripcion.Text;
                     insumo.costo_unitario = Double.Parse(txtUCosto.Text);
@@ -220,9 +264,18 @@ namespace SharkAdministrativo.Vista
                     insumo.rendimiento = Double.Parse(txtRendimiento.Text);
                     insumo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
                     insumo.Unidad_Medida = unidad.obtener(cbxUmedida.SelectedItem.ToString());
-                    insumo.registrar(insumo);
-                    this.insumoElaborado = insumo;
-                    clearFields();
+                    Int32 aldProducto = 0;
+                    int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
+                    if (error == 0)
+                    {
+                        insumo.registrar(insumo);
+                        this.insumoElaborado = insumo;
+                        clearFields();
+                    }
+                    else {
+                        SDK.rError(error);
+                    }
+                    
                 }
                 else {
                     MessageBox.Show("ES NECESARIO QUE INGRESE CADA UNO DE LOS DATOS SOLICITADOS");
@@ -358,14 +411,21 @@ namespace SharkAdministrativo.Vista
 
         private void llenarUnidades()
         {
-            cbxUmedida.Clear();
-            cbxUmedida.Items.Clear();
-            List<Unidad_Medida> unidades = unidad.obtenerTodos();
-            cbxUmedida.Items.Add("Nuevo");
-            foreach (var medida in unidades)
-            {
-                cbxUmedida.Items.Add(medida.nombre);
 
+            cbxUmedida.Items.Clear();
+            cbxUmedida.Items.Add("Nuevo");
+            int error = SDK.fPosPrimerUnidad();
+            while (error == 0)
+            {
+                StringBuilder nomUnidad = new StringBuilder(20);
+                SDK.fLeeDatoUnidad("CNOMBREUNIDAD", nomUnidad, 20);
+
+                if (nomUnidad.ToString() != "(Ninguno)")
+                {
+
+                    cbxUmedida.Items.Add(nomUnidad);
+                }
+                error = SDK.fPosSiguienteUnidad();
             }
 
         }

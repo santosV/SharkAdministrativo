@@ -125,6 +125,8 @@ namespace SharkAdministrativo.Vista
                 String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
                 string codigoClasificacion = clasificacion[0].Trim();
                 cProducto.cCodigoValorClasificacion1 = codigoClasificacion;
+                
+                    
 
                 insumo_activo.descripcion = txtDescripcion.Text;
                 insumo_activo.costo_promedio = float.Parse(txtCpromedio.Text);
@@ -426,14 +428,19 @@ namespace SharkAdministrativo.Vista
                 unidadDeMedida.cNombreUnidad = txtNombreUnidad.Text;
                 unidadDeMedida.cAbreviatura = txtNombreUnidad.Text.Substring(0, 1);
                 medida.nombre = txtNombreUnidad.Text;
-                medida.registrar(medida);
-                if (medida.id > 0)
+                Int32 cIdUnidadDeMedida = 0;
+                int error = SDK.fAltaUnidad(ref cIdUnidadDeMedida, ref unidadDeMedida);
+
+                if (error == 0)
                 {
-                    Int32 cIdUnidadDeMedida = 0;
-                    SDK.fAltaUnidad(ref cIdUnidadDeMedida, ref unidadDeMedida);
+
+                    medida.registrar(medida);
                     llenarUnidades();
                     cbxUmedida.SelectedItem = unidadDeMedida.cNombreUnidad;
                     groupUnidades.Visibility = Visibility.Collapsed;
+                }
+                else {
+                    SDK.rError(error);
                 }
             }
         }

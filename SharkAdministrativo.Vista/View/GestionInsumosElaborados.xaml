@@ -17,7 +17,7 @@
                         <dxb:BarButtonItem x:Name="goToAddRecipe" ItemClick="goToAddRecipe_ItemClick" Content="Agregar Receta" LargeGlyph="{dx:DXImage Image=NewTableStyle_32x32.png}" Glyph="{dx:DXImage Image=NewTableStyle_16x16.png}"/>
 
                     </dxr:RibbonPageGroup>
-                   
+
                     <dxr:RibbonPageGroup Caption="Exportar">
                         <dxb:BarButtonItem Content="Excel" ItemClick="insumosElaborados_ExportToExcel_ItemClick" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}"/>
                         <dxb:BarButtonItem Content="PDF" ItemClick="insumosElaborados_ExportToPDF_ItemClick" Glyph="{dx:DXImageGrayscale Image=ExportToPDF_32x32.png}"/>
@@ -48,7 +48,7 @@
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="{x:Null}">
                         <dxb:BarButtonItem Content="Agregar Receta" ItemClick="goToAddRecipeFromProducts_ItemClick" LargeGlyph="{dx:DXImage Image=NewTableStyle_32x32.png}" Glyph="{dx:DXImage Image=NewTableStyle_16x16.png}"/>
-                        
+
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Mostrar">
                         <dxb:BarButtonItem ItemClick="btnProductReport_ItemClick" Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
@@ -62,16 +62,26 @@
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
         <TextBlock x:Name="Title" TextWrapping="Wrap" Text="Gestión De Insumos Elaborados" Padding="5" UseLayoutRounding="True" TextAlignment="Center" Background="#FF046AA6" Foreground="White" FontSize="16" VerticalAlignment="Top" Margin="0,0,0,-1"/>
-        <dxlc:LayoutGroup x:Name="vista_InsumosElaborados" Visibility="Collapsed" Height="417" Orientation="Vertical">
+        <dxlc:LayoutGroup x:Name="vista_InsumosElaborados" Visibility="Visible" Height="417" Orientation="Vertical">
             <dxlc:LayoutGroup x:Name="groupInsumoElaborado" View="GroupBox" Header="Nuevo Insumo Elaborado" Orientation="Vertical" Margin="0">
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
-                    <dxlc:LayoutItem Label="Grupo:">
-                        <dxe:ComboBoxEdit x:Name="cbxGrupos"  SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" AutoComplete="True"/>
-                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Grupo:">
+                            <dxe:ComboBoxEdit x:Name="cbxGrupos"  SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" AutoComplete="True"/>
+                        </dxlc:LayoutItem>
 
-                    <dxlc:LayoutItem Label="Descripción:">
-                        <dxe:TextEdit x:Name="txtDescripcion"/>
-                    </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Descripción:">
+                            <dxe:TextEdit x:Name="txtDescripcion"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Código:">
+                            <dxe:TextEdit x:Name="txtCodigo"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Ultimo Costo:">
+                            <dxe:TextEdit x:Name="txtUCosto" KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostos_KeyUp"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                     <dxlc:LayoutItem Label="Ingresa El Nombre:">
@@ -89,30 +99,25 @@
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
-                    <dxlc:LayoutItem Label="Ultimo Costo:">
-                        <dxe:TextEdit x:Name="txtUCosto" KeyDown="SoloNumeros_KeyDown" KeyUp="ObtenerCostos_KeyUp"/>
-                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Costo Promedio:">
                         <dxe:TextEdit x:Name="txtCpromedio" KeyDown="SoloNumeros_KeyDown"/>
                     </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Costo Estandar:">
                         <dxe:TextEdit x:Name="txtEstandar"/>
                     </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Inventariable:">
                         <dxe:ComboBoxEdit x:Name="cbxInventariable" AutoComplete="True"/>
                     </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Rendimiento">
                         <dxe:TextEdit x:Name="txtRendimiento"/>
                     </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Cantidad:">
                         <dxe:TextEdit/>
                     </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Unidad De Medida:">
                         <dxe:ComboBoxEdit x:Name="cbxUmedida" SelectedIndexChanged="cbxUmedida_SelectedIndexChanged" AutoComplete="True"/>
                     </dxlc:LayoutItem>
@@ -120,6 +125,11 @@
                 <dxlc:LayoutItem Label="Entrada Automática:">
                     <dxe:CheckEdit x:Name="chksAutomatico"/>
                 </dxlc:LayoutItem>
+                <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Clasificación: ">
+                        <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup x:Name="groupUnidades" Visibility="Collapsed" Header="Nueva Unidad De Medida" View="GroupBox" HorizontalAlignment="Stretch">
                     <dxlc:LayoutItem Label="Nombre:">
                         <dxe:TextEdit x:Name="txtNombreUnidad"/>
