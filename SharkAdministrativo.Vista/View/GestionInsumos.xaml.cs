@@ -112,9 +112,20 @@ namespace SharkAdministrativo.Vista
         {
             if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtCCimpuesto.Text) && cbxInventariable.SelectedItem != null && !String.IsNullOrEmpty(txtUCosto.Text) && cbxGrupos.SelectedItem != null && cbxUmedida.SelectedItem != null)
             {
+                
                 SDK.tProduto cProducto = new SDK.tProduto();
+                cProducto.cNombreProducto = txtDescripcion.Text;
+                cProducto.cCodigoProducto = txtCodigoInsumo.Text;
                 cProducto.cDescripcionProducto = txtDescripcion.Text;
                 cProducto.cImpuesto1 = Double.Parse(txtIva.Text);
+                cProducto.cTipoProducto = 1;
+                cProducto.cMetodoCosteo = 1;
+                cProducto.cCodigoUnidadBase = cbxUmedida.SelectedItem.ToString();
+                cProducto.cPrecio1 = Double.Parse(txtUCosto.Text);
+                String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
+                string codigoClasificacion = clasificacion[0].Trim();
+                cProducto.cCodigoValorClasificacion1 = codigoClasificacion;
+
                 insumo_activo.descripcion = txtDescripcion.Text;
                 insumo_activo.costo_promedio = float.Parse(txtCpromedio.Text);
                 insumo_activo.costo_con_impuesto = float.Parse(txtCCimpuesto.Text);
@@ -125,19 +136,28 @@ namespace SharkAdministrativo.Vista
                 insumo_activo.ultimo_costo = float.Parse(txtUCosto.Text);
                 insumo_activo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
                 insumo_activo.grupo_id = insumo_activo.Grupo.id;
+                
                 insumo_activo.Unidad_Medida = unidad.obtener(cbxUmedida.SelectedItem.ToString());
                 insumo_activo.unidad_id = insumo_activo.Unidad_Medida.id;
                 if (tblLista.CurrentItem == null)
                 {
-                    insumo_activo.registrar(insumo_activo);
+                    
                     if (estado_de_insumo == "Nuevo")
                     {
-                        if (insumo_activo.id > 0)
+                        Int32 aldProducto = 0;
+                        int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
+                        if (error == 0)
                         {
+                            insumo_activo.registrar(insumo_activo);
                             llenarInsumos();
                             MessageBox.Show("EL INSUMO " + insumo_activo.descripcion + " SE REGISTRÓ CORRECTAMENTE \n ¡Puedes Agregar presentaciones a través de tu factura xml de compra! \n También puedes registrarlos manualmente en el módulo gestión de presentaciones");
-                            this.Close();
+                            //this.Close();
                         }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+                        
 
                     }
                     else
@@ -230,21 +250,19 @@ namespace SharkAdministrativo.Vista
 
         private void llenarUnidades()
         {
-            
+
             cbxUmedida.Items.Clear();
             cbxUmedida.Items.Add("Nuevo");
             int error = SDK.fPosPrimerUnidad();
             while (error == 0)
             {
-                StringBuilder codUnidad = new StringBuilder(11);
-                StringBuilder nomUnidad = new StringBuilder(11);
-                SDK.fLeeDatoUnidad("CIDUNIDAD", codUnidad, 11);
-                SDK.fLeeDatoUnidad("CNOMBREUNIDAD", nomUnidad, 11);
+                StringBuilder nomUnidad = new StringBuilder(20);
+                SDK.fLeeDatoUnidad("CNOMBREUNIDAD", nomUnidad, 20);
 
                 if (nomUnidad.ToString() != "(Ninguno)")
                 {
 
-                    cbxUmedida.Items.Add(codUnidad + " | " + nomUnidad);
+                    cbxUmedida.Items.Add(nomUnidad);
                 }
                 error = SDK.fPosSiguienteUnidad();
             }
@@ -412,9 +430,9 @@ namespace SharkAdministrativo.Vista
                 if (medida.id > 0)
                 {
                     Int32 cIdUnidadDeMedida = 0;
-                    SDK.fAltaUnidad( ref cIdUnidadDeMedida,ref unidadDeMedida);
+                    SDK.fAltaUnidad(ref cIdUnidadDeMedida, ref unidadDeMedida);
                     llenarUnidades();
-                    cbxUmedida.SelectedItem = cIdUnidadDeMedida+" | "+unidadDeMedida.cNombreUnidad;
+                    cbxUmedida.SelectedItem = unidadDeMedida.cNombreUnidad;
                     groupUnidades.Visibility = Visibility.Collapsed;
                 }
             }

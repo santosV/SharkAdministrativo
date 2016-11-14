@@ -72,7 +72,7 @@ namespace SharkAdministrativo.Modelo
             using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
-                var unidadesQuery = from unidad in db.Unidades_Medida where unidad.nombre == name select unidad;
+                var unidadesQuery = from unidad in db.Unidades_Medida where unidad.nombre.Trim() == name.Trim() select unidad;
                 foreach (var unidad in unidadesQuery)
                 {
                     medida = unidad;
