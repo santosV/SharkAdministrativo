@@ -95,14 +95,14 @@ namespace SharkAdministrativo.Vista
 
         private void obtenerAlmacenesCOMP()
         {
-            int error = SDK.fLeeDatoAlmacen();
+            int error = SDK.fPosPrimerAlmacen();
             while (error == 0)
             {
                 StringBuilder cCodAlmacen = new StringBuilder(30);
                 StringBuilder cNombreAlmacen = new StringBuilder(60);
-                SDK.fLeeDatoAlmacen("CCODIGOALMACEN", cCodAlmacen,30);
+                SDK.fLeeDatoAlmacen("CCODIGOALMACEN", cCodAlmacen, 30);
             }
-            error = SDK.fLeeDatoAlmacen();
+            error = SDK.fPosSiguienteAlmacen();
         }
 
         /// <summary>
