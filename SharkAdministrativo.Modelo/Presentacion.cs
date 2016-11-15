@@ -37,6 +37,7 @@ namespace SharkAdministrativo.Modelo
         public Nullable<double> costo_unitario { get; set; }
         public Nullable<double> cantidad { get; set; }
         public Nullable<double> existencia { get; set; }
+        public string codigo { get; set; }
     
         public virtual Almacen Almacen { get; set; }
         public virtual ICollection<EntradaPresentacion> EntradaPresentacion { get; set; }
@@ -213,5 +214,6 @@ namespace SharkAdministrativo.Modelo
 
             return presentaciones;
         }
+
     }
 }

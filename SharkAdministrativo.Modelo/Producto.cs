@@ -31,9 +31,11 @@ namespace SharkAdministrativo.Modelo
         public string areasPreparacion { get; set; }
         public string disponlibleEn { get; set; }
         public byte[] imagen { get; set; }
+        public string codigo { get; set; }
     
         public virtual ICollection<ProductoPromocion> ProductoPromocion { get; set; }
         public virtual ICollection<Receta> Receta { get; set; }
+
 
         /// <summary>
         /// Obtiene una lista de todos los productos.
@@ -148,5 +150,6 @@ namespace SharkAdministrativo.Modelo
                 db.SaveChanges();
             }
         }
+
     }
 }

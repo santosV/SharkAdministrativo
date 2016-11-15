@@ -34,6 +34,7 @@ namespace SharkAdministrativo.Modelo
         public Nullable<double> maximo { get; set; }
         public int grupo_id { get; set; }
         public int unidad_id { get; set; }
+        public string codigoInsumo { get; set; }
     
         public virtual Grupo Grupo { get; set; }
         public virtual Unidad_Medida Unidad_Medida { get; set; }
@@ -160,5 +161,8 @@ namespace SharkAdministrativo.Modelo
                 db.SaveChanges();
             }
         }
+
+
+
     }
 }

@@ -38,6 +38,7 @@ namespace SharkAdministrativo.Modelo
         public int empresa_id { get; set; }
         public string sucursal { get; set; }
         public string tipos_proveedor { get; set; }
+        public string codigo { get; set; }
     
         public virtual ICollection<Presentacion> Presentacion { get; set; }
         public virtual Empresa Empresa { get; set; }
@@ -223,5 +224,6 @@ namespace SharkAdministrativo.Modelo
                 db.SaveChanges();
             }
         }
+
     }
 }

@@ -11,8 +11,8 @@ namespace SharkAdministrativo.Modelo
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Data;
+    using System.Linq;
     
     public partial class Almacen
     {
@@ -26,6 +26,7 @@ namespace SharkAdministrativo.Modelo
     
         public int id { get; set; }
         public string nombre { get; set; }
+        public string codigo { get; set; }
     
         public virtual ICollection<Presentacion> Presentacion { get; set; }
         public virtual ICollection<EntradaPresentacion> EntradaPresentacion { get; set; }
@@ -153,5 +154,7 @@ namespace SharkAdministrativo.Modelo
                 db.SaveChanges();
             }
         }
+
+
     }
 }

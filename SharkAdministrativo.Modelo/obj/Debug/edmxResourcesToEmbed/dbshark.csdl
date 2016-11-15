@@ -114,6 +114,7 @@
     <NavigationProperty Name="EntradaPresentacion" Relationship="bdsharkModel.AlmacenEntradaPresentacion" FromRole="Almacen" ToRole="EntradaPresentacion" />
     <NavigationProperty Name="Presentacion1" Relationship="bdsharkModel.AlmacenPresentacion1" FromRole="Almacen" ToRole="Presentacion" />
     <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.AlmacenSalida_almacen" FromRole="Almacen" ToRole="Salida_almacen" />
+    <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="AreaProduccion">
     <Key>
@@ -207,6 +208,7 @@
     <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Insumo" ToRole="Presentacion" />
     <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoReceta" FromRole="Insumo" ToRole="Receta" />
     <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Insumo" ToRole="Salida_almacen" />
+    <Property Name="codigoInsumo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="InsumoElaborado">
     <Key>
@@ -227,6 +229,7 @@
     <NavigationProperty Name="Grupo" Relationship="bdsharkModel.GrupoInsumoElaborado" FromRole="InsumoElaborado" ToRole="Grupo" />
     <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="InsumoElaborado" ToRole="Unidad_Medida" />
     <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoElaboradoReceta" FromRole="InsumoElaborado" ToRole="Receta" />
+    <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Presentacion">
     <Key>
@@ -254,6 +257,7 @@
     <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Presentacion" ToRole="Insumo" />
     <NavigationProperty Name="Factura" Relationship="bdsharkModel.FacturaPresentacion" FromRole="Presentacion" ToRole="Factura" />
     <NavigationProperty Name="Almacen1" Relationship="bdsharkModel.AlmacenPresentacion1" FromRole="Presentacion" ToRole="Almacen" />
+    <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ProductoPromocion">
     <Key>
@@ -281,6 +285,7 @@
     <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
     <NavigationProperty Name="ProductoPromocion" Relationship="bdsharkModel.ProductoProductoPromocion" FromRole="Producto" ToRole="ProductoPromocion" />
     <NavigationProperty Name="Receta" Relationship="bdsharkModel.ProductoReceta" FromRole="Producto" ToRole="Receta" />
+    <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Promocion">
     <Key>
@@ -324,6 +329,7 @@
     <Property Name="tipos_proveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.ProveedorPresentacion" FromRole="Proveedor" ToRole="Presentacion" />
     <NavigationProperty Name="Empresa" Relationship="bdsharkModel.EmpresaProveedor" FromRole="Proveedor" ToRole="Empresa" />
+    <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Receta">
     <Key>

@@ -6,6 +6,7 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="AreasProduccion">
     <Key>
@@ -86,6 +87,7 @@
     <Property Name="maximo" Type="float" />
     <Property Name="grupo_id" Type="int" Nullable="false" />
     <Property Name="unidad_id" Type="int" Nullable="false" />
+    <Property Name="codigoInsumo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="InsumosElaborados">
     <Key>
@@ -103,6 +105,7 @@
     <Property Name="inventariable" Type="varchar" MaxLength="10" />
     <Property Name="entrada_automatica" Type="int" />
     <Property Name="existencia" Type="float" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Presentaciones">
     <Key>
@@ -124,6 +127,7 @@
     <Property Name="costo_unitario" Type="float" />
     <Property Name="cantidad" Type="float" />
     <Property Name="existencia" Type="float" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ProductoPromocion">
     <Key>
@@ -147,6 +151,7 @@
     <Property Name="areasPreparacion" Type="varchar" MaxLength="50" />
     <Property Name="disponlibleEn" Type="varchar" MaxLength="50" />
     <Property Name="imagen" Type="image" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Promociones">
     <Key>
@@ -187,6 +192,7 @@
     <Property Name="empresa_id" Type="int" Nullable="false" />
     <Property Name="sucursal" Type="varchar" MaxLength="50" />
     <Property Name="tipos_proveedor" Type="varchar" MaxLength="500" />
+    <Property Name="codigo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Recetas">
     <Key>

@@ -11,6 +11,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AreasProduccion">
           <Key>
@@ -91,6 +92,7 @@
           <Property Name="maximo" Type="float" />
           <Property Name="grupo_id" Type="int" Nullable="false" />
           <Property Name="unidad_id" Type="int" Nullable="false" />
+          <Property Name="codigoInsumo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="InsumosElaborados">
           <Key>
@@ -108,6 +110,7 @@
           <Property Name="inventariable" Type="varchar" MaxLength="10" />
           <Property Name="entrada_automatica" Type="int" />
           <Property Name="existencia" Type="float" />
+          <Property Name="codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Presentaciones">
           <Key>
@@ -129,6 +132,7 @@
           <Property Name="costo_unitario" Type="float" />
           <Property Name="cantidad" Type="float" />
           <Property Name="existencia" Type="float" />
+          <Property Name="codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ProductoPromocion">
           <Key>
@@ -152,6 +156,7 @@
           <Property Name="areasPreparacion" Type="varchar" MaxLength="50" />
           <Property Name="disponlibleEn" Type="varchar" MaxLength="50" />
           <Property Name="imagen" Type="image" />
+          <Property Name="codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Promociones">
           <Key>
@@ -192,6 +197,7 @@
           <Property Name="empresa_id" Type="int" Nullable="false" />
           <Property Name="sucursal" Type="varchar" MaxLength="50" />
           <Property Name="tipos_proveedor" Type="varchar" MaxLength="500" />
+          <Property Name="codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Recetas">
           <Key>
@@ -366,6 +372,7 @@
           <NavigationProperty Name="EntradaPresentacion" Relationship="bdsharkModel.AlmacenEntradaPresentacion" FromRole="Almacen" ToRole="EntradaPresentacion" />
           <NavigationProperty Name="Presentacion1" Relationship="bdsharkModel.AlmacenPresentacion1" FromRole="Almacen" ToRole="Presentacion" />
           <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.AlmacenSalida_almacen" FromRole="Almacen" ToRole="Salida_almacen" />
+          <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AreaProduccion">
           <Key>
@@ -459,6 +466,7 @@
           <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Insumo" ToRole="Presentacion" />
           <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoReceta" FromRole="Insumo" ToRole="Receta" />
           <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Insumo" ToRole="Salida_almacen" />
+          <Property Name="codigoInsumo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="InsumoElaborado">
           <Key>
@@ -479,6 +487,7 @@
           <NavigationProperty Name="Grupo" Relationship="bdsharkModel.GrupoInsumoElaborado" FromRole="InsumoElaborado" ToRole="Grupo" />
           <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="InsumoElaborado" ToRole="Unidad_Medida" />
           <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoElaboradoReceta" FromRole="InsumoElaborado" ToRole="Receta" />
+          <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Presentacion">
           <Key>
@@ -506,6 +515,7 @@
           <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Presentacion" ToRole="Insumo" />
           <NavigationProperty Name="Factura" Relationship="bdsharkModel.FacturaPresentacion" FromRole="Presentacion" ToRole="Factura" />
           <NavigationProperty Name="Almacen1" Relationship="bdsharkModel.AlmacenPresentacion1" FromRole="Presentacion" ToRole="Almacen" />
+          <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductoPromocion">
           <Key>
@@ -533,6 +543,7 @@
           <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="ProductoPromocion" Relationship="bdsharkModel.ProductoProductoPromocion" FromRole="Producto" ToRole="ProductoPromocion" />
           <NavigationProperty Name="Receta" Relationship="bdsharkModel.ProductoReceta" FromRole="Producto" ToRole="Receta" />
+          <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Promocion">
           <Key>
@@ -576,6 +587,7 @@
           <Property Name="tipos_proveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.ProveedorPresentacion" FromRole="Proveedor" ToRole="Presentacion" />
           <NavigationProperty Name="Empresa" Relationship="bdsharkModel.EmpresaProveedor" FromRole="Proveedor" ToRole="Empresa" />
+          <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Receta">
           <Key>
@@ -882,6 +894,7 @@
           <EntitySetMapping Name="Almacenes">
             <EntityTypeMapping TypeName="bdsharkModel.Almacen">
               <MappingFragment StoreEntitySet="Almacenes">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -960,6 +973,7 @@
           <EntitySetMapping Name="Insumos">
             <EntityTypeMapping TypeName="bdsharkModel.Insumo">
               <MappingFragment StoreEntitySet="Insumos">
+                <ScalarProperty Name="codigoInsumo" ColumnName="codigoInsumo" />
                 <ScalarProperty Name="unidad_id" ColumnName="unidad_id" />
                 <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
                 <ScalarProperty Name="maximo" ColumnName="maximo" />
@@ -977,6 +991,7 @@
           <EntitySetMapping Name="InsumosElaborados">
             <EntityTypeMapping TypeName="bdsharkModel.InsumoElaborado">
               <MappingFragment StoreEntitySet="InsumosElaborados">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="existencia" ColumnName="existencia" />
                 <ScalarProperty Name="entrada_automatica" ColumnName="entrada_automatica" />
                 <ScalarProperty Name="inventariable" ColumnName="inventariable" />
@@ -995,6 +1010,7 @@
           <EntitySetMapping Name="Presentaciones">
             <EntityTypeMapping TypeName="bdsharkModel.Presentacion">
               <MappingFragment StoreEntitySet="Presentaciones">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="existencia" ColumnName="existencia" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="costo_unitario" ColumnName="costo_unitario" />
@@ -1027,6 +1043,7 @@
           <EntitySetMapping Name="Productos">
             <EntityTypeMapping TypeName="bdsharkModel.Producto">
               <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
                 <ScalarProperty Name="disponlibleEn" ColumnName="disponlibleEn" />
                 <ScalarProperty Name="areasPreparacion" ColumnName="areasPreparacion" />
@@ -1061,6 +1078,7 @@
           <EntitySetMapping Name="Proveedores">
             <EntityTypeMapping TypeName="bdsharkModel.Proveedor">
               <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="tipos_proveedor" ColumnName="tipos_proveedor" />
                 <ScalarProperty Name="sucursal" ColumnName="sucursal" />
                 <ScalarProperty Name="empresa_id" ColumnName="empresa_id" />

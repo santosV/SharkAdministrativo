@@ -189,21 +189,13 @@ namespace SharkAdministrativo.Vista {
         
         #line 56 "..\..\..\View\RegistrosRapidos.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.Editors.TextEdit txtCodigo;
-        
-        #line default
-        #line hidden
-        
-        
-        #line 59 "..\..\..\View\RegistrosRapidos.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtAlmacen;
         
         #line default
         #line hidden
         
         
-        #line 62 "..\..\..\View\RegistrosRapidos.xaml"
+        #line 59 "..\..\..\View\RegistrosRapidos.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Grid.GridControl tblStorage;
         
@@ -322,15 +314,12 @@ namespace SharkAdministrativo.Vista {
             this.groupStorage = ((DevExpress.Xpf.LayoutControl.LayoutGroup)(target));
             return;
             case 19:
-            this.txtCodigo = ((DevExpress.Xpf.Editors.TextEdit)(target));
-            return;
-            case 20:
             this.txtAlmacen = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 21:
+            case 20:
             this.tblStorage = ((DevExpress.Xpf.Grid.GridControl)(target));
             
-            #line 62 "..\..\..\View\RegistrosRapidos.xaml"
+            #line 59 "..\..\..\View\RegistrosRapidos.xaml"
             this.tblStorage.MouseDoubleClick += new System.Windows.Input.MouseButtonEventHandler(this.tblStorage_MouseDoubleClick);
             
             #line default

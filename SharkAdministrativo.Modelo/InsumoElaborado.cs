@@ -11,8 +11,8 @@ namespace SharkAdministrativo.Modelo
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Data;
+    using System.Linq;
     
     public partial class InsumoElaborado
     {
@@ -33,10 +33,12 @@ namespace SharkAdministrativo.Modelo
         public string inventariable { get; set; }
         public Nullable<int> entrada_automatica { get; set; }
         public Nullable<double> existencia { get; set; }
+        public string codigo { get; set; }
     
         public virtual Grupo Grupo { get; set; }
         public virtual Unidad_Medida Unidad_Medida { get; set; }
         public virtual ICollection<Receta> Receta { get; set; }
+
 
         /// <summary>
         /// Registra un objeto insumo elaborado en la base de datos.
@@ -130,5 +132,6 @@ namespace SharkAdministrativo.Modelo
                 db.SaveChanges();
             }
         }
+ 
     }
 }

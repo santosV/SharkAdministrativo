@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Almacenes">
       <EntityTypeMapping TypeName="bdsharkModel.Almacen">
         <MappingFragment StoreEntitySet="Almacenes">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
@@ -82,6 +83,7 @@
     <EntitySetMapping Name="Insumos">
       <EntityTypeMapping TypeName="bdsharkModel.Insumo">
         <MappingFragment StoreEntitySet="Insumos">
+          <ScalarProperty Name="codigoInsumo" ColumnName="codigoInsumo" />
           <ScalarProperty Name="unidad_id" ColumnName="unidad_id" />
           <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
           <ScalarProperty Name="maximo" ColumnName="maximo" />
@@ -99,6 +101,7 @@
     <EntitySetMapping Name="InsumosElaborados">
       <EntityTypeMapping TypeName="bdsharkModel.InsumoElaborado">
         <MappingFragment StoreEntitySet="InsumosElaborados">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
           <ScalarProperty Name="existencia" ColumnName="existencia" />
           <ScalarProperty Name="entrada_automatica" ColumnName="entrada_automatica" />
           <ScalarProperty Name="inventariable" ColumnName="inventariable" />
@@ -117,6 +120,7 @@
     <EntitySetMapping Name="Presentaciones">
       <EntityTypeMapping TypeName="bdsharkModel.Presentacion">
         <MappingFragment StoreEntitySet="Presentaciones">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
           <ScalarProperty Name="existencia" ColumnName="existencia" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
           <ScalarProperty Name="costo_unitario" ColumnName="costo_unitario" />
@@ -149,6 +153,7 @@
     <EntitySetMapping Name="Productos">
       <EntityTypeMapping TypeName="bdsharkModel.Producto">
         <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
           <ScalarProperty Name="imagen" ColumnName="imagen" />
           <ScalarProperty Name="disponlibleEn" ColumnName="disponlibleEn" />
           <ScalarProperty Name="areasPreparacion" ColumnName="areasPreparacion" />
@@ -183,6 +188,7 @@
     <EntitySetMapping Name="Proveedores">
       <EntityTypeMapping TypeName="bdsharkModel.Proveedor">
         <MappingFragment StoreEntitySet="Proveedores">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
           <ScalarProperty Name="tipos_proveedor" ColumnName="tipos_proveedor" />
           <ScalarProperty Name="sucursal" ColumnName="sucursal" />
           <ScalarProperty Name="empresa_id" ColumnName="empresa_id" />
