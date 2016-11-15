@@ -389,20 +389,26 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar el insumo '" + seleccion.Row.ItemArray[1] + "' de la lista?", "Eliminación de Presentación", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    Insumo insumo = new Insumo();
-                    insumo.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
-                    if (insumo.id > 0)
+                    int error = SDK.fEliminarProducto(seleccion.Row.ItemArray[11].ToString());
+                    if (error == 0)
                     {
-                        insumo.eliminar(insumo);
-                        seleccion.Delete();
-                        clearFields();
+                        Insumo insumo = new Insumo();
+                        insumo.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
+                        if (insumo.id > 0)
+                        {
+                            insumo.eliminar(insumo);
+                            seleccion.Delete();
+                            clearFields();
+                        }
+                        else
+                        {
+                            seleccion.Delete();
+                            clearFields();
+                        }
                     }
-                    else
-                    {
-                        seleccion.Delete();
-                        clearFields();
+                    else {
+                        SDK.rError(error);
                     }
-
 
                 }
                 else
