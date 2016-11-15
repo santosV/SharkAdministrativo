@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SharkAdministrativo.Modelo;
 using System.Data;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -60,7 +61,7 @@ namespace SharkAdministrativo.Vista
         /// </summary>
         private void loadStorageTitle()
         {
-            dtAlmacenes.Columns.Add("ID");
+            dtAlmacenes.Columns.Add("Codigo");
             dtAlmacenes.Columns.Add("Nombre");
             tblStorage.ItemsSource = dtAlmacenes.DefaultView;
         }
@@ -89,6 +90,19 @@ namespace SharkAdministrativo.Vista
             {
                 dtCategoria.Rows.Add(category.id, category.nombre);
             }
+        }
+
+
+        private void obtenerAlmacenesCOMP()
+        {
+            int error = SDK.fLeeDatoAlmacen();
+            while (error == 0)
+            {
+                StringBuilder cCodAlmacen = new StringBuilder(30);
+                StringBuilder cNombreAlmacen = new StringBuilder(60);
+                SDK.fLeeDatoAlmacen("CCODIGOALMACEN", cCodAlmacen,30);
+            }
+            error = SDK.fLeeDatoAlmacen();
         }
 
         /// <summary>
