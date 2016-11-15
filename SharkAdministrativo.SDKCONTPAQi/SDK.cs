@@ -127,6 +127,30 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public double cImporteExtra4;
         }
 
+        //Declaración de la estructura del almacen
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
+        public struct tAlmacen
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodigo)]
+            public string cCodigoAlmacen;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongNombre)]
+            public string cNombreAlmacen;
+
+            // N.D.8386 La estructura debe recibir el nombre de la característica padre. (ALRH
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion1;//[ kLongCodValorClasif + 1 ];
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion2;//[ kLongCodValorClasif + 1 ];
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion3;//[ kLongCodValorClasif + 1 ];
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion4;//[ kLongCodValorClasif + 1 ];
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion5;//[ kLongCodValorClasif + 1 ];
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacion6;//[ kLongCodValorClasif + 1 ];
+        }
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tDocumento
         {
@@ -320,6 +344,19 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fPosSiguienteAlmacen();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoAlmacen(String aCampo, StringBuilder aValor, int longitud);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fInsertaAlmacen();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fEditaAlmacen();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fSetDatoAlmacen(String aCampo, String aValor);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fGuardaAlmacen();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosUltimoAlmacen();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fBuscaAlmacen(String aCodAlmacen);
+
 
         //Funciones De Unidad y peso.
         [DllImport("MGWSERVICIOS.dll")]

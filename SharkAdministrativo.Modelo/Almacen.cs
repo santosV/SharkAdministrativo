@@ -113,6 +113,29 @@ namespace SharkAdministrativo.Modelo
         }
 
         /// <summary>
+        /// Obtiene a través del codigo
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <returns></returns>
+        public Almacen obtenerCodigo(string codigo)
+        {
+            Almacen almacen = new Almacen();
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+
+                db.Configuration.LazyLoadingEnabled = true;
+                var almacenesQuery = from storage in db.Almacenes where storage.codigo == codigo select storage;
+                // Iterate through the results of the parameterized query.
+                foreach (var storage in almacenesQuery)
+                {
+                    almacen = storage;
+                }
+            }
+
+            return almacen;
+        }
+
+        /// <summary>
         /// Registra un objeto almacén en la base de datos.
         /// </summary>
         /// <param name="almacen">Objeto a registrar.</param>
@@ -135,18 +158,18 @@ namespace SharkAdministrativo.Modelo
 
             using (bdsharkEntities db = new bdsharkEntities())
             {
-                Almacen storage = db.Almacenes.Find(almacen.id);
+                Almacen storage = obtenerCodigo(almacen.codigo);
                 storage.nombre = almacen.nombre;
                 db.Entry(storage).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
 
-        public void delete(int id)
+        public void delete(String codigo)
         {
             using (bdsharkEntities db = new bdsharkEntities())
             {
-                var Query = from almacen in db.Almacenes where almacen.id == id select almacen;
+                var Query = from almacen in db.Almacenes where almacen.codigo == codigo select almacen;
                 foreach (var almacen in Query)
                 {
                     db.Entry(almacen).State = EntityState.Deleted;

@@ -93,30 +93,40 @@ namespace SharkAdministrativo.Vista
         }
 
 
-        private void obtenerAlmacenesCOMP()
+        private void obtenerAlmacenesCONT()
         {
+            dtAlmacenes.Rows.Clear();
             int error = SDK.fPosPrimerAlmacen();
             while (error == 0)
             {
                 StringBuilder cCodAlmacen = new StringBuilder(30);
                 StringBuilder cNombreAlmacen = new StringBuilder(60);
                 SDK.fLeeDatoAlmacen("CCODIGOALMACEN", cCodAlmacen, 30);
+                SDK.fLeeDatoAlmacen("CNOMBREALMACEN", cNombreAlmacen, 60);
+
+                if (cNombreAlmacen.ToString() != "(Ninguno)")
+                {
+                   
+                    dtAlmacenes.Rows.Add(cCodAlmacen.ToString(),cNombreAlmacen.ToString());
+
+                }
+                error = SDK.fPosSiguienteAlmacen();
             }
-            error = SDK.fPosSiguienteAlmacen();
+           
         }
 
         /// <summary>
         /// Llena las filas de la tabla de almacenes.
         /// </summary>
-        private void fillTableStorage()
-        {
-            dtAlmacenes.Rows.Clear();
-            List<Almacen> storages = almacen.obtenerTodos();
-            foreach (var storage in storages)
-            {
-                dtAlmacenes.Rows.Add(storage.id, storage.nombre);
-            }
-        }
+        //private void fillTableStorage()
+        //{
+        //    dtAlmacenes.Rows.Clear();
+        //    List<Almacen> storages = almacen.obtenerTodos();
+        //    foreach (var storage in storages)
+        //    {
+        //        dtAlmacenes.Rows.Add(storage.id, storage.nombre);
+        //    }
+        //}
 
         /// <summary>
         /// Llena el combobox de todas las categorías disponibles.
@@ -166,22 +176,83 @@ namespace SharkAdministrativo.Vista
                 }
                 fillTableCategory();
 
-            }else if (!String.IsNullOrEmpty(txtAlmacen.Text))
+            }else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
             {
+                almacen.codigo = txtCodigo.Text;
                 almacen.nombre = txtAlmacen.Text;
+
+                SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
+                cAlmacen.cCodigoAlmacen = txtCodigo.Text;
+                cAlmacen.cNombreAlmacen = txtAlmacen.Text;
+
                 if (tblStorage.SelectedItem == null)
                 {
-                    almacen.registrar(almacen);
+                    int error = SDK.fInsertaAlmacen();
+                    if (error == 0)
+                    {
+                        error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
+                        error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+                        if (error == 0)
+                        {
+                            error = SDK.fGuardaAlmacen();
+                            almacen.registrar(almacen);
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+                    }
+                    else {
+                        SDK.rError(error);
+                    }
                 }
                 else
                 {
+                    
                     System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
-                    almacen.id = Convert.ToInt32(seleccion.Row.ItemArray[0]);
-                    almacen.Modify(almacen);
+                   
+                    int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
+                    if (error == 0)
+                    {
+
+                        error = SDK.fEditaAlmacen();
+
+                        if (error == 0)
+                        {
+
+                            error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", txtCodigo.Text);
+                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", txtAlmacen.Text);
+
+                            if (error == 0)
+                            {
+
+                                error = SDK.fGuardaAlmacen();
+                                almacen.codigo = seleccion.Row.ItemArray[0].ToString();
+                                almacen.Modify(almacen);
+
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+                    }
+                    else
+                    {
+                        SDK.rError(error);
+                    }
+
                 }
-                fillTableStorage();
+                }
+                
+                //fillTableStorage();
+                obtenerAlmacenesCONT();
             }
-        }
+        
 
         /// <summary>
         /// Muestra la vista solicitada.
@@ -204,7 +275,7 @@ namespace SharkAdministrativo.Vista
             }else if (vista==3)
             {
                 loadStorageTitle();
-                fillTableStorage();
+                obtenerAlmacenesCONT();
                 ventanaRapida.Title = "Gestión De Almacenes";
                 vista_almacenes.Visibility = Visibility.Visible;
             }
@@ -223,6 +294,7 @@ namespace SharkAdministrativo.Vista
         /// Limpia todos los campos.
         /// </summary>
         private void clearFields() {
+            txtCodigo.Clear();
             txtAlmacen.Clear();
             txtCategoria.Clear();
             txtGrupo.Clear();
@@ -294,8 +366,42 @@ namespace SharkAdministrativo.Vista
                     MessageBoxResult dialogResult = MessageBox.Show("¿ESTÁ SEGURO DE ELIMINAR EL REGISTRO '" + seleccion.Row.ItemArray[1] + "'?", "ELIMINACIÓN DE REGISTRO", MessageBoxButton.YesNo);
                     if (dialogResult == MessageBoxResult.Yes)
                     {
-                        almacen.delete(Convert.ToInt32(seleccion.Row.ItemArray[0]));
-                        seleccion.Delete();
+                        int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
+                        if (error == 0)
+                        {
+
+                            error = SDK.fEditaAlmacen();
+
+                            if (error == 0)
+                            {
+
+                              //error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", "(Ninguno)");
+                                error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", "(Ninguno)");
+
+                                if (error == 0)
+                                {
+
+                                    error = SDK.fGuardaAlmacen();
+                                    almacen.delete(seleccion.Row.ItemArray[0].ToString());
+                                    seleccion.Delete();
+
+                                }
+                                else
+                                {
+                                    SDK.rError(error);
+                                }
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+
+                       
                         clearFields();
                     }
                 }
@@ -328,7 +434,10 @@ namespace SharkAdministrativo.Vista
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
             if (seleccion != null)
             {
+                groupStorage.Header = "Modificando... " + seleccion.Row.ItemArray[1].ToString();
+                txtCodigo.IsReadOnly = true;
                 txtAlmacen.Text = seleccion.Row.ItemArray[1].ToString();
+                txtCodigo.Text = seleccion.Row.ItemArray[0].ToString();
             }
         }
 

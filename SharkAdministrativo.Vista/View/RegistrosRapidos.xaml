@@ -51,19 +51,22 @@
 
         <dxlc:LayoutControl x:Name="vista_almacenes" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
             <TextBlock x:Name="txtStorageTitles" TextWrapping="Wrap" Text="Gestión De Almacenes" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2"/>
-            <dxlc:LayoutGroup x:Name="groupStorage" Header="Nuevo" View="GroupBox" HorizontalAlignment="Stretch">
+            <dxlc:LayoutGroup x:Name="groupStorage" Header="Nuevo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                <dxlc:LayoutItem Label="Codigo:">
+                    <dxe:TextEdit x:Name="txtCodigo"/>
+                </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="Nombre:">
                     <dxe:TextEdit x:Name="txtAlmacen"/>
                 </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
             <dxg:GridControl x:Name="tblStorage" MouseDoubleClick="tblStorage_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
-                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
                 </dxg:GridControl.View>
             </dxg:GridControl>
         </dxlc:LayoutControl>
 
-        
+
 
 
     </Grid>
