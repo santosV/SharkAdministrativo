@@ -222,32 +222,46 @@ namespace SharkAdministrativo.SDKCONTPAQi
         }
 
 
-        //Funciones
+        //Funciones De Conexión.
         [DllImport("KERNEL32")]
         public static extern int SetCurrentDirectory(string pPtrDirActual);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern int fSetNombrePAQ(string aNombrePAQ);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern void fTerminaSDK();
 
+        //Funciones De Empresa.
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern int fAbreEmpresa(string Directorio);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern void fCierraEmpresa();
+       
+        
+        //Funciones De Clasificación.
         [DllImport("MGWSERVICIOS.dll")]
         public static extern int fBuscaClasificacion(int aClasificacionDe, int aNumClasificacion);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fPosUltimoClasificacion();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fBuscaValorClasif(int aClasificacionDe, int aNumClasificacion, string aCodValorClasif);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosPrimerValorClasif();
 
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern void fTerminaSDK();
+        public static extern Int32 fPosSiguienteValorClasif();
 
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern int fSetNombrePAQ(string aNombrePAQ);
+        public static extern Int32 fLeeDatoValorClasif(string aCampo, StringBuilder aValor, int aLen);
 
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern int fAbreEmpresa(string Directorio);
 
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern void fCierraEmpresa();
 
+        //Funciones De Error.
         [DllImport("mgwservicios.dll")]
         public static extern void fError(int NumeroError, StringBuilder Mensaje, int Longitud);
 
+        //Funciones De Documento.
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fAltaDocumento(ref Int32 aIdDocumento, ref tDocumento atDocumento);
 
@@ -262,44 +276,6 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fEntregEnDiscoXML([MarshalAs(UnmanagedType.LPStr)] string aCodConcepto, [MarshalAs(UnmanagedType.LPStr)] string aSerie, double aFolio, int aFormato, string aFormatoAmigable);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fAltaProducto(ref Int32 aldProducto, ref tProduto astProducto);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fAltaUnidad(ref Int32 aldUnidad, ref tUnidad astUnidad);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fBuscaProducto(string aCodProducto);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fEliminarProducto(string aCodProducto);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fEditaProducto();
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fGuardaProducto();
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosPrimerUnidad();
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosSiguienteUnidad(); 
-
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fSetDatoProducto(string aCampo, string aValor);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fLeeDatoProducto(string aCampo, StringBuilder aValor, int longitud);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fLeeDatoUnidad(string aCampo, StringBuilder aValor, int longitud);
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fBuscaValorClasif(int aClasificacionDe, int aNumClasificacion, string aCodValorClasif);
-
-
-
         [DllImport("MGWSERVICIOS.DLL")]
         public static extern int fDocumentoUUID(StringBuilder aCodigoConcepto, StringBuilder aSerie, double aFolio, StringBuilder atPtrCFDIUUID);
 
@@ -309,20 +285,43 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fEditarDocumento();
 
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosPrimerValorClasif();
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosSiguienteValorClasif();
-
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fLeeDatoValorClasif( string aCampo, StringBuilder aValor, int aLen );
 
 
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fGuardaDocumento();
 
+        //Funciones De Producto.
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fAltaProducto(ref Int32 aldProducto, ref tProduto astProducto);
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fBuscaProducto(string aCodProducto);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fEditaProducto();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fGuardaProducto();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fEliminarProducto(string aCodProducto);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fSetDatoProducto(string aCampo, string aValor);
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLeeDatoProducto(string aCampo, StringBuilder aValor, int longitud);
+
+
+        //Funciones De Unidad y peso.
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fAltaUnidad(ref Int32 aldUnidad, ref tUnidad astUnidad);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosPrimerUnidad();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosSiguienteUnidad(); 
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLeeDatoUnidad(string aCampo, StringBuilder aValor, int longitud);
+
+        
+        //Funciones De Memoria.
         [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
 
@@ -347,7 +346,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
             SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
         }
 
-        // Función para el manejo de errores en SDK
+        /// <summary>
+        /// Personaliza el error detallado.
+        /// </summary>
+        /// <param name="iError"></param>
         public static void rError(int iError)
         {
             StringBuilder sMensaje = new StringBuilder(512);
@@ -360,6 +362,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
             }
         }
 
+        /// <summary>
+        /// Inicializa el SDK y abre la empresa.
+        /// </summary>
+        /// <returns></returns>
         public static int startSDK()
         {
             int success = 1;
@@ -390,6 +396,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             return success;
         }
 
+        /// <summary>
+        /// Cierra la empresa y el SDK.
+        /// </summary>
         public static void closeSDK()
         {
             fCierraEmpresa();
