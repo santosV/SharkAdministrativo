@@ -61,6 +61,7 @@ namespace SharkAdministrativo.Vista
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblLista.SelectedItem;
             if (seleccion != null)
             {
+                txtCodigoInsumo.IsReadOnly = true;
                 SDK.fBuscaProducto(seleccion.Row.ItemArray[11].ToString());
                 StringBuilder idValorClasificacion = new StringBuilder(5);
                 SDK.fLeeDatoProducto("CIDVALORCLASIFICACION1", idValorClasificacion, 5);
@@ -205,6 +206,7 @@ namespace SharkAdministrativo.Vista
                         error = SDK.fSetDatoProducto("CCODIGOPRODUCTO", cProducto.cCodigoProducto);
                         error = SDK.fSetDatoProducto("CDESCRIPCIONPRODUCTO", cProducto.cNombreProducto);
                         error = SDK.fSetDatoProducto("CIMPUESTO1", Convert.ToString(cProducto.cImpuesto1));
+                        error = SDK.fSetDatoProducto("CPRECIO1", Convert.ToString(cProducto.cPrecio1));
                         error = SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
                         SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
                         SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
