@@ -51,7 +51,7 @@ namespace SharkAdministrativo.Vista
             List<Insumo> insumos = insumo_activo.obtenerTodos();
             foreach (var insumo in insumos)
             {
-                dt.Rows.Add(insumo.id, insumo.Grupo.nombre, insumo.descripcion, insumo.ultimo_costo, insumo.costo_promedio, insumo.IVA, insumo.costo_con_impuesto, insumo.inventariable, insumo.Unidad_Medida.nombre, insumo.minimo, insumo.maximo);
+                dt.Rows.Add(insumo.id, insumo.Grupo.nombre, insumo.descripcion, insumo.ultimo_costo, insumo.costo_promedio, insumo.IVA, insumo.costo_con_impuesto, insumo.inventariable, insumo.Unidad_Medida.nombre, insumo.minimo, insumo.maximo, insumo.codigoInsumo);
             }
         }
 
@@ -61,6 +61,18 @@ namespace SharkAdministrativo.Vista
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblLista.SelectedItem;
             if (seleccion != null)
             {
+                SDK.fBuscaProducto(seleccion.Row.ItemArray[11].ToString());
+                StringBuilder idValorClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoProducto("CIDVALORCLASIFICACION1", idValorClasificacion, 5);
+                SDK.fBuscaIdValorClasif(Convert.ToInt32(idValorClasificacion.ToString()));
+                StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder nomValorClasificacion = new StringBuilder(30);
+                StringBuilder idUnidad = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoProducto("CIDUNIDADBASE", idUnidad, 5);
+
+                cbxValoresDeClasificaciones.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
                 groupInsumo.Header = "Modificando '" + seleccion.Row.ItemArray[2].ToString() + "'";
                 txtDescripcion.Text = seleccion.Row.ItemArray[2].ToString();
                 cbxGrupos.SelectedItem = seleccion.Row.ItemArray[1].ToString();
@@ -69,9 +81,11 @@ namespace SharkAdministrativo.Vista
                 txtIva.Text = seleccion.Row.ItemArray[5].ToString();
                 txtCCimpuesto.Text = seleccion.Row.ItemArray[6].ToString();
                 cbxInventariable.SelectedItem = seleccion.Row.ItemArray[7].ToString();
-                cbxUmedida.SelectedItem = seleccion.Row.ItemArray[8].ToString();
+                cbxUmedida.SelectedItem = idUnidad + " | " + seleccion.Row.ItemArray[8].ToString();
                 txtMinimo.Text = seleccion.Row.ItemArray[9].ToString();
                 txtMaximo.Text = seleccion.Row.ItemArray[10].ToString();
+                txtCodigoInsumo.Text = seleccion.Row.ItemArray[11].ToString();
+
             }
 
         }
@@ -89,6 +103,7 @@ namespace SharkAdministrativo.Vista
             dt.Columns.Add("Unidad De Medida");
             dt.Columns.Add("Mínimo");
             dt.Columns.Add("Máximo");
+            dt.Columns.Add("Código");
 
             tblLista.ItemsSource = dt.DefaultView;
             tblLista.Columns[0].Visible = false;
@@ -112,7 +127,7 @@ namespace SharkAdministrativo.Vista
         {
             if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtCCimpuesto.Text) && cbxInventariable.SelectedItem != null && !String.IsNullOrEmpty(txtUCosto.Text) && cbxGrupos.SelectedItem != null && cbxUmedida.SelectedItem != null)
             {
-                
+
                 SDK.tProduto cProducto = new SDK.tProduto();
                 cProducto.cNombreProducto = txtDescripcion.Text;
                 cProducto.cCodigoProducto = txtCodigoInsumo.Text;
@@ -120,14 +135,14 @@ namespace SharkAdministrativo.Vista
                 cProducto.cImpuesto1 = Double.Parse(txtIva.Text);
                 cProducto.cTipoProducto = 1;
                 cProducto.cMetodoCosteo = 1;
-                cProducto.cCodigoUnidadBase = cbxUmedida.SelectedItem.ToString();
+                String[] unidades = cbxUmedida.SelectedItem.ToString().Split('|');
+                string idUnidad = unidades[0].Trim();
                 cProducto.cPrecio1 = Double.Parse(txtUCosto.Text);
                 String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
                 string codigoClasificacion = clasificacion[0].Trim();
-                cProducto.cCodigoValorClasificacion1 = codigoClasificacion;
-                
-                    
 
+
+                insumo_activo.codigoInsumo = txtCodigoInsumo.Text;
                 insumo_activo.descripcion = txtDescripcion.Text;
                 insumo_activo.costo_promedio = float.Parse(txtCpromedio.Text);
                 insumo_activo.costo_con_impuesto = float.Parse(txtCCimpuesto.Text);
@@ -138,28 +153,35 @@ namespace SharkAdministrativo.Vista
                 insumo_activo.ultimo_costo = float.Parse(txtUCosto.Text);
                 insumo_activo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
                 insumo_activo.grupo_id = insumo_activo.Grupo.id;
-                
-                insumo_activo.Unidad_Medida = unidad.obtener(cbxUmedida.SelectedItem.ToString());
+                string nameUnidad = unidades[1].Trim();
+                insumo_activo.Unidad_Medida = unidad.obtener(nameUnidad);
                 insumo_activo.unidad_id = insumo_activo.Unidad_Medida.id;
                 if (tblLista.CurrentItem == null)
                 {
-                    
+
                     if (estado_de_insumo == "Nuevo")
                     {
                         Int32 aldProducto = 0;
                         int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
                         if (error == 0)
                         {
+                            SDK.fBuscaProducto(cProducto.cCodigoProducto);
+                            SDK.fEditaProducto();
+                            SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                            SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
+                            SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
+                            SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
+                            SDK.fGuardaProducto();
                             insumo_activo.registrar(insumo_activo);
                             llenarInsumos();
                             MessageBox.Show("EL INSUMO " + insumo_activo.descripcion + " SE REGISTRÓ CORRECTAMENTE \n ¡Puedes Agregar presentaciones a través de tu factura xml de compra! \n También puedes registrarlos manualmente en el módulo gestión de presentaciones");
-                            //this.Close();
+                            this.Close();
                         }
                         else
                         {
                             SDK.rError(error);
                         }
-                        
+
 
                     }
                     else
@@ -174,23 +196,52 @@ namespace SharkAdministrativo.Vista
                 {
                     System.Data.DataRowView seleccion = (System.Data.DataRowView)tblLista.SelectedItem;
                     insumo_activo.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
-                    insumo_activo.modificar(insumo_activo);
-                    if (estado_de_insumo != "Nuevo")
+                    string codigoInsumo = txtCodigoInsumo.Text;
+                    int error = SDK.fBuscaProducto(codigoInsumo);
+                    SDK.fEditaProducto();
+                    if (error == 0)
                     {
-                        GestionPresentaciones vista = new GestionPresentaciones();
-                        vista.addInsumo(insumo_activo);
-                        vista.Show();
-                    }
-                    if (exit == true)
-                    {
-                        this.Close();
+                        error = SDK.fSetDatoProducto("CNOMBREPRODUCTO", cProducto.cNombreProducto);
+                        error = SDK.fSetDatoProducto("CCODIGOPRODUCTO", cProducto.cCodigoProducto);
+                        error = SDK.fSetDatoProducto("CDESCRIPCIONPRODUCTO", cProducto.cNombreProducto);
+                        error = SDK.fSetDatoProducto("CIMPUESTO1", Convert.ToString(cProducto.cImpuesto1));
+                        error = SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
+                        SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
+                        SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
+
+                        error = SDK.fGuardaProducto();
+                        if (error == 0)
+                        {
+                            insumo_activo.modificar(insumo_activo);
+                            if (estado_de_insumo != "Nuevo")
+                            {
+                                GestionPresentaciones vista = new GestionPresentaciones();
+                                vista.addInsumo(insumo_activo);
+                                vista.Show();
+                            }
+                            if (exit == true)
+                            {
+                                this.Close();
+                            }
+                            else
+                            {
+
+                                llenarInsumos();
+                                clearFields();
+                            }
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+
                     }
                     else
                     {
-
-                        llenarInsumos();
-                        clearFields();
+                        SDK.rError(error);
                     }
+
                 }
             }
             else
@@ -259,12 +310,14 @@ namespace SharkAdministrativo.Vista
             while (error == 0)
             {
                 StringBuilder nomUnidad = new StringBuilder(20);
+                StringBuilder idUnidad = new StringBuilder(5);
                 SDK.fLeeDatoUnidad("CNOMBREUNIDAD", nomUnidad, 20);
+                SDK.fLeeDatoUnidad("CIDUNIDAD", idUnidad, 5);
 
                 if (nomUnidad.ToString() != "(Ninguno)")
                 {
 
-                    cbxUmedida.Items.Add(nomUnidad);
+                    cbxUmedida.Items.Add(idUnidad + " | " + nomUnidad);
                 }
                 error = SDK.fPosSiguienteUnidad();
             }
@@ -369,10 +422,12 @@ namespace SharkAdministrativo.Vista
             txtMaximo.Clear();
             txtMinimo.Clear();
             txtUCosto.Clear();
+            txtCodigoInsumo.Clear();
             cbxGrupos.SelectedItem = null;
             cbxInventariable.SelectedItem = null;
             cbxUmedida.SelectedItem = null;
             tblLista.SelectedItem = false;
+            cbxValoresDeClasificaciones.SelectedItem = null;
 
         }
 
@@ -439,7 +494,8 @@ namespace SharkAdministrativo.Vista
                     cbxUmedida.SelectedItem = unidadDeMedida.cNombreUnidad;
                     groupUnidades.Visibility = Visibility.Collapsed;
                 }
-                else {
+                else
+                {
                     SDK.rError(error);
                 }
             }
@@ -465,13 +521,13 @@ namespace SharkAdministrativo.Vista
             {
                 string value_ucosto = txtUCosto.Text;
                 string value_iva = txtIva.Text;
-                if (value_ucosto[0].ToString() == ",")
+                if (value_ucosto[0].ToString() == ".")
                 {
-                    txtUCosto.Text = "0,";
+                    txtUCosto.Text = "0.";
                 }
-                if (value_iva[0].ToString() == ",")
+                if (value_iva[0].ToString() == ".")
                 {
-                    txtIva.Text = "0,";
+                    txtIva.Text = "0.";
                 }
                 double ultimo_costo = Convert.ToDouble(txtUCosto.Text);
                 double costo_promedio = Convert.ToDouble(txtUCosto.Text); ;
@@ -590,9 +646,9 @@ namespace SharkAdministrativo.Vista
             while (error == 0)
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
-                StringBuilder nomValorClasificacion = new StringBuilder(11);
-                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 11);
+                StringBuilder nomValorClasificacion = new StringBuilder(30);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 if (nomValorClasificacion.ToString() != "(Ninguna)")
                 {

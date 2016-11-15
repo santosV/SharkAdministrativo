@@ -255,7 +255,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoValorClasif(string aCampo, StringBuilder aValor, int aLen);
 
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fBuscaIdValorClasif (int aIdValorClasif);
 
+        
 
         //Funciones De Error.
         [DllImport("mgwservicios.dll")]
@@ -294,6 +297,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
         //Funciones De Producto.
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fAltaProducto(ref Int32 aldProducto, ref tProduto astProducto);
+
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaProducto(string aCodProducto);
