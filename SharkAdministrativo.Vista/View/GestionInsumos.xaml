@@ -18,9 +18,7 @@
                             <dxb:BarButtonItem Content="Nuevo" ItemClick="BarButtonItem_ItemClick_1" Glyph="{dx:DXImageOffice2013 Image=Add_32x32.png}"/>
                             <dxb:BarButtonItem Content="Guardar &amp; nuevo" ItemClick="SaveAndNew_ItemClick_2" Glyph="{dx:DXImageOffice2013 Image=SaveAs_32x32.png}"/>
                             <dxb:BarButtonItem ItemClick="EliminarPresentacion_ItemClick" Content="Eliminar" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png"/>
-                            <dxb:BarButtonItem Content="Agregar Presentacioes" ItemClick="BarButtonItem_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Sales/SalesPeriodYear_32x32.png"/>
-
-
+                            
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Mostrar">
                             <dxb:BarButtonItem Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/NewOpportunities_32x32.png"/>

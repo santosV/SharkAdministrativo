@@ -67,6 +67,7 @@ namespace SharkAdministrativo.Vista
             dtIElaborados.Columns.Add("Grupo");
             dtIElaborados.Columns.Add("Rendimiento");
             dtIElaborados.Columns.Add("Unidad De Medida");
+            dtIElaborados.Columns.Add("Código");
             cargarInsumosElaborados();
             tblIElaborados.ItemsSource = dtIElaborados.DefaultView;
             tblIElaborados.Columns[0].Visible = false;
@@ -121,9 +122,9 @@ namespace SharkAdministrativo.Vista
             while (error == 0)
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
-                StringBuilder nomValorClasificacion = new StringBuilder(11);
-                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 11);
+                StringBuilder nomValorClasificacion = new StringBuilder(30);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 if (nomValorClasificacion.ToString() != "(Ninguna)")
                 {
@@ -189,7 +190,7 @@ namespace SharkAdministrativo.Vista
             List<InsumoElaborado> insumosElaborados = insumoElaborado.obtenerTodos();
             foreach (var IE in insumosElaborados)
             {
-                dtIElaborados.Rows.Add(IE.id, IE.descripcion, IE.Grupo.nombre, IE.rendimiento, IE.Unidad_Medida.nombre);      
+                dtIElaborados.Rows.Add(IE.id, IE.descripcion, IE.Grupo.nombre, IE.rendimiento, IE.Unidad_Medida.nombre, IE.codigo);      
             }
             
         }
@@ -241,17 +242,21 @@ namespace SharkAdministrativo.Vista
                     cProducto.cDescripcionProducto = txtDescripcion.Text;
                     cProducto.cTipoProducto = 1;
                     cProducto.cMetodoCosteo = 1;
-                    cProducto.cCodigoUnidadBase = cbxUmedida.SelectedItem.ToString();
+                    String[] unidades = cbxUmedida.SelectedItem.ToString().Split('|');
+                    string idUnidad = unidades[0].Trim();
                     cProducto.cPrecio1 = Double.Parse(txtUCosto.Text);
                     String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
                     string codigoClasificacion = clasificacion[0].Trim();
-                    cProducto.cCodigoValorClasificacion1 = codigoClasificacion;
+
 
                     InsumoElaborado insumo = new InsumoElaborado();
                     insumo.descripcion = txtDescripcion.Text;
                     insumo.costo_unitario = Double.Parse(txtUCosto.Text);
                     insumo.costo_promedio = Double.Parse(txtCpromedio.Text);
                     insumo.costo_estandar = Double.Parse(txtEstandar.Text);
+                    insumo.codigo = txtCodigo.Text;
+                   
+                    
                     if (chksAutomatico.IsChecked == true)
                     {
                         insumo.entrada_automatica = 1;
@@ -263,11 +268,19 @@ namespace SharkAdministrativo.Vista
                     insumo.inventariable = cbxInventariable.SelectedItem.ToString();
                     insumo.rendimiento = Double.Parse(txtRendimiento.Text);
                     insumo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
-                    insumo.Unidad_Medida = unidad.obtener(cbxUmedida.SelectedItem.ToString());
+                    string nameUnidad = unidades[1].Trim();
+                    insumo.Unidad_Medida = unidad.obtener(nameUnidad);
                     Int32 aldProducto = 0;
                     int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
                     if (error == 0)
                     {
+                        SDK.fBuscaProducto(cProducto.cCodigoProducto);
+                        SDK.fEditaProducto();
+                        SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
+                        SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
+                        SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
+                        SDK.fGuardaProducto();
                         insumo.registrar(insumo);
                         this.insumoElaborado = insumo;
                         clearFields();
@@ -418,12 +431,14 @@ namespace SharkAdministrativo.Vista
             while (error == 0)
             {
                 StringBuilder nomUnidad = new StringBuilder(20);
+                StringBuilder idUnidad = new StringBuilder(5);
                 SDK.fLeeDatoUnidad("CNOMBREUNIDAD", nomUnidad, 20);
+                SDK.fLeeDatoUnidad("CIDUNIDAD", idUnidad, 5);
 
                 if (nomUnidad.ToString() != "(Ninguno)")
                 {
 
-                    cbxUmedida.Items.Add(nomUnidad);
+                    cbxUmedida.Items.Add(idUnidad + " | " + nomUnidad);
                 }
                 error = SDK.fPosSiguienteUnidad();
             }
@@ -628,17 +643,30 @@ namespace SharkAdministrativo.Vista
 
             if (seleccion != null)
             {
+                txtCodigo.IsReadOnly = true;
+                SDK.fBuscaProducto(seleccion.Row.ItemArray[5].ToString());
+                StringBuilder idValorClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoProducto("CIDVALORCLASIFICACION1", idValorClasificacion, 5);
+                SDK.fBuscaIdValorClasif(Convert.ToInt32(idValorClasificacion.ToString()));
+                StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder nomValorClasificacion = new StringBuilder(30);
+                StringBuilder idUnidad = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoProducto("CIDUNIDADBASE", idUnidad, 5);
+
                 this.insumoElaborado = insumoElaborado.getForId(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
                 txtDescripcion.Text = insumoElaborado.descripcion;
                 cbxGrupos.SelectedItem = seleccion.Row.ItemArray[2].ToString();
                 cbxInventariable.SelectedItem = insumoElaborado.inventariable;
-                cbxUmedida.SelectedItem = seleccion.Row.ItemArray[4].ToString();
+                cbxUmedida.SelectedItem = idUnidad + " | " + seleccion.Row.ItemArray[4].ToString();
                 txtUCosto.Text = Convert.ToString(insumoElaborado.costo_unitario);
                 txtCpromedio.Text = Convert.ToString(insumoElaborado.costo_promedio);
                 txtEstandar.Text = Convert.ToString(insumoElaborado.costo_estandar);
                 txtRendimiento.Text = Convert.ToString(insumoElaborado.rendimiento);
                 chksAutomatico.IsChecked = false;
                 groupInsumoElaborado.Header = "MODIFICANDO INSUMO "+ insumoElaborado.descripcion;
+                txtCodigo.Text = seleccion.Row.ItemArray[5].ToString();
                 if (insumoElaborado.entrada_automatica == 1)
                 {
                     chksAutomatico.IsChecked = true;

@@ -116,7 +116,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Cantidad:">
-                        <dxe:TextEdit/>
+                        <dxe:TextEdit x:Name="txtCantidadIE"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Unidad De Medida:">
                         <dxe:ComboBoxEdit x:Name="cbxUmedida" SelectedIndexChanged="cbxUmedida_SelectedIndexChanged" AutoComplete="True"/>
@@ -125,16 +125,17 @@
                 <dxlc:LayoutItem Label="Entrada Automática:">
                     <dxe:CheckEdit x:Name="chksAutomatico"/>
                 </dxlc:LayoutItem>
-                <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <dxlc:LayoutItem Label="Clasificación: ">
-                        <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones" AutoComplete="True"/>
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
+                
                 <dxlc:LayoutGroup x:Name="groupUnidades" Visibility="Collapsed" Header="Nueva Unidad De Medida" View="GroupBox" HorizontalAlignment="Stretch">
                     <dxlc:LayoutItem Label="Nombre:">
                         <dxe:TextEdit x:Name="txtNombreUnidad"/>
                     </dxlc:LayoutItem>
                     <Button Content="Guardar" x:Name="btnGuardarUnidad" Click="btnGuardarUnidad_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Clasificación: ">
+                        <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
 
             </dxlc:LayoutGroup>
