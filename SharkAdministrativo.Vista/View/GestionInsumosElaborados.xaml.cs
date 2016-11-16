@@ -195,7 +195,7 @@ namespace SharkAdministrativo.Vista
         {
             dtIElaborados.Rows.Clear();
             List<InsumoElaborado> insumosElaborados = insumoElaborado.obtenerTodos();
-            foreach (var IE in insumosElaborados)
+            foreach (var IE in insumosElaborados) 
             {
                 dtIElaborados.Rows.Add(IE.id, IE.descripcion, IE.Grupo.nombre, IE.rendimiento, IE.Unidad_Medida.nombre, IE.codigo);
             }
@@ -278,6 +278,8 @@ namespace SharkAdministrativo.Vista
                 insumo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
                 string nameUnidad = unidades[1].Trim();
                 insumo.Unidad_Medida = unidad.obtener(nameUnidad);
+                insumo.unidad_id = insumo.Unidad_Medida.id;
+                insumo.grupo_id = insumo.Grupo.id;
                 if (tblIElaborados.SelectedItem == null)
                 {
                     Int32 aldProducto = 0;
@@ -303,37 +305,39 @@ namespace SharkAdministrativo.Vista
                 else
                 {
                     System.Data.DataRowView seleccion = (System.Data.DataRowView)tblIElaborados.SelectedItem;
-                    insumoElaborado.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
+                    insumo.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
                     string codigoInsumo = txtCodigo.Text;
-                    int error = SDK.fBuscaProducto(codigoInsumo);
-                    SDK.fEditaProducto();
-                    if (error == 0)
+                    try
                     {
-                        error = SDK.fSetDatoProducto("CNOMBREPRODUCTO", cProducto.cNombreProducto);
-                        error = SDK.fSetDatoProducto("CCODIGOPRODUCTO", cProducto.cCodigoProducto);
-                        error = SDK.fSetDatoProducto("CDESCRIPCIONPRODUCTO", cProducto.cNombreProducto);
-                        error = SDK.fSetDatoProducto("CIMPUESTO1", Convert.ToString(cProducto.cImpuesto1));
-                        error = SDK.fSetDatoProducto("CPRECIO1", Convert.ToString(cProducto.cPrecio1));
-                        error = SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
-                        error = SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
-                        error = SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
-                        error = SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
-                        error = SDK.fGuardaProducto();
+                        int error = SDK.fBuscaProducto(codigoInsumo);
+                        SDK.fEditaProducto();
                         if (error == 0)
                         {
+                            error = SDK.fSetDatoProducto("CNOMBREPRODUCTO", cProducto.cNombreProducto);
+                            error = SDK.fSetDatoProducto("CCODIGOPRODUCTO", cProducto.cCodigoProducto);
+                            error = SDK.fSetDatoProducto("CDESCRIPCIONPRODUCTO", cProducto.cNombreProducto);
+                            error = SDK.fSetDatoProducto("CIMPUESTO1", Convert.ToString(cProducto.cImpuesto1));
+                            error = SDK.fSetDatoProducto("CPRECIO1", Convert.ToString(cProducto.cPrecio1));
+                            error = SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                            error = SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
+                            error = SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
+                            error = SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
+                            error = SDK.fGuardaProducto();
+                            if (error == 0)
+                            {
 
 
-                            insumoElaborado.modificar(insumoElaborado);
-                            MessageBox.Show(insumoElaborado.descripcion + ", Se modificó correctamente");
-
-                        }
-                        else
-                        {
-                            SDK.rError(error);
+                                insumoElaborado.modificar(insumo);
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
                         }
                     }
+                    catch (System.ArithmeticException) { }
                 }
-                clearFields();
+                limpiarCampos();
                 cargarInsumosElaborados();
             }
 
@@ -505,9 +509,19 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar el insumo '" + seleccion.Row.ItemArray[1] + "'?", "Eliminación de Insumo Elaborado", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    insumoElaborado.eliminar(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
-                    seleccion.Delete();
-                    clearFields();
+                    int error = SDK.fEliminarProducto(txtCodigo.Text);
+
+                    if (error == 0)
+                    {
+
+                        insumoElaborado.eliminar(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                        seleccion.Delete();
+                        clearFields();
+                    }
+                    else {
+                        SDK.rError(error);
+                    }
+                    
                 }
             }
             else
@@ -529,9 +543,28 @@ namespace SharkAdministrativo.Vista
             txtEstandar.Clear();
             txtRendimiento.Clear();
             chksAutomatico.IsChecked = false;
+            txtCodigo.Clear();
+            cbxValoresDeClasificaciones.SelectedItem = null;
             tblIElaborados.SelectedItem = false;
+            groupInsumoElaborado.Header = "Nuevo Insumo Elaborado";
             Title.Text = "Gestion De Insumos Elaborados";
         }
+
+        public void limpiarCampos(){
+            cbxGrupos.SelectedItem = null;
+            cbxInventariable.SelectedItem = null;
+            cbxUmedida.SelectedItem = null;
+            txtDescripcion.Clear();
+            txtUCosto.Clear();
+            txtCpromedio.Clear();
+            txtEstandar.Clear();
+            txtRendimiento.Clear();
+            chksAutomatico.IsChecked = false;
+            txtCodigo.Clear();
+            cbxValoresDeClasificaciones.SelectedItem = null;
+            Title.Text = "Gestion De Insumos Elaborados";
+        }
+
 
         private void ObtenerCostos_KeyUp(object sender, KeyEventArgs e)
         {
