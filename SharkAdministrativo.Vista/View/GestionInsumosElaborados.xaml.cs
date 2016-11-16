@@ -49,11 +49,11 @@ namespace SharkAdministrativo.Vista
             cargarTitlesProducts();
             cargarAreas();
             cargarClasificaciones();
-        
+
         }
 
 
-        
+
 
 
         ImageSource GetImage(string path)
@@ -61,7 +61,8 @@ namespace SharkAdministrativo.Vista
             return new BitmapImage(new Uri(path, UriKind.Relative));
         }
 
-        public void loadTitles() {
+        public void loadTitles()
+        {
             dtIElaborados.Columns.Add("ID");
             dtIElaborados.Columns.Add("Descripción");
             dtIElaborados.Columns.Add("Grupo");
@@ -71,10 +72,11 @@ namespace SharkAdministrativo.Vista
             cargarInsumosElaborados();
             tblIElaborados.ItemsSource = dtIElaborados.DefaultView;
             tblIElaborados.Columns[0].Visible = false;
-            
+
         }
 
-        public void cargarReceta(string indicador, int id) { 
+        public void cargarReceta(string indicador, int id)
+        {
             Receta receta = new Receta();
             dtReceta.Rows.Clear();
             List<Receta> ingredientes = receta.obtenerIngredientesDeReceta(indicador, id);
@@ -82,26 +84,27 @@ namespace SharkAdministrativo.Vista
             double total = 0;
             foreach (var ingrediente in ingredientes)
             {
-                
+
                 string string_almacenes = null;
-                String [] almacenes = ingrediente.almacenes_id.Split(';');
+                String[] almacenes = ingrediente.almacenes_id.Split(';');
                 foreach (var storage in almacenes)
                 {
                     if (!String.IsNullOrEmpty(storage))
                     {
                         this.almacen = almacen.getForId(Convert.ToInt32(storage));
-                        string_almacenes = almacen.nombre+";";
+                        string_almacenes = almacen.nombre + ";";
                     }
                 }
                 string costo = Convert.ToString(ingrediente.Insumo.ultimo_costo);
                 string cantidad = Convert.ToString(ingrediente.cantidad);
-                gasto += Double.Parse(costo)* Double.Parse(cantidad);
+                gasto += Double.Parse(costo) * Double.Parse(cantidad);
                 total += gasto;
                 dtReceta.Rows.Add(ingrediente.id, ingrediente.Insumo.descripcion, ingrediente.cantidad, string_almacenes, gasto);
             }
             txtCostoReceta.Text = "Costo De Receta: $" + total;
         }
-        public void cargarTitlesProducts() {
+        public void cargarTitlesProducts()
+        {
             dtProductos.Columns.Add("ID");
             dtProductos.Columns.Add("Descripción");
             dtProductos.Columns.Add("Nombre");
@@ -113,7 +116,7 @@ namespace SharkAdministrativo.Vista
             tblProductos.ItemsSource = dtProductos.DefaultView;
             cargarProductos();
             tblProductos.Columns[0].Visible = false;
-           
+
         }
 
         private void cargarClasificaciones()
@@ -136,12 +139,13 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        void cargarProductos() { 
+        void cargarProductos()
+        {
             Producto producto = new Producto();
             List<Producto> productos = producto.obtenerTodos();
             dtProductos.Rows.Clear();
-            
-            
+
+
             foreach (var item in productos)
             {
                 string areasPreparacion = "";
@@ -153,7 +157,7 @@ namespace SharkAdministrativo.Vista
                     if (!String.IsNullOrEmpty(a))
                     {
                         AreaProduccion area = this.area.obtenerPorID(Convert.ToInt32(a));
-                        areasPreparacion += area.nombre+";";
+                        areasPreparacion += area.nombre + ";";
                     }
                 }
                 foreach (var a in disponibles_id)
@@ -165,11 +169,12 @@ namespace SharkAdministrativo.Vista
                     }
                 }
 
-                dtProductos.Rows.Add(item.id,item.descripcion,item.nombre,item.ultimoPrecio,item.IVA,item.precioConImpuesto,areasPreparacion,areasDisponibles);
+                dtProductos.Rows.Add(item.id, item.descripcion, item.nombre, item.ultimoPrecio, item.IVA, item.precioConImpuesto, areasPreparacion, areasDisponibles);
             }
         }
 
-        public void cargarIngredientes() {
+        public void cargarIngredientes()
+        {
             insumos = insumo.obtenerTodos();
             foreach (var item in insumos)
             {
@@ -177,7 +182,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void cargarAlmacenes() {
+        public void cargarAlmacenes()
+        {
             List<Almacen> almacenes = almacen.obtenerTodos();
             foreach (var item in almacenes)
             {
@@ -185,14 +191,15 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void cargarInsumosElaborados() {
+        public void cargarInsumosElaborados()
+        {
             dtIElaborados.Rows.Clear();
             List<InsumoElaborado> insumosElaborados = insumoElaborado.obtenerTodos();
             foreach (var IE in insumosElaborados)
             {
-                dtIElaborados.Rows.Add(IE.id, IE.descripcion, IE.Grupo.nombre, IE.rendimiento, IE.Unidad_Medida.nombre, IE.codigo);      
+                dtIElaborados.Rows.Add(IE.id, IE.descripcion, IE.Grupo.nombre, IE.rendimiento, IE.Unidad_Medida.nombre, IE.codigo);
             }
-            
+
         }
 
         private void btnGuardarUnidad_Click(object sender, RoutedEventArgs e)
@@ -222,54 +229,57 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public Boolean validarCampos(){
+        public Boolean validarCampos()
+        {
             bool validez = false;
-            if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtUCosto.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtEstandar.Text) && cbxInventariable.SelectedItem!=null && cbxUmedida.SelectedItem!=null && cbxGrupos.SelectedItem!=null)
+            if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtUCosto.Text) && !String.IsNullOrEmpty(txtCpromedio.Text) && !String.IsNullOrEmpty(txtEstandar.Text) && cbxInventariable.SelectedItem != null && cbxUmedida.SelectedItem != null && cbxGrupos.SelectedItem != null)
             {
-                validez = true;   
+                validez = true;
             }
             return validez;
         }
 
-        public void guardarModificar() {
-            if (tblIElaborados.SelectedItem == null)
+        public void guardarModificar()
+        {
+
+            if (validarCampos())
             {
-                if (validarCampos())
+                SDK.tProduto cProducto = new SDK.tProduto();
+                cProducto.cNombreProducto = txtDescripcion.Text;
+                cProducto.cCodigoProducto = txtCodigo.Text;
+                cProducto.cDescripcionProducto = txtDescripcion.Text;
+                cProducto.cTipoProducto = 1;
+                cProducto.cMetodoCosteo = 1;
+                String[] unidades = cbxUmedida.SelectedItem.ToString().Split('|');
+                string idUnidad = unidades[0].Trim();
+                cProducto.cPrecio1 = Double.Parse(txtUCosto.Text);
+                String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
+                string codigoClasificacion = clasificacion[0].Trim();
+
+
+                InsumoElaborado insumo = new InsumoElaborado();
+                insumo.descripcion = txtDescripcion.Text;
+                insumo.costo_unitario = Double.Parse(txtUCosto.Text);
+                insumo.costo_promedio = Double.Parse(txtCpromedio.Text);
+                insumo.costo_estandar = Double.Parse(txtEstandar.Text);
+                insumo.codigo = txtCodigo.Text;
+
+
+                if (chksAutomatico.IsChecked == true)
                 {
-                    SDK.tProduto cProducto = new SDK.tProduto();
-                    cProducto.cNombreProducto = txtDescripcion.Text;
-                    cProducto.cCodigoProducto = txtCodigo.Text;
-                    cProducto.cDescripcionProducto = txtDescripcion.Text;
-                    cProducto.cTipoProducto = 1;
-                    cProducto.cMetodoCosteo = 1;
-                    String[] unidades = cbxUmedida.SelectedItem.ToString().Split('|');
-                    string idUnidad = unidades[0].Trim();
-                    cProducto.cPrecio1 = Double.Parse(txtUCosto.Text);
-                    String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
-                    string codigoClasificacion = clasificacion[0].Trim();
-
-
-                    InsumoElaborado insumo = new InsumoElaborado();
-                    insumo.descripcion = txtDescripcion.Text;
-                    insumo.costo_unitario = Double.Parse(txtUCosto.Text);
-                    insumo.costo_promedio = Double.Parse(txtCpromedio.Text);
-                    insumo.costo_estandar = Double.Parse(txtEstandar.Text);
-                    insumo.codigo = txtCodigo.Text;
-                   
-                    
-                    if (chksAutomatico.IsChecked == true)
-                    {
-                        insumo.entrada_automatica = 1;
-                    }
-                    else
-                    {
-                        insumo.entrada_automatica = 0;
-                    }
-                    insumo.inventariable = cbxInventariable.SelectedItem.ToString();
-                    insumo.rendimiento = Double.Parse(txtRendimiento.Text);
-                    insumo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
-                    string nameUnidad = unidades[1].Trim();
-                    insumo.Unidad_Medida = unidad.obtener(nameUnidad);
+                    insumo.entrada_automatica = 1;
+                }
+                else
+                {
+                    insumo.entrada_automatica = 0;
+                }
+                insumo.inventariable = cbxInventariable.SelectedItem.ToString();
+                insumo.rendimiento = Double.Parse(txtRendimiento.Text);
+                insumo.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
+                string nameUnidad = unidades[1].Trim();
+                insumo.Unidad_Medida = unidad.obtener(nameUnidad);
+                if (tblIElaborados.SelectedItem == null)
+                {
                     Int32 aldProducto = 0;
                     int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
                     if (error == 0)
@@ -285,41 +295,48 @@ namespace SharkAdministrativo.Vista
                         this.insumoElaborado = insumo;
                         clearFields();
                     }
-                    else {
+                    else
+                    {
                         SDK.rError(error);
                     }
-                    
-                }
-                else {
-                    MessageBox.Show("ES NECESARIO QUE INGRESE CADA UNO DE LOS DATOS SOLICITADOS");
-                }
-            }
-            else {
-                System.Data.DataRowView seleccion = (System.Data.DataRowView)tblIElaborados.SelectedItem;
-                insumoElaborado.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
-                insumoElaborado.descripcion = txtDescripcion.Text;
-                insumoElaborado.costo_unitario = Double.Parse(txtUCosto.Text);
-                insumoElaborado.costo_promedio = Double.Parse(txtCpromedio.Text);
-                insumoElaborado.costo_estandar = Double.Parse(txtEstandar.Text);
-                if (chksAutomatico.IsChecked == true)
-                {
-                    insumoElaborado.entrada_automatica = 1;
                 }
                 else
                 {
-                    insumoElaborado.entrada_automatica = 0;
+                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblIElaborados.SelectedItem;
+                    insumoElaborado.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
+                    string codigoInsumo = txtCodigo.Text;
+                    int error = SDK.fBuscaProducto(codigoInsumo);
+                    SDK.fEditaProducto();
+                    if (error == 0)
+                    {
+                        error = SDK.fSetDatoProducto("CNOMBREPRODUCTO", cProducto.cNombreProducto);
+                        error = SDK.fSetDatoProducto("CCODIGOPRODUCTO", cProducto.cCodigoProducto);
+                        error = SDK.fSetDatoProducto("CDESCRIPCIONPRODUCTO", cProducto.cNombreProducto);
+                        error = SDK.fSetDatoProducto("CIMPUESTO1", Convert.ToString(cProducto.cImpuesto1));
+                        error = SDK.fSetDatoProducto("CPRECIO1", Convert.ToString(cProducto.cPrecio1));
+                        error = SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        error = SDK.fSetDatoProducto("CBANUNIDADES", idUnidad);
+                        error = SDK.fSetDatoProducto("CIDUNIDADBASE", idUnidad);
+                        error = SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
+                        error = SDK.fGuardaProducto();
+                        if (error == 0)
+                        {
+
+
+                            insumoElaborado.modificar(insumoElaborado);
+                            MessageBox.Show(insumoElaborado.descripcion + ", Se modificó correctamente");
+
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+                    }
                 }
-                insumoElaborado.inventariable = cbxInventariable.SelectedItem.ToString();
-                insumoElaborado.rendimiento = Double.Parse(txtRendimiento.Text);
-                insumoElaborado.Grupo = grupo.obtener(cbxGrupos.SelectedItem.ToString());
-                insumoElaborado.Unidad_Medida = unidad.obtener(cbxUmedida.SelectedItem.ToString());
-                insumoElaborado.unidad_id = insumoElaborado.Unidad_Medida.id;
-                insumoElaborado.grupo_id = insumoElaborado.Grupo.id;
-                insumoElaborado.modificar(insumoElaborado);
-                MessageBox.Show(insumoElaborado.descripcion+", Se modificó correctamente");
+                clearFields();
+                cargarInsumosElaborados();
             }
-            clearFields();
-            cargarInsumosElaborados();
+
         }
 
         private void cbxGrupos_SelectedIndexChanged(object sender, RoutedEventArgs e)
@@ -480,11 +497,12 @@ namespace SharkAdministrativo.Vista
             guardarModificar();
         }
 
-        private void eliminarIElaborado() {
+        private void eliminarIElaborado()
+        {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblIElaborados.SelectedItem;
             if (seleccion != null)
             {
-                MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar el insumo '"+seleccion.Row.ItemArray[1]+"'?", "Eliminación de Insumo Elaborado", MessageBoxButton.YesNo);
+                MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar el insumo '" + seleccion.Row.ItemArray[1] + "'?", "Eliminación de Insumo Elaborado", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
                     insumoElaborado.eliminar(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
@@ -492,14 +510,16 @@ namespace SharkAdministrativo.Vista
                     clearFields();
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("SELECCIONA EL INSUMO QUE DESEAS ELIMINAR");
             }
-            
+
         }
 
 
-        public void clearFields() {
+        public void clearFields()
+        {
             cbxGrupos.SelectedItem = null;
             cbxInventariable.SelectedItem = null;
             cbxUmedida.SelectedItem = null;
@@ -526,21 +546,26 @@ namespace SharkAdministrativo.Vista
         {
             if (!String.IsNullOrEmpty(txtUPrecioP.Text) && !String.IsNullOrEmpty(txtIVAP.Text))
             {
-                try {
+                try
+                {
                     string costop = txtUPrecioP.Text;
                     string ivap = txtIVAP.Text;
                     double precioImpuesto = (Double.Parse(costop) * (Double.Parse(ivap) / 100)) + Double.Parse(costop);
                     txtPCImpuestoP.Text = Convert.ToString(precioImpuesto);
-                }catch(Exception ex){
+                }
+                catch (Exception ex)
+                {
                     Console.Write(ex);
                 }
             }
-            else {
+            else
+            {
                 txtPCImpuestoP.Clear();
             }
         }
 
-        public void showView(int vista) {
+        public void showView(int vista)
+        {
             esconderVistas();
             if (vista == 1)
             {
@@ -548,17 +573,21 @@ namespace SharkAdministrativo.Vista
                 vista_InsumosElaborados.Visibility = Visibility.Visible;
                 btnGeneral.IsVisible = true;
             }
-            else if (vista == 2){
+            else if (vista == 2)
+            {
                 vista_Receta.Visibility = Visibility.Visible;
                 btnADDRECETAMENU.IsVisible = true;
-            }else if(vista == 3){
+            }
+            else if (vista == 3)
+            {
                 Title.Text = "Gestión De Productos";
                 vista_Producto.Visibility = Visibility.Visible;
                 btnProducto.IsVisible = true;
             }
         }
 
-        private void esconderVistas() {
+        private void esconderVistas()
+        {
             vista_Producto.Visibility = Visibility.Collapsed;
             vista_Receta.Visibility = Visibility.Collapsed;
             vista_InsumosElaborados.Visibility = Visibility.Collapsed;
@@ -572,15 +601,15 @@ namespace SharkAdministrativo.Vista
         {
             if (tblIElaborados.SelectedItem != null)
             {
-                from = "IE";   
-                Title.Text = "Receta de '"+insumoElaborado.descripcion+"'";
+                from = "IE";
+                Title.Text = "Receta de '" + insumoElaborado.descripcion + "'";
                 showView(2);
                 cargarReceta("IE", this.insumoElaborado.id);
                 hasChanged = false;
             }
             else if (validarCampos() == true)
             {
-                from = "IE";   
+                from = "IE";
                 guardarModificar();
                 Title.Text = "Receta de '" + insumoElaborado.descripcion + "'";
                 showView(2);
@@ -588,7 +617,8 @@ namespace SharkAdministrativo.Vista
                 hasChanged = false;
 
             }
-            else {
+            else
+            {
                 MessageBox.Show("La andas cagando papu :V");
             }
         }
@@ -597,7 +627,7 @@ namespace SharkAdministrativo.Vista
         {
             if (tblProductos.SelectedItem != null)
             {
-                from = "P";   
+                from = "P";
                 Title.Text = "Receta de '" + producto.descripcion + "'";
                 showView(2);
                 cargarReceta("P", this.producto.id);
@@ -605,7 +635,7 @@ namespace SharkAdministrativo.Vista
             }
             else if (validarCampos() == true)
             {
-                from = "P";   
+                from = "P";
                 guardarModificarProducto();
                 Title.Text = "Receta de '" + producto.descripcion + "'";
                 showView(2);
@@ -623,17 +653,18 @@ namespace SharkAdministrativo.Vista
         {
             if (hasChanged)
             {
-                MessageBox.Show("SE GUARDARON LOS CAMBIOS CORRECTAMENTE");   
+                MessageBox.Show("SE GUARDARON LOS CAMBIOS CORRECTAMENTE");
             }
             clearFields();
             if (from == "IE")
             {
                 showView(1);
             }
-            else {
+            else
+            {
                 showView(3);
             }
-            
+
         }
 
 
@@ -644,7 +675,8 @@ namespace SharkAdministrativo.Vista
             if (seleccion != null)
             {
                 txtCodigo.IsReadOnly = true;
-                SDK.fBuscaProducto(seleccion.Row.ItemArray[5].ToString());
+                int error = SDK.fBuscaProducto(seleccion.Row.ItemArray[5].ToString());
+                SDK.rError(error);
                 StringBuilder idValorClasificacion = new StringBuilder(5);
                 SDK.fLeeDatoProducto("CIDVALORCLASIFICACION1", idValorClasificacion, 5);
                 SDK.fBuscaIdValorClasif(Convert.ToInt32(idValorClasificacion.ToString()));
@@ -654,7 +686,7 @@ namespace SharkAdministrativo.Vista
                 SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
                 SDK.fLeeDatoProducto("CIDUNIDADBASE", idUnidad, 5);
-
+                cbxValoresDeClasificaciones.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
                 this.insumoElaborado = insumoElaborado.getForId(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
                 txtDescripcion.Text = insumoElaborado.descripcion;
                 cbxGrupos.SelectedItem = seleccion.Row.ItemArray[2].ToString();
@@ -665,7 +697,7 @@ namespace SharkAdministrativo.Vista
                 txtEstandar.Text = Convert.ToString(insumoElaborado.costo_estandar);
                 txtRendimiento.Text = Convert.ToString(insumoElaborado.rendimiento);
                 chksAutomatico.IsChecked = false;
-                groupInsumoElaborado.Header = "MODIFICANDO INSUMO "+ insumoElaborado.descripcion;
+                groupInsumoElaborado.Header = "MODIFICANDO INSUMO " + insumoElaborado.descripcion;
                 txtCodigo.Text = seleccion.Row.ItemArray[5].ToString();
                 if (insumoElaborado.entrada_automatica == 1)
                 {
@@ -696,12 +728,14 @@ namespace SharkAdministrativo.Vista
                     }
                 }
             }
-            else {
+            else
+            {
                 txtUnidadMedida.Text = "...";
             }
         }
 
-        public void loadTitlesRecipe(){
+        public void loadTitlesRecipe()
+        {
             dtReceta.Columns.Add("ID");
             dtReceta.Columns.Add("Ingrediente / Insumo");
             dtReceta.Columns.Add("Cantidad");
@@ -712,16 +746,16 @@ namespace SharkAdministrativo.Vista
             tblReceta.ItemsSource = dtReceta.DefaultView;
             tblReceta.Columns[0].Visible = false;
             tblReceta.SelectedItem = false;
-            
+
 
         }
-       
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtCantidadR.Text) && cbxIngredientes.SelectedItem!=null && cbxAlmacenes.SelectedItem!=null)
+            if (!String.IsNullOrEmpty(txtCantidadR.Text) && cbxIngredientes.SelectedItem != null && cbxAlmacenes.SelectedItem != null)
             {
                 hasChanged = true;
-                double total =0;
+                double total = 0;
                 string costo = null;
                 string almacenes = "";
                 Receta receta = new Receta();
@@ -729,27 +763,28 @@ namespace SharkAdministrativo.Vista
                 receta.insumo_id = receta.Insumo.id;
                 receta.cantidad = Double.Parse(txtCantidadR.Text);
                 costo = Convert.ToString(receta.Insumo.ultimo_costo);
-                double gasto = Double.Parse(costo)*Double.Parse(txtCantidadR.Text);
-                if (receta.InsumoElaborado != null)
+                double gasto = Double.Parse(costo) * Double.Parse(txtCantidadR.Text);
+                if (this.insumoElaborado != null)
                 {
                     receta.InsumoElaborado = insumoElaborado.getForId(insumoElaborado.id);
                     receta.insumoElaborado_id = receta.InsumoElaborado.id;
                 }
-                else {
+                else
+                {
                     receta.Producto = producto.obtenerPorID(producto.id);
                     receta.producto_id = receta.producto_id;
                 }
-                
+
                 String[] obtenerTotal = txtCostoReceta.Text.Split('$');
                 total += Double.Parse(obtenerTotal[1]);
                 total += gasto;
-                txtCostoReceta.Text = "Costo De Receta: $"+total;
+                txtCostoReceta.Text = "Costo De Receta: $" + total;
 
                 foreach (var item in cbxAlmacenes.SelectedItems)
                 {
                     if (!String.IsNullOrEmpty(item.ToString()))
                     {
-                        almacenes += item.ToString()+";";
+                        almacenes += item.ToString() + ";";
                         receta.almacenes_id += almacen.obtenerID(item.ToString()) + ";";
                     }
                 }
@@ -758,7 +793,8 @@ namespace SharkAdministrativo.Vista
                     receta.registrar(receta);
                     dtReceta.Rows.Add(receta.id, receta.Insumo.descripcion, receta.cantidad, almacenes, gasto);
                 }
-                else {
+                else
+                {
                     System.Data.DataRowView seleccion = (System.Data.DataRowView)tblReceta.SelectedItem;
                     receta.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
                     receta.modificar(receta);
@@ -766,18 +802,20 @@ namespace SharkAdministrativo.Vista
                     {
                         cargarReceta("IE", this.insumoElaborado.id);
                     }
-                    else {
+                    else
+                    {
                         cargarReceta("P", this.producto.id);
                     }
                 }
-               
-                
+
+
                 clearFieldsReceta();
             }
         }
 
 
-        public void clearFieldsReceta() {
+        public void clearFieldsReceta()
+        {
             cbxIngredientes.SelectedItem = null;
             cbxAlmacenes.SelectedItem = null;
             txtCantidadR.Clear();
@@ -786,7 +824,7 @@ namespace SharkAdministrativo.Vista
         private void tblReceta_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblReceta.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
                 cbxIngredientes.SelectedItem = seleccion.Row.ItemArray[1].ToString();
                 txtCantidadR.Text = seleccion.Row.ItemArray[2].ToString();
@@ -795,7 +833,7 @@ namespace SharkAdministrativo.Vista
                 {
                     cbxAlmacenes.SelectedItems.Add(storage);
                 }
-                
+
             }
         }
 
@@ -815,26 +853,29 @@ namespace SharkAdministrativo.Vista
                     clearFieldsReceta();
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Es Necesario que seleccione el ingrediente que desea elimianr");
             }
         }
 
         private void btnNuevaArea_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (btnNuevaArea.Content.ToString() == "Nuevo")
             {
                 vistaNAP.Visibility = Visibility.Visible;
                 btnNuevaArea.Content = "Cancelar";
             }
-            else if(btnNuevaArea.Content.ToString() == "Cancelar"){
+            else if (btnNuevaArea.Content.ToString() == "Cancelar")
+            {
                 vistaNAP.Visibility = Visibility.Collapsed;
                 btnNuevaArea.Content = "Nuevo";
             }
         }
         AreaProduccion area = new AreaProduccion();
-        private void cargarAreas() {
+        private void cargarAreas()
+        {
             cbxPreparacion.Items.Clear();
             cbxAreaDisponible.Items.Clear();
             List<AreaProduccion> areas = area.obtenerTodos();
@@ -853,7 +894,7 @@ namespace SharkAdministrativo.Vista
                 AreaProduccion area = new AreaProduccion();
                 area.nombre = txtNombreArea.Text;
                 area.registrar(area);
-                if (area.id>0)
+                if (area.id > 0)
                 {
                     txtNombreArea.Clear();
                     cargarAreas();
@@ -861,98 +902,104 @@ namespace SharkAdministrativo.Vista
                     vistaNAP.Visibility = Visibility.Collapsed;
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Es Necesario que ingrese el nombre de la nueva área de producción");
             }
 
         }
-        
+
         private void GuardarYNuevo_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             if (validarDatosProducto() == true)
             {
                 guardarModificarProducto();
             }
-            else {
+            else
+            {
                 MessageBox.Show("EXISTEN CAMPOS IMPORTANTES SIN INGRESAR");
             }
-            
+
         }
 
-        public Boolean validarDatosProducto() {
+        public Boolean validarDatosProducto()
+        {
             bool validacion = false;
-            if (!String.IsNullOrEmpty(txtDescripcionP.Text) && !String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtPCImpuestoP.Text) && !String.IsNullOrEmpty(txtUPrecioP.Text) && !String.IsNullOrEmpty(txtIVAP.Text) && cbxAreaDisponible.SelectedItem!=null && cbxPreparacion.SelectedItem!=null)
+            if (!String.IsNullOrEmpty(txtDescripcionP.Text) && !String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtPCImpuestoP.Text) && !String.IsNullOrEmpty(txtUPrecioP.Text) && !String.IsNullOrEmpty(txtIVAP.Text) && cbxAreaDisponible.SelectedItem != null && cbxPreparacion.SelectedItem != null)
             {
                 validacion = true;
             }
             return validacion;
         }
 
-        public void guardarModificarProducto() {
+        public void guardarModificarProducto()
+        {
             if (validarDatosProducto())
             {
                 producto.descripcion = txtDescripcionP.Text;
-            producto.areasPreparacion = "";
-            producto.disponlibleEn = "";
-            foreach (var item in cbxPreparacion.SelectedItems)
-            {
-                if (!String.IsNullOrEmpty(item.ToString()))
+                producto.areasPreparacion = "";
+                producto.disponlibleEn = "";
+                foreach (var item in cbxPreparacion.SelectedItems)
                 {
-                    AreaProduccion area = this.area.obtener(item.ToString());   
-                    producto.areasPreparacion += area.id + ";";
+                    if (!String.IsNullOrEmpty(item.ToString()))
+                    {
+                        AreaProduccion area = this.area.obtener(item.ToString());
+                        producto.areasPreparacion += area.id + ";";
+                    }
                 }
-            }
-            foreach (var item in cbxAreaDisponible.SelectedItems)
-            {
-                if (!String.IsNullOrEmpty(item.ToString()))
+                foreach (var item in cbxAreaDisponible.SelectedItems)
                 {
-                    AreaProduccion area = this.area.obtener(item.ToString());  
-                    producto.disponlibleEn = area.id + ";";
+                    if (!String.IsNullOrEmpty(item.ToString()))
+                    {
+                        AreaProduccion area = this.area.obtener(item.ToString());
+                        producto.disponlibleEn = area.id + ";";
+                    }
                 }
-            }
-            String[] route = img.Source.ToString().Split('/');
-            string URI = "";
-            foreach (var ruta in route)
-            {
-                if (ruta!="file:")
+                String[] route = img.Source.ToString().Split('/');
+                string URI = "";
+                foreach (var ruta in route)
                 {
-                      URI+=ruta+"/";
+                    if (ruta != "file:")
+                    {
+                        URI += ruta + "/";
+                    }
                 }
-            }
-            URI = URI.TrimEnd('/');
-            URI = URI.TrimStart('/');
-            URI = URI.TrimStart('/');
-            producto.IVA = Double.Parse(txtIVAP.Text);
-            producto.nombre = txtNombreP.Text;
-            producto.precioConImpuesto = Double.Parse(txtPCImpuestoP.Text);
-            producto.ultimoPrecio = Double.Parse(txtUPrecioP.Text);
+                URI = URI.TrimEnd('/');
+                URI = URI.TrimStart('/');
+                URI = URI.TrimStart('/');
+                producto.IVA = Double.Parse(txtIVAP.Text);
+                producto.nombre = txtNombreP.Text;
+                producto.precioConImpuesto = Double.Parse(txtPCImpuestoP.Text);
+                producto.ultimoPrecio = Double.Parse(txtUPrecioP.Text);
 
-            if (URI != "System.Windows.Media.Imaging.BitmapImage")
-            {
-                System.Drawing.Image imagen = System.Drawing.Image.FromFile(URI);
-                producto.imagen = convertirAByte(imagen);
-            }
-           
-          
-            if (tblProductos.SelectedItem==null)
-            {
-                producto.registrar(producto);
-                MessageBox.Show("Se registró el producto "+producto.nombre);
-            }
-            else {
-                System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
-                Producto p = new Producto();
-                p = producto.obtenerPorID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
-                producto.id = p.id;
-                producto.modificar(producto);
-                MessageBox.Show("Se modificó el producto " + producto.nombre);
-            }
-            cargarProductos();
-            clearFieldsProducts();
+                if (URI != "System.Windows.Media.Imaging.BitmapImage")
+                {
+                    System.Drawing.Image imagen = System.Drawing.Image.FromFile(URI);
+                    producto.imagen = convertirAByte(imagen);
+                }
+
+
+                if (tblProductos.SelectedItem == null)
+                {
+                    producto.registrar(producto);
+                    MessageBox.Show("Se registró el producto " + producto.nombre);
+                }
+                else
+                {
+                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
+                    Producto p = new Producto();
+                    p = producto.obtenerPorID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                    producto.id = p.id;
+                    producto.modificar(producto);
+                    MessageBox.Show("Se modificó el producto " + producto.nombre);
+                }
+                cargarProductos();
+                clearFieldsProducts();
             }
         }
 
-        public void clearFieldsProducts() {
+        public void clearFieldsProducts()
+        {
             txtDescripcionP.Clear();
             txtNombreP.Clear();
             txtUPrecioP.Clear();
@@ -986,8 +1033,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        
-        
+
+
 
         private void SeleccionarImagen_Click(object sender, RoutedEventArgs e)
         {
@@ -1010,7 +1057,7 @@ namespace SharkAdministrativo.Vista
         private void tblProductos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
-           
+
             if (seleccion != null)
             {
                 this.producto = this.producto.obtenerPorID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
@@ -1029,7 +1076,7 @@ namespace SharkAdministrativo.Vista
                 txtIVAP.Text = Convert.ToString(producto.IVA);
                 String[] produccion = seleccion.Row.ItemArray[6].ToString().Split(';');
                 String[] disponible = seleccion.Row.ItemArray[7].ToString().Split(';');
-                groupProducto.Header = "MODIFICANDO "+producto.descripcion;
+                groupProducto.Header = "MODIFICANDO " + producto.descripcion;
                 foreach (var item in produccion)
                 {
                     if (!String.IsNullOrEmpty(item.ToString()))
@@ -1046,7 +1093,7 @@ namespace SharkAdministrativo.Vista
                 }
 
             }
-         
+
         }
 
         private void txtNombreP_KeyUp(object sender, KeyEventArgs e)
@@ -1055,11 +1102,12 @@ namespace SharkAdministrativo.Vista
             {
                 txtCortoName.Text = txtNombreP.Text;
             }
-            else {
+            else
+            {
                 txtCortoName.Text = "Sin Nombre Disponible";
             }
         }
-        
+
         private void eliminarProducto_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
@@ -1075,7 +1123,8 @@ namespace SharkAdministrativo.Vista
                     clearFieldsProducts();
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("EN NECESARIO QUE SELECCIONE EL PRODUCTO QUE DESEA ELIMINAR");
             }
         }
@@ -1164,7 +1213,7 @@ namespace SharkAdministrativo.Vista
             exportTo(".png", tablaProductos, "InsumosElaborados");
         }
 
-        
+
         private void btnProductReport_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             ReportsView.ProductView vista = new ReportsView.ProductView();
@@ -1177,6 +1226,6 @@ namespace SharkAdministrativo.Vista
             vista.Show();
         }
 
-        
+
     }
 }
