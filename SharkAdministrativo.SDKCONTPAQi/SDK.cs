@@ -362,18 +362,19 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern void fCierraEmpresa();
 
 
-        //Funciones De Clasificación.
+        //funciones de Valores de clasificaciones
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern int fBuscaClasificacion(int aClasificacionDe, int aNumClasificacion);
+        public static extern int fAltaValorClasif(int aIdValorClasif, ValorClasificacion astValorClasif);
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosUltimoClasificacion();
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
+        public static extern Int32 fPosPrimerValorClasif();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaValorClasif(int aClasificacionDe, int aNumClasificacion, string aCodValorClasif);
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosPrimerValorClasif();
-
+        public static extern Int32 fEditaValorClasif();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fGuardaValorClasif();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fSetDatoValorClasif(String aCampo, String aValor);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fPosSiguienteValorClasif();
 
@@ -382,6 +383,19 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaIdValorClasif(int aIdValorClasif);
+
+
+        //Funciones De Clasificación.
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern int fBuscaClasificacion(int aClasificacionDe, int aNumClasificacion);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fPosUltimoClasificacion();
+
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fGuardaClasificacion();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
 
 
 

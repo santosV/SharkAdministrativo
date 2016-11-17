@@ -115,18 +115,6 @@ namespace SharkAdministrativo.Vista
            
         }
 
-        /// <summary>
-        /// Llena las filas de la tabla de almacenes.
-        /// </summary>
-        //private void fillTableStorage()
-        //{
-        //    dtAlmacenes.Rows.Clear();
-        //    List<Almacen> storages = almacen.obtenerTodos();
-        //    foreach (var storage in storages)
-        //    {
-        //        dtAlmacenes.Rows.Add(storage.id, storage.nombre);
-        //    }
-        //}
 
         /// <summary>
         /// Llena el combobox de todas las categorías disponibles.
@@ -146,21 +134,85 @@ namespace SharkAdministrativo.Vista
         public void saveModify() {
             if (!String.IsNullOrEmpty(txtGrupo.Text) && cbxCategoria.SelectedItem != null)
             {
-                grupo.nombre = txtGrupo.Text;
-                grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
-                grupo.categoria_id = grupo.Categoria.id;
-                if (tblGrupos.SelectedItem==null)
-                {
-                    grupo.registrar(grupo);
-                }
-                else
-                {
-                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
-                    Grupo group = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
-                    grupo.id = group.id;
-                    grupo.Modify(grupo);
+                
 
+                int error = SDK.fPosPrimerValorClasif();
+                String bandera = "No encontrado";
+                if(error==0){
+                    for (int i = 13; i <= 18; i++)
+                    {
+                        if (bandera.Equals("Encontrado")) {
+                            break;
+                        }
+                        String aValorClasificacion = "";
+                        String aValorAbreviatura = "";
+                        while (bandera.Equals("No encontrado")) {
+                            
+                            StringBuilder cClasificacion = new StringBuilder(11);
+                            StringBuilder cValorClasificacion = new StringBuilder(60);
+                            StringBuilder cValorAbreviatura = new StringBuilder(3);
+                            SDK.fLeeDatoValorClasif("CIDCLASIFICACION",cClasificacion,11);
+                            SDK.fLeeDatoValorClasif("CVALORCLASIFICACION",cValorClasificacion,60);
+                            SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                            
+
+                            if (!cValorClasificacion.ToString().Equals(aValorClasificacion) && 
+                                !cValorAbreviatura.ToString().Equals(aValorAbreviatura) ||
+                                cValorClasificacion.ToString().Equals(aValorClasificacion) && 
+                                !cValorAbreviatura.ToString().Equals(aValorAbreviatura) ||
+                                !cValorClasificacion.ToString().Equals(aValorClasificacion) && 
+                                cValorAbreviatura.ToString().Equals(aValorAbreviatura))
+                            {
+                                if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
+                                {
+
+                                    grupo.nombre = txtGrupo.Text;
+                                    grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
+                                    grupo.categoria_id = grupo.Categoria.id;
+
+                                    if (tblGrupos.SelectedItem == null)
+                                    {
+
+
+                                        SDK.fEditaValorClasif();
+                                        SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtGrupo.Text);
+                                        SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbreviatura.Text);
+                                        SDK.fGuardaValorClasif();
+                                        grupo.registrar(grupo);
+                                        bandera = "Encontrado";
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
+                                        Grupo group = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                                        grupo.id = group.id;
+                                        grupo.Modify(grupo);
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    aValorClasificacion = cValorClasificacion.ToString();
+                                    aValorAbreviatura = aValorAbreviatura.ToString();
+                                    SDK.fPosSiguienteValorClasif();
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("La abreviatura o el grupo ya existen");
+                                bandera = "Encontrado";
+                                break;
+                            }
+
+                            
+                        }
+                    }
                 }
+
+                
+                
                 fillTableGroups();
 
             }else if(!String.IsNullOrEmpty(txtCategoria.Text)){
@@ -247,10 +299,11 @@ namespace SharkAdministrativo.Vista
                     }
 
                 }
+                obtenerAlmacenesCONT();
                 }
                 
-                //fillTableStorage();
-                obtenerAlmacenesCONT();
+               
+                
             }
         
 

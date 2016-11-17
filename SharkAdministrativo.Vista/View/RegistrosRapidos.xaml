@@ -1,7 +1,7 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Name="ventanaRapida" x:Class="SharkAdministrativo.Vista.RegistrosRapidos"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.1" x:Name="ventanaRapida" x:Class="SharkAdministrativo.Vista.RegistrosRapidos"
         Title="RegistrosRapidos" WindowStartupLocation="CenterScreen" VerticalAlignment="Top" Width="618" Height="515">
     <Grid>
         <dxr:RibbonControl RibbonStyle="Office2010">
@@ -18,15 +18,20 @@
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
-        <dxlc:LayoutControl x:Name="vista_grupos" Visibility="Collapsed"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
-            <TextBlock x:Name="txtGroupTitle" TextWrapping="Wrap" Text="Gestión De Grupos" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2"/>
-            <dxlc:LayoutGroup x:Name="groupGrupo" Header="Nuevo" View="GroupBox" HorizontalAlignment="Stretch">
-                <dxlc:LayoutItem Label="Nombre:">
-                    <dxe:TextEdit x:Name="txtGrupo"/>
+        <dxlc:LayoutControl x:Name="vista_grupos" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
+            <TextBlock x:Name="txtGroupTitle" TextWrapping="Wrap" Text="Gestión De Grupos" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2" VerticalAlignment="Top"/>
+            <dxlc:LayoutGroup x:Name="groupGrupo" Header="Nuevo" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <dxlc:LayoutItem Label="Abreviatura:">
+                    <dxe:TextEdit x:Name="txtAbreviatura"/>
                 </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="Categoría:">
-                    <dxe:ComboBoxEdit x:Name="cbxCategoria" AutoComplete="True"/>
-                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Nombre:">
+                        <dxe:TextEdit x:Name="txtGrupo"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Categoría:">
+                        <dxe:ComboBoxEdit x:Name="cbxCategoria" AutoComplete="True"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>
             <dxg:GridControl MouseDoubleClick="tblGrupos_MouseDoubleClick" x:Name="tblGrupos" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
@@ -49,7 +54,7 @@
             </dxg:GridControl>
         </dxlc:LayoutControl>
 
-        <dxlc:LayoutControl x:Name="vista_almacenes" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
+        <dxlc:LayoutControl x:Name="vista_almacenes" Visibility="Collapsed"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
             <TextBlock x:Name="txtStorageTitles" TextWrapping="Wrap" Text="Gestión De Almacenes" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2"/>
             <dxlc:LayoutGroup x:Name="groupStorage" Header="Nuevo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                 <dxlc:LayoutItem Label="Codigo:">
