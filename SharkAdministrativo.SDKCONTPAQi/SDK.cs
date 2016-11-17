@@ -56,6 +56,107 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static string systemName = "CONTPAQ I COMERCIAL";
 
 
+        // Declaración de la estructura del proveedor
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
+        public struct CteProv
+        {
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodigo)]
+            public string cCodigoCliente;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongNombre)]
+            public string cRazonSocial;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongFecha)]
+            public string cFechaAlta;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCURP)]
+            public string cRFC;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongDenComercial)]
+            public string cDenComercial;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongRepLegal)]
+            public string cRepLegal;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongNombre)]
+            public string cNombreMoneda;
+            public int cListaPreciosCliente;
+            public double cDescuentoMovto;
+            public int cBanVentaCredito; // 0 = No se permite venta a crédito, 1 = Se permite venta a crédito
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionCliente1;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionCliente2;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionCliente3;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionCliente4;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionCliente5;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionCliente6;
+            public int cTipoCliente; // 1 - Cliente, 2 - Cliente/Proveedor, 3 - Proveedor
+            public int cEstatus; // 0. Inactivo, 1. Activo
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongFecha)]
+            public string cFechaBaja;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongFecha)]
+            public string cFechaUltimaRevision;
+            public double cLimiteCreditoCliente;
+            public int cDiasCreditoCliente;
+            public int cBanExcederCredito; // 0 = No se permite exceder crédito, 1 = Se permite exceder el crédito
+            public double cDescuentoProntoPago;
+            public int cDiasProntoPago;
+            public double cInteresMoratorio;
+            public int cDiaPago;
+            public int cDiasRevision;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongDesCorta)]
+            public string cMensajeria;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongDescripcion)]
+            public string cCuentaMensajeria;
+            public int cDiasEmbarqueCliente;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodigo)]
+            public string cCodigoAlmacen;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodigo)]
+            public string cCodigoAgenteVenta;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodigo)]
+            public string cCodigoAgenteCobro;
+            public int cRestriccionAgente;
+            public double cImpuesto1;
+            public double cImpuesto2;
+            public double cImpuesto3;
+            public double cRetencionCliente1;
+            public double cRetencionCliente2;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionProveedor1;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionProveedor2;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionProveedor3;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionProveedor4;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionProveedor5;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodValorClasif)]
+            public string cCodigoValorClasificacionProveedor6;
+            public double cLimiteCreditoProveedor;
+            public int cDiasCreditoProveedor;
+            public int cTiempoEntrega;
+            public int cDiasEmbarqueProveedor;
+            public double cImpuestoProveedor1;
+            public double cImpuestoProveedor2;
+            public double cImpuestoProveedor3;
+            public double cRetencionProveedor1;
+            public double cRetencionProveedor2;
+            public int cBanInteresMoratorio; // 0 = No se le calculan intereses moratorios al cliente, 1 = Si se le calculan intereses moratorios al cliente.
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongTextoExtra)]
+            public string cTextoExtra1;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongTextoExtra)]
+            public string cTextoExtra2;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongTextoExtra)]
+            public string cTextoExtra3;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongFecha)]
+            public string cFechaExtra;
+            public double cImporteExtra1;
+            public double cImporteExtra2;
+            public double cImporteExtra3;
+            public double cImporteExtra4;
+        }
+
         // Declaración de la estructura del producto
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
@@ -192,7 +293,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public string cValorClasificacion;
         }
 
-  
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tUnidad
         {
@@ -259,8 +360,8 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern int fAbreEmpresa(string Directorio);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern void fCierraEmpresa();
-       
-        
+
+
         //Funciones De Clasificación.
         [DllImport("MGWSERVICIOS.dll")]
         public static extern int fBuscaClasificacion(int aClasificacionDe, int aNumClasificacion);
@@ -280,9 +381,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fLeeDatoValorClasif(string aCampo, StringBuilder aValor, int aLen);
 
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fBuscaIdValorClasif (int aIdValorClasif);
+        public static extern Int32 fBuscaIdValorClasif(int aIdValorClasif);
 
-        
+
 
         //Funciones De Error.
         [DllImport("mgwservicios.dll")]
@@ -364,11 +465,11 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fPosPrimerUnidad();
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fPosSiguienteUnidad(); 
+        public static extern Int32 fPosSiguienteUnidad();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoUnidad(string aCampo, StringBuilder aValor, int longitud);
 
-        
+
         //Funciones De Memoria.
         [DllImport("kernel32.dll", EntryPoint = "SetProcessWorkingSetSize", ExactSpelling = true, CharSet = CharSet.Ansi, SetLastError = true)]
         private static extern int SetProcessWorkingSetSize(IntPtr process, int minimumWorkingSetSize, int maximumWorkingSetSize);
@@ -440,7 +541,8 @@ namespace SharkAdministrativo.SDKCONTPAQi
                     }
                 }
                 throw new Exception("Ignora los FPu");
-            }catch(Exception ex){}
+            }
+            catch (Exception ex) { }
             return success;
         }
 

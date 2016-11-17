@@ -178,6 +178,8 @@ namespace SharkAdministrativo.Vista
         public void guardarModificar() {
             if (!String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtRFC.Text) && cbxGrupos.SelectedItem != null && !String.IsNullOrEmpty(txtRazonP.Text) && cbxEmpresa.SelectedItem != null)
             {
+
+
                 Proveedor proveedor = new Proveedor();
                 proveedor.nombre = txtNombreP.Text;
                 proveedor.razon_social = txtRazonP.Text;

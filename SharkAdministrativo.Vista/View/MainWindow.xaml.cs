@@ -314,6 +314,7 @@ namespace SharkAdministrativo.Vista
             dtProveedores.Columns.Add("País");
             dtProveedores.Columns.Add("Código Postal");
             dtProveedores.Columns.Add("Empresa A La Que Provee");
+            dtProveedores.Columns.Add("Código");
             tblProveedores.ItemsSource = dtProveedores.DefaultView;
             tblProveedores.Columns[0].Visible = false;
         }
@@ -371,7 +372,7 @@ namespace SharkAdministrativo.Vista
             List<Proveedor> proveedores = proveedor.obtenerTodos();
             foreach (var item in proveedores)
             {
-                dtProveedores.Rows.Add(item.id,item.nombre,item.tipos_proveedor,item.calle,item.colonia,item.NoExterior,item.municipio,item.estado,item.pais,item.codigo_postal, item.Empresa.nombre);   
+                dtProveedores.Rows.Add(item.id,item.nombre,item.tipos_proveedor,item.calle,item.colonia,item.NoExterior,item.municipio,item.estado,item.pais,item.codigo_postal, item.Empresa.nombre,item.codigo);   
             }
             if (dtProveedores.Rows.Count>0)
             {
