@@ -144,8 +144,8 @@ namespace SharkAdministrativo.Vista
                         if (bandera.Equals("Encontrado")) {
                             break;
                         }
-                        String aValorClasificacion = "";
-                        String aValorAbreviatura = "";
+                        String aValorClasificacion = txtGrupo.Text;
+                        String aValorAbreviatura = txtAbreviatura.Text;
                         while (bandera.Equals("No encontrado")) {
                             
                             StringBuilder cClasificacion = new StringBuilder(11);
@@ -156,12 +156,8 @@ namespace SharkAdministrativo.Vista
                             SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
                             
 
-                            if (!cValorClasificacion.ToString().Equals(aValorClasificacion) && 
-                                !cValorAbreviatura.ToString().Equals(aValorAbreviatura) ||
-                                cValorClasificacion.ToString().Equals(aValorClasificacion) && 
-                                !cValorAbreviatura.ToString().Equals(aValorAbreviatura) ||
-                                !cValorClasificacion.ToString().Equals(aValorClasificacion) && 
-                                cValorAbreviatura.ToString().Equals(aValorAbreviatura))
+                            if ((!cValorClasificacion.ToString().Equals(aValorClasificacion) && 
+                                !cValorAbreviatura.ToString().Equals(aValorAbreviatura)))
                             {
                                 if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
                                 {
@@ -194,8 +190,6 @@ namespace SharkAdministrativo.Vista
                                 }
                                 else
                                 {
-                                    aValorClasificacion = cValorClasificacion.ToString();
-                                    aValorAbreviatura = aValorAbreviatura.ToString();
                                     SDK.fPosSiguienteValorClasif();
                                 }
                             }
