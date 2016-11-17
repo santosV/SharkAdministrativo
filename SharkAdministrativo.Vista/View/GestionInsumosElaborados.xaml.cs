@@ -997,9 +997,9 @@ namespace SharkAdministrativo.Vista
                         URI += ruta + "/";
                     }
                 }
-                URI = URI.TrimEnd('/');
-                URI = URI.TrimStart('/');
-                URI = URI.TrimStart('/');
+                //URI = URI.TrimEnd('/');
+                //URI = URI.TrimStart('/');
+                //URI = URI.TrimStart('/');
                 producto.IVA = Double.Parse(txtIVAP.Text);
                 producto.nombre = txtNombreP.Text;
                 producto.precioConImpuesto = Double.Parse(txtPCImpuestoP.Text);
