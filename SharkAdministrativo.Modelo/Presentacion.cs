@@ -169,6 +169,24 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        public Presentacion obtener(int id)
+        {
+            Presentacion r_presentacion = new Presentacion();
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+                db.Configuration.LazyLoadingEnabled = true;
+                var insumoQuery = from presentacion in db.Presentaciones
+                                  where presentacion.id == id
+                                  select presentacion;
+                foreach (var presentacionR in insumoQuery)
+                {
+                    r_presentacion = presentacionR;
+
+                }
+                return r_presentacion;
+            }
+        }
+
 
         public Presentacion get(string name)
         {

@@ -30,12 +30,15 @@
             </dxr:RibbonControl>
             <TextBlock x:Name="title" TextWrapping="Wrap" Text="Gestión de Presentaciones" Padding="5" UseLayoutRounding="True" TextAlignment="Center" Background="#FF046AA6" Foreground="White" FontSize="16" VerticalAlignment="Top"/>
             <dxlc:LayoutGroup x:Name="vista_registrodepresentaciones" Visibility="Visible" dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
-                <dxg:GridControl x:Name="tblPresentaciones" AutoGenerateColumns="AddNew"  EnableSmartColumnsGeneration="True" VerticalAlignment="Top" Margin="0" Height="347">
+                <dxg:GridControl x:Name="tblPresentaciones" AutoGenerateColumns="AddNew"  EnableSmartColumnsGeneration="True" VerticalAlignment="Top" Margin="0" Height="347" MouseDoubleClick="tblPresentaciones_MouseDoubleClick">
                     <dxg:GridControl.View>
                         <dxg:TableView x:Name="tablaPresentaciones" AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
                     </dxg:GridControl.View>
                 </dxg:GridControl>
                 <dxlc:LayoutGroup View="GroupBox" Header="Nueva Presentación" Margin="0" Orientation="Vertical" Padding="13,10,10,10">
+                    <dxlc:LayoutItem Label="Codigo:">
+                        <dxe:TextEdit x:Name="txtCodigoPr"/>
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Insumo:">
                         <dxe:ComboBoxEdit x:Name="cbxInsumoBase" SelectedIndexChanged="cbxInsumoBase_SelectedIndexChanged" AutoComplete="True"/>
                     </dxlc:LayoutItem>
@@ -63,6 +66,9 @@
                     <dxlc:LayoutItem Label="Cantidad:">
                         <dxe:TextEdit x:Name="txtCantidad" KeyDown="SoloNumeros_KeyDown"/>
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Clasificacion:">
+                        <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones"/>
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Proveedor:">
                         <dxe:ComboBoxEdit x:Name="cbxProveedor" AutoComplete="True"/>
                     </dxlc:LayoutItem>
@@ -70,6 +76,9 @@
                         <dxe:ComboBoxEdit x:Name="cbxAlmacen" SelectedIndexChanged="cbxAlmacen_SelectedIndexChanged" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupAlmacen" Header="Nuevo Almacén" Visibility="Collapsed" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutItem Label="Codigo:">
+                            <dxe:TextEdit x:Name="txtCodigoAl"/>
+                        </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Nombre:">
                             <dxe:TextEdit x:Name="txtAlmacen"/>
                         </dxlc:LayoutItem>
