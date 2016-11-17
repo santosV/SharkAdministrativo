@@ -39,8 +39,8 @@
             <dxlc:LayoutControl x:Name="vista_promocion" Visibility="Visible" Padding="0" Orientation="Vertical">
                 <dxlc:LayoutGroup x:Name="groupPromocion" Header="Nueva Promoción" View="GroupBox" Margin="0" Padding="0">
                     <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
-                        <dxlc:LayoutItem HorizontalAlignment="Left" Background="#FFD93B06">
-                            <Image  x:Name="img"  OpacityMask="Black" Width="120" Height="100" Stretch="Fill" Source="/SharkAdministrativo.Vista;component/Assets/sin.jpg"/>
+                        <dxlc:LayoutItem HorizontalAlignment="Left" Background="#FF8D1D">
+                            <Image  x:Name="img"  OpacityMask="Black" Width="120" Height="100" Stretch="Fill"/>
 
                         </dxlc:LayoutItem>
                         <TextBlock x:Name="txtCortoName" TextWrapping="Wrap" Text="Sin Nombre Disponible" Width="120" Height="51" TextAlignment="Center"/>

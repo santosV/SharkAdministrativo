@@ -113,6 +113,7 @@ namespace SharkAdministrativo.Vista
             dtProductos.Columns.Add("Costo C/ Impuesto");
             dtProductos.Columns.Add("Áreas De Preparación");
             dtProductos.Columns.Add("Disponlible");
+            dtProductos.Columns.Add("Código");
             tblProductos.ItemsSource = dtProductos.DefaultView;
             cargarProductos();
             tblProductos.Columns[0].Visible = false;
@@ -133,6 +134,8 @@ namespace SharkAdministrativo.Vista
                 {
 
                     cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                    cbxValoresDeClasificacionesP.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+
                 }
                 error = SDK.fPosSiguienteValorClasif();
             }
@@ -169,7 +172,7 @@ namespace SharkAdministrativo.Vista
                     }
                 }
 
-                dtProductos.Rows.Add(item.id, item.descripcion, item.nombre, item.ultimoPrecio, item.IVA, item.precioConImpuesto, areasPreparacion, areasDisponibles);
+                dtProductos.Rows.Add(item.id, item.descripcion, item.nombre, item.ultimoPrecio, item.IVA, item.precioConImpuesto, areasPreparacion, areasDisponibles,item.codigo);
             }
         }
 
@@ -195,7 +198,7 @@ namespace SharkAdministrativo.Vista
         {
             dtIElaborados.Rows.Clear();
             List<InsumoElaborado> insumosElaborados = insumoElaborado.obtenerTodos();
-            foreach (var IE in insumosElaborados) 
+            foreach (var IE in insumosElaborados)
             {
                 dtIElaborados.Rows.Add(IE.id, IE.descripcion, IE.Grupo.nombre, IE.rendimiento, IE.Unidad_Medida.nombre, IE.codigo);
             }
@@ -518,10 +521,11 @@ namespace SharkAdministrativo.Vista
                         seleccion.Delete();
                         clearFields();
                     }
-                    else {
+                    else
+                    {
                         SDK.rError(error);
                     }
-                    
+
                 }
             }
             else
@@ -550,7 +554,8 @@ namespace SharkAdministrativo.Vista
             Title.Text = "Gestion De Insumos Elaborados";
         }
 
-        public void limpiarCampos(){
+        public void limpiarCampos()
+        {
             cbxGrupos.SelectedItem = null;
             cbxInventariable.SelectedItem = null;
             cbxUmedida.SelectedItem = null;
@@ -969,9 +974,25 @@ namespace SharkAdministrativo.Vista
         {
             if (validarDatosProducto())
             {
+
+                SDK.tProduto cProducto = new SDK.tProduto();
+                cProducto.cCodigoProducto = txtCodigoP.Text;
+                cProducto.cNombreProducto = txtDescripcionP.Text;
+                cProducto.cDescripcionProducto = txtDescripcionP.Text;
+                String[] clasificacion = cbxValoresDeClasificacionesP.SelectedItem.ToString().Split('|');
+                string codigoClasificacion = clasificacion[0].Trim();
+                cProducto.cPrecio1 = Double.Parse(txtUPrecioP.Text);
+                cProducto.cImpuesto1 = Double.Parse(txtIVAP.Text);
+                cProducto.cTipoProducto = 1;
+                cProducto.cMetodoCosteo = 1;
+                producto.codigo = txtCodigoP.Text;
                 producto.descripcion = txtDescripcionP.Text;
                 producto.areasPreparacion = "";
                 producto.disponlibleEn = "";
+                producto.IVA = Double.Parse(txtIVAP.Text);
+                producto.nombre = txtNombreP.Text;
+                producto.precioConImpuesto = Double.Parse(txtPCImpuestoP.Text);
+                producto.ultimoPrecio = Double.Parse(txtUPrecioP.Text);
                 foreach (var item in cbxPreparacion.SelectedItems)
                 {
                     if (!String.IsNullOrEmpty(item.ToString()))
@@ -988,43 +1009,72 @@ namespace SharkAdministrativo.Vista
                         producto.disponlibleEn = area.id + ";";
                     }
                 }
-                String[] route = img.Source.ToString().Split('/');
-                string URI = "";
-                foreach (var ruta in route)
+                if (img.Source != null)
                 {
-                    if (ruta != "file:")
+                    String[] route = img.Source.ToString().Split('/');
+                    string URI = "";
+                    foreach (var ruta in route)
                     {
-                        URI += ruta + "/";
+                        if (ruta != "file:")
+                        {
+                            URI += ruta + "/";
+                        }
+                    }
+                    URI = URI.TrimEnd('/');
+                    URI = URI.TrimStart('/');
+                    URI = URI.TrimStart('/');
+                    if (URI != "System.Windows.Media.Imaging.BitmapImage")
+                    {
+                        System.Drawing.Image imagen = System.Drawing.Image.FromFile(URI);
+                        producto.imagen = convertirAByte(imagen);
                     }
                 }
-                //URI = URI.TrimEnd('/');
-                //URI = URI.TrimStart('/');
-                //URI = URI.TrimStart('/');
-                producto.IVA = Double.Parse(txtIVAP.Text);
-                producto.nombre = txtNombreP.Text;
-                producto.precioConImpuesto = Double.Parse(txtPCImpuestoP.Text);
-                producto.ultimoPrecio = Double.Parse(txtUPrecioP.Text);
 
-                if (URI != "System.Windows.Media.Imaging.BitmapImage")
-                {
-                    System.Drawing.Image imagen = System.Drawing.Image.FromFile(URI);
-                    producto.imagen = convertirAByte(imagen);
-                }
 
 
                 if (tblProductos.SelectedItem == null)
                 {
-                    producto.registrar(producto);
-                    MessageBox.Show("Se registró el producto " + producto.nombre);
+                    Int32 aldProducto = 0;
+                    int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
+                    if (error == 0)
+                    {
+                        SDK.fEditaProducto();
+                        SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        SDK.fGuardaProducto();
+                        producto.registrar(producto);
+                        MessageBox.Show("Se registró el producto " + producto.nombre);
+                    }
+                    else
+                    {
+                        SDK.rError(error);
+                    }
                 }
                 else
                 {
-                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
-                    Producto p = new Producto();
-                    p = producto.obtenerPorID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
-                    producto.id = p.id;
-                    producto.modificar(producto);
-                    MessageBox.Show("Se modificó el producto " + producto.nombre);
+                    int error = SDK.fBuscaProducto(txtCodigoP.Text);
+                    SDK.fEditaProducto();
+                    if (error == 0)
+                    {
+                        error = SDK.fSetDatoProducto("CNOMBREPRODUCTO", cProducto.cNombreProducto);
+                        error = SDK.fSetDatoProducto("CCODIGOPRODUCTO", cProducto.cCodigoProducto);
+                        error = SDK.fSetDatoProducto("CDESCRIPCIONPRODUCTO", cProducto.cNombreProducto);
+                        error = SDK.fSetDatoProducto("CIMPUESTO1", Convert.ToString(cProducto.cImpuesto1));
+                        error = SDK.fSetDatoProducto("CPRECIO1", Convert.ToString(cProducto.cPrecio1));
+                        error = SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        error = SDK.fGuardaProducto();
+                        if (error == 0)
+                        {
+                            System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
+                            Producto p = new Producto();
+                            p = producto.obtenerPorID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                            producto.id = p.id;
+                            producto.modificar(producto);
+                        }
+                        else {
+                            SDK.rError(error);
+                        }
+                    }
+                    
                 }
                 cargarProductos();
                 clearFieldsProducts();
@@ -1033,17 +1083,21 @@ namespace SharkAdministrativo.Vista
 
         public void clearFieldsProducts()
         {
+            this.Title.Text = "Gestión De Productos";
             txtDescripcionP.Clear();
             txtNombreP.Clear();
             txtUPrecioP.Clear();
             txtIVAP.Clear();
+            txtCodigoP.Clear();
+            cbxValoresDeClasificacionesP.SelectedItem = null;
             txtPCImpuestoP.Clear();
             cbxAreaDisponible.SelectedItem = null;
             cbxPreparacion.SelectedItem = null;
             tblProductos.SelectedItem = false;
-            img.Source = GetImage("/SharkAdministrativo.Vista;component/Assets/sin.jpg"); ;
+            img.Source = null;
             txtCortoName.Text = "Sin Nombre Disponible";
             groupProducto.Header = "Nuevo Producto";
+            txtCodigoP.IsReadOnly = false;
         }
 
 
@@ -1098,8 +1152,11 @@ namespace SharkAdministrativo.Vista
                 cbxPreparacion.SelectedItem = null;
                 Producto producto = new Producto();
                 producto = producto.obtenerPorID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
-                BitmapImage img1 = convertirAImagen(producto.imagen);
-                img.Source = img1;
+                if (producto.imagen != null)
+                {
+                    BitmapImage img1 = convertirAImagen(producto.imagen);
+                    img.Source = img1;
+                }
                 txtCortoName.Text = producto.nombre;
                 txtDescripcion.Text = producto.descripcion;
                 txtPCImpuestoP.Text = Convert.ToString(producto.precioConImpuesto);
@@ -1110,6 +1167,8 @@ namespace SharkAdministrativo.Vista
                 String[] produccion = seleccion.Row.ItemArray[6].ToString().Split(';');
                 String[] disponible = seleccion.Row.ItemArray[7].ToString().Split(';');
                 groupProducto.Header = "MODIFICANDO " + producto.descripcion;
+                txtCodigoP.Text = seleccion.Row.ItemArray[8].ToString();
+                txtCodigoP.IsReadOnly = true;
                 foreach (var item in produccion)
                 {
                     if (!String.IsNullOrEmpty(item.ToString()))
@@ -1125,6 +1184,16 @@ namespace SharkAdministrativo.Vista
                     }
                 }
 
+                SDK.fBuscaProducto(seleccion.Row.ItemArray[8].ToString());
+                StringBuilder idValorClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoProducto("CIDVALORCLASIFICACION1", idValorClasificacion, 5);
+                SDK.fBuscaIdValorClasif(Convert.ToInt32(idValorClasificacion.ToString()));
+                StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder nomValorClasificacion = new StringBuilder(30);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+
+                cbxValoresDeClasificacionesP.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
             }
 
         }
@@ -1149,11 +1218,19 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿ESTÁ SEGURO DE ELIMINAR EL PRODUCTO '" + seleccion.Row.ItemArray[1] + "'?", "ELIMINACIÓN DE PRODUCTO", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    Producto producto = new Producto();
-                    producto.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
-                    producto.eliminar(producto);
-                    cargarProductos();
-                    clearFieldsProducts();
+                    int error = SDK.fEliminarProducto(txtCodigoP.Text);
+
+                    if (error == 0)
+                    {
+                        Producto producto = new Producto();
+                        producto.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
+                        producto.eliminar(producto);
+                        cargarProductos();
+                        clearFieldsProducts();
+                    }
+                    else {
+                        SDK.rError(error);
+                    }
                 }
             }
             else

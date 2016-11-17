@@ -125,7 +125,7 @@
                 <dxlc:LayoutItem Label="Entrada Automática:">
                     <dxe:CheckEdit x:Name="chksAutomatico"/>
                 </dxlc:LayoutItem>
-                
+
                 <dxlc:LayoutGroup x:Name="groupUnidades" Visibility="Collapsed" Header="Nueva Unidad De Medida" View="GroupBox" HorizontalAlignment="Stretch">
                     <dxlc:LayoutItem Label="Nombre:">
                         <dxe:TextEdit x:Name="txtNombreUnidad"/>
@@ -179,14 +179,17 @@
         <dxlc:LayoutControl x:Name="vista_Producto" Visibility="Visible" Padding="0" Orientation="Vertical">
             <dxlc:LayoutGroup x:Name="groupProducto" Header="Nuevo Producto" View="GroupBox" HorizontalAlignment="Stretch">
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
-                    <dxlc:LayoutItem HorizontalAlignment="Left" Background="#FFD93B06">
-                        <Image  x:Name="img" OpacityMask="Black" Width="120" Height="100" Stretch="Fill" Source="pack://application:,,,/SharkAdministrativo.Vista;component/Assets/sin.jpg"/>
+                    <dxlc:LayoutItem HorizontalAlignment="Left" Background="#FFFF8D1D">
+                        <Image  x:Name="img" Width="120" Height="100" Stretch="Fill"/>
 
                     </dxlc:LayoutItem>
                     <TextBlock x:Name="txtCortoName" TextWrapping="Wrap" Text="Sin Nombre Disponible" Width="120" Height="51" TextAlignment="Center"/>
                 </dxlc:LayoutGroup>
                 <Button Content="..." Click="SeleccionarImagen_Click" x:Name="SeleccionarImagen" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Código">
+                        <dxe:TextEdit x:Name="txtCodigoP"/>
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                         <dxlc:LayoutItem Label="Descripción:">
                             <dxe:TextEdit x:Name="txtDescripcionP"/>
@@ -232,11 +235,16 @@
                             </dxe:ComboBoxEdit.StyleSettings>
                         </dxe:ComboBoxEdit>
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup Header="Clasificaciones del producto*" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                        <dxlc:LayoutItem Label="Clasificación: ">
+                            <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificacionesP" AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>
             <dxg:GridControl x:Name="tblProductos" MouseDoubleClick="tblProductos_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
-                    <dxg:TableView x:Name="tablaProductos" AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                    <dxg:TableView x:Name="tablaProductos" AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
                 </dxg:GridControl.View>
             </dxg:GridControl>
 

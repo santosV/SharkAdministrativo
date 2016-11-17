@@ -40,7 +40,8 @@ namespace SharkAdministrativo.Vista
             loadTitlesDetalles();
         }
 
-        void loadTitlesDetalles() {
+        void loadTitlesDetalles()
+        {
             dtProductos.Columns.Add("ID");
             dtProductos.Columns.Add("Nombre");
             dtProductos.Columns.Add("Cantidad");
@@ -57,30 +58,34 @@ namespace SharkAdministrativo.Vista
                 this.promocion = promocion.obtenerPorId(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
                 cargarVista(2);
                 cargarDetallePromocion();
-                Title.Text = "AGREGA LOS PRODUCTOS DE LA PROMOCIÓN "+this.promocion.descripcion;
+                Title.Text = "AGREGA LOS PRODUCTOS DE LA PROMOCIÓN " + this.promocion.descripcion;
             }
-            else {
+            else
+            {
                 MessageBox.Show("ES NECESARIO QUE SELECCIONE LA PROMOCIÓN");
             }
 
         }
 
-        void cargarDias() {
-            string [] dias = new string[]{"L","Ma","Mi","J","V","S","D"};
+        void cargarDias()
+        {
+            string[] dias = new string[] { "L", "Ma", "Mi", "J", "V", "S", "D" };
             cbxDiasDisponibles.ItemsSource = dias;
         }
 
-        private void cargarPromociones() {
+        private void cargarPromociones()
+        {
             dtPromociones.Rows.Clear();
             List<Promocion> promociones = promocion.obtenerTodos();
             foreach (var promo in promociones)
             {
-                dtPromociones.Rows.Add(promo.id,promo.nombre,promo.ultimoPrecio,promo.IVA,promo.precioConImpuesto,promo.areasDisponibles,promo.diasDisponibles,promo.hora_inicio,promo.hora_fin,promo.fecha_inicio,promo.fecha_fin);
+                dtPromociones.Rows.Add(promo.id, promo.nombre, promo.ultimoPrecio, promo.IVA, promo.precioConImpuesto, promo.areasDisponibles, promo.diasDisponibles, promo.hora_inicio, promo.hora_fin, promo.fecha_inicio, promo.fecha_fin);
             }
-            
+
         }
 
-        public void loadTiltesPromo() {
+        public void loadTiltesPromo()
+        {
             dtPromociones.Columns.Add("ID");
             dtPromociones.Columns.Add("Nombre");
             dtPromociones.Columns.Add("Precio");
@@ -127,7 +132,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        void cargarComboBoxProductos() {
+        void cargarComboBoxProductos()
+        {
             Producto producto = new Producto();
             List<Producto> productos = producto.obtenerTodos();
             foreach (var item in productos)
@@ -136,12 +142,13 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void cargarHoras() {
+        public void cargarHoras()
+        {
             string hora = "";
             string minutos = "";
-            for (int i = 0; i<=24; i++)
+            for (int i = 0; i <= 24; i++)
             {
-                
+
                 if (i < 10)
                 {
                     hora = "0" + i;
@@ -151,13 +158,14 @@ namespace SharkAdministrativo.Vista
                     hora = Convert.ToString(i);
                 }
 
-                for (int j = 0; j <60; j++)
+                for (int j = 0; j < 60; j++)
                 {
                     if (j < 10)
                     {
                         minutos += ":0" + j;
                     }
-                    else {
+                    else
+                    {
                         minutos += ":" + j;
                     }
                     cbxHInicio.Items.Add(hora + minutos);
@@ -167,7 +175,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void cargarAreas() {
+        public void cargarAreas()
+        {
             List<AreaProduccion> areas = area.obtenerTodos();
             foreach (var item in areas)
             {
@@ -175,7 +184,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void cargarVista(int vista){
+        public void cargarVista(int vista)
+        {
             vista_promocion.Visibility = Visibility.Collapsed;
             btnGeneral.IsVisible = false;
             vista_detalle.Visibility = Visibility.Collapsed;
@@ -185,7 +195,8 @@ namespace SharkAdministrativo.Vista
                 vista_promocion.Visibility = Visibility.Visible;
                 btnGeneral.IsVisible = true;
             }
-            else {
+            else
+            {
                 vista_detalle.Visibility = Visibility.Visible;
                 btnDetalle.IsVisible = true;
             }
@@ -229,8 +240,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void guardarModificarPromocion() {
-            if (validarDatos()==true)
+        public void guardarModificarPromocion()
+        {
+            if (validarDatos() == true)
             {
                 promocion.diasDisponibles = "";
                 promocion.areasDisponibles = "";
@@ -255,47 +267,52 @@ namespace SharkAdministrativo.Vista
                     DateTime finaliza = DateTime.Parse(fecha_de_fin, System.Globalization.CultureInfo.InvariantCulture);
                     promocion.fecha_fin = finaliza;
                 }
-                
-                
-                String[] route = img.Source.ToString().Split('/');
-                string URI = "";
-                foreach (var ruta in route)
+
+                if (img.Source != null)
                 {
-                    if (ruta != "file:")
+                    String[] route = img.Source.ToString().Split('/');
+                    string URI = "";
+                    foreach (var ruta in route)
                     {
-                        URI += ruta + "/";
+                        if (ruta != "file:")
+                        {
+                            URI += ruta + "/";
+                        }
+                    }
+                    URI = URI.TrimEnd('/');
+                    URI = URI.TrimStart('/');
+                    URI = URI.TrimStart('/');
+
+
+
+                    if (URI != "System.Windows.Media.Imaging.BitmapImage")
+                    {
+                        System.Drawing.Image imagen = System.Drawing.Image.FromFile(URI);
+                        promocion.imagen = convertirAByte(imagen);
                     }
                 }
-                URI = URI.TrimEnd('/');
-                URI = URI.TrimStart('/');
-                URI = URI.TrimStart('/');
 
 
-
-                if (URI != "System.Windows.Media.Imaging.BitmapImage")
-                {
-                    System.Drawing.Image imagen = System.Drawing.Image.FromFile(URI);
-                    promocion.imagen = convertirAByte(imagen);
-                }
 
                 foreach (var item in cbxDisponible.SelectedItems)
                 {
-                    promocion.areasDisponibles += item.ToString()+";";   
+                    promocion.areasDisponibles += item.ToString() + ";";
                 }
                 foreach (var item in cbxDiasDisponibles.SelectedItems)
                 {
-                    promocion.diasDisponibles += item.ToString()+";";
+                    promocion.diasDisponibles += item.ToString() + ";";
                 }
 
                 if (tblPromociones.SelectedItem == null)
                 {
                     promocion.registrar(promocion);
                 }
-                else {
+                else
+                {
                     promocion.modificar(promocion);
-                    MessageBox.Show("SE MODIFICÓ CORRECTAMENTE LA PROMOCIÓN "+promocion.descripcion);
+                    MessageBox.Show("SE MODIFICÓ CORRECTAMENTE LA PROMOCIÓN " + promocion.descripcion);
                 }
-                
+
                 cargarPromociones();
                 clearFieldsPromo();
             }
@@ -327,12 +344,13 @@ namespace SharkAdministrativo.Vista
             return new BitmapImage(new Uri(path, UriKind.Relative));
         }
 
-        void clearFieldsPromo() {
+        void clearFieldsPromo()
+        {
 
             txtDescripcion.Clear();
             txtNombre.Clear();
             txtCortoName.Text = "Sin Nombre Disponible";
-            img.Source = GetImage("/SharkAdministrativo.Vista;component/Assets/sin.jpg");
+            img.Source = null;
             txtPrecio.Clear();
             txtIVA.Clear();
             txtPCImpuesto.Clear();
@@ -346,9 +364,10 @@ namespace SharkAdministrativo.Vista
             groupPromocion.Header = "Nueva Promoción";
         }
 
-        public bool validarDatos() {
+        public bool validarDatos()
+        {
             bool validacion = false;
-            if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtNombre.Text) && !String.IsNullOrEmpty(txtPCImpuesto.Text) && !String.IsNullOrEmpty(txtPrecio.Text) && cbxDiasDisponibles.SelectedItem!=null && cbxDisponible.SelectedItem !=null && cbxHFinalizacion.SelectedItem!=null && cbxHInicio.SelectedItem!=null && !String.IsNullOrEmpty(cbxFInicio.Text) && !String.IsNullOrEmpty(cbxFFinalizacion.Text))
+            if (!String.IsNullOrEmpty(txtDescripcion.Text) && !String.IsNullOrEmpty(txtNombre.Text) && !String.IsNullOrEmpty(txtPCImpuesto.Text) && !String.IsNullOrEmpty(txtPrecio.Text) && cbxDiasDisponibles.SelectedItem != null && cbxDisponible.SelectedItem != null && cbxHFinalizacion.SelectedItem != null && cbxHInicio.SelectedItem != null && !String.IsNullOrEmpty(cbxFInicio.Text) && !String.IsNullOrEmpty(cbxFFinalizacion.Text))
             {
                 validacion = true;
             }
@@ -381,7 +400,7 @@ namespace SharkAdministrativo.Vista
         private void tblPromociones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblPromociones.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
                 this.promocion = this.promocion.obtenerPorId(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
                 txtDescripcion.Text = promocion.descripcion;
@@ -408,17 +427,21 @@ namespace SharkAdministrativo.Vista
                 cbxHInicio.SelectedItem = promocion.hora_inicio;
                 cbxHFinalizacion.SelectedItem = promocion.hora_fin;
                 cbxFInicio.Text = promocion.fecha_inicio.ToString();
-                cbxFFinalizacion.Text = promocion.fecha_fin.ToString(); 
+                cbxFFinalizacion.Text = promocion.fecha_fin.ToString();
                 txtCortoName.Text = promocion.nombre;
-                BitmapImage img1 = convertirAImagen(promocion.imagen);
-                img.Source = img1;
-                groupPromocion.Header = "MODIFICANDO "+ promocion.descripcion;
+                if (promocion.imagen != null)
+                {
+                    BitmapImage img1 = convertirAImagen(promocion.imagen);
+                    img.Source = img1;
+                }
+                groupPromocion.Header = "MODIFICANDO " + promocion.descripcion;
             }
         }
 
-        private bool validarCamposDetalle() {
+        private bool validarCamposDetalle()
+        {
             bool validacion = false;
-            if (!String.IsNullOrEmpty(txtCantidadP.Text) && cbxProductos.SelectedItem!=null)
+            if (!String.IsNullOrEmpty(txtCantidadP.Text) && cbxProductos.SelectedItem != null)
             {
                 validacion = true;
             }
@@ -427,22 +450,24 @@ namespace SharkAdministrativo.Vista
 
 
 
-        public void cargarDetallePromocion() {
+        public void cargarDetallePromocion()
+        {
             dtProductos.Rows.Clear();
             ProductoPromocion detalle = new ProductoPromocion();
             List<ProductoPromocion> detalles = detalle.obtenerTodos(this.promocion.id);
             double total = 0;
             foreach (var item in detalles)
             {
-                dtProductos.Rows.Add(item.id,item.Producto.nombre,item.cantidad, item.Producto.ultimoPrecio * item.cantidad);
+                dtProductos.Rows.Add(item.id, item.Producto.nombre, item.cantidad, item.Producto.ultimoPrecio * item.cantidad);
                 string precio = Convert.ToString(item.Producto.ultimoPrecio);
                 string cantidad = Convert.ToString(item.cantidad);
                 total += Double.Parse(cantidad) * Double.Parse(precio);
             }
-            txtTotal.Text = "Total Promoción: $"+this.promocion.ultimoPrecio+", Total En Producto: $" + total;
+            txtTotal.Text = "Total Promoción: $" + this.promocion.ultimoPrecio + ", Total En Producto: $" + total;
         }
 
-        void clearFieldDetalle() {
+        void clearFieldDetalle()
+        {
             txtCantidadP.Clear();
             cbxProductos.SelectedItem = null;
             tblProductos.SelectedItem = false;
@@ -473,9 +498,10 @@ namespace SharkAdministrativo.Vista
                 cargarDetallePromocion();
                 clearFieldDetalle();
             }
-            else {
+            else
+            {
                 MessageBox.Show("EXISTEN CAMPOS IMPORTANTES SIN INGRESAR");
-            }   
+            }
 
         }
 
@@ -488,7 +514,7 @@ namespace SharkAdministrativo.Vista
         private void tblProductos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
                 ProductoPromocion detalle = new ProductoPromocion();
                 detalle = detalle.obtener(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));

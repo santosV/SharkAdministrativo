@@ -141,7 +141,7 @@ namespace SharkAdministrativo.Modelo
         {
             using (bdsharkEntities db = new bdsharkEntities())
             {
-                var productosQuery = from producto in db.Proveedores where producto.id == _producto.id select producto;
+                var productosQuery = from producto in db.Productos where producto.id == _producto.id select producto;
 
                 foreach (var producto in productosQuery)
                 {
