@@ -207,15 +207,18 @@ namespace SharkAdministrativo.Vista
 
         public void guardarModificar()
         {
+            List<string> cIDClasificacionesGrupos = new List<string>();
             if (!String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtRFC.Text) && cbxGrupos.SelectedItem != null && !String.IsNullOrEmpty(txtRazonP.Text) && cbxEmpresa.SelectedItem != null)
             {
-
+                
                 SDK.CteProv cProveedor = new SDK.CteProv();
 
                 cProveedor.cCodigoCliente = txtCodigo.Text;
                 cProveedor.cRazonSocial = txtRazonP.Text;
                 cProveedor.cRFC = txtRFC.Text;
                 cProveedor.cDenComercial = txtNombreP.Text;
+                cProveedor.cEstatus = 1;
+                
 
                 Proveedor proveedor = new Proveedor();
                 proveedor.codigo = txtCodigo.Text;
@@ -236,14 +239,12 @@ namespace SharkAdministrativo.Vista
                 proveedor.pais = txtPaisP.Text;
                 DateTime thisDay = DateTime.Today;
                 proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                String[] cIDClasificacionesGrupos = null;
-                int index = 1;
+                
                 foreach (var grupos in cbxGrupos.SelectedItems)
                 {
                     String[] groups = grupos.ToString().Split('|');
-                    cIDClasificacionesGrupos[index] = groups[0].ToString().Trim();
-                    index++;
-                    proveedor.tipos_proveedor += groups[1].Trim() + ";";
+                    cIDClasificacionesGrupos.Add(groups[0].ToString().Trim());
+                    proveedor.tipos_proveedor += groups[1].ToString().Trim() + ";";
                 }
                 if (hasChanged == "Yes")
                 {
@@ -264,30 +265,36 @@ namespace SharkAdministrativo.Vista
                 }
                 else
                 {
-                    int error = SDK.fInsertaCteProv();
+                    int cIDCteProv = 0;
+                    int error = SDK.fAltaCteProv(ref cIDCteProv,ref  cProveedor);
                     if (error == 0)
                     {
-                        error = SDK.fSetDatoCteProv("CCODIGOCLIENTE", cProveedor.cCodigoCliente);
-                        error = SDK.fSetDatoCteProv("CRAZONSOCIAL", cProveedor.cRazonSocial);
-                        error = SDK.fSetDatoCteProv("CDENCOMERCIAL", cProveedor.cDenComercial);
-                        error = SDK.fSetDatoCteProv("CRFC", cProveedor.cRFC);
-                        error = SDK.fGuardaCteProv();
-                        if (error == 0)
+                        proveedor.registrar(proveedor);
+                        MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
+                        SDK.fBuscaIdCteProv(cIDCteProv);
+                        SDK.fEditaCteProv();
+                        SDK.fSetDatoCteProv("CTIPOCLIENTE","3");
+                        int i = 1;
+                            foreach (var item in cIDClasificacionesGrupos)
+                            {
+                                SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
+                                i++;
+                            }
+                            
+                        
+                        SDK.fGuardaCteProv();
+                        if (exit == "No")
                         {
-                            proveedor.registrar(proveedor);
-                            MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
-                            if (exit == "No")
-                            {
-                                ClearField();
-                            }
-                            else
-                            {
-                                this.Close();
-                            }
+                            ClearField();
                         }
-                        else {
-                            SDK.rError(error);
+                        else
+                        {
+                            this.Close();
                         }
+
+                    }
+                    else {
+                        SDK.rError(error);
                     }
 
 
@@ -313,6 +320,7 @@ namespace SharkAdministrativo.Vista
 
         public void ClearField()
         {
+            txtCodigo.Clear();
             txtCalleP.Clear();
             txtCodigoPostalP.Clear();
             txtColoniaP.Clear();

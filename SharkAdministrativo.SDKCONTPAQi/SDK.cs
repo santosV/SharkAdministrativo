@@ -387,17 +387,21 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
         //funciones De Cliente/Proveedor
         [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fBuscaIdCteProv(int aIdCteProv);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fEditaCteProv();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fAltaCteProv(ref int aIdCteProv, ref CteProv atCteProv);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fLlenaRegistroCteProv(CteProv atCteProv, int aEsAlta);
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fPosPrimerCteProv();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fPosSiguienteCteProv();
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fSetDatoCteProv(string aCampo, StringBuilder aValor, int aLen);
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fLeeDatoCteProv(String aCampo, String aValor);
-        [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fInsertaCteProv();
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fSetDatoCteProv(String aCampo, String aValor);
+        public static extern Int32 fSetDatoCteProv(string aCampo, string aValor);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fGuardaCteProv();
 
