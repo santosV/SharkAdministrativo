@@ -71,16 +71,26 @@ namespace SharkAdministrativo.Vista
         {
             int i = 13;
             int error = SDK.fPosPrimerValorClasif();
-            while(error == 0){
+            while (error == 0)
+            {
                 StringBuilder cCodClasificacion = new StringBuilder(5);
-                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cCodClasificacion,5);
-
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cCodClasificacion, 5);
+                StringBuilder cNameValorClasificacion = new StringBuilder(20);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cNameValorClasificacion, 20);
                 if (!cCodClasificacion.ToString().Equals(Convert.ToString(i)))
                 {
                     error = SDK.fPosSiguienteValorClasif();
                 }
-                else {
-                    error = 1;
+                else
+                {
+                    if ((cCodClasificacion.ToString().Equals(Convert.ToString(i)) && cNameValorClasificacion.ToString().Equals("(Ninguna)")))
+                    {
+                        error = SDK.fPosSiguienteValorClasif();
+                        i++;
+                    }
+                    else {
+                        error = 1;
+                    }  
                 }
             }
             cbxGrupos.Items.Clear();
@@ -204,6 +214,8 @@ namespace SharkAdministrativo.Vista
 
                 cProveedor.cCodigoCliente = txtCodigo.Text;
                 cProveedor.cRazonSocial = txtRazonP.Text;
+                cProveedor.cRFC = txtRFC.Text;
+                cProveedor.cDenComercial = txtNombreP.Text;
 
                 Proveedor proveedor = new Proveedor();
                 proveedor.codigo = txtCodigo.Text;
@@ -224,9 +236,14 @@ namespace SharkAdministrativo.Vista
                 proveedor.pais = txtPaisP.Text;
                 DateTime thisDay = DateTime.Today;
                 proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                String[] cIDClasificacionesGrupos = null;
+                int index = 1;
                 foreach (var grupos in cbxGrupos.SelectedItems)
                 {
-                    proveedor.tipos_proveedor += grupos + ";";
+                    String[] groups = grupos.ToString().Split('|');
+                    cIDClasificacionesGrupos[index] = groups[0].ToString().Trim();
+                    index++;
+                    proveedor.tipos_proveedor += groups[1].Trim() + ";";
                 }
                 if (hasChanged == "Yes")
                 {
@@ -247,24 +264,33 @@ namespace SharkAdministrativo.Vista
                 }
                 else
                 {
-                    proveedor.registrar(proveedor);
-                    if (proveedor.id > 0)
+                    int error = SDK.fInsertaCteProv();
+                    if (error == 0)
                     {
-                        MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
-                        if (exit == "No")
+                        error = SDK.fSetDatoCteProv("CCODIGOCLIENTE", cProveedor.cCodigoCliente);
+                        error = SDK.fSetDatoCteProv("CRAZONSOCIAL", cProveedor.cRazonSocial);
+                        error = SDK.fSetDatoCteProv("CDENCOMERCIAL", cProveedor.cDenComercial);
+                        error = SDK.fSetDatoCteProv("CRFC", cProveedor.cRFC);
+                        error = SDK.fGuardaCteProv();
+                        if (error == 0)
                         {
-                            ClearField();
+                            proveedor.registrar(proveedor);
+                            MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
+                            if (exit == "No")
+                            {
+                                ClearField();
+                            }
+                            else
+                            {
+                                this.Close();
+                            }
                         }
-                        else
-                        {
-                            this.Close();
+                        else {
+                            SDK.rError(error);
                         }
+                    }
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("ERROR, NO FUE POSIBLE REGISTRAR AL PROVEEDOR '" + proveedor.razon_social + "'");
-                    }
+
                 }
 
 
