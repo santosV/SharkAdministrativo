@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using SharkAdministrativo.Modelo;
 using System.Data;
 using System.Xml;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -33,7 +34,7 @@ namespace SharkAdministrativo.Vista
         public CapturaExtendido()
         {
             InitializeComponent();
-     
+            obtenerValoresDeClasificaciones();
         }
 
         /// <summary>
@@ -93,6 +94,8 @@ namespace SharkAdministrativo.Vista
                         proveedor.sucursal = txtSucursalP.Text;
                         DateTime thisDay = DateTime.Today;
                         proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+
+                        //resgistrar proveedor en contpaq
                         proveedor.registrar(proveedor);
                     }
                     else
@@ -133,8 +136,8 @@ namespace SharkAdministrativo.Vista
                 Unidad_Medida unidad = new Unidad_Medida();
                 Categoria categoria = new Categoria();
                 Almacen almacen = new Almacen();
-              
-                
+
+                presentacion.codigo = item.ItemArray[13].ToString();
                 presentacion.Insumo = insumo.obtener(item.ItemArray[0].ToString());
                 presentacion.descripcion = item.ItemArray[1].ToString();
                 presentacion.Almacen = almacen.obtener(item.ItemArray[6].ToString());
@@ -182,8 +185,40 @@ namespace SharkAdministrativo.Vista
                 if (presentacion.verificarRegistro(presentacion) == false)
                 {
                     presentacion.Factura = factura;
-                    presentacion.registrar(presentacion);
+
+                    //registro de presentacion a contpaq
+                    SDK.tProduto cProducto = new SDK.tProduto();
+                    cProducto.cCodigoProducto = presentacion.codigo;
+                    cProducto.cNombreProducto = presentacion.descripcion;
+                    cProducto.cDescripcionProducto = presentacion.descripcion;
+                    String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
+                    string codigoClasificacion = clasificacion[0].Trim();
+                    string ultimo_costo = presentacion.ultimo_costo.ToString();
+                    cProducto.cPrecio1 = Double.Parse(ultimo_costo);
+                    cProducto.cImpuesto1 = Double.Parse(Convert.ToString(presentacion.IVA));
+                    cProducto.cTipoProducto = 1;
+                    cProducto.cMetodoCosteo = 1;
+
+                    Int32 aldProducto = 0;
+                    int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
+                    if (error == 0)
+                    {
+                        SDK.fEditaProducto();
+                        SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        SDK.fGuardaProducto();
+                        presentacion.registrar(presentacion);
+
+                    }
+                    else
+                    {
+                        SDK.rError(error);
+                    }
+
+                   
                 }
+
+                //registro de documento(entrada de almacen) a contpaq
+
                 EntradaPresentacion entrada = new EntradaPresentacion();
                 DateTime thisDay = DateTime.Today;
                 entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
@@ -199,6 +234,27 @@ namespace SharkAdministrativo.Vista
             this.Close();
         }
 
+        /// <summary>
+        /// Obtiene de CONTPAQI los valores de las clasificaciones disponibles.
+        /// </summary>
+        public void obtenerValoresDeClasificaciones() {
+            int error = SDK.fPosPrimerValorClasif();
+            while (error == 0)
+            {
+                StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder nomValorClasificacion = new StringBuilder(30);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+
+                if (nomValorClasificacion.ToString() != "(Ninguna)")
+                {
+
+                    cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                }
+                error = SDK.fPosSiguienteValorClasif();
+            }
+
+        }
 
         /// <summary>
         /// Carga en la vista todos los datos referentes al objeto factura.
@@ -289,6 +345,7 @@ namespace SharkAdministrativo.Vista
             dt.Columns.Add("Rendimiento");
             dt.Columns.Add("IVA");
             dt.Columns.Add("Total", typeof(string));
+            dt.Columns.Add("Codigo");
             tblInsumos.ItemsSource = dt.DefaultView;
 
             llenarAlmacen();
@@ -424,6 +481,7 @@ namespace SharkAdministrativo.Vista
                 seleccion["Costo Con Impuesto"] = txtCCimpuesto.Text;
                 seleccion["IVA"] = txtIVA.Text;
                 seleccion["Rendimiento"] = txtRendimiento.Text;
+                seleccion["Codigo"] = txtCodigo.Text;
                 
                 
                 tblInsumos.SelectedItem = seleccion;
