@@ -132,7 +132,7 @@ namespace SharkAdministrativo.Vista
         /// Guarda o modifica el objeto indicado.
         /// </summary>
         public void saveModify() {
-            if (!String.IsNullOrEmpty(txtGrupo.Text) && cbxCategoria.SelectedItem != null)
+            if (!String.IsNullOrEmpty(txtGrupo.Text) && cbxCategoria.SelectedItem != null && !String.IsNullOrEmpty(txtAbreviatura.Text))
             {
                 
 
@@ -144,8 +144,10 @@ namespace SharkAdministrativo.Vista
                         if (bandera.Equals("Encontrado")) {
                             break;
                         }
+
                         String aValorClasificacion = txtGrupo.Text;
                         String aValorAbreviatura = txtAbreviatura.Text;
+
                         while (bandera.Equals("No encontrado")) {
                             
                             StringBuilder cClasificacion = new StringBuilder(11);
@@ -191,6 +193,10 @@ namespace SharkAdministrativo.Vista
                                 else
                                 {
                                     SDK.fPosSiguienteValorClasif();
+
+                                    if(i.ToString().Equals(cClasificacion.ToString())){
+                                        break;
+                                    }
                                 }
                             }
                             else
@@ -209,7 +215,9 @@ namespace SharkAdministrativo.Vista
                 
                 fillTableGroups();
 
-            }else if(!String.IsNullOrEmpty(txtCategoria.Text)){
+            }else 
+                
+                if(!String.IsNullOrEmpty(txtCategoria.Text)){
                 categoria.nombre = txtCategoria.Text;
                 if (tblCategory.SelectedItem == null)
                 {
@@ -345,6 +353,7 @@ namespace SharkAdministrativo.Vista
             txtAlmacen.Clear();
             txtCategoria.Clear();
             txtGrupo.Clear();
+            txtAbreviatura.Clear();
             tblGrupos.SelectedItem = null;
             tblCategory.SelectedItem = null;
             tblStorage.SelectedItem = null;
