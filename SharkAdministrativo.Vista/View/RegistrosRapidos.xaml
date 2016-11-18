@@ -35,7 +35,7 @@
             </dxlc:LayoutGroup>
             <dxg:GridControl MouseDoubleClick="tblGrupos_MouseDoubleClick" x:Name="tblGrupos" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
-                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
                 </dxg:GridControl.View>
             </dxg:GridControl>
         </dxlc:LayoutControl>

@@ -158,8 +158,8 @@ namespace SharkAdministrativo.Vista
                             SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
                             
 
-                            if ((!cValorClasificacion.ToString().Equals(aValorClasificacion) && 
-                                !cValorAbreviatura.ToString().Equals(aValorAbreviatura)))
+                            if ((!cValorClasificacion.ToString().ToUpper().Equals(aValorClasificacion.ToUpper()) && 
+                                !cValorAbreviatura.ToString().ToUpper().Equals(aValorAbreviatura.ToUpper())))
                             {
                                 if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
                                 {
@@ -381,6 +381,29 @@ namespace SharkAdministrativo.Vista
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
             if (seleccion!=null)
             {
+                    int error = SDK.fPosPrimerValorClasif();
+                    while (error == 0)
+                    {
+                            StringBuilder cClasificacion = new StringBuilder(11);
+                            StringBuilder cValorClasificacion = new StringBuilder(60);
+                            StringBuilder cValorAbreviatura = new StringBuilder(3);
+                            SDK.fLeeDatoValorClasif("CIDCLASIFICACION",cClasificacion,11);
+                            SDK.fLeeDatoValorClasif("CVALORCLASIFICACION",cValorClasificacion,60);
+                            SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+
+                            if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
+                            {
+                                txtAbreviatura.Text = cValorAbreviatura.ToString();
+                            }
+                             
+                            if(cClasificacion.ToString().Equals("18"))
+                            {
+                            break;
+                            }
+                            SDK.fPosSiguienteValorClasif();
+                    }
+                
+
                 txtGrupo.Text = seleccion.Row.ItemArray[1].ToString();
                 cbxCategoria.SelectedItem = seleccion.Row.ItemArray[2].ToString();
             }
