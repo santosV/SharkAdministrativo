@@ -139,7 +139,8 @@ namespace SharkAdministrativo.Vista
                 empresa = empresa.obtenerPorRFC(nodo.GetAttribute("rfc"));
                 if (empresa.rfc != null)
                 {
-                    if (empresa.nombre.Trim() != nodo.GetAttribute("nombre"))
+                   
+                    if (empresa.nombre.Trim() ==  nodo.GetAttribute("nombre"))
                     {
                         foreach (XmlElement domicilio in domicilio_fiscal_receptor)
                         {

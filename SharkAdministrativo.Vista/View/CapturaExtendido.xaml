@@ -37,6 +37,9 @@
             <dxlc:LayoutGroup Header="Tools" View="Tabs" Margin="0,-20,0,0" Background="#FFE8E8E8" Padding="0">
                 <dxlc:LayoutGroup Header="Insumos" Orientation="Vertical">
                     <dxlc:LayoutGroup Header="Detalles de Insumo" View="GroupBox" Orientation="Vertical">
+                        <dxlc:LayoutItem Label="Codigo:">
+                            <dxe:TextEdit x:Name="txtCodigo"/>
+                        </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Insumo Base:">
                             <dxe:ComboBoxEdit x:Name="cbxInsumos" SelectedIndexChanged="cbxInsumos_SelectedIndexChanged" KeyDown="ObtenerCostos_KeyUp" AutoComplete="True"/>
                         </dxlc:LayoutItem>
@@ -70,6 +73,9 @@
                         </dxlc:LayoutGroup>
                         <dxlc:LayoutItem Label="Almacén:" Margin="30,0,0,0">
                             <dxe:ComboBoxEdit x:Name="cbxAlmacen"  AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Clasificacion">
+                            <dxe:ComboBoxEdit x:Name="cbxValoresDeClasificaciones"/>
                         </dxlc:LayoutItem>
                         <Button x:Name="btnGuardarList" Content="Listo" HorizontalAlignment="Center" VerticalAlignment="Top" Click="btnGuardarList_Click" KeyDown="btnGuardarList_KeyDown"/>
                     </dxlc:LayoutGroup>

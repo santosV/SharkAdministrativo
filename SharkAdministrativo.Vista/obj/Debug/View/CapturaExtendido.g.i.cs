@@ -94,7 +94,7 @@ namespace SharkAdministrativo.Vista {
         
         #line 41 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.Editors.ComboBoxEdit cbxInsumos;
+        internal DevExpress.Xpf.Editors.TextEdit txtCodigo;
         
         #line default
         #line hidden
@@ -102,7 +102,7 @@ namespace SharkAdministrativo.Vista {
         
         #line 44 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.Editors.TextEdit txtDescripcion;
+        internal DevExpress.Xpf.Editors.ComboBoxEdit cbxInsumos;
         
         #line default
         #line hidden
@@ -110,15 +110,15 @@ namespace SharkAdministrativo.Vista {
         
         #line 47 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.LayoutControl.LayoutItem txtCreferencia;
+        internal DevExpress.Xpf.Editors.TextEdit txtDescripcion;
         
         #line default
         #line hidden
         
         
-        #line 48 "..\..\..\View\CapturaExtendido.xaml"
+        #line 50 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.Editors.TextEdit txtCostoUnitario;
+        internal DevExpress.Xpf.LayoutControl.LayoutItem txtCreferencia;
         
         #line default
         #line hidden
@@ -126,15 +126,15 @@ namespace SharkAdministrativo.Vista {
         
         #line 51 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.Editors.TextEdit txtCpromedio;
+        internal DevExpress.Xpf.Editors.TextEdit txtCostoUnitario;
         
         #line default
         #line hidden
         
         
-        #line 56 "..\..\..\View\CapturaExtendido.xaml"
+        #line 54 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal DevExpress.Xpf.Editors.TextEdit txtIVA;
+        internal DevExpress.Xpf.Editors.TextEdit txtCpromedio;
         
         #line default
         #line hidden
@@ -142,13 +142,21 @@ namespace SharkAdministrativo.Vista {
         
         #line 59 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        internal DevExpress.Xpf.Editors.TextEdit txtIVA;
+        
+        #line default
+        #line hidden
+        
+        
+        #line 62 "..\..\..\View\CapturaExtendido.xaml"
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtCCimpuesto;
         
         #line default
         #line hidden
         
         
-        #line 64 "..\..\..\View\CapturaExtendido.xaml"
+        #line 67 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtRendimiento;
         
@@ -156,7 +164,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 66 "..\..\..\View\CapturaExtendido.xaml"
+        #line 69 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TextBlock txtUnidad;
         
@@ -164,7 +172,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 68 "..\..\..\View\CapturaExtendido.xaml"
+        #line 71 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtCantidad;
         
@@ -172,7 +180,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 72 "..\..\..\View\CapturaExtendido.xaml"
+        #line 75 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.ComboBoxEdit cbxAlmacen;
         
@@ -180,7 +188,15 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 74 "..\..\..\View\CapturaExtendido.xaml"
+        #line 78 "..\..\..\View\CapturaExtendido.xaml"
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        internal DevExpress.Xpf.Editors.ComboBoxEdit cbxValoresDeClasificaciones;
+        
+        #line default
+        #line hidden
+        
+        
+        #line 80 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button btnGuardarList;
         
@@ -188,7 +204,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 76 "..\..\..\View\CapturaExtendido.xaml"
+        #line 82 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Grid.GridControl tblInsumos;
         
@@ -196,7 +212,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 85 "..\..\..\View\CapturaExtendido.xaml"
+        #line 91 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtRazonSocialP;
         
@@ -204,7 +220,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 89 "..\..\..\View\CapturaExtendido.xaml"
+        #line 95 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtRfcP;
         
@@ -212,7 +228,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 92 "..\..\..\View\CapturaExtendido.xaml"
+        #line 98 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtSucursalP;
         
@@ -220,7 +236,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 98 "..\..\..\View\CapturaExtendido.xaml"
+        #line 104 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtCalleP;
         
@@ -228,7 +244,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 101 "..\..\..\View\CapturaExtendido.xaml"
+        #line 107 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtColoniaP;
         
@@ -236,7 +252,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 104 "..\..\..\View\CapturaExtendido.xaml"
+        #line 110 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtLocalidadP;
         
@@ -244,7 +260,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 107 "..\..\..\View\CapturaExtendido.xaml"
+        #line 113 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtEstadoP;
         
@@ -252,7 +268,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 112 "..\..\..\View\CapturaExtendido.xaml"
+        #line 118 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtNoExteriorP;
         
@@ -260,7 +276,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 115 "..\..\..\View\CapturaExtendido.xaml"
+        #line 121 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtCodigoPostalP;
         
@@ -268,7 +284,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 118 "..\..\..\View\CapturaExtendido.xaml"
+        #line 124 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtMunicipioP;
         
@@ -276,7 +292,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 121 "..\..\..\View\CapturaExtendido.xaml"
+        #line 127 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtPaisP;
         
@@ -284,7 +300,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 134 "..\..\..\View\CapturaExtendido.xaml"
+        #line 140 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.DateEdit txtFechaF;
         
@@ -292,7 +308,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 137 "..\..\..\View\CapturaExtendido.xaml"
+        #line 143 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtMonedaF;
         
@@ -300,7 +316,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 140 "..\..\..\View\CapturaExtendido.xaml"
+        #line 146 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtTipoComprobanteF;
         
@@ -308,7 +324,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 145 "..\..\..\View\CapturaExtendido.xaml"
+        #line 151 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtTipoCambioF;
         
@@ -316,7 +332,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 148 "..\..\..\View\CapturaExtendido.xaml"
+        #line 154 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtFormaPagoF;
         
@@ -324,7 +340,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 153 "..\..\..\View\CapturaExtendido.xaml"
+        #line 159 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtSubTotalF;
         
@@ -332,7 +348,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 156 "..\..\..\View\CapturaExtendido.xaml"
+        #line 162 "..\..\..\View\CapturaExtendido.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtTotalF;
         
@@ -385,174 +401,180 @@ namespace SharkAdministrativo.Vista {
             this.biNew = ((DevExpress.Xpf.Bars.BarButtonItem)(target));
             return;
             case 4:
+            this.txtCodigo = ((DevExpress.Xpf.Editors.TextEdit)(target));
+            return;
+            case 5:
             this.cbxInsumos = ((DevExpress.Xpf.Editors.ComboBoxEdit)(target));
             
-            #line 41 "..\..\..\View\CapturaExtendido.xaml"
+            #line 44 "..\..\..\View\CapturaExtendido.xaml"
             this.cbxInsumos.SelectedIndexChanged += new System.Windows.RoutedEventHandler(this.cbxInsumos_SelectedIndexChanged);
             
             #line default
             #line hidden
             
-            #line 41 "..\..\..\View\CapturaExtendido.xaml"
+            #line 44 "..\..\..\View\CapturaExtendido.xaml"
             this.cbxInsumos.KeyDown += new System.Windows.Input.KeyEventHandler(this.ObtenerCostos_KeyUp);
             
             #line default
             #line hidden
             return;
-            case 5:
+            case 6:
             this.txtDescripcion = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 6:
+            case 7:
             this.txtCreferencia = ((DevExpress.Xpf.LayoutControl.LayoutItem)(target));
             return;
-            case 7:
+            case 8:
             this.txtCostoUnitario = ((DevExpress.Xpf.Editors.TextEdit)(target));
             
-            #line 48 "..\..\..\View\CapturaExtendido.xaml"
+            #line 51 "..\..\..\View\CapturaExtendido.xaml"
             this.txtCostoUnitario.KeyDown += new System.Windows.Input.KeyEventHandler(this.SoloNumeros_KeyDown);
             
             #line default
             #line hidden
             
-            #line 48 "..\..\..\View\CapturaExtendido.xaml"
+            #line 51 "..\..\..\View\CapturaExtendido.xaml"
             this.txtCostoUnitario.KeyUp += new System.Windows.Input.KeyEventHandler(this.ObtenerCostos_KeyUp);
             
             #line default
             #line hidden
             return;
-            case 8:
+            case 9:
             this.txtCpromedio = ((DevExpress.Xpf.Editors.TextEdit)(target));
             
-            #line 51 "..\..\..\View\CapturaExtendido.xaml"
+            #line 54 "..\..\..\View\CapturaExtendido.xaml"
             this.txtCpromedio.KeyDown += new System.Windows.Input.KeyEventHandler(this.SoloNumeros_KeyDown);
             
             #line default
             #line hidden
             return;
-            case 9:
+            case 10:
             this.txtIVA = ((DevExpress.Xpf.Editors.TextEdit)(target));
             
-            #line 56 "..\..\..\View\CapturaExtendido.xaml"
+            #line 59 "..\..\..\View\CapturaExtendido.xaml"
             this.txtIVA.KeyDown += new System.Windows.Input.KeyEventHandler(this.SoloNumeros_KeyDown);
             
             #line default
             #line hidden
             
-            #line 56 "..\..\..\View\CapturaExtendido.xaml"
+            #line 59 "..\..\..\View\CapturaExtendido.xaml"
             this.txtIVA.KeyUp += new System.Windows.Input.KeyEventHandler(this.ObtenerCostos_KeyUp);
             
             #line default
             #line hidden
             return;
-            case 10:
+            case 11:
             this.txtCCimpuesto = ((DevExpress.Xpf.Editors.TextEdit)(target));
             
-            #line 59 "..\..\..\View\CapturaExtendido.xaml"
+            #line 62 "..\..\..\View\CapturaExtendido.xaml"
             this.txtCCimpuesto.KeyDown += new System.Windows.Input.KeyEventHandler(this.SoloNumeros_KeyDown);
             
             #line default
             #line hidden
             return;
-            case 11:
+            case 12:
             this.txtRendimiento = ((DevExpress.Xpf.Editors.TextEdit)(target));
             
-            #line 64 "..\..\..\View\CapturaExtendido.xaml"
+            #line 67 "..\..\..\View\CapturaExtendido.xaml"
             this.txtRendimiento.KeyDown += new System.Windows.Input.KeyEventHandler(this.SoloNumeros_KeyDown);
             
             #line default
             #line hidden
             return;
-            case 12:
+            case 13:
             this.txtUnidad = ((System.Windows.Controls.TextBlock)(target));
             return;
-            case 13:
+            case 14:
             this.txtCantidad = ((DevExpress.Xpf.Editors.TextEdit)(target));
             
-            #line 68 "..\..\..\View\CapturaExtendido.xaml"
+            #line 71 "..\..\..\View\CapturaExtendido.xaml"
             this.txtCantidad.KeyDown += new System.Windows.Input.KeyEventHandler(this.SoloNumeros_KeyDown);
             
             #line default
             #line hidden
             return;
-            case 14:
+            case 15:
             this.cbxAlmacen = ((DevExpress.Xpf.Editors.ComboBoxEdit)(target));
             return;
-            case 15:
+            case 16:
+            this.cbxValoresDeClasificaciones = ((DevExpress.Xpf.Editors.ComboBoxEdit)(target));
+            return;
+            case 17:
             this.btnGuardarList = ((System.Windows.Controls.Button)(target));
             
-            #line 74 "..\..\..\View\CapturaExtendido.xaml"
+            #line 80 "..\..\..\View\CapturaExtendido.xaml"
             this.btnGuardarList.Click += new System.Windows.RoutedEventHandler(this.btnGuardarList_Click);
             
             #line default
             #line hidden
             
-            #line 74 "..\..\..\View\CapturaExtendido.xaml"
+            #line 80 "..\..\..\View\CapturaExtendido.xaml"
             this.btnGuardarList.KeyDown += new System.Windows.Input.KeyEventHandler(this.btnGuardarList_KeyDown);
             
             #line default
             #line hidden
             return;
-            case 16:
+            case 18:
             this.tblInsumos = ((DevExpress.Xpf.Grid.GridControl)(target));
             
-            #line 76 "..\..\..\View\CapturaExtendido.xaml"
+            #line 82 "..\..\..\View\CapturaExtendido.xaml"
             this.tblInsumos.MouseDown += new System.Windows.Input.MouseButtonEventHandler(this.tblInsumos_MouseDown);
             
             #line default
             #line hidden
             return;
-            case 17:
+            case 19:
             this.txtRazonSocialP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 18:
+            case 20:
             this.txtRfcP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 19:
+            case 21:
             this.txtSucursalP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 20:
+            case 22:
             this.txtCalleP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 21:
+            case 23:
             this.txtColoniaP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 22:
+            case 24:
             this.txtLocalidadP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 23:
+            case 25:
             this.txtEstadoP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 24:
+            case 26:
             this.txtNoExteriorP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 25:
+            case 27:
             this.txtCodigoPostalP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 26:
+            case 28:
             this.txtMunicipioP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 27:
+            case 29:
             this.txtPaisP = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 28:
+            case 30:
             this.txtFechaF = ((DevExpress.Xpf.Editors.DateEdit)(target));
             return;
-            case 29:
+            case 31:
             this.txtMonedaF = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 30:
+            case 32:
             this.txtTipoComprobanteF = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 31:
+            case 33:
             this.txtTipoCambioF = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 32:
+            case 34:
             this.txtFormaPagoF = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 33:
+            case 35:
             this.txtSubTotalF = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
-            case 34:
+            case 36:
             this.txtTotalF = ((DevExpress.Xpf.Editors.TextEdit)(target));
             return;
             }
