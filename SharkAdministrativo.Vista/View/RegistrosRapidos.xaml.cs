@@ -32,13 +32,14 @@ namespace SharkAdministrativo.Vista
         public RegistrosRapidos()
         {
             InitializeComponent();
-            
+
         }
 
         /// <summary>
         /// Carga lo títulos de la tabla de grupos.
         /// </summary>
-        private void loadGroupTitle() {
+        private void loadGroupTitle()
+        {
             dtGrupos.Columns.Add("ID");
             dtGrupos.Columns.Add("Nombre");
             dtGrupos.Columns.Add("Categoría");
@@ -70,12 +71,13 @@ namespace SharkAdministrativo.Vista
         /// <summary>
         /// Llena las filas de la tabla de grupos.
         /// </summary>
-        private void fillTableGroups() {
+        private void fillTableGroups()
+        {
             dtGrupos.Rows.Clear();
             List<Grupo> groups = grupo.obtenerTodos();
             foreach (var group in groups)
             {
-                dtGrupos.Rows.Add(group.id,group.nombre,group.Categoria.nombre);
+                dtGrupos.Rows.Add(group.id, group.nombre, group.Categoria.nombre);
             }
         }
 
@@ -106,20 +108,21 @@ namespace SharkAdministrativo.Vista
 
                 if (cNombreAlmacen.ToString() != "(Ninguno)")
                 {
-                   
-                    dtAlmacenes.Rows.Add(cCodAlmacen.ToString(),cNombreAlmacen.ToString());
+
+                    dtAlmacenes.Rows.Add(cCodAlmacen.ToString(), cNombreAlmacen.ToString());
 
                 }
                 error = SDK.fPosSiguienteAlmacen();
             }
-           
+
         }
 
 
         /// <summary>
         /// Llena el combobox de todas las categorías disponibles.
         /// </summary>
-        public void fillCategories() {
+        public void fillCategories()
+        {
             cbxCategoria.Items.Clear();
             List<Categoria> categories = categoria.obtenerTodos();
             foreach (var category in categories)
@@ -131,44 +134,49 @@ namespace SharkAdministrativo.Vista
         /// <summary>
         /// Guarda o modifica el objeto indicado.
         /// </summary>
-        public void saveModify() {
+        public void saveModify()
+        {
             if (!String.IsNullOrEmpty(txtGrupo.Text) && cbxCategoria.SelectedItem != null && !String.IsNullOrEmpty(txtAbreviatura.Text))
             {
-                
+
 
                 int error = SDK.fPosPrimerValorClasif();
                 String bandera = "No encontrado";
-                if(error==0){
+
+                if (error == 0)
+                {
                     for (int i = 13; i <= 18; i++)
                     {
-                        if (bandera.Equals("Encontrado")) {
+                        if (bandera.Equals("Encontrado"))
+                        {
                             break;
                         }
 
                         String aValorClasificacion = txtGrupo.Text;
                         String aValorAbreviatura = txtAbreviatura.Text;
 
-                        while (bandera.Equals("No encontrado")) {
-                            
+                        while (bandera.Equals("No encontrado"))
+                        {
+
                             StringBuilder cClasificacion = new StringBuilder(11);
                             StringBuilder cValorClasificacion = new StringBuilder(60);
                             StringBuilder cValorAbreviatura = new StringBuilder(3);
-                            SDK.fLeeDatoValorClasif("CIDCLASIFICACION",cClasificacion,11);
-                            SDK.fLeeDatoValorClasif("CVALORCLASIFICACION",cValorClasificacion,60);
+                            SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
+                            SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
                             SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
-                            
+                            grupo.nombre = txtGrupo.Text;
+                            grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
+                            grupo.categoria_id = grupo.Categoria.id;
 
-                            if ((!cValorClasificacion.ToString().ToUpper().Equals(aValorClasificacion.ToUpper()) && 
-                                !cValorAbreviatura.ToString().ToUpper().Equals(aValorAbreviatura.ToUpper())))
+
+
+                            if (tblGrupos.SelectedItem == null)
                             {
-                                if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
+                                if ((!cValorClasificacion.ToString().ToUpper().Equals(aValorClasificacion.ToUpper()) &&
+                           !cValorAbreviatura.ToString().ToUpper().Equals(aValorAbreviatura.ToUpper())))
                                 {
-
-                                    grupo.nombre = txtGrupo.Text;
-                                    grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
-                                    grupo.categoria_id = grupo.Categoria.id;
-
-                                    if (tblGrupos.SelectedItem == null)
+                                    
+                                    if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
                                     {
 
 
@@ -178,112 +186,98 @@ namespace SharkAdministrativo.Vista
                                         SDK.fGuardaValorClasif();
                                         grupo.registrar(grupo);
                                         bandera = "Encontrado";
-                                        break;
+
+
+
                                     }
                                     else
                                     {
-                                        System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
-                                        Grupo group = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
-                                        grupo.id = group.id;
-                                        grupo.Modify(grupo);
+                                        SDK.fPosSiguienteValorClasif();
 
+                                        if (i.ToString().Equals(cClasificacion.ToString()))
+                                        {
+                                            break;
+                                        }
                                     }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("La abreviatura o el grupo ya existen");
+                                    bandera = "Encontrado";
+                                    break;
+                                }
 
+                            }
+                            else
+                            {
+                                if (cValorAbreviatura.ToString().Equals(txtAbreviatura.Text))
+                                {
+                                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
+                                    Grupo group = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                                    SDK.fEditaValorClasif();
+                                    SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtGrupo.Text);
+                                    SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbreviatura.Text);
+                                    SDK.fGuardaValorClasif();
+
+                                    bandera = "Encontrado";
+
+                                    grupo.id = group.id;
+                                    grupo.Modify(grupo);
+                                    break;
                                 }
                                 else
                                 {
                                     SDK.fPosSiguienteValorClasif();
-
-                                    if(i.ToString().Equals(cClasificacion.ToString())){
-                                        break;
-                                    }
                                 }
-                            }
-                            else
-                            {
-                                MessageBox.Show("La abreviatura o el grupo ya existen");
-                                bandera = "Encontrado";
-                                break;
-                            }
 
-                            
+                            }
                         }
                     }
                 }
 
-                
-                
+
+
                 fillTableGroups();
 
-            }else 
-                
-                if(!String.IsNullOrEmpty(txtCategoria.Text)){
-                categoria.nombre = txtCategoria.Text;
-                if (tblCategory.SelectedItem == null)
+            }
+            else
+
+                if (!String.IsNullOrEmpty(txtCategoria.Text))
                 {
-                    categoria.registrar(categoria);
-                }
-                else {
-                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
-                    categoria.id = Convert.ToInt32(seleccion.Row.ItemArray[0]);
-                    categoria.Modify(categoria);
-                }
-                fillTableCategory();
-
-            }else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
-            {
-                almacen.codigo = txtCodigo.Text;
-                almacen.nombre = txtAlmacen.Text;
-
-                SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
-                cAlmacen.cCodigoAlmacen = txtCodigo.Text;
-                cAlmacen.cNombreAlmacen = txtAlmacen.Text;
-
-                if (tblStorage.SelectedItem == null)
-                {
-                    int error = SDK.fInsertaAlmacen();
-                    if (error == 0)
+                    categoria.nombre = txtCategoria.Text;
+                    if (tblCategory.SelectedItem == null)
                     {
-                        error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
-                        error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+                        categoria.registrar(categoria);
+                    }
+                    else
+                    {
+                        System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
+                        categoria.id = Convert.ToInt32(seleccion.Row.ItemArray[0]);
+                        categoria.Modify(categoria);
+                    }
+                    fillTableCategory();
+
+                }
+                else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
+                {
+                    almacen.codigo = txtCodigo.Text;
+                    almacen.nombre = txtAlmacen.Text;
+
+                    SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
+                    cAlmacen.cCodigoAlmacen = txtCodigo.Text;
+                    cAlmacen.cNombreAlmacen = txtAlmacen.Text;
+
+                    if (tblStorage.SelectedItem == null)
+                    {
+                        int error = SDK.fInsertaAlmacen();
                         if (error == 0)
                         {
-                            error = SDK.fGuardaAlmacen();
-                            almacen.registrar(almacen);
-                        }
-                        else
-                        {
-                            SDK.rError(error);
-                        }
-                    }
-                    else {
-                        SDK.rError(error);
-                    }
-                }
-                else
-                {
-                    
-                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
-                   
-                    int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
-                    if (error == 0)
-                    {
-
-                        error = SDK.fEditaAlmacen();
-
-                        if (error == 0)
-                        {
-
-                            error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", txtCodigo.Text);
-                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", txtAlmacen.Text);
-
+                            error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
+                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
                             if (error == 0)
                             {
-
                                 error = SDK.fGuardaAlmacen();
-                                almacen.codigo = seleccion.Row.ItemArray[0].ToString();
-                                almacen.Modify(almacen);
-
+                                almacen.registrar(almacen);
                             }
                             else
                             {
@@ -297,37 +291,75 @@ namespace SharkAdministrativo.Vista
                     }
                     else
                     {
-                        SDK.rError(error);
-                    }
 
+                        System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
+
+                        int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
+                        if (error == 0)
+                        {
+
+                            error = SDK.fEditaAlmacen();
+
+                            if (error == 0)
+                            {
+
+                                error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", txtCodigo.Text);
+                                error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", txtAlmacen.Text);
+
+                                if (error == 0)
+                                {
+
+                                    error = SDK.fGuardaAlmacen();
+                                    almacen.codigo = seleccion.Row.ItemArray[0].ToString();
+                                    almacen.Modify(almacen);
+
+                                }
+                                else
+                                {
+                                    SDK.rError(error);
+                                }
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+
+                    }
+                    obtenerAlmacenesCONT();
                 }
-                obtenerAlmacenesCONT();
-                }
-                
-               
-                
-            }
-        
+
+
+
+        }
+
 
         /// <summary>
         /// Muestra la vista solicitada.
         /// </summary>
-        public void showView(int vista) {
+        public void showView(int vista)
+        {
             hideViews();
-            if (vista==1)
+            if (vista == 1)
             {
                 loadGroupTitle();
                 fillCategories();
                 fillTableGroups();
                 ventanaRapida.Title = "Gestión De Grupos";
                 vista_grupos.Visibility = Visibility.Visible;
-            }else if (vista==2)
+            }
+            else if (vista == 2)
             {
                 loadCategoryTitle();
                 fillTableCategory();
                 ventanaRapida.Title = "Gestión De Categorías";
                 vista_categorias.Visibility = Visibility.Visible;
-            }else if (vista==3)
+            }
+            else if (vista == 3)
             {
                 loadStorageTitle();
                 obtenerAlmacenesCONT();
@@ -339,7 +371,8 @@ namespace SharkAdministrativo.Vista
         /// <summary>
         /// Esconde todas las vistas.
         /// </summary>
-        public void hideViews() {
+        public void hideViews()
+        {
             vista_grupos.Visibility = Visibility.Collapsed;
             vista_categorias.Visibility = Visibility.Collapsed;
             vista_almacenes.Visibility = Visibility.Collapsed;
@@ -348,12 +381,14 @@ namespace SharkAdministrativo.Vista
         /// <summary>
         /// Limpia todos los campos.
         /// </summary>
-        private void clearFields() {
+        private void clearFields()
+        {
             txtCodigo.Clear();
             txtAlmacen.Clear();
             txtCategoria.Clear();
             txtGrupo.Clear();
             txtAbreviatura.Clear();
+            txtAbreviatura.IsReadOnly = false;
             tblGrupos.SelectedItem = null;
             tblCategory.SelectedItem = null;
             tblStorage.SelectedItem = null;
@@ -379,52 +414,92 @@ namespace SharkAdministrativo.Vista
         private void tblGrupos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
-                    int error = SDK.fPosPrimerValorClasif();
-                    while (error == 0)
-                    {
-                            StringBuilder cClasificacion = new StringBuilder(11);
-                            StringBuilder cValorClasificacion = new StringBuilder(60);
-                            StringBuilder cValorAbreviatura = new StringBuilder(3);
-                            SDK.fLeeDatoValorClasif("CIDCLASIFICACION",cClasificacion,11);
-                            SDK.fLeeDatoValorClasif("CVALORCLASIFICACION",cValorClasificacion,60);
-                            SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                txtAbreviatura.IsReadOnly = true;
 
-                            if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
-                            {
-                                txtAbreviatura.Text = cValorAbreviatura.ToString();
-                            }
-                             
-                            if(cClasificacion.ToString().Equals("18"))
-                            {
-                            break;
-                            }
-                            SDK.fPosSiguienteValorClasif();
+                int error = SDK.fPosPrimerValorClasif();
+                while (error == 0)
+                {
+                    StringBuilder cClasificacion = new StringBuilder(11);
+                    StringBuilder cValorClasificacion = new StringBuilder(60);
+                    StringBuilder cValorAbreviatura = new StringBuilder(3);
+                    SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
+                    SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                    SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+
+                    if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
+                    {
+                        txtAbreviatura.Text = cValorAbreviatura.ToString();
                     }
-                
+
+                    if (cClasificacion.ToString().Equals("18"))
+                    {
+                        break;
+                    }
+                    SDK.fPosSiguienteValorClasif();
+                }
+
 
                 txtGrupo.Text = seleccion.Row.ItemArray[1].ToString();
                 cbxCategoria.SelectedItem = seleccion.Row.ItemArray[2].ToString();
             }
         }
 
-        private void deleteObject() {
+        private void deleteObject()
+        {
             if (tblGrupos.SelectedItem != null)
             {
                 System.Data.DataRowView seleccion = (System.Data.DataRowView)tblGrupos.SelectedItem;
                 if (seleccion != null)
                 {
-                    MessageBoxResult dialogResult = MessageBox.Show("¿ESTÁ SEGURO DE ELIMINAR EL REGISTRO '" + seleccion.Row.ItemArray[1] + "'?", "ELIMINACIÓN DE REGISTRO", MessageBoxButton.YesNo);
-                    if (dialogResult == MessageBoxResult.Yes)
+                    int error = SDK.fPosPrimerValorClasif();
+                    while (error == 0)
                     {
-                        this.grupo = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0]));
-                        grupo.delete(grupo);
-                        seleccion.Delete();
-                        clearFields();
+                        StringBuilder cClasificacion = new StringBuilder(11);
+                        StringBuilder cValorClasificacion = new StringBuilder(60);
+                        StringBuilder cValorAbreviatura = new StringBuilder(3);
+                        SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
+                        SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+
+                        if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
+                        {
+                            MessageBoxResult dialogResult = MessageBox.Show("¿ESTÁ SEGURO DE ELIMINAR EL REGISTRO '" + seleccion.Row.ItemArray[1] + "'?", "ELIMINACIÓN DE REGISTRO", MessageBoxButton.YesNo);
+                            if (dialogResult == MessageBoxResult.Yes)
+                            {
+                                this.grupo = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0]));
+                                SDK.fEditaValorClasif();
+                                error=SDK.fSetDatoValorClasif("CVALORCLASIFICACION","(Ninguna)");
+                                error=SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", "0");
+                                error=SDK.fGuardaValorClasif();
+                                if (error == 0)
+                                {
+                                    grupo.delete(grupo);
+                                    seleccion.Delete();
+                                    clearFields();
+                                    break;
+                                }
+                                else {
+                                    SDK.rError(error);
+                                }
+                                
+                            }
+                            
+                        }
+
+                        if (cClasificacion.ToString().Equals("18"))
+                        {
+                            break;
+                        }
+                        SDK.fPosSiguienteValorClasif();
                     }
+
+                   
                 }
-            }else if(tblCategory.SelectedItem!=null){
+            }
+            else if (tblCategory.SelectedItem != null)
+            {
                 System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
                 if (seleccion != null)
                 {
@@ -454,7 +529,7 @@ namespace SharkAdministrativo.Vista
                             if (error == 0)
                             {
 
-                              //error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", "(Ninguno)");
+                                //error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", "(Ninguno)");
                                 error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", "(Ninguno)");
 
                                 if (error == 0)
@@ -480,11 +555,13 @@ namespace SharkAdministrativo.Vista
                             SDK.rError(error);
                         }
 
-                       
+
                         clearFields();
                     }
                 }
-            }else {
+            }
+            else
+            {
                 MessageBox.Show("ES NECESARIO QUE SELECCIONE EL REGISTRO QUE DESEA ELIMINAR");
             }
         }
@@ -502,7 +579,7 @@ namespace SharkAdministrativo.Vista
         private void tblCategory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
                 txtCategoria.Text = seleccion.Row.ItemArray[1].ToString();
             }
