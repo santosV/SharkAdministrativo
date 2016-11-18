@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SharkAdministrativo.Modelo;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -20,14 +21,14 @@ namespace SharkAdministrativo.Vista
     /// </summary>
     public partial class GestionProveedores : Window
     {
-        
+
         Grupo grupo = new Grupo();
         Categoria categoria = new Categoria();
         Empresa empresa = new Empresa();
         Proveedor proveedor = new Proveedor();
         string exit = "No";
         string hasChanged = "No";
-       
+
         public GestionProveedores()
         {
             InitializeComponent();
@@ -36,7 +37,8 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        public void addProveedor(string name, string empresa) {
+        public void addProveedor(string name, string empresa)
+        {
             hasChanged = "Yes";
             this.proveedor = proveedor.obtener(name);
             txtNombreP.Text = proveedor.nombre;
@@ -54,34 +56,52 @@ namespace SharkAdministrativo.Vista
             txtTelefono.Text = proveedor.telefono;
             cbxEmpresa.SelectedItem = empresa;
             if (!String.IsNullOrEmpty(proveedor.tipos_proveedor))
-            {       
+            {
                 String[] grupos = proveedor.tipos_proveedor.Split(';');
                 foreach (string group in grupos)
                 {
                     cbxGrupos.SelectedItems.Add(group);
                 }
             }
-            
-           
+
+
         }
 
-        public void llenarGrupos() {
+        public void llenarGrupos()
+        {
+            int i = 13;
+            int error = SDK.fPosPrimerValorClasif();
+            while(error == 0){
+                StringBuilder cCodClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cCodClasificacion,5);
+
+                if (!cCodClasificacion.ToString().Equals(Convert.ToString(i)))
+                {
+                    error = SDK.fPosSiguienteValorClasif();
+                }
+                else {
+                    error = 1;
+                }
+            }
             cbxGrupos.Items.Clear();
             List<Grupo> grupos = grupo.obtenerTodos();
-            cbxGrupos.Items.Add("Nuevo");
             foreach (var item in grupos)
             {
-                cbxGrupos.Items.Add(item.nombre);
+                StringBuilder cCodValorClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", cCodValorClasificacion, 5);
+                cbxGrupos.Items.Add(cCodValorClasificacion + " | " + item.nombre);
+                SDK.fPosSiguienteValorClasif();
             }
         }
 
-        public void llenarEmpresas() {
+        public void llenarEmpresas()
+        {
             List<Empresa> empresas = empresa.obtenerTodos();
             foreach (var item in empresas)
             {
                 cbxEmpresa.Items.Add(item.nombre);
             }
-        
+
         }
 
         private void cbxGrupos_SelectedIndexChanged(object sender, RoutedEventArgs e)
@@ -175,12 +195,18 @@ namespace SharkAdministrativo.Vista
             guardarModificar();
         }
 
-        public void guardarModificar() {
+        public void guardarModificar()
+        {
             if (!String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtRFC.Text) && cbxGrupos.SelectedItem != null && !String.IsNullOrEmpty(txtRazonP.Text) && cbxEmpresa.SelectedItem != null)
             {
 
+                SDK.CteProv cProveedor = new SDK.CteProv();
+
+                cProveedor.cCodigoCliente = txtCodigo.Text;
+                cProveedor.cRazonSocial = txtRazonP.Text;
 
                 Proveedor proveedor = new Proveedor();
+                proveedor.codigo = txtCodigo.Text;
                 proveedor.nombre = txtNombreP.Text;
                 proveedor.razon_social = txtRazonP.Text;
                 proveedor.RFC = txtRFC.Text;
@@ -207,7 +233,7 @@ namespace SharkAdministrativo.Vista
                     proveedor.id = this.proveedor.id;
                     proveedor.modificar(proveedor);
                     MessageBox.Show("ÉXITO, SE MODIFICÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
-                    
+
                     if (exit == "No")
                     {
                         ClearField();
@@ -216,10 +242,11 @@ namespace SharkAdministrativo.Vista
                     {
                         this.Close();
                     }
-                   
+
 
                 }
-                else {
+                else
+                {
                     proveedor.registrar(proveedor);
                     if (proveedor.id > 0)
                     {
@@ -228,7 +255,8 @@ namespace SharkAdministrativo.Vista
                         {
                             ClearField();
                         }
-                        else {
+                        else
+                        {
                             this.Close();
                         }
 
@@ -238,8 +266,8 @@ namespace SharkAdministrativo.Vista
                         MessageBox.Show("ERROR, NO FUE POSIBLE REGISTRAR AL PROVEEDOR '" + proveedor.razon_social + "'");
                     }
                 }
-                
-                
+
+
             }
             else
             {
@@ -257,7 +285,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void ClearField() {
+        public void ClearField()
+        {
             txtCalleP.Clear();
             txtCodigoPostalP.Clear();
             txtColoniaP.Clear();
@@ -282,7 +311,7 @@ namespace SharkAdministrativo.Vista
             guardarModificar();
         }
 
-        
+
 
     }
 }
