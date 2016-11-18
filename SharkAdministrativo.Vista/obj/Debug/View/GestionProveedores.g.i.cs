@@ -168,7 +168,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 80 "..\..\..\View\GestionProveedores.xaml"
+        #line 77 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.ComboBoxEdit cbxEmpresa;
         
@@ -176,7 +176,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 86 "..\..\..\View\GestionProveedores.xaml"
+        #line 83 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtCalleP;
         
@@ -184,7 +184,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 89 "..\..\..\View\GestionProveedores.xaml"
+        #line 86 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtColoniaP;
         
@@ -192,7 +192,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 92 "..\..\..\View\GestionProveedores.xaml"
+        #line 89 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtLocalidadP;
         
@@ -200,7 +200,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 95 "..\..\..\View\GestionProveedores.xaml"
+        #line 92 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtEstadoP;
         
@@ -208,7 +208,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 100 "..\..\..\View\GestionProveedores.xaml"
+        #line 97 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtNoExteriorP;
         
@@ -216,7 +216,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 103 "..\..\..\View\GestionProveedores.xaml"
+        #line 100 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtCodigoPostalP;
         
@@ -224,7 +224,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 106 "..\..\..\View\GestionProveedores.xaml"
+        #line 103 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtMunicipioP;
         
@@ -232,7 +232,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 109 "..\..\..\View\GestionProveedores.xaml"
+        #line 106 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtPaisP;
         
@@ -240,7 +240,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 115 "..\..\..\View\GestionProveedores.xaml"
+        #line 112 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtSucursalP;
         
@@ -248,7 +248,7 @@ namespace SharkAdministrativo.Vista {
         #line hidden
         
         
-        #line 118 "..\..\..\View\GestionProveedores.xaml"
+        #line 115 "..\..\..\View\GestionProveedores.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal DevExpress.Xpf.Editors.TextEdit txtTelefono;
         

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SharkAdministrativo.Modelo;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista
 {
@@ -68,7 +69,7 @@ namespace SharkAdministrativo.Vista
         public void llenarGrupos() {
             cbxGrupos.Items.Clear();
             List<Grupo> grupos = grupo.obtenerTodos();
-            cbxGrupos.Items.Add("Nuevo");
+           
             foreach (var item in grupos)
             {
                 cbxGrupos.Items.Add(item.nombre);
@@ -179,8 +180,13 @@ namespace SharkAdministrativo.Vista
             if (!String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtRFC.Text) && cbxGrupos.SelectedItem != null && !String.IsNullOrEmpty(txtRazonP.Text) && cbxEmpresa.SelectedItem != null)
             {
 
+                SDK.CteProv cProveedor = new SDK.CteProv();
+
+                cProveedor.cCodigoCliente = txtCodigo.Text;
+                cProveedor.cRazonSocial = txtRazonP.Text;
 
                 Proveedor proveedor = new Proveedor();
+                proveedor.codigo = txtCodigo.Text;
                 proveedor.nombre = txtNombreP.Text;
                 proveedor.razon_social = txtRazonP.Text;
                 proveedor.RFC = txtRFC.Text;

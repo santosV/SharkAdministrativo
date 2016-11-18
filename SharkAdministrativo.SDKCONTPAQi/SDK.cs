@@ -385,6 +385,8 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fBuscaIdValorClasif(int aIdValorClasif);
 
 
+        //funciones De Cliente/Proveedor
+
         //Funciones De Clasificación.
 
         [DllImport("MGWSERVICIOS.dll")]
