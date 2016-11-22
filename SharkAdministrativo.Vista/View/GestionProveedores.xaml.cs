@@ -68,7 +68,7 @@ namespace SharkAdministrativo.Vista
                 foreach (string group in grupos)
                 {
                     StringBuilder cIdValorClasificacionProv = new StringBuilder(5);
-                    SDK.fLeeDatoCteProv("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
+                    SDK.fLeeDatoValorClasif("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
                     i++;
                     cbxGrupos.SelectedItems.Add(cIdValorClasificacionProv+" | "+group);
                 }
