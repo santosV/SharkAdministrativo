@@ -271,7 +271,7 @@ namespace SharkAdministrativo.Vista
                     }
 
 
-                    int error = SDK.fBuscaCteProv();
+                    int error = SDK.fBuscaCteProv(proveedor.codigo);
                     if (error == 0)
                     {
                         proveedor.id = this.proveedor.id;
@@ -306,9 +306,9 @@ namespace SharkAdministrativo.Vista
                                 SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
                                 i++;
                             }
-                            
-                        
-                        SDK.fBuscaCteProv();
+
+
+                        SDK.fGuardaCteProv();
                         if (exit == "No")
                         {
                             ClearField();
