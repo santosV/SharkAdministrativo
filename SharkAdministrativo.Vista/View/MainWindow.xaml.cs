@@ -610,5 +610,12 @@ namespace SharkAdministrativo.Vista
             this.Close();
         }
 
+        private void createProductGroup_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            RegistrosRapidos vista = new RegistrosRapidos();
+            vista.showView(4);
+            vista.Show();
+        }
+
     }
 }

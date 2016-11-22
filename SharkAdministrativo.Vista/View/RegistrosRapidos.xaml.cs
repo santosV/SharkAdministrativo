@@ -28,10 +28,50 @@ namespace SharkAdministrativo.Vista
         DataTable dtGrupos = new DataTable();
         DataTable dtCategoria = new DataTable();
         DataTable dtAlmacenes = new DataTable();
+        DataTable dtClasificaciones = new DataTable();
+        public bool esCalsificacion = false;
 
         public RegistrosRapidos()
         {
             InitializeComponent();
+
+        }
+
+        private void cargarTitulosClasificaciones() {
+            dtClasificaciones.Columns.Add("Código");
+            dtClasificaciones.Columns.Add("Nombre");
+            tblGrupos.ItemsSource = dtClasificaciones.DefaultView;
+        }
+
+
+        private void cargarClasif()
+        {
+            dtClasificaciones.Rows.Clear();
+            int error = SDK.fPosPrimerValorClasif();
+            int i = 1;
+            while (error == 0)
+            {
+                StringBuilder cIdValorClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cIdValorClasificacion, 5);
+                int idClasificacion = Convert.ToInt32(cIdValorClasificacion.ToString());
+                if (idClasificacion == 25)
+                {
+
+                    StringBuilder cValorClasificacion = new StringBuilder(60);
+                    StringBuilder cCodigoValorClasificacion = new StringBuilder(3);
+                    SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                    SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cCodigoValorClasificacion, 3);
+                    dtClasificaciones.Rows.Add(cCodigoValorClasificacion, cValorClasificacion);
+                    SDK.fPosSiguienteValorClasif();
+                }
+                else {
+                    SDK.fPosSiguienteValorClasif();
+                    if (idClasificacion!=25 && idClasificacion > 0)
+                    {
+                        error = 1;
+                    }
+                }
+            }
 
         }
 
@@ -161,9 +201,9 @@ namespace SharkAdministrativo.Vista
                             StringBuilder cClasificacion = new StringBuilder(11);
                             StringBuilder cValorClasificacion = new StringBuilder(60);
                             StringBuilder cValorAbreviatura = new StringBuilder(3);
-                            SDK.fLeeDatoCteProv("CIDCLASIFICACION", cClasificacion, 11);
-                            SDK.fLeeDatoCteProv("CVALORCLASIFICACION", cValorClasificacion, 60);
-                            SDK.fLeeDatoCteProv("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                            SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
+                            SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                            SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
                             grupo.nombre = txtGrupo.Text;
                             grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
                             grupo.categoria_id = grupo.Categoria.id;
@@ -175,7 +215,7 @@ namespace SharkAdministrativo.Vista
                                 if ((!cValorClasificacion.ToString().ToUpper().Equals(aValorClasificacion.ToUpper()) &&
                            !cValorAbreviatura.ToString().ToUpper().Equals(aValorAbreviatura.ToUpper())))
                                 {
-                                    
+
                                     if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
                                     {
 
@@ -366,6 +406,13 @@ namespace SharkAdministrativo.Vista
                 ventanaRapida.Title = "Gestión De Almacenes";
                 vista_almacenes.Visibility = Visibility.Visible;
             }
+            else if (vista == 4)
+            {
+                cargarTitulosClasificaciones();
+                cargarClasif();
+                ventanaRapida.Title = "Gestión De Clasificaciones";
+                vista_grupos.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -470,9 +517,9 @@ namespace SharkAdministrativo.Vista
                             {
                                 this.grupo = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0]));
                                 SDK.fEditaValorClasif();
-                                error=SDK.fSetDatoValorClasif("CVALORCLASIFICACION","(Ninguna)");
-                                error=SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", "0");
-                                error=SDK.fGuardaValorClasif();
+                                error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION", "(Ninguna)");
+                                error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", "0");
+                                error = SDK.fGuardaValorClasif();
                                 if (error == 0)
                                 {
                                     grupo.delete(grupo);
@@ -480,12 +527,13 @@ namespace SharkAdministrativo.Vista
                                     clearFields();
                                     break;
                                 }
-                                else {
+                                else
+                                {
                                     SDK.rError(error);
                                 }
-                                
+
                             }
-                            
+
                         }
 
                         if (cClasificacion.ToString().Equals("18"))
@@ -495,7 +543,7 @@ namespace SharkAdministrativo.Vista
                         SDK.fPosSiguienteValorClasif();
                     }
 
-                   
+
                 }
             }
             else if (tblCategory.SelectedItem != null)
