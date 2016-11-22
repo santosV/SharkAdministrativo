@@ -55,12 +55,22 @@ namespace SharkAdministrativo.Vista
             txtSucursalP.Text = proveedor.sucursal;
             txtTelefono.Text = proveedor.telefono;
             cbxEmpresa.SelectedItem = empresa;
+            txtCodigo.Text = proveedor.codigo;
+            int error = SDK.fBuscaCteProv(proveedor.codigo);
+            txtCodigo.IsReadOnly = true;
+            
             if (!String.IsNullOrEmpty(proveedor.tipos_proveedor))
             {
+
+                SDK.rError(error); 
                 String[] grupos = proveedor.tipos_proveedor.Split(';');
+                int i = 1;
                 foreach (string group in grupos)
                 {
-                    cbxGrupos.SelectedItems.Add(group);
+                    StringBuilder cIdValorClasificacionProv = new StringBuilder(5);
+                    SDK.fLeeDatoCteProv("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
+                    i++;
+                    cbxGrupos.SelectedItems.Add(cIdValorClasificacionProv+" | "+group);
                 }
             }
 
@@ -248,20 +258,35 @@ namespace SharkAdministrativo.Vista
                 }
                 if (hasChanged == "Yes")
                 {
-                    proveedor.id = this.proveedor.id;
-                    proveedor.modificar(proveedor);
-                    MessageBox.Show("ÉXITO, SE MODIFICÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
-
-                    if (exit == "No")
+                    SDK.fBuscaCteProv(proveedor.codigo);
+                    SDK.fEditaCteProv();
+                    SDK.fSetDatoCteProv("CRAZONSOCIAL", cProveedor.cRazonSocial);
+                    SDK.fSetDatoCteProv("CRFC", cProveedor.cRFC);
+                    SDK.fSetDatoCteProv("CDENCOMERCIAL", cProveedor.cDenComercial);
+                    int i = 1;
+                    foreach (var item in cIDClasificacionesGrupos)
                     {
-                        ClearField();
+                        SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
+                        i++;
                     }
-                    else
+
+
+                    int error = SDK.fGuardaCteProv();
+                    if (error == 0)
                     {
-                        this.Close();
+                        proveedor.id = this.proveedor.id;
+                        proveedor.modificar(proveedor);
+                        MessageBox.Show("ÉXITO, SE MODIFICÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
+
+                        if (exit == "No")
+                        {
+                            ClearField();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
                     }
-
-
                 }
                 else
                 {
@@ -274,6 +299,7 @@ namespace SharkAdministrativo.Vista
                         SDK.fBuscaIdCteProv(cIDCteProv);
                         SDK.fEditaCteProv();
                         SDK.fSetDatoCteProv("CTIPOCLIENTE","3");
+                        SDK.fSetDatoCteProv("CIDMONEDA", "1");
                         int i = 1;
                             foreach (var item in cIDClasificacionesGrupos)
                             {
