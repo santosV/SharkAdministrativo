@@ -39,7 +39,7 @@ namespace SharkAdministrativo.Vista
         }
 
 
-        
+
 
         /// <summary>
         /// ABRE EL EXPLORADOR DE ARCHIVOS DE WINDOWS PARA SELECCIONAR LAS CFDI.
@@ -58,8 +58,8 @@ namespace SharkAdministrativo.Vista
             {
                 foreach (string url in openFileDialog.FileNames) //obtiene las rutas de los archivos seleccionados.
                 {
-          
-                    
+
+
                     obtenerFactura(url);
 
                 }
@@ -139,8 +139,8 @@ namespace SharkAdministrativo.Vista
                 empresa = empresa.obtenerPorRFC(nodo.GetAttribute("rfc"));
                 if (empresa.rfc != null)
                 {
-                   
-                    if (empresa.nombre.Trim() ==  nodo.GetAttribute("nombre"))
+
+                    if (empresa.nombre.Trim() == nodo.GetAttribute("nombre"))
                     {
                         foreach (XmlElement domicilio in domicilio_fiscal_receptor)
                         {
@@ -272,22 +272,23 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        
+
 
 
         int cont = 0;
         private void ocultarVistas()
         {
             cont++;
-            if (cont>1)
+            if (cont > 1)
             {
-            Vista1_facturas.Visibility = Visibility.Collapsed;
-            Vista2_Proveedores.Visibility = Visibility.Collapsed;
-            vista3_shark.Visibility = Visibility.Collapsed;
+                Vista1_facturas.Visibility = Visibility.Collapsed;
+                Vista2_Proveedores.Visibility = Visibility.Collapsed;
+                vista3_shark.Visibility = Visibility.Collapsed;
             }
         }
 
-        public void loadtitles() {
+        public void loadtitles()
+        {
             dtFacturas.Columns.Add("route", typeof(string));
             dtFacturas.Columns.Add("Folio", typeof(string));
             dtFacturas.Columns.Add("Fecha De Emisión", typeof(string));
@@ -335,7 +336,9 @@ namespace SharkAdministrativo.Vista
                 else if (Control_menu.SelectedPage == vista_insumos)
                 {
                     Vista1_facturas.Visibility = Visibility.Visible;
-                }else if(Control_menu.SelectedPage == vista_oficina || Control_menu.SelectedPage == vista_perfiles){
+                }
+                else if (Control_menu.SelectedPage == vista_oficina || Control_menu.SelectedPage == vista_perfiles)
+                {
                     vista3_shark.Visibility = Visibility.Visible;
                 }
                 llenarProveedores();
@@ -360,7 +363,7 @@ namespace SharkAdministrativo.Vista
             vista.Show();
         }
 
- 
+
 
         private void btnPresentaciones_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
@@ -368,21 +371,22 @@ namespace SharkAdministrativo.Vista
             vista.Show();
         }
 
-        void llenarProveedores() {
+        void llenarProveedores()
+        {
             dtProveedores.Rows.Clear();
             List<Proveedor> proveedores = proveedor.obtenerTodos();
             foreach (var item in proveedores)
             {
-                dtProveedores.Rows.Add(item.id,item.nombre,item.tipos_proveedor,item.calle,item.colonia,item.NoExterior,item.municipio,item.estado,item.pais,item.codigo_postal, item.Empresa.nombre,item.codigo);   
+                dtProveedores.Rows.Add(item.id, item.nombre, item.tipos_proveedor, item.calle, item.colonia, item.NoExterior, item.municipio, item.estado, item.pais, item.codigo_postal, item.Empresa.nombre, item.codigo);
             }
-            if (dtProveedores.Rows.Count>0)
+            if (dtProveedores.Rows.Count > 0)
             {
                 txtProveedoresTitle.Text = "Proveedores Registrados (" + dtProveedores.Rows.Count + ")";
             }
-            
+
         }
 
-        
+
 
         private void btnElaborados_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
@@ -425,8 +429,17 @@ namespace SharkAdministrativo.Vista
                     proveedor.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
                     if (proveedor.id > 0)
                     {
-                        proveedor.eliminar(proveedor);
-                        seleccion.Delete();
+                        string codigo = seleccion.Row.ItemArray[11].ToString();
+                        int error = SDK.fEliminarCteProv(codigo);
+                        if (error == 0)
+                        {
+                            proveedor.eliminar(proveedor);
+                            seleccion.Delete();
+                        }
+                        else {
+                            SDK.rError(error);
+                        }
+                        
                     }
                     else
                     {
@@ -462,7 +475,7 @@ namespace SharkAdministrativo.Vista
                         vista.addProveedor(seleccion.Row.ItemArray[1].ToString(), seleccion.Row.ItemArray[10].ToString());
                         vista.Show();
                     }
-                    
+
                 }
             }
         }
@@ -506,7 +519,7 @@ namespace SharkAdministrativo.Vista
                     System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show("El Reporte se creó satisfactoriamente en la ubicación especificada, ¿Desea Abrir el Archivo? '", "Creación De Reporte", System.Windows.MessageBoxButton.YesNo);
                     if (dialogResult == System.Windows.MessageBoxResult.Yes)
                     {
-                        System.Diagnostics.Process.Start(rout + @"\Shark_"+nombre+"_" + fecha + ".xlsx");
+                        System.Diagnostics.Process.Start(rout + @"\Shark_" + nombre + "_" + fecha + ".xlsx");
                     }
                 }
             }
@@ -514,11 +527,11 @@ namespace SharkAdministrativo.Vista
             {
                 if (!String.IsNullOrEmpty(rout))
                 {
-                    view.ExportToImage(rout + @"\Shark_"+nombre+"_" + fecha + ".png");
+                    view.ExportToImage(rout + @"\Shark_" + nombre + "_" + fecha + ".png");
                     System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show("El Reporte se creó satisfactoriamente en la ubicación especificada, ¿Desea Abrir el Archivo? '", "Creación De Reporte", System.Windows.MessageBoxButton.YesNo);
                     if (dialogResult == System.Windows.MessageBoxResult.Yes)
                     {
-                        System.Diagnostics.Process.Start(rout + @"\Shark_"+nombre+"_" + fecha + ".png");
+                        System.Diagnostics.Process.Start(rout + @"\Shark_" + nombre + "_" + fecha + ".png");
                     }
                 }
             }
@@ -526,11 +539,11 @@ namespace SharkAdministrativo.Vista
             {
                 if (!String.IsNullOrEmpty(rout))
                 {
-                    view.ExportToPdf(rout + @"\Shark_"+nombre+"_" + fecha + ".pdf");
+                    view.ExportToPdf(rout + @"\Shark_" + nombre + "_" + fecha + ".pdf");
                     System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show("El Reporte se creó satisfactoriamente en la ubicación especificada, ¿Desea Abrir el Archivo? '", "Creación De Reporte", System.Windows.MessageBoxButton.YesNo);
                     if (dialogResult == System.Windows.MessageBoxResult.Yes)
                     {
-                        System.Diagnostics.Process.Start(rout + @"\Shark_"+nombre+"_" + fecha + ".pdf");
+                        System.Diagnostics.Process.Start(rout + @"\Shark_" + nombre + "_" + fecha + ".pdf");
                     }
                 }
 
@@ -540,7 +553,7 @@ namespace SharkAdministrativo.Vista
 
         private void proveedores_ExportToExcel_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-            exportTo(".xsls",tablaProveedores,"Proveedores");
+            exportTo(".xsls", tablaProveedores, "Proveedores");
         }
 
         private void proveedores_ExportToPDF_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
