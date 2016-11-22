@@ -418,7 +418,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
 
-
+        //Funciones de documentos
+        [DllImport("MGWServicios.DLL")]
+        public static extern Int32 fSiguienteFolio([MarshalAs(UnmanagedType.LPStr)] string aCodigoConcepto,
+                                                   [MarshalAs(UnmanagedType.LPStr)] StringBuilder aSerie, ref double aFolio);
 
         //Funciones De Error.
         [DllImport("mgwservicios.dll")]

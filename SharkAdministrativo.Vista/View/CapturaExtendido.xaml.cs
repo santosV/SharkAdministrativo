@@ -178,6 +178,7 @@ namespace SharkAdministrativo.Vista
         /// <param name="presentaciones">Lista de Insumo.</param>
         public void registrarPresentaciones(List<Presentacion> presentaciones)
         {
+            int error=0;
             factura.registrar(factura);
             foreach (var presentacion in presentaciones)
             {
@@ -200,7 +201,7 @@ namespace SharkAdministrativo.Vista
                     cProducto.cMetodoCosteo = 1;
 
                     Int32 aldProducto = 0;
-                    int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
+                    error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
                     if (error == 0)
                     {
                         SDK.fEditaProducto();
@@ -217,7 +218,49 @@ namespace SharkAdministrativo.Vista
                    
                 }
 
+                //registro de la compra
+               SDK.tDocumento lDocto = new SDK.tDocumento();
+               SDK.tMovimiento lMovto = new SDK.tMovimiento();
+               StringBuilder serie = new StringBuilder();
+                
+                Double folio =Double.Parse(factura.folio);
+
+                var concepto = insumo.obtener(cbxInsumos.SelectedItem.ToString());
+                error = SDK.fSiguienteFolio(concepto.codigoInsumo,serie,ref folio);
+                lDocto.aCodConcepto=concepto.codigoInsumo;
+                lDocto.aFolio = folio;
+                lDocto.aSerie = "";
+
+                lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
+
+                lDocto.aCodigoCteProv = "2904" ;
+                lDocto.aTipoCambio = 1;
+                lDocto.aNumMoneda = 1;
+                lDocto.aSistemaOrigen = 1;
+
+                Int32 aIdDocumento = 0;
+                error = SDK.fAltaDocumento(ref aIdDocumento, ref lDocto);
+                if (error != 0)
+                {
+                    SDK.rError(error);
+                    return;
+                }
+                else
+                {
+
+                    MessageBox.Show("Documeto Creado");
+
+                }
+
+
+                lMovto.aCodAlmacen = "";
+                lMovto.aCodProdSer = "PR001";
+                lMovto.aUnidades = Double.Parse(txtCantidad.Text);
+                lMovto.aConsecutivo = 1;
+
+
                 //registro de documento(entrada de almacen) a contpaq
+                
 
                 EntradaPresentacion entrada = new EntradaPresentacion();
                 DateTime thisDay = DateTime.Today;
