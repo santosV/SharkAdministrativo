@@ -127,15 +127,17 @@ namespace SharkAdministrativo.Vista
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
+                StringBuilder cIdClasificacion = new StringBuilder(5);
                 SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
-
-                if (nomValorClasificacion.ToString() != "(Ninguna)")
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cIdClasificacion, 30);
+                int idClasificacion = Convert.ToInt32(cIdClasificacion.ToString());
+                if (idClasificacion >= 25 && idClasificacion <= 30)
                 {
-
-                    cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
-                    cbxValoresDeClasificacionesP.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
-
+                    if (nomValorClasificacion.ToString() != "(Ninguna)")
+                    {
+                        cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                    }
                 }
                 error = SDK.fPosSiguienteValorClasif();
             }
