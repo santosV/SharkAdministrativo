@@ -251,7 +251,7 @@ namespace SharkAdministrativo.Vista
                     MessageBox.Show("Documeto Creado");
 
                 }
-
+                
 
                 lMovto.aCodAlmacen = "";
                 lMovto.aCodProdSer = "PR001";
