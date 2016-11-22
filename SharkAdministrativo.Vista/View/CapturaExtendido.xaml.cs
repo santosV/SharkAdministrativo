@@ -151,7 +151,7 @@ namespace SharkAdministrativo.Vista
                 presentacion.rendimiento = Double.Parse(item.ItemArray[10].ToString());
                 presentacion.ultimo_costo = Double.Parse(item.ItemArray[3].ToString());
                 presentacion.existencia = presentacion.rendimiento * presentacion.cantidad;
-                if (presentacion.Almacen.id > 0 &&  presentacion.Insumo.id >0 && presentacion.Proveedor.id>0 && !String.IsNullOrEmpty(presentacion.descripcion) && presentacion.costo_unitario!=null && presentacion.rendimiento!=null)
+                if (presentacion.Almacen.id > 0 && presentacion.Insumo.id > 0 && presentacion.Proveedor.id > 0 && !String.IsNullOrEmpty(presentacion.descripcion) && presentacion.costo_unitario != null && presentacion.rendimiento != null)
                 {
                     presentaciones.Add(presentacion);
                     cont++;
@@ -178,7 +178,7 @@ namespace SharkAdministrativo.Vista
         /// <param name="presentaciones">Lista de Insumo.</param>
         public void registrarPresentaciones(List<Presentacion> presentaciones)
         {
-            int error=0;
+            int error = 0;
             Double folio = 0;
             SDK.tDocumento lDocto = new SDK.tDocumento();
             SDK.tMovimiento lMovto = new SDK.tMovimiento();
@@ -219,7 +219,7 @@ namespace SharkAdministrativo.Vista
                         SDK.rError(error);
                     }
 
-                   
+
                 }
                 StringBuilder serie = new StringBuilder();
                 folio = Double.Parse(factura.folio);
@@ -229,7 +229,7 @@ namespace SharkAdministrativo.Vista
                 lDocto.aCodConcepto = presentacion.codigo;
                 lDocto.aFolio = folio;
                 lDocto.aSerie = "";
-               
+
                 //registro de documento(entrada de almacen) a contpaq
 
                 EntradaPresentacion entrada = new EntradaPresentacion();
@@ -293,19 +293,24 @@ namespace SharkAdministrativo.Vista
         /// <summary>
         /// Obtiene de CONTPAQI los valores de las clasificaciones disponibles.
         /// </summary>
-        public void obtenerValoresDeClasificaciones() {
+        public void obtenerValoresDeClasificaciones()
+        {
             int error = SDK.fPosPrimerValorClasif();
             while (error == 0)
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
+                StringBuilder cIdClasificacion = new StringBuilder(5);
                 SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
-
-                if (nomValorClasificacion.ToString() != "(Ninguna)")
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cIdClasificacion, 30);
+                int idClasificacion = Convert.ToInt32(cIdClasificacion.ToString());
+                if (idClasificacion >= 25 && idClasificacion <= 30)
                 {
-
-                    cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                    if (nomValorClasificacion.ToString() != "(Ninguna)")
+                    {
+                        cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                    }
                 }
                 error = SDK.fPosSiguienteValorClasif();
             }
@@ -371,11 +376,11 @@ namespace SharkAdministrativo.Vista
                     //presentacion.costo_unitario = float.Parse(item.GetAttribute("importe").ToString(), System.Globalization.CultureInfo.InvariantCulture);
                     //insumo.costo_referenc = float.Parse(item.GetAttribute("importe").ToString(), System.Globalization.CultureInfo.InvariantCulture);
                     presentacion.ultimo_costo = float.Parse(item.GetAttribute("valorUnitario").ToString(), System.Globalization.CultureInfo.InvariantCulture);
-                    presentacion.noIdentificacion = item.GetAttribute("noIdentificacion"); 
+                    presentacion.noIdentificacion = item.GetAttribute("noIdentificacion");
 
                     presentacion.descripcion = item.GetAttribute("descripcion");
-                   presentacion.cantidad = float.Parse(item.GetAttribute("cantidad").ToString(), System.Globalization.CultureInfo.InvariantCulture);
-                    dt.Rows.Add("", presentacion.descripcion,proveedor.nombre,presentacion.ultimo_costo,presentacion.cantidad,"","",presentacion.noIdentificacion,"","","","",presentacion.ultimo_costo * presentacion.cantidad );
+                    presentacion.cantidad = float.Parse(item.GetAttribute("cantidad").ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                    dt.Rows.Add("", presentacion.descripcion, proveedor.nombre, presentacion.ultimo_costo, presentacion.cantidad, "", "", presentacion.noIdentificacion, "", "", "", "", presentacion.ultimo_costo * presentacion.cantidad);
 
                 }
             }
@@ -409,7 +414,8 @@ namespace SharkAdministrativo.Vista
         }
 
 
-        public void llenarInsumoBase() {
+        public void llenarInsumoBase()
+        {
             List<Insumo> Insumo = insumo.obtenerTodos();
 
             foreach (var item in Insumo)
@@ -418,7 +424,8 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        public void llenarAlmacen() {
+        public void llenarAlmacen()
+        {
             List<Almacen> Almacen = almacen.obtenerTodos();
             foreach (var item in Almacen)
             {
@@ -430,7 +437,7 @@ namespace SharkAdministrativo.Vista
         {
             if (cbxInsumos.SelectedItem != null)
             {
-                
+
                 insumo = insumo.obtener(cbxInsumos.SelectedItem.ToString());
                 unidad = unidad.obtenerPorId(insumo.unidad_id);
                 txtUnidad.Text = unidad.nombre;
@@ -440,12 +447,14 @@ namespace SharkAdministrativo.Vista
                 {
                     txtDescripcion.Text = cbxInsumos.SelectedItem.ToString() + " " + seleccion.Row.ItemArray[1].ToString();
                 }
-                else {
+                else
+                {
                     txtDescripcion.Text = cbxInsumos.SelectedItem.ToString();
                 }
-                
+
             }
-            else {
+            else
+            {
                 txtUnidad.Text = "...";
                 txtDescripcion.Clear();
             }
@@ -454,7 +463,7 @@ namespace SharkAdministrativo.Vista
         private void tblInsumos_MouseDown(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblInsumos.SelectedItem;
-            if (seleccion!=null)
+            if (seleccion != null)
             {
                 txtDescripcion.Text = seleccion.Row.ItemArray[1].ToString();
                 if (!String.IsNullOrEmpty(seleccion.Row.ItemArray[0].ToString()))
@@ -512,22 +521,24 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        void clearFields() {
+        void clearFields()
+        {
             cbxInsumos.SelectedItem = null;
             cbxAlmacen.SelectedItem = null;
-            txtDescripcion.Clear(); 
+            txtDescripcion.Clear();
             txtCpromedio.Clear();
             txtCostoUnitario.Clear();
             txtRendimiento.Clear();
             txtCantidad.Clear();
         }
 
-        public void addToList() {
+        public void addToList()
+        {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblInsumos.SelectedItem;
             if (seleccion != null)
             {
-                if (cbxInsumos.SelectedItem!=null){seleccion["Insumo Base"] = cbxInsumos.SelectedItem.ToString();}
-                if (cbxAlmacen.SelectedItem != null){seleccion["Almacén"] = cbxAlmacen.SelectedItem.ToString();}
+                if (cbxInsumos.SelectedItem != null) { seleccion["Insumo Base"] = cbxInsumos.SelectedItem.ToString(); }
+                if (cbxAlmacen.SelectedItem != null) { seleccion["Almacén"] = cbxAlmacen.SelectedItem.ToString(); }
                 seleccion["Descripción"] = txtDescripcion.Text;
                 seleccion["Proveedor"] = txtRazonSocialP.Text;
                 seleccion["Último Costo"] = txtCostoUnitario.Text;
@@ -538,12 +549,13 @@ namespace SharkAdministrativo.Vista
                 seleccion["IVA"] = txtIVA.Text;
                 seleccion["Rendimiento"] = txtRendimiento.Text;
                 seleccion["Codigo"] = txtCodigo.Text;
-                
-                
+
+
                 tblInsumos.SelectedItem = seleccion;
                 clearFields();
             }
-            else {
+            else
+            {
                 MessageBox.Show("Selecciona el insumo, ingresa la información faltante y agrega a la lista");
             }
         }
@@ -553,8 +565,9 @@ namespace SharkAdministrativo.Vista
             addToList();
         }
 
-        public void guardarTodo() { 
-            
+        public void guardarTodo()
+        {
+
         }
 
         private void btnGuardarList_KeyDown(object sender, KeyEventArgs e)
