@@ -389,15 +389,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaIdCteProv(int aIdCteProv);
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fEliminarCteProv(string aCodCteProv);
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fBuscaCteProv(string aCodCteProv);
-        [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fEditaCteProv();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fAltaCteProv(ref int aIdCteProv, ref CteProv atCteProv);
-        [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fActualizaCteProv(string aCodCteProv, ref CteProv atCteProv);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLlenaRegistroCteProv(CteProv atCteProv, int aEsAlta);
         [DllImport("MGWSERVICIOS.dll")]
@@ -411,11 +405,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fGuardaCteProv();
         [DllImport("MGWSERVICIOS.dll")]
-        public static extern Int32 fLeeDatoCteProv(string aCampo, StringBuilder aValor, int longitud);
-
-
-
-
+        
 
         //Funciones De Clasificación.
 

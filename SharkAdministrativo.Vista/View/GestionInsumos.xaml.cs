@@ -69,8 +69,8 @@ namespace SharkAdministrativo.Vista
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
                 StringBuilder idUnidad = new StringBuilder(5);
-                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoCteProv("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoCteProv("CVALORCLASIFICACION", nomValorClasificacion, 30);
                 SDK.fLeeDatoProducto("CIDUNIDADBASE", idUnidad, 5);
 
                 cbxValoresDeClasificaciones.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
@@ -389,7 +389,7 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar el insumo '" + seleccion.Row.ItemArray[1] + "' de la lista?", "Eliminación de Presentación", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    int error = SDK.fEliminarProducto(seleccion.Row.ItemArray[11].ToString());
+                    int error = SDK.fEliminarCteProv(seleccion.Row.ItemArray[11].ToString());
                     if (error == 0)
                     {
                         Insumo insumo = new Insumo();
@@ -655,8 +655,8 @@ namespace SharkAdministrativo.Vista
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
-                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoCteProv("CIDVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoCteProv("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 if (nomValorClasificacion.ToString() != "(Ninguna)")
                 {

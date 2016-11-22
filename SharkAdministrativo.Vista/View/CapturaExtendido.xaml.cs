@@ -179,6 +179,10 @@ namespace SharkAdministrativo.Vista
         public void registrarPresentaciones(List<Presentacion> presentaciones)
         {
             int error=0;
+            Double folio = 0;
+            SDK.tDocumento lDocto = new SDK.tDocumento();
+            SDK.tMovimiento lMovto = new SDK.tMovimiento();
+
             factura.registrar(factura);
             foreach (var presentacion in presentaciones)
             {
@@ -217,50 +221,16 @@ namespace SharkAdministrativo.Vista
 
                    
                 }
+                StringBuilder serie = new StringBuilder();
+                folio = Double.Parse(factura.folio);
 
-                //registro de la compra
-               SDK.tDocumento lDocto = new SDK.tDocumento();
-               SDK.tMovimiento lMovto = new SDK.tMovimiento();
-               StringBuilder serie = new StringBuilder();
-                
-                Double folio =Double.Parse(factura.folio);
-
-                var concepto = insumo.obtener(cbxInsumos.SelectedItem.ToString());
-                error = SDK.fSiguienteFolio(concepto.codigoInsumo,serie,ref folio);
-                lDocto.aCodConcepto=concepto.codigoInsumo;
+                //fetch de crear un concepto nuevo para la compra
+                SDK.fSiguienteFolio(presentacion.codigo, serie, ref folio);
+                lDocto.aCodConcepto = presentacion.codigo;
                 lDocto.aFolio = folio;
                 lDocto.aSerie = "";
-
-                lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
-
-                lDocto.aCodigoCteProv = "2904" ;
-                lDocto.aTipoCambio = 1;
-                lDocto.aNumMoneda = 1;
-                lDocto.aSistemaOrigen = 1;
-
-                Int32 aIdDocumento = 0;
-                error = SDK.fAltaDocumento(ref aIdDocumento, ref lDocto);
-                if (error != 0)
-                {
-                    SDK.rError(error);
-                    return;
-                }
-                else
-                {
-
-                    MessageBox.Show("Documeto Creado");
-
-                }
-                
-
-                lMovto.aCodAlmacen = "";
-                lMovto.aCodProdSer = "PR001";
-                lMovto.aUnidades = Double.Parse(txtCantidad.Text);
-                lMovto.aConsecutivo = 1;
-
-
+               
                 //registro de documento(entrada de almacen) a contpaq
-                
 
                 EntradaPresentacion entrada = new EntradaPresentacion();
                 DateTime thisDay = DateTime.Today;
@@ -272,6 +242,49 @@ namespace SharkAdministrativo.Vista
                 entrada.cantidad = presentacion.cantidad;
                 entrada.registrar(entrada);
             }
+
+            //registro de la compra
+            lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
+
+            lDocto.aCodigoCteProv = "2904";
+            lDocto.aTipoCambio = 1;
+            lDocto.aNumMoneda = 1;
+            lDocto.aSistemaOrigen = 1;
+
+            Int32 aIdDocumento = 0;
+            error = SDK.fAltaDocumento(ref aIdDocumento, ref lDocto);
+            if (error != 0)
+            {
+                SDK.rError(error);
+                return;
+            }
+            else
+            {
+
+                MessageBox.Show("Documeto Creado");
+
+            }
+
+
+            lMovto.aCodAlmacen = almacen.obtener(cbxAlmacen.SelectedItem.ToString()).codigo;
+            lMovto.aCodProdSer = "PR001";
+            lMovto.aUnidades = Double.Parse(txtCantidad.Text);
+            lMovto.aConsecutivo = 1;
+            lMovto.aPrecio = Double.Parse(txtCostoUnitario.Text);
+
+            Int32 aIdMovimiento = 0;
+            error = SDK.fAltaMovimiento(aIdDocumento, ref aIdMovimiento, ref lMovto);
+            if (error != 0)
+            {
+                SDK.rError(error);
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Movimiento Creado");
+            }
+
+
             System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor e Insumo!");
 
             this.Close();
@@ -286,8 +299,8 @@ namespace SharkAdministrativo.Vista
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
-                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoCteProv("CIDVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoCteProv("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 if (nomValorClasificacion.ToString() != "(Ninguna)")
                 {
