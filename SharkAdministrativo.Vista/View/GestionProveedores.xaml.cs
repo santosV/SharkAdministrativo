@@ -84,9 +84,9 @@ namespace SharkAdministrativo.Vista
             while (error == 0)
             {
                 StringBuilder cCodClasificacion = new StringBuilder(5);
-                SDK.fLeeDatoCteProv("CIDCLASIFICACION", cCodClasificacion, 5);
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cCodClasificacion, 5);
                 StringBuilder cNameValorClasificacion = new StringBuilder(20);
-                SDK.fLeeDatoCteProv("CVALORCLASIFICACION", cNameValorClasificacion, 20);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cNameValorClasificacion, 20);
                 if (!cCodClasificacion.ToString().Equals(Convert.ToString(i)))
                 {
                     error = SDK.fPosSiguienteValorClasif();
@@ -108,7 +108,7 @@ namespace SharkAdministrativo.Vista
             foreach (var item in grupos)
             {
                 StringBuilder cCodValorClasificacion = new StringBuilder(5);
-                SDK.fLeeDatoCteProv("CIDVALORCLASIFICACION", cCodValorClasificacion, 5);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", cCodValorClasificacion, 5);
                 cbxGrupos.Items.Add(cCodValorClasificacion + " | " + item.nombre);
                 SDK.fPosSiguienteValorClasif();
             }

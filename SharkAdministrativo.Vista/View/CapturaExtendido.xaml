@@ -90,6 +90,17 @@
                         <dxlc:LayoutItem Label="Razón Social">
                             <dxe:TextEdit x:Name="txtRazonSocialP"/>
                         </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Código">
+                            <dxe:TextEdit x:Name="txtcodigoProveedor"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Grupos Que Provee">
+                            <dxe:ComboBoxEdit x:Name="cbxGrupos" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+
+                                <dxe:ComboBoxEdit.StyleSettings>
+                                    <dxe:CheckedComboBoxStyleSettings/>
+                                </dxe:ComboBoxEdit.StyleSettings>
+                            </dxe:ComboBoxEdit>
+                        </dxlc:LayoutItem>
                         <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                             <dxlc:LayoutItem Label="RFC" LabelVerticalAlignment="Stretch" LabelHorizontalAlignment="Stretch">
                                 <dxe:TextEdit x:Name="txtRfcP"/>

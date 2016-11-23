@@ -35,6 +35,7 @@ namespace SharkAdministrativo.Vista
         {
             InitializeComponent();
             obtenerValoresDeClasificaciones();
+            llenarGrupos();
         }
 
         /// <summary>
@@ -63,6 +64,46 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+
+        public void llenarGrupos()
+        {
+            int i = 13;
+            int error = SDK.fPosPrimerValorClasif();
+            while (error == 0)
+            {
+                StringBuilder cCodClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cCodClasificacion, 5);
+                StringBuilder cNameValorClasificacion = new StringBuilder(20);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cNameValorClasificacion, 20);
+                if (!cCodClasificacion.ToString().Equals(Convert.ToString(i)))
+                {
+                    error = SDK.fPosSiguienteValorClasif();
+                }
+                else
+                {
+                    if ((cCodClasificacion.ToString().Equals(Convert.ToString(i)) && cNameValorClasificacion.ToString().Equals("(Ninguna)")))
+                    {
+                        error = SDK.fPosSiguienteValorClasif();
+                        i++;
+                    }
+                    else
+                    {
+                        error = 1;
+                    }
+                }
+            }
+            Grupo grupo = new Grupo();
+            cbxGrupos.Items.Clear();
+            List<Grupo> grupos = grupo.obtenerTodos();
+            foreach (var item in grupos)
+            {
+                StringBuilder cCodValorClasificacion = new StringBuilder(5);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", cCodValorClasificacion, 5);
+                cbxGrupos.Items.Add(cCodValorClasificacion + " | " + item.nombre);
+                SDK.fPosSiguienteValorClasif();
+            }
+        }
+
         /// <summary>
         /// Obtiene la información de los objetos para mandar llamar los modelos correspondientes.
         /// </summary>
@@ -79,28 +120,69 @@ namespace SharkAdministrativo.Vista
                 {
                     if (txtRazonSocialP.Text != "" && txtCalleP.Text != "" && txtCodigoPostalP.Text != ""
                     && txtPaisP.Text != "" && txtMunicipioP.Text != "" &&
-                    txtEstadoP.Text != "" && txtRfcP.Text != "" && txtNoExteriorP.Text != "")
+                    txtEstadoP.Text != "" && txtRfcP.Text != "" && txtNoExteriorP.Text != "" && !String.IsNullOrEmpty(txtcodigoProveedor.Text) && cbxGrupos.SelectedItem!= null)
                     {
+                        SDK.CteProv cProveedor = new SDK.CteProv();
+
+                        cProveedor.cCodigoCliente = txtcodigoProveedor.Text;
+                        cProveedor.cRazonSocial = txtRazonSocialP.Text;
+                        cProveedor.cRFC = txtRfcP.Text;
+                        cProveedor.cDenComercial = txtRazonSocialP.Text;
+                        cProveedor.cEstatus = 1;
+
+                        Empresa empresa = new Empresa();
+                        Proveedor proveedor = new Proveedor();
+                        proveedor.codigo = txtcodigoProveedor.Text;
                         proveedor.nombre = txtRazonSocialP.Text;
-                        proveedor.NoExterior = txtNoExteriorP.Text;
-                        proveedor.localidad = txtLocalidadP.Text;
-                        proveedor.calle = txtCalleP.Text;
-                        proveedor.colonia = txtColoniaP.Text;
-                        proveedor.codigo_postal = txtCodigoPostalP.Text;
-                        proveedor.municipio = txtMunicipioP.Text;
-                        proveedor.estado = txtEstadoP.Text;
-                        proveedor.pais = txtPaisP.Text;
+                        proveedor.razon_social = txtRazonSocialP.Text;
                         proveedor.RFC = txtRfcP.Text;
                         proveedor.sucursal = txtSucursalP.Text;
+                        proveedor.calle = txtCalleP.Text;
+                        proveedor.codigo_postal = txtCodigoPostalP.Text;
+                        proveedor.colonia = txtColoniaP.Text;
+                        proveedor.Empresa = empresa.obtenerPorNombre("Baja Salads");
+                        proveedor.empresa_id = proveedor.Empresa.id;
+                        proveedor.localidad = txtLocalidadP.Text;
+                        proveedor.municipio = txtMunicipioP.Text;
+                        proveedor.estado = txtEstadoP.Text;
+                        proveedor.NoExterior = txtNoExteriorP.Text;
+                        proveedor.pais = txtPaisP.Text;
                         DateTime thisDay = DateTime.Today;
                         proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                        List<string> cIDClasificacionesGrupos = new List<string>();
 
-                        //resgistrar proveedor en contpaq
-                        proveedor.registrar(proveedor);
+                        foreach (var grupos in cbxGrupos.SelectedItems)
+                        {
+                            String[] groups = grupos.ToString().Split('|');
+                            cIDClasificacionesGrupos.Add(groups[0].ToString().Trim());
+                            proveedor.tipos_proveedor += groups[1].ToString().Trim() + ";";
+                        }
+                        int cIDCteProv = 0;
+                        int error = SDK.fAltaCteProv(ref cIDCteProv, ref  cProveedor);
+                        if (error == 0)
+                        {
+                            proveedor.registrar(proveedor);
+                            MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
+                            SDK.fBuscaIdCteProv(cIDCteProv);
+                            SDK.fEditaCteProv();
+                            SDK.fSetDatoCteProv("CTIPOCLIENTE", "3");
+                            SDK.fSetDatoCteProv("CIDMONEDA", "1");
+                            int i = 1;
+                            foreach (var item in cIDClasificacionesGrupos)
+                            {
+                                SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
+                                i++;
+                            }
+                            SDK.fGuardaCteProv();
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Hay campos importantes que están vacíos, por favor ingréselos");
+                        System.Windows.Forms.MessageBox.Show("Hay campos importantes que están vacíos, pueden ser en la tabla de productos o en los campos de proveedor");
                     }
                 }
                 else if (validacion == "sucursal")
