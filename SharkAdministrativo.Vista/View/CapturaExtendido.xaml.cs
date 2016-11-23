@@ -225,8 +225,8 @@ namespace SharkAdministrativo.Vista
                 folio = Double.Parse(factura.folio);
 
                 //fetch de crear un concepto nuevo para la compra
-                SDK.fSiguienteFolio(presentacion.codigo, serie, ref folio);
-                lDocto.aCodConcepto = presentacion.codigo;
+                SDK.fSiguienteFolio("19", serie, ref folio);
+                lDocto.aCodConcepto = "19";
                 lDocto.aFolio = folio;
                 lDocto.aSerie = "";
 
@@ -245,8 +245,8 @@ namespace SharkAdministrativo.Vista
 
             //registro de la compra
             lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
-
-            lDocto.aCodigoCteProv = "2904";
+            lDocto.aImporte = 223;
+            lDocto.aCodigoCteProv = "879";
             lDocto.aTipoCambio = 1;
             lDocto.aNumMoneda = 1;
             lDocto.aSistemaOrigen = 1;
@@ -267,10 +267,15 @@ namespace SharkAdministrativo.Vista
 
 
             lMovto.aCodAlmacen = almacen.obtener(cbxAlmacen.SelectedItem.ToString()).codigo;
-            lMovto.aCodProdSer = "PR001";
-            lMovto.aUnidades = Double.Parse(txtCantidad.Text);
+            lMovto.aCodProdSer = "PREO";
+            System.Data.DataRowView seleccion = (System.Data.DataRowView)tblInsumos.SelectedItem;
+            if (seleccion != null)
+            {
+            lMovto.aPrecio = Double.Parse(seleccion.Row.ItemArray[3].ToString());
+            lMovto.aUnidades = Double.Parse(seleccion.Row.ItemArray[4].ToString());
+            }
             lMovto.aConsecutivo = 1;
-            lMovto.aPrecio = Double.Parse(txtCostoUnitario.Text);
+            
 
             Int32 aIdMovimiento = 0;
             error = SDK.fAltaMovimiento(aIdDocumento, ref aIdMovimiento, ref lMovto);
