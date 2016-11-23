@@ -37,10 +37,11 @@ namespace SharkAdministrativo.Vista
 
         }
 
-        private void cargarTitulosClasificaciones() {
+        private void cargarTitulosClasificaciones()
+        {
             dtClasificaciones.Columns.Add("Código");
             dtClasificaciones.Columns.Add("Nombre");
-            tblGrupos.ItemsSource = dtClasificaciones.DefaultView;
+            tblClasificaciones.ItemsSource = dtClasificaciones.DefaultView;
         }
 
 
@@ -64,9 +65,10 @@ namespace SharkAdministrativo.Vista
                     dtClasificaciones.Rows.Add(cCodigoValorClasificacion, cValorClasificacion);
                     SDK.fPosSiguienteValorClasif();
                 }
-                else {
+                else
+                {
                     SDK.fPosSiguienteValorClasif();
-                    if (idClasificacion!=25 && idClasificacion > 0)
+                    if (idClasificacion != 25 && idClasificacion > 0)
                     {
                         error = 1;
                     }
@@ -280,44 +282,77 @@ namespace SharkAdministrativo.Vista
                 fillTableGroups();
 
             }
-            else
-
-                if (!String.IsNullOrEmpty(txtCategoria.Text))
+            else if (!String.IsNullOrEmpty(txtCategoria.Text))
+            {
+                categoria.nombre = txtCategoria.Text;
+                if (tblCategory.SelectedItem == null)
                 {
-                    categoria.nombre = txtCategoria.Text;
-                    if (tblCategory.SelectedItem == null)
+                    categoria.registrar(categoria);
+                }
+                else
+                {
+                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
+                    categoria.id = Convert.ToInt32(seleccion.Row.ItemArray[0]);
+                    categoria.Modify(categoria);
+                }
+                fillTableCategory();
+
+            }
+            else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
+            {
+                almacen.codigo = txtCodigo.Text;
+                almacen.nombre = txtAlmacen.Text;
+
+                SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
+                cAlmacen.cCodigoAlmacen = txtCodigo.Text;
+                cAlmacen.cNombreAlmacen = txtAlmacen.Text;
+
+                if (tblStorage.SelectedItem == null)
+                {
+                    int error = SDK.fInsertaAlmacen();
+                    if (error == 0)
                     {
-                        categoria.registrar(categoria);
+                        error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
+                        error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+                        if (error == 0)
+                        {
+                            error = SDK.fGuardaAlmacen();
+                            almacen.registrar(almacen);
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
                     }
                     else
                     {
-                        System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
-                        categoria.id = Convert.ToInt32(seleccion.Row.ItemArray[0]);
-                        categoria.Modify(categoria);
+                        SDK.rError(error);
                     }
-                    fillTableCategory();
-
                 }
-                else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
+                else
                 {
-                    almacen.codigo = txtCodigo.Text;
-                    almacen.nombre = txtAlmacen.Text;
 
-                    SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
-                    cAlmacen.cCodigoAlmacen = txtCodigo.Text;
-                    cAlmacen.cNombreAlmacen = txtAlmacen.Text;
+                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
 
-                    if (tblStorage.SelectedItem == null)
+                    int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
+                    if (error == 0)
                     {
-                        int error = SDK.fInsertaAlmacen();
+
+                        error = SDK.fEditaAlmacen();
+
                         if (error == 0)
                         {
-                            error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
-                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+
+                            error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", txtCodigo.Text);
+                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", txtAlmacen.Text);
+
                             if (error == 0)
                             {
+
                                 error = SDK.fGuardaAlmacen();
-                                almacen.registrar(almacen);
+                                almacen.codigo = seleccion.Row.ItemArray[0].ToString();
+                                almacen.Modify(almacen);
+
                             }
                             else
                             {
@@ -331,47 +366,34 @@ namespace SharkAdministrativo.Vista
                     }
                     else
                     {
-
-                        System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
-
-                        int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
-                        if (error == 0)
-                        {
-
-                            error = SDK.fEditaAlmacen();
-
-                            if (error == 0)
-                            {
-
-                                error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", txtCodigo.Text);
-                                error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", txtAlmacen.Text);
-
-                                if (error == 0)
-                                {
-
-                                    error = SDK.fGuardaAlmacen();
-                                    almacen.codigo = seleccion.Row.ItemArray[0].ToString();
-                                    almacen.Modify(almacen);
-
-                                }
-                                else
-                                {
-                                    SDK.rError(error);
-                                }
-                            }
-                            else
-                            {
-                                SDK.rError(error);
-                            }
-                        }
-                        else
-                        {
-                            SDK.rError(error);
-                        }
-
+                        SDK.rError(error);
                     }
-                    obtenerAlmacenesCONT();
+
                 }
+                obtenerAlmacenesCONT();
+            }
+            else if (!String.IsNullOrEmpty(txtAbre.Text) && !String.IsNullOrEmpty(txtNombreC.Text))
+            {
+                int error = SDK.fInsertaValorClasif();
+                if (error == 0)
+                {
+                    error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtNombreC.Text);
+                    error = SDK.fSetDatoValorClasif("CIDCLASIFICACION", "25");
+                    error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbre.Text);
+                    error = SDK.fGuardaValorClasif();
+                    if (error == 0)
+                    {
+                        cargarClasif();
+                    }
+                    else {
+                        SDK.rError(error);
+                    }
+                }
+                else
+                {
+                    SDK.rError(error);
+                }
+            }
 
 
 
@@ -411,7 +433,7 @@ namespace SharkAdministrativo.Vista
                 cargarTitulosClasificaciones();
                 cargarClasif();
                 ventanaRapida.Title = "Gestión De Clasificaciones";
-                vista_grupos.Visibility = Visibility.Visible;
+                vista_clasificacionesProductos.Visibility = Visibility.Visible;
             }
         }
 
@@ -642,6 +664,18 @@ namespace SharkAdministrativo.Vista
                 txtCodigo.IsReadOnly = true;
                 txtAlmacen.Text = seleccion.Row.ItemArray[1].ToString();
                 txtCodigo.Text = seleccion.Row.ItemArray[0].ToString();
+            }
+        }
+
+        private void tblClasificaciones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            System.Data.DataRowView seleccion = (System.Data.DataRowView)tblClasificaciones.SelectedItem;
+            if (seleccion != null)
+            {
+                groupClasificacion.Header = "Modificando La Clasificación " + seleccion.Row.ItemArray[1].ToString();
+                txtAbre.IsReadOnly = true;
+                txtNombreC.Text = seleccion.Row.ItemArray[1].ToString();
+                txtAbre.Text = seleccion.Row.ItemArray[0].ToString();
             }
         }
 

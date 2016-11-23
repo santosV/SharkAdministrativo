@@ -18,7 +18,7 @@
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
-        <dxlc:LayoutControl x:Name="vista_grupos" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
+        <dxlc:LayoutControl x:Name="vista_grupos" Visibility="Collapsed"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
             <TextBlock x:Name="txtGroupTitle" TextWrapping="Wrap" Text="Gestión De Grupos" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2" VerticalAlignment="Top"/>
             <dxlc:LayoutGroup x:Name="groupGrupo" Header="Nuevo" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <dxlc:LayoutItem Label="Abreviatura:">
@@ -35,6 +35,26 @@
             </dxlc:LayoutGroup>
             
             <dxg:GridControl MouseDoubleClick="tblGrupos_MouseDoubleClick" x:Name="tblGrupos" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+                <dxg:GridControl.View>
+                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </dxlc:LayoutControl>
+
+        <dxlc:LayoutControl x:Name="vista_clasificacionesProductos" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
+            <TextBlock TextWrapping="Wrap" Text="Gestión De Grupos" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2" VerticalAlignment="Top"/>
+            <dxlc:LayoutGroup x:Name="groupClasificacion"  Header="Nuevo" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <dxlc:LayoutItem Label="Abreviatura (3):">
+                    <dxe:TextEdit x:Name="txtAbre" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="Nombre:">
+                        <dxe:TextEdit x:Name="txtNombreC"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+
+            <dxg:GridControl x:Name="tblClasificaciones" MouseDoubleClick="tblClasificaciones_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
                     <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
                 </dxg:GridControl.View>

@@ -366,6 +366,8 @@ namespace SharkAdministrativo.SDKCONTPAQi
         [DllImport("MGWSERVICIOS.dll")]
         public static extern int fAltaValorClasif(int aIdValorClasif, ValorClasificacion astValorClasif);
         [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fInsertaValorClasif();
+        [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fPosPrimerValorClasif();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaValorClasif(int aClasificacionDe, int aNumClasificacion, string aCodValorClasif);
@@ -383,6 +385,7 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fBuscaIdValorClasif(int aIdValorClasif);
+
 
 
         //funciones De Cliente/Proveedor
