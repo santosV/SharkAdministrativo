@@ -182,6 +182,7 @@ namespace SharkAdministrativo.Vista
             Double folio = 0;
             SDK.tDocumento lDocto = new SDK.tDocumento();
             SDK.tMovimiento lMovto = new SDK.tMovimiento();
+            StringBuilder serie = new StringBuilder();
 
             factura.registrar(factura);
             foreach (var presentacion in presentaciones)
@@ -221,16 +222,14 @@ namespace SharkAdministrativo.Vista
 
 
                 }
-                StringBuilder serie = new StringBuilder();
-                folio = Double.Parse(factura.folio);
+               
+                
+               // folio = Double.Parse(factura.folio);
 
-                //fetch de crear un concepto nuevo para la compra
-                SDK.fSiguienteFolio("19", serie, ref folio);
-                lDocto.aCodConcepto = "19";
-                lDocto.aFolio = folio;
-                lDocto.aSerie = "";
+                
+                
 
-                //registro de documento(entrada de almacen) a contpaq
+                //entrada almacen shark
 
                 EntradaPresentacion entrada = new EntradaPresentacion();
                 DateTime thisDay = DateTime.Today;
@@ -243,6 +242,12 @@ namespace SharkAdministrativo.Vista
                 entrada.registrar(entrada);
             }
 
+            //fetch de crear un concepto nuevo para la compra
+            SDK.fSiguienteFolio("21", serie, ref folio);
+            lDocto.aCodConcepto = "21";
+            lDocto.aFolio = folio;
+            lDocto.aSerie = "";
+
             //registro de la compra
             lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
             lDocto.aImporte = 223;
@@ -250,6 +255,7 @@ namespace SharkAdministrativo.Vista
             lDocto.aTipoCambio = 1;
             lDocto.aNumMoneda = 1;
             lDocto.aSistemaOrigen = 1;
+            lDocto.aGasto1 = 213;
 
             Int32 aIdDocumento = 0;
             error = SDK.fAltaDocumento(ref aIdDocumento, ref lDocto);
@@ -266,16 +272,19 @@ namespace SharkAdministrativo.Vista
             }
 
 
-            lMovto.aCodAlmacen = almacen.obtener(cbxAlmacen.SelectedItem.ToString()).codigo;
-            lMovto.aCodProdSer = "PREO";
+            lMovto.aCodAlmacen = "1"; //almacen.obtener(cbxAlmacen.SelectedItem.ToString()).codigo;
+            lMovto.aCodProdSer = "PREPE";
+            
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblInsumos.SelectedItem;
+
             if (seleccion != null)
             {
-            lMovto.aPrecio = Double.Parse(seleccion.Row.ItemArray[3].ToString());
-            lMovto.aUnidades = Double.Parse(seleccion.Row.ItemArray[4].ToString());
-            }
-            lMovto.aConsecutivo = 1;
             
+            lMovto.aUnidades = 1;//Double.Parse(seleccion.Row.ItemArray[4].ToString());
+            }
+
+            lMovto.aConsecutivo = 1;
+            lMovto.aPrecio = 502; //Double.Parse(seleccion.Row.ItemArray[3].ToString());
 
             Int32 aIdMovimiento = 0;
             error = SDK.fAltaMovimiento(aIdDocumento, ref aIdMovimiento, ref lMovto);
