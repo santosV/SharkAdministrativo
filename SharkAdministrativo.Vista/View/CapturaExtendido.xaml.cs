@@ -264,7 +264,7 @@ namespace SharkAdministrativo.Vista
             Double folio = 0;
             SDK.tDocumento lDocto = new SDK.tDocumento();
             SDK.tMovimiento lMovto = new SDK.tMovimiento();
-            StringBuilder serie = new StringBuilder();
+            StringBuilder serie = new StringBuilder(12);
 
             factura.registrar(factura);
             foreach (var presentacion in presentaciones)
@@ -308,9 +308,6 @@ namespace SharkAdministrativo.Vista
                 
                // folio = Double.Parse(factura.folio);
 
-                
-                
-
                 //entrada almacen shark
 
                 EntradaPresentacion entrada = new EntradaPresentacion();
@@ -323,10 +320,11 @@ namespace SharkAdministrativo.Vista
                 entrada.cantidad = presentacion.cantidad;
                 entrada.registrar(entrada);
             }
-
+            
             //fetch de crear un concepto nuevo para la compra
             SDK.fSiguienteFolio("21", serie, ref folio);
             lDocto.aCodConcepto = "21";
+            
             lDocto.aFolio = folio;
             lDocto.aSerie = "";
 
@@ -337,7 +335,9 @@ namespace SharkAdministrativo.Vista
             lDocto.aTipoCambio = 1;
             lDocto.aNumMoneda = 1;
             lDocto.aSistemaOrigen = 1;
-            lDocto.aGasto1 = 213;
+            lDocto.aGasto1 = 100;
+            lDocto.aGasto2 = 100;
+            lDocto.aGasto3 = 23;
 
             Int32 aIdDocumento = 0;
             error = SDK.fAltaDocumento(ref aIdDocumento, ref lDocto);
@@ -366,7 +366,7 @@ namespace SharkAdministrativo.Vista
             }
 
             lMovto.aConsecutivo = 1;
-            lMovto.aPrecio = 502; //Double.Parse(seleccion.Row.ItemArray[3].ToString());
+            lMovto.aCosto = 502; //Double.Parse(seleccion.Row.ItemArray[3].ToString());
 
             Int32 aIdMovimiento = 0;
             error = SDK.fAltaMovimiento(aIdDocumento, ref aIdMovimiento, ref lMovto);

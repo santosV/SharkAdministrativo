@@ -108,6 +108,7 @@ namespace SharkAdministrativo.Modelo
                                       where presentacion.Proveedor.id == presentation.Proveedor.id
                                       where presentacion.noIdentificacion == presentacion.noIdentificacion
                                       where presentacion.Insumo.id == presentation.Insumo.id
+                                      where presentacion.descripcion == presentation.descripcion
                                       select presentacion;
                     // Iterate through the results of the parameterized query.
                     foreach (var presentacionR in insumoQuery)
