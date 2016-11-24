@@ -54,7 +54,7 @@
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>
 
-            <dxg:GridControl x:Name="tblClasificaciones" MouseDoubleClick="tblClasificaciones_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+            <dxg:GridControl x:Name="tblClasificaciones"  MouseDoubleClick="tblClasificaciones_MouseDoubleClick" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
                     <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False"/>
                 </dxg:GridControl.View>

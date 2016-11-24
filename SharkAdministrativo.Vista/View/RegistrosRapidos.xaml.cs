@@ -50,28 +50,32 @@ namespace SharkAdministrativo.Vista
             dtClasificaciones.Rows.Clear();
             int error = SDK.fPosPrimerValorClasif();
             int i = 1;
+            string codigo = "";
             while (error == 0)
             {
                 StringBuilder cIdValorClasificacion = new StringBuilder(5);
                 SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cIdValorClasificacion, 5);
                 int idClasificacion = Convert.ToInt32(cIdValorClasificacion.ToString());
-                if (idClasificacion == 25)
-                {
+                StringBuilder cValorClasificacion = new StringBuilder(60);
+                StringBuilder idValorClasificacion = new StringBuilder(3);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", idValorClasificacion, 3);
 
-                    StringBuilder cValorClasificacion = new StringBuilder(60);
-                    StringBuilder cCodigoValorClasificacion = new StringBuilder(3);
-                    SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
-                    SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cCodigoValorClasificacion, 3);
-                    dtClasificaciones.Rows.Add(cCodigoValorClasificacion, cValorClasificacion);
+                if (codigo != idValorClasificacion.ToString())
+                {
+                    if (idClasificacion == 25)
+                    {
+
+
+                        dtClasificaciones.Rows.Add(idValorClasificacion, cValorClasificacion);
+
+                    }
                     SDK.fPosSiguienteValorClasif();
+                    codigo = idValorClasificacion.ToString();
                 }
                 else
                 {
-                    SDK.fPosSiguienteValorClasif();
-                    if (idClasificacion != 25 && idClasificacion > 0)
-                    {
-                        error = 1;
-                    }
+                    error = 1;
                 }
             }
 
@@ -385,7 +389,8 @@ namespace SharkAdministrativo.Vista
                     {
                         cargarClasif();
                     }
-                    else {
+                    else
+                    {
                         SDK.rError(error);
                     }
                 }
@@ -593,13 +598,10 @@ namespace SharkAdministrativo.Vista
                         int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
                         if (error == 0)
                         {
-
                             error = SDK.fEditaAlmacen();
 
                             if (error == 0)
                             {
-
-                                //error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", "(Ninguno)");
                                 error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", "(Ninguno)");
 
                                 if (error == 0)
@@ -629,6 +631,30 @@ namespace SharkAdministrativo.Vista
                         clearFields();
                     }
                 }
+            }
+            else if (tblClasificaciones.SelectedItem != null)
+            {
+                System.Data.DataRowView seleccion = (System.Data.DataRowView)tblClasificaciones.SelectedItem;
+                if (seleccion != null)
+                {
+                    int error = SDK.fBuscaIdValorClasif(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                    if (error == 0)
+                    {
+                        error = SDK.fBorraValorClasif();
+                        if (error == 0)
+                        {
+                            seleccion.Delete();
+                        }
+                        else {
+                            SDK.rError(error);
+                        }
+                    }
+                    else
+                    {
+                        SDK.rError(error);
+                    }
+                }
+
             }
             else
             {
@@ -672,12 +698,14 @@ namespace SharkAdministrativo.Vista
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblClasificaciones.SelectedItem;
             if (seleccion != null)
             {
-                groupClasificacion.Header = "Modificando La Clasificación " + seleccion.Row.ItemArray[1].ToString();
+                groupStorage.Header = "Modificando La Clasifiación " + seleccion.Row.ItemArray[1].ToString();
                 txtAbre.IsReadOnly = true;
-                txtNombreC.Text = seleccion.Row.ItemArray[1].ToString();
                 txtAbre.Text = seleccion.Row.ItemArray[0].ToString();
+                txtNombreC.Text = seleccion.Row.ItemArray[1].ToString();
             }
         }
+
+
 
     }
 }
