@@ -120,7 +120,7 @@ namespace SharkAdministrativo.Vista
                 {
                     if (txtRazonSocialP.Text != "" && txtCalleP.Text != "" && txtCodigoPostalP.Text != ""
                     && txtPaisP.Text != "" && txtMunicipioP.Text != "" &&
-                    txtEstadoP.Text != "" && txtRfcP.Text != "" && txtNoExteriorP.Text != "" && !String.IsNullOrEmpty(txtcodigoProveedor.Text) && cbxGrupos.SelectedItem!= null)
+                    txtEstadoP.Text != "" && txtRfcP.Text != "" && txtNoExteriorP.Text != "" && !String.IsNullOrEmpty(txtcodigoProveedor.Text) && cbxGrupos.SelectedItem != null)
                     {
                         SDK.CteProv cProveedor = new SDK.CteProv();
 
@@ -261,12 +261,14 @@ namespace SharkAdministrativo.Vista
         public void registrarPresentaciones(List<Presentacion> presentaciones)
         {
             int error = 0;
-            Double folio = 0;
-            SDK.tDocumento lDocto = new SDK.tDocumento();
-            SDK.tMovimiento lMovto = new SDK.tMovimiento();
+            double folio = 0;
+
             StringBuilder serie = new StringBuilder(12);
 
             factura.registrar(factura);
+
+            SDK.fSiguienteFolio("21", serie, ref folio);
+
             foreach (var presentacion in presentaciones)
             {
 
@@ -304,84 +306,93 @@ namespace SharkAdministrativo.Vista
 
 
                 }
-               
-                
-               // folio = Double.Parse(factura.folio);
 
-                //entrada almacen shark
 
-                EntradaPresentacion entrada = new EntradaPresentacion();
-                DateTime thisDay = DateTime.Today;
-                entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                Presentacion presentacionR = presentacion.obtener(presentacion);
-                entrada.Presentacion = presentacionR;
-
-                entrada.Almacen = almacen.obtener(presentacion.Almacen.nombre);
-                entrada.cantidad = presentacion.cantidad;
-                entrada.registrar(entrada);
             }
-            
-            //fetch de crear un concepto nuevo para la compra
-            SDK.fSiguienteFolio("21", serie, ref folio);
+
+            SDK.tDocumento lDocto = new SDK.tDocumento();
+
             lDocto.aCodConcepto = "21";
-            
-            lDocto.aFolio = folio;
-            lDocto.aSerie = "";
-
-            //registro de la compra
-            lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
-            lDocto.aImporte = 223;
-            lDocto.aCodigoCteProv = "879";
-            lDocto.aTipoCambio = 1;
+            lDocto.aCodigoAgente = "(Ninguno)";
             lDocto.aNumMoneda = 1;
-            lDocto.aSistemaOrigen = 1;
-            lDocto.aGasto1 = 100;
-            lDocto.aGasto2 = 100;
-            lDocto.aGasto3 = 23;
+            lDocto.aTipoCambio = 1;
 
-            Int32 aIdDocumento = 0;
-            error = SDK.fAltaDocumento(ref aIdDocumento, ref lDocto);
-            if (error != 0)
+            lDocto.aImporte = 0;
+            lDocto.aDescuentoDoc1 = 0;
+            lDocto.aDescuentoDoc2 = 0;
+            lDocto.aAfecta = 0;
+            lDocto.aSistemaOrigen = 205;
+            lDocto.aCodigoCteProv = "P0333";
+            lDocto.aFolio = folio;
+            lDocto.aSistemaOrigen = 205;
+            lDocto.aSerie = factura.folio;
+            lDocto.aGasto1 = 0;
+            lDocto.aGasto2 = 0;
+            lDocto.aGasto3 = 0;
+            lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
+            int lError = 0;
+            Int32 lIdDocumento = 0;
+            lError = SDK.fAltaDocumento(ref lIdDocumento, ref lDocto);
+
+            if (lError != 0)
             {
-                SDK.rError(error);
+                SDK.rError(lError);
+                
                 return;
             }
-            else
+
+            foreach (var presentacion in presentaciones)
             {
 
-                MessageBox.Show("Documeto Creado");
 
+                SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
+                int lIdMovimiento = 0;
+
+                SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
+                StringBuilder codigo = new StringBuilder(20);
+                SDK.fLeeDatoAlmacen("CCODIGOALMACEN",codigo,20);
+                ltMovimiento.aCodAlmacen = codigo.ToString();
+                ltMovimiento.aConsecutivo = 1;
+
+                ltMovimiento.aCodProdSer = presentacion.codigo;
+
+                ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
+                
+
+                ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
+
+
+                lError = 0;
+                lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
+
+                if (lError != 0)
+                {
+                    SDK.rError(lError);
+                    return;
+                }
+                else
+                {
+                    //entrada almacen shark
+
+                    EntradaPresentacion entrada = new EntradaPresentacion();
+                    DateTime thisDay = DateTime.Today;
+                    entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                    Presentacion presentacionR = presentacion.obtener(presentacion);
+                    entrada.Presentacion = presentacionR;
+
+                    entrada.Almacen = almacen.obtener(presentacion.Almacen.nombre);
+                    entrada.cantidad = presentacion.cantidad;
+                    entrada.registrar(entrada);
+                }
             }
 
 
-            lMovto.aCodAlmacen = "1"; //almacen.obtener(cbxAlmacen.SelectedItem.ToString()).codigo;
-            lMovto.aCodProdSer = "PREPE";
-            
-            System.Data.DataRowView seleccion = (System.Data.DataRowView)tblInsumos.SelectedItem;
 
-            if (seleccion != null)
+            if (lError == 0)
             {
-            
-            lMovto.aUnidades = 1;//Double.Parse(seleccion.Row.ItemArray[4].ToString());
+                System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor e Insumo!");
             }
 
-            lMovto.aConsecutivo = 1;
-            lMovto.aCosto = 502; //Double.Parse(seleccion.Row.ItemArray[3].ToString());
-
-            Int32 aIdMovimiento = 0;
-            error = SDK.fAltaMovimiento(aIdDocumento, ref aIdMovimiento, ref lMovto);
-            if (error != 0)
-            {
-                SDK.rError(error);
-                return;
-            }
-            else
-            {
-                MessageBox.Show("Movimiento Creado");
-            }
-
-
-            System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor e Insumo!");
 
             this.Close();
         }

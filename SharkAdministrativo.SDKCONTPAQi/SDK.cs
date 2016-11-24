@@ -275,10 +275,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public String aCodigoAgente;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongReferencia)]
             public String aReferencia;
-            public int aAfecta;
-            public int aGasto1;
-            public int aGasto2;
-            public int aGasto3;
+            public double aAfecta;
+            public double aGasto1;
+            public double aGasto2;
+            public double aGasto3;
 
         }
 
