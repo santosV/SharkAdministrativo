@@ -39,14 +39,17 @@ namespace SharkAdministrativo.Vista
 
         private void cargarTitulosClasificaciones()
         {
+            dtClasificaciones.Columns.Add("ID");
             dtClasificaciones.Columns.Add("Código");
             dtClasificaciones.Columns.Add("Nombre");
             tblClasificaciones.ItemsSource = dtClasificaciones.DefaultView;
+            tblClasificaciones.Columns[0].Visible = false;
         }
 
 
         private void cargarClasif()
         {
+            clearFieldsClasif();
             dtClasificaciones.Rows.Clear();
             int error = SDK.fPosPrimerValorClasif();
             int i = 1;
@@ -58,8 +61,10 @@ namespace SharkAdministrativo.Vista
                 int idClasificacion = Convert.ToInt32(cIdValorClasificacion.ToString());
                 StringBuilder cValorClasificacion = new StringBuilder(60);
                 StringBuilder idValorClasificacion = new StringBuilder(3);
+                StringBuilder codValorClasificacion = new StringBuilder(3);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
                 SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", idValorClasificacion, 3);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 3);
 
                 if (codigo != idValorClasificacion.ToString())
                 {
@@ -67,7 +72,7 @@ namespace SharkAdministrativo.Vista
                     {
 
 
-                        dtClasificaciones.Rows.Add(idValorClasificacion, cValorClasificacion);
+                        dtClasificaciones.Rows.Add(idValorClasificacion,codValorClasificacion, cValorClasificacion);
 
                     }
                     SDK.fPosSiguienteValorClasif();
@@ -378,16 +383,24 @@ namespace SharkAdministrativo.Vista
             }
             else if (!String.IsNullOrEmpty(txtAbre.Text) && !String.IsNullOrEmpty(txtNombreC.Text))
             {
-                int error = SDK.fInsertaValorClasif();
-                if (error == 0)
+                if (tblClasificaciones.SelectedItem == null)
                 {
-                    error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtNombreC.Text);
-                    error = SDK.fSetDatoValorClasif("CIDCLASIFICACION", "25");
-                    error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbre.Text);
-                    error = SDK.fGuardaValorClasif();
+                    int error = SDK.fInsertaValorClasif();
                     if (error == 0)
                     {
-                        cargarClasif();
+                        error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtNombreC.Text);
+                        error = SDK.fSetDatoValorClasif("CIDCLASIFICACION", "25");
+                        error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbre.Text);
+                        error = SDK.fGuardaValorClasif();
+                        if (error == 0)
+                        {
+                            cargarClasif();
+                            clearFieldsClasif();
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
                     }
                     else
                     {
@@ -396,7 +409,28 @@ namespace SharkAdministrativo.Vista
                 }
                 else
                 {
-                    SDK.rError(error);
+                    System.Data.DataRowView seleccion = (System.Data.DataRowView)tblClasificaciones.SelectedItem;
+                    int error = SDK.fBuscaIdValorClasif(Convert.ToInt32(seleccion.Row.ItemArray[0].ToString()));
+                    if (error == 0)
+                    {
+                        error = SDK.fEditaValorClasif();
+                        if (error == 0)
+                        {
+                            error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtNombreC.Text);
+                            error = SDK.fSetDatoValorClasif("CIDCLASIFICACION", "25");
+                            error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbre.Text);
+                            error = SDK.fGuardaValorClasif();
+                            if (error == 0)
+                            {
+                                cargarClasif();
+                                clearFieldsClasif();
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -450,6 +484,7 @@ namespace SharkAdministrativo.Vista
             vista_grupos.Visibility = Visibility.Collapsed;
             vista_categorias.Visibility = Visibility.Collapsed;
             vista_almacenes.Visibility = Visibility.Collapsed;
+            vista_clasificacionesProductos.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -478,6 +513,7 @@ namespace SharkAdministrativo.Vista
         {
             saveModify();
             clearFields();
+            clearFieldsClasif();
         }
 
         /// <summary>
@@ -498,9 +534,9 @@ namespace SharkAdministrativo.Vista
                     StringBuilder cClasificacion = new StringBuilder(11);
                     StringBuilder cValorClasificacion = new StringBuilder(60);
                     StringBuilder cValorAbreviatura = new StringBuilder(3);
-                    SDK.fLeeDatoCteProv("CIDCLASIFICACION", cClasificacion, 11);
-                    SDK.fLeeDatoCteProv("CVALORCLASIFICACION", cValorClasificacion, 60);
-                    SDK.fLeeDatoCteProv("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                    SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
+                    SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                    SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
 
                     if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
                     {
@@ -533,9 +569,9 @@ namespace SharkAdministrativo.Vista
                         StringBuilder cClasificacion = new StringBuilder(11);
                         StringBuilder cValorClasificacion = new StringBuilder(60);
                         StringBuilder cValorAbreviatura = new StringBuilder(3);
-                        SDK.fLeeDatoCteProv("CIDCLASIFICACION", cClasificacion, 11);
-                        SDK.fLeeDatoCteProv("CVALORCLASIFICACION", cValorClasificacion, 60);
-                        SDK.fLeeDatoCteProv("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                        SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
+                        SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
+                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
 
                         if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
                         {
@@ -644,8 +680,10 @@ namespace SharkAdministrativo.Vista
                         if (error == 0)
                         {
                             seleccion.Delete();
+                            clearFieldsClasif();
                         }
-                        else {
+                        else
+                        {
                             SDK.rError(error);
                         }
                     }
@@ -670,6 +708,7 @@ namespace SharkAdministrativo.Vista
         private void btnNew_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             clearFields();
+            clearFieldsClasif();
         }
 
         private void tblCategory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -698,14 +737,23 @@ namespace SharkAdministrativo.Vista
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblClasificaciones.SelectedItem;
             if (seleccion != null)
             {
-                groupStorage.Header = "Modificando La Clasifiación " + seleccion.Row.ItemArray[1].ToString();
+                groupStorage.Header = "Modificando La Clasifiación " + seleccion.Row.ItemArray[2].ToString();
                 txtAbre.IsReadOnly = true;
-                txtAbre.Text = seleccion.Row.ItemArray[0].ToString();
-                txtNombreC.Text = seleccion.Row.ItemArray[1].ToString();
+                txtAbre.Text = seleccion.Row.ItemArray[1].ToString();
+                txtNombreC.Text = seleccion.Row.ItemArray[2].ToString();
+            
             }
         }
 
-
+        private void clearFieldsClasif()
+        {
+            txtAbre.Clear();
+            txtNombreC.Clear();
+            tblClasificaciones.SelectedItem = false;
+            txtAbre.IsReadOnly = false;
+            groupStorage.Header = "Nueva Clasifiación ";
+            txtTitle.Text = "Gestión De Clasifiaciones De Producto";
+        }
 
     }
 }

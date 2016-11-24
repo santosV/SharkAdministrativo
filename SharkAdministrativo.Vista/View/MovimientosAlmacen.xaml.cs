@@ -60,6 +60,18 @@ namespace SharkAdministrativo.Vista.View
             }
         }
 
+        private void clearFields() {
+            txtCantidad.Clear();
+            txtDescripcion.Clear();
+            txtMedida.Text = "...";
+            txtRazon.Clear();
+            cbxADestino.SelectedItem = null;
+            cbxAlamcenAfectado.SelectedItem = null;
+            cbxAOrigen.SelectedItem = null;
+            cbxInsumo.SelectedItem = null;
+            cbxMovimiento.SelectedItem = null;
+        }
+
         private void cbxMovimiento_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
             if (cbxMovimiento.SelectedItem != null)
@@ -68,6 +80,11 @@ namespace SharkAdministrativo.Vista.View
                 {
                     vista_Alamcenes.Visibility = Visibility.Visible;
                     vista_almacenAfectado.Visibility = Visibility.Collapsed;
+                    vista_salida.Visibility = Visibility.Collapsed;
+                }
+                else if(cbxMovimiento.SelectedItem.ToString() == "SALIDA")
+                {
+                    vista_salida.Visibility = Visibility.Visible;
                 }
                 else
                 {
@@ -78,8 +95,14 @@ namespace SharkAdministrativo.Vista.View
             }
             else {
                 vista_Alamcenes.Visibility = Visibility.Collapsed;
+                vista_salida.Visibility = Visibility.Collapsed;
                 vista_almacenAfectado.Visibility = Visibility.Visible;
             }
+        }
+
+        private void btnNuevo_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            clearFields();
         }
     }
 }

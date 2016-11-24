@@ -13,7 +13,7 @@
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="{x:Null}">
                         <dxb:BarButtonItem Content="Guardar &amp; Nuevo" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
-                        <dxb:BarButtonItem Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=AddFile_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="btnNuevo_ItemClick" Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=AddFile_32x32.png}"/>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
@@ -41,6 +41,14 @@
                         <dxe:ComboBoxEdit x:Name="cbxADestino" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup x:Name="vista_salida" View="GroupBox" Visibility="Collapsed" Header="DETALLES DE SALIDA" HorizontalAlignment="Stretch">
+                    <dxlc:LayoutItem Label="Descripción: ">
+                        <dxe:TextEdit x:Name="txtDescripcion"/>
+                    </dxlc:LayoutItem>
+
+
+                </dxlc:LayoutGroup>
+
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Insumo:">
                         <dxe:ComboBoxEdit SelectedIndexChanged="cbxInsumo_SelectedIndexChanged" x:Name="cbxInsumo" AutoComplete="True"/>

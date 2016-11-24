@@ -41,8 +41,8 @@
             </dxg:GridControl>
         </dxlc:LayoutControl>
 
-        <dxlc:LayoutControl x:Name="vista_clasificacionesProductos" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
-            <TextBlock TextWrapping="Wrap" Text="Gestión De Grupos" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2" VerticalAlignment="Top"/>
+        <dxlc:LayoutControl x:Name="vista_clasificacionesProductos" Visibility="Collapsed"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
+            <TextBlock x:Name="txtTitle" TextWrapping="Wrap" Text="Gestión De Grupos" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2" VerticalAlignment="Top"/>
             <dxlc:LayoutGroup x:Name="groupClasificacion"  Header="Nuevo" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <dxlc:LayoutItem Label="Abreviatura (3):">
                     <dxe:TextEdit x:Name="txtAbre" />
@@ -75,7 +75,7 @@
             </dxg:GridControl>
         </dxlc:LayoutControl>
 
-        <dxlc:LayoutControl x:Name="vista_almacenes" Visibility="Collapsed"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
+        <dxlc:LayoutControl x:Name="vista_almacenes" Visibility="Visible"  Margin="0,140,0,0" Padding="0" Orientation="Vertical">
             <TextBlock x:Name="txtStorageTitles" TextWrapping="Wrap" Text="Gestión De Almacenes" VerticalAlignment="Top" FontSize="16" FontFamily="Century gothic" Foreground="White" Background="#FF006AB2" TextAlignment="Center" Height="24" Padding="0,2"/>
             <dxlc:LayoutGroup x:Name="groupStorage" Header="Nuevo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                 <dxlc:LayoutItem Label="Codigo:">
