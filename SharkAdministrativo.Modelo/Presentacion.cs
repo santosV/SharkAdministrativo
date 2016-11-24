@@ -105,10 +105,10 @@ namespace SharkAdministrativo.Modelo
                 {
                     db.Configuration.LazyLoadingEnabled = true;
                     var insumoQuery = from presentacion in db.Presentaciones
+                                      where presentacion.descripcion == presentation.descripcion
                                       where presentacion.Proveedor.id == presentation.Proveedor.id
                                       where presentacion.noIdentificacion == presentacion.noIdentificacion
                                       where presentacion.Insumo.id == presentation.Insumo.id
-                                      where presentacion.descripcion == presentation.descripcion
                                       select presentacion;
                     // Iterate through the results of the parameterized query.
                     foreach (var presentacionR in insumoQuery)

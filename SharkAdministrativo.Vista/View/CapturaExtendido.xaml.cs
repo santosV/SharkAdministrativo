@@ -133,7 +133,7 @@ namespace SharkAdministrativo.Vista
         {
 
             string folio = "";
-            folio = factura.validarRegistro(factura.folio);
+            //folio = factura.validarRegistro(factura.folio);
             if (factura.folio != folio)
             {
                 if (validacion == "unico")
