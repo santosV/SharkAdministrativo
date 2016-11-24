@@ -31,12 +31,15 @@ namespace SharkAdministrativo.Vista
         DataTable dtClasificaciones = new DataTable();
         public bool esCalsificacion = false;
 
+
         public RegistrosRapidos()
         {
             InitializeComponent();
 
         }
-
+        /// <summary>
+        /// Carga los títulos de clasificaciones.
+        /// </summary>
         private void cargarTitulosClasificaciones()
         {
             dtClasificaciones.Columns.Add("ID");
@@ -46,7 +49,9 @@ namespace SharkAdministrativo.Vista
             tblClasificaciones.Columns[0].Visible = false;
         }
 
-
+        /// <summary>
+        /// Carga todas las clasificaciones de producto disponibles.
+        /// </summary>
         private void cargarClasif()
         {
             clearFieldsClasif();
@@ -145,7 +150,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-
+        /// <summary>
+        /// Obtiene los almacenes de contpaqi y shark.
+        /// </summary>
         private void obtenerAlmacenesCONT()
         {
             dtAlmacenes.Rows.Clear();
@@ -183,17 +190,14 @@ namespace SharkAdministrativo.Vista
         }
 
         /// <summary>
-        /// Guarda o modifica el objeto indicado.
+        /// Guarda o modifica el objeto indicado (Almcén,Grupo,Clasificación).
         /// </summary>
         public void saveModify()
         {
             if (!String.IsNullOrEmpty(txtGrupo.Text) && cbxCategoria.SelectedItem != null && !String.IsNullOrEmpty(txtAbreviatura.Text))
             {
-
-
                 int error = SDK.fPosPrimerValorClasif();
                 String bandera = "No encontrado";
-
                 if (error == 0)
                 {
                     for (int i = 13; i <= 18; i++)
@@ -202,7 +206,6 @@ namespace SharkAdministrativo.Vista
                         {
                             break;
                         }
-
                         String aValorClasificacion = txtGrupo.Text;
                         String aValorAbreviatura = txtAbreviatura.Text;
 
@@ -218,28 +221,19 @@ namespace SharkAdministrativo.Vista
                             grupo.nombre = txtGrupo.Text;
                             grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
                             grupo.categoria_id = grupo.Categoria.id;
-
-
-
                             if (tblGrupos.SelectedItem == null)
                             {
                                 if ((!cValorClasificacion.ToString().ToUpper().Equals(aValorClasificacion.ToUpper()) &&
                            !cValorAbreviatura.ToString().ToUpper().Equals(aValorAbreviatura.ToUpper())))
                                 {
-
                                     if (cClasificacion.ToString().Equals(i.ToString()) && cValorClasificacion.ToString().Equals("(Ninguna)"))
                                     {
-
-
                                         SDK.fEditaValorClasif();
                                         SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtGrupo.Text);
                                         SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbreviatura.Text);
                                         SDK.fGuardaValorClasif();
                                         grupo.registrar(grupo);
                                         bandera = "Encontrado";
-
-
-
                                     }
                                     else
                                     {
@@ -269,9 +263,7 @@ namespace SharkAdministrativo.Vista
                                     SDK.fSetDatoValorClasif("CVALORCLASIFICACION", txtGrupo.Text);
                                     SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", txtAbreviatura.Text);
                                     SDK.fGuardaValorClasif();
-
                                     bandera = "Encontrado";
-
                                     grupo.id = group.id;
                                     grupo.Modify(grupo);
                                     break;
@@ -285,11 +277,7 @@ namespace SharkAdministrativo.Vista
                         }
                     }
                 }
-
-
-
                 fillTableGroups();
-
             }
             else if (!String.IsNullOrEmpty(txtCategoria.Text))
             {
@@ -305,13 +293,13 @@ namespace SharkAdministrativo.Vista
                     categoria.Modify(categoria);
                 }
                 fillTableCategory();
-
             }
             else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
             {
                 almacen.codigo = txtCodigo.Text;
                 almacen.nombre = txtAlmacen.Text;
 
+                //Creación de almacén en Contpaqi.
                 SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
                 cAlmacen.cCodigoAlmacen = txtCodigo.Text;
                 cAlmacen.cNombreAlmacen = txtAlmacen.Text;
@@ -326,6 +314,7 @@ namespace SharkAdministrativo.Vista
                         if (error == 0)
                         {
                             error = SDK.fGuardaAlmacen();
+                            //Creación de almacén en Shark.
                             almacen.registrar(almacen);
                         }
                         else
@@ -340,28 +329,22 @@ namespace SharkAdministrativo.Vista
                 }
                 else
                 {
-
                     System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
-
                     int error = SDK.fBuscaAlmacen(seleccion.Row.ItemArray[0].ToString());
                     if (error == 0)
                     {
-
+                        //Modificación de almacén en Contpaqi.
                         error = SDK.fEditaAlmacen();
-
                         if (error == 0)
                         {
-
                             error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", txtCodigo.Text);
                             error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", txtAlmacen.Text);
-
                             if (error == 0)
                             {
-
                                 error = SDK.fGuardaAlmacen();
+                                //Modificación de almacén en Shark.
                                 almacen.codigo = seleccion.Row.ItemArray[0].ToString();
                                 almacen.Modify(almacen);
-
                             }
                             else
                             {
@@ -433,9 +416,6 @@ namespace SharkAdministrativo.Vista
                     }
                 }
             }
-
-
-
         }
 
 
@@ -556,6 +536,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Elimina el objeto indicado (Almcén,Grupo,Clasificación).
+        /// </summary>
         private void deleteObject()
         {
             if (tblGrupos.SelectedItem != null)
@@ -700,17 +683,32 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Manda llamar el método eliminar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEliminar_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             deleteObject();
         }
 
+        /// <summary>
+        /// Manda llamar los métodos para limpiar campos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNew_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             clearFields();
             clearFieldsClasif();
         }
 
+        /// <summary>
+        /// Obtiene los datos de catgoría.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblCategory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblCategory.SelectedItem;
@@ -719,19 +717,28 @@ namespace SharkAdministrativo.Vista
                 txtCategoria.Text = seleccion.Row.ItemArray[1].ToString();
             }
         }
-
+        /// <summary>
+        /// Detecta el evento y obtiene los datos del almacén para ponerlo en edición.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblStorage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblStorage.SelectedItem;
             if (seleccion != null)
             {
-                groupStorage.Header = "Modificando... " + seleccion.Row.ItemArray[1].ToString();
+                groupStorage.Header = "Modificando El Almacén" + seleccion.Row.ItemArray[1].ToString();
                 txtCodigo.IsReadOnly = true;
                 txtAlmacen.Text = seleccion.Row.ItemArray[1].ToString();
                 txtCodigo.Text = seleccion.Row.ItemArray[0].ToString();
             }
         }
 
+        /// <summary>
+        /// Detecta el evento y obtiene los datos de la clasificación para ponerlo en edición.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblClasificaciones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblClasificaciones.SelectedItem;
@@ -744,7 +751,9 @@ namespace SharkAdministrativo.Vista
             
             }
         }
-
+        /// <summary>
+        /// Limpia los datos de clasificación.
+        /// </summary>
         private void clearFieldsClasif()
         {
             txtAbre.Clear();

@@ -41,7 +41,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Grupos Que Provee">
-                        <dxe:ComboBoxEdit x:Name="cbxGrupos" SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
+                        <dxe:ComboBoxEdit x:Name="cbxGrupos"  Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">
 
                             <dxe:ComboBoxEdit.StyleSettings>
                                 <dxe:CheckedComboBoxStyleSettings/>
@@ -52,21 +52,7 @@
                         <dxe:TextEdit x:Name="txtRFC"/>
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <dxlc:LayoutItem Label="Ingresa El Nombre:">
-                        <dxe:TextEdit x:Name="txtnombreGrupo"/>
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="Categoria: ">
-                        <dxe:ComboBoxEdit x:Name="cbxCategoria" SelectedIndexChanged="cbxCategoria_SelectedIndexChanged"/>
-                    </dxlc:LayoutItem>
-                    <Button Content="Guardar" x:Name="btnGuardarGrupo" Click="btnGuardarGrupo_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    <dxlc:LayoutGroup x:Name="groupCategoria" Visibility="Collapsed" Header="Nueva Categoría" View="GroupBox" HorizontalAlignment="Stretch">
-                        <dxlc:LayoutItem Label="Nombre:">
-                            <dxe:TextEdit x:Name="txtCategoria"/>
-                        </dxlc:LayoutItem>
-                        <Button Content="Guardar" x:Name="btnGuardarCategoria" Click="btnGuardarCategoria_Click" Visibility="Visible" Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    </dxlc:LayoutGroup>
-                </dxlc:LayoutGroup>
+                
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
                         <dxlc:LayoutItem Label="Razón Social">

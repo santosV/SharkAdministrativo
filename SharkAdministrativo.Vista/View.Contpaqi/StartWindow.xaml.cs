@@ -27,6 +27,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             txtRutaEmpresa.Text = @"C:\Compac\Empresas";
         }
 
+        /// <summary>
+        /// Abre el explorador de archivos para que se seleccione la empresa que se desea abrir en Contpaqi Comercial.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSeleccionar_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.FolderBrowserDialog carpeta = new System.Windows.Forms.FolderBrowserDialog();
@@ -34,9 +39,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             carpeta.SelectedPath = @"C:\Compac\Empresas\";
             carpeta.ShowDialog();
             txtRutaEmpresa.Text = carpeta.SelectedPath;
-            /*
-             La siguiente línea evade la excepción de error con los FPU al utilizar la librería de contpaqi en C.
-             */
+
             try
             {
 
@@ -51,6 +54,9 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
                     }
                 }
+                /*
+                La siguiente línea evade la excepción de error con los FPU al utilizar la librería de contpaqi en C.
+                */
                 throw new Exception("Ignore this please, resetting the FPU");//ignoramos la excepción de FPU.
             }
             catch (Exception ex) { }

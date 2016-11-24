@@ -48,8 +48,6 @@ namespace SharkAdministrativo.Vista
         /// <param name="e">Action param</param>
         private void actionCargarXML(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-
-
             OpenFileDialog openFileDialog = new OpenFileDialog(); //abre el explorador de archivos de windows.
             openFileDialog.Multiselect = true; //permite la multiselección.
             openFileDialog.Filter = "Ficheros Xml|*.xml"; //define el tipo de archivo a buscar.
@@ -58,10 +56,7 @@ namespace SharkAdministrativo.Vista
             {
                 foreach (string url in openFileDialog.FileNames) //obtiene las rutas de los archivos seleccionados.
                 {
-
-
                     obtenerFactura(url);
-
                 }
             }
         }
@@ -135,16 +130,13 @@ namespace SharkAdministrativo.Vista
             bool error = true;
             foreach (XmlElement nodo in receptor)
             {
-
                 empresa = empresa.obtenerPorRFC(nodo.GetAttribute("rfc"));
                 if (empresa.rfc != null)
                 {
-
                     if (empresa.nombre.Trim() == nodo.GetAttribute("nombre"))
                     {
                         foreach (XmlElement domicilio in domicilio_fiscal_receptor)
                         {
-
                             /* if (empresa.calle.Trim() != domicilio.GetAttribute("calle")) { razon = "calle"; }
                             else if (empresa.colonia.Trim() != domicilio.GetAttribute("colonia")) { razon = "colonia"; }
                             else if (empresa.codigo_postal.Trim() != domicilio.GetAttribute("codigoPostal")) { razon = "código postal"; }
@@ -274,7 +266,9 @@ namespace SharkAdministrativo.Vista
 
 
 
-
+        /// <summary>
+        /// Oculta todas las vistas.
+        /// </summary>
         int cont = 0;
         private void ocultarVistas()
         {
@@ -287,6 +281,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Carga los títulos para las tablas de facturas y proveedor.
+        /// </summary>
         public void loadtitles()
         {
             dtFacturas.Columns.Add("route", typeof(string));
@@ -321,9 +318,11 @@ namespace SharkAdministrativo.Vista
             tblProveedores.Columns[0].Visible = false;
         }
 
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RibbonControl_SelectedPageChanged(object sender, RibbonPropertyChangedEventArgs e)
         {
             try
@@ -350,13 +349,22 @@ namespace SharkAdministrativo.Vista
         }
 
 
-
+        /// <summary>
+        /// Manda llamar ventana de registro de proveedor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void registrarProveedor_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             GestionProveedores vista = new GestionProveedores();
             vista.Show();
         }
 
+        /// <summary>
+        /// Manda llamar ventana de registro de Insumos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnInsumos_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             GestionInsumos vista = new GestionInsumos();
@@ -364,13 +372,20 @@ namespace SharkAdministrativo.Vista
         }
 
 
-
+        /// <summary>
+        /// Manda llamar ventana de registro de presentaciones
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPresentaciones_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             GestionPresentaciones vista = new GestionPresentaciones();
             vista.Show();
         }
 
+        /// <summary>
+        /// Carga los proveedores registrados en Shark y Contpaqi.
+        /// </summary>
         void llenarProveedores()
         {
             dtProveedores.Rows.Clear();
@@ -387,7 +402,11 @@ namespace SharkAdministrativo.Vista
         }
 
 
-
+        /// <summary>
+        /// Manda llamar ventana de registro de insumos elaborados.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnElaborados_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             GestionInsumosElaborados vista = new GestionInsumosElaborados();
@@ -395,12 +414,22 @@ namespace SharkAdministrativo.Vista
             vista.Show();
         }
 
+        /// <summary>
+        /// Manda llamar ventana de registro de productos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNuevoProducto_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             GestionDeProductos vista = new GestionDeProductos();
             vista.Show();
         }
 
+        /// <summary>
+        /// Detecta la selección de un proveedor e informa cual está seleccionado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblProveedores_MouseDown(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProveedores.SelectedItem;
@@ -417,7 +446,12 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        private void EliminarPresentacion_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        /// <summary>
+        /// Elimina el proveedor seleccionado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EliminarProveedor_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProveedores.SelectedItem;
             if (seleccion != null)
@@ -436,10 +470,11 @@ namespace SharkAdministrativo.Vista
                             proveedor.eliminar(proveedor);
                             seleccion.Delete();
                         }
-                        else {
+                        else
+                        {
                             SDK.rError(error);
                         }
-                        
+
                     }
                     else
                     {
@@ -456,12 +491,22 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Deselecciona un proveedor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Deseleccionar_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             tblProveedores.SelectedItem = null;
             txtProveedoresTitle.Text = "Proveedores Registrados (" + dtProveedores.Rows.Count + ")";
         }
 
+        /// <summary>
+        /// Obtiene el evento Key.Enter y abre la ventana de edición de proveedor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblProveedores_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -480,18 +525,32 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Llena la tabla de proveedores registrados en Shark y Contpaqi.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Actualizar_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             llenarProveedores();
         }
 
-        private void btnProductos_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        /// <summary>
+        /// Manda llamar ventana de registro de insumos elaborados.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnInsumosElaborados_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             GestionInsumosElaborados vista = new GestionInsumosElaborados();
             vista.showView(3);
             vista.Show();
         }
 
+        /// <summary>
+        /// Detecta si se va cerrar la venta principal.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             MessageBoxResult rs2 = MessageBox.Show("¿ESTÁS SEGURO QUE DESEAS TERMINAR LA SESIÓN EN SHARK POS", "TERMINAR SESIÓN", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -502,6 +561,12 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Exporta la tabla seleccionada a un formato selccionado.
+        /// </summary>
+        /// <param name="exportTo"></param>
+        /// <param name="view"></param>
+        /// <param name="name"></param>
         public void exportTo(string exportTo, DevExpress.Xpf.Grid.TableView view, string name)
         {
             System.Windows.Forms.FolderBrowserDialog carpeta = new System.Windows.Forms.FolderBrowserDialog();
@@ -566,50 +631,83 @@ namespace SharkAdministrativo.Vista
             exportTo(".png", tablaProveedores, "Proveedores");
         }
 
+        /// <summary>
+        /// Manda llamar la ventana de reportes de proveedores.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnProviderReport_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             ReportsView.ProviderView vista = new ReportsView.ProviderView();
             vista.Show();
         }
-
+        /// <summary>
+        /// Manda llamar la venta de registros de grupos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGroup_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             RegistrosRapidos vista = new RegistrosRapidos();
             vista.showView(1);
             vista.Show();
         }
-
+        /// <summary>
+        /// Manda llamar la venta de registros de categorías.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCategory_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             RegistrosRapidos vista = new RegistrosRapidos();
             vista.showView(2);
             vista.Show();
         }
-
+        /// <summary>
+        /// Manda llamar la venta de registros de almacenes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSotrage_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             RegistrosRapidos vista = new RegistrosRapidos();
             vista.showView(3);
             vista.Show();
         }
-
+        /// <summary>
+        /// Manda llamar la venta de registros de entradas.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEntradas_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             View.EntradasAlamcen vista = new View.EntradasAlamcen();
             vista.Show();
         }
-
-        private void BarButtonItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        /// <summary>
+        /// Manda llamar la venta de registros de movimientos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnMovimientos_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             View.MovimientosAlmacen vista = new View.MovimientosAlmacen();
             vista.Show();
         }
-
+        /// <summary>
+        /// Cierra la ventana principal y la sesión.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeSession_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Manda llamar la venta de registros de clasificaciones de productos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void createProductGroup_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             RegistrosRapidos vista = new RegistrosRapidos();

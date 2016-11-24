@@ -42,7 +42,7 @@
                         <dxb:BarButtonItem Content="Insumos Elaborados" x:Name="btnElaborados" ItemClick="btnElaborados_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Sales/SalesPeriodYear_32x32.png"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Gestionamiento">
-                        <dxb:BarButtonItem Content="Productos" x:Name="btnProductos" ItemClick="btnProductos_ItemClick" LargeGlyph="{dx:DXImageOffice2013 Image=Feature_32x32.png}"/>
+                        <dxb:BarButtonItem Content="Productos" x:Name="btnProductos" ItemClick="btnInsumosElaborados_ItemClick" LargeGlyph="{dx:DXImageOffice2013 Image=Feature_32x32.png}"/>
                         <dxb:BarButtonItem ItemClick="goToPromocion_ItemClick" Content="Promociones" LargeGlyph="{dx:DXImageOffice2013 Image=Info_32x32.png}"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Errores">
@@ -60,7 +60,7 @@
                     <dxr:RibbonPageGroup Caption="Gestión De Proveedores">
                         <dxb:BarButtonItem Content="Actualizar Proveedores" ItemClick="Actualizar_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Refresh_32x32.png}" RibbonStyle="Large"/>
                         <dxb:BarButtonItem x:Name="registrarProveedor" ItemClick="registrarProveedor_ItemClick" Content="Registrar"  LargeGlyph="{dx:DXImageGrayscale Image=Add_32x32.png}" Glyph="{dx:DXImageGrayscale Image=Add_32x32.png}" RibbonStyle="Large"/>
-                        <dxb:BarButtonItem Content="Eliminar" ItemClick="EliminarPresentacion_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png" RibbonStyle="SmallWithText" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png"/>
+                        <dxb:BarButtonItem Content="Eliminar" ItemClick="EliminarProveedor_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png" RibbonStyle="SmallWithText" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png"/>
                         <dxb:BarButtonItem Content="Deseleccionar Proveedor(es)" ItemClick="Deseleccionar_ItemClick" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/About_32x32.png"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Reportes">
@@ -92,7 +92,7 @@
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Almacén">
                         <dxb:BarButtonItem ItemClick="btnEntradas_ItemClick" Content="Entradas" LargeGlyph="{dx:DXImage Image=Fill_32x32.png}" Glyph="{dx:DXImage Image=ConditionalFormatting_16x16.png}"/>
-                        <dxb:BarButtonItem ItemClick="BarButtonItem_ItemClick" Content="Movimientos" LargeGlyph="{dx:DXImageGrayscale Image=SnapToCells_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="btnMovimientos_ItemClick" Content="Movimientos" LargeGlyph="{dx:DXImageGrayscale Image=SnapToCells_32x32.png}"/>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>

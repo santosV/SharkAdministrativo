@@ -11,7 +11,7 @@
                         <dxb:BarButtonItem Content="Guardar &amp; Salir" LargeGlyph="{dx:DXImageOffice2013 Image=SaveAndClose_32x32.png}"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Archivo">
-                        <dxb:BarButtonItem Content="Guardar &amp; Nuevo" ItemClick="BarButtonItem_ItemClick" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
+                        <dxb:BarButtonItem Content="Guardar &amp; Nuevo" ItemClick="btnPromocion_ItemClick" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
                         <dxb:BarButtonItem ItemClick="NuevoPromo_ItemClick_1" Content="Nuevo" Glyph="{dx:DXImage Image=New_32x32.png}" LargeGlyph="{dx:DXImage Image=New_32x32.png}" RibbonStyle="SmallWithText"/>
                         <dxb:BarButtonItem ItemClick="eliminarPromocion_ItemClick" Content="Eliminar" LargeGlyph="{dx:DXImageOffice2013 Image=Close_32x32.png}" RibbonStyle="SmallWithText" Glyph="{dx:DXImageOffice2013 Image=Close_32x32.png}"/>
                     </dxr:RibbonPageGroup>

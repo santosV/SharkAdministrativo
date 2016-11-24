@@ -30,6 +30,9 @@ namespace SharkAdministrativo.Vista.View
             loadMovements();
         }
 
+        /// <summary>
+        /// Carga la información necesaria para cada combobox como almacenes, tipos de movimientos, etc.
+        /// </summary>
         private void loadMovements(){
             List<Tipo_movimiento> movimientos = movimiento.obtenerTodos();
             List<Insumo> insumos = insumo.obtenerTodos();
@@ -50,6 +53,11 @@ namespace SharkAdministrativo.Vista.View
             }
         }
 
+        /// <summary>
+        /// Obtiene el insumo que fué seleccionado y obtener sus datos requeridos para la creación del movimiento.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxInsumo_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
             if (cbxInsumo.SelectedItem!=null)
@@ -60,6 +68,9 @@ namespace SharkAdministrativo.Vista.View
             }
         }
 
+        /// <summary>
+        /// Limpia los campos de movmientos.
+        /// </summary>
         private void clearFields() {
             txtCantidad.Clear();
             txtDescripcion.Clear();
@@ -72,6 +83,11 @@ namespace SharkAdministrativo.Vista.View
             cbxMovimiento.SelectedItem = null;
         }
 
+        /// <summary>
+        /// Provee la vista dependiendo el movimiento seleccionado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxMovimiento_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
             if (cbxMovimiento.SelectedItem != null)
@@ -100,6 +116,11 @@ namespace SharkAdministrativo.Vista.View
             }
         }
 
+        /// <summary>
+        /// Llama el método limpiar campos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNuevo_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             clearFields();

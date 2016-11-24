@@ -28,6 +28,7 @@ namespace SharkAdministrativo.Vista
         Promocion promocion = new Promocion();
         DataTable dtPromociones = new DataTable();
         DataTable dtProductos = new DataTable();
+
         public Promociones()
         {
             InitializeComponent();
@@ -40,6 +41,9 @@ namespace SharkAdministrativo.Vista
             loadTitlesDetalles();
         }
 
+        /// <summary>
+        /// Carga los títulos de la tabla de detalles de promocíones.
+        /// </summary>
         void loadTitlesDetalles()
         {
             dtProductos.Columns.Add("ID");
@@ -50,6 +54,11 @@ namespace SharkAdministrativo.Vista
             tblProductos.Columns[0].Visible = false;
         }
 
+        /// <summary>
+        /// Provee la vista para agregar detalles a la promoción.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDetalle_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblPromociones.SelectedItem;
@@ -67,12 +76,18 @@ namespace SharkAdministrativo.Vista
 
         }
 
+        /// <summary>
+        /// Carga días de la semana.
+        /// </summary>
         void cargarDias()
         {
             string[] dias = new string[] { "L", "Ma", "Mi", "J", "V", "S", "D" };
             cbxDiasDisponibles.ItemsSource = dias;
         }
 
+        /// <summary>
+        /// Carga las promociones disponibles en shark.
+        /// </summary>
         private void cargarPromociones()
         {
             dtPromociones.Rows.Clear();
@@ -84,6 +99,9 @@ namespace SharkAdministrativo.Vista
 
         }
 
+        /// <summary>
+        /// Carga los títulos de la tabla de promociónes.
+        /// </summary>
         public void loadTiltesPromo()
         {
             dtPromociones.Columns.Add("ID");
@@ -103,6 +121,11 @@ namespace SharkAdministrativo.Vista
 
         }
 
+        /// <summary>
+        /// Abre el explorador de archivos y asigna la imagén a la promoción.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SeleccionarImagen_Click(object sender, RoutedEventArgs e)
         {
 
@@ -120,6 +143,11 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Agrega el nombre de la promoción a la vista previa.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtNombreP_KeyUp(object sender, KeyEventArgs e)
         {
             if (!String.IsNullOrEmpty(txtNombre.Text))
@@ -132,6 +160,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Carga todos los productos disponibles en Shark y Contpaqi.
+        /// </summary>
         void cargarComboBoxProductos()
         {
             Producto producto = new Producto();
@@ -142,6 +173,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Carga los combobox de horas.
+        /// </summary>
         public void cargarHoras()
         {
             string hora = "";
@@ -175,6 +209,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Carga las áreas disponibles.
+        /// </summary>
         public void cargarAreas()
         {
             List<AreaProduccion> areas = area.obtenerTodos();
@@ -184,6 +221,10 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Carga la vista solicitada.
+        /// </summary>
+        /// <param name="vista"></param>
         public void cargarVista(int vista)
         {
             vista_promocion.Visibility = Visibility.Collapsed;
@@ -202,22 +243,34 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Llama el método cargarVista();
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnListo_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             cargarVista(1);
         }
 
+        /// <summary>
+        /// Captura los eventos de teclado para permitir solo números.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SoloNumeros_KeyDown(object sender, KeyEventArgs e)
         {
-
-
             if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.OemComma || e.Key == Key.Tab)
                 e.Handled = false;
             else
                 e.Handled = true;
-
         }
 
+        /// <summary>
+        /// Captura los eventos de teclado para obtener los costos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ObtenerCostosPromociones_KeyUp(object sender, KeyEventArgs e)
         {
             if (!String.IsNullOrEmpty(txtPrecio.Text) && !String.IsNullOrEmpty(txtIVA.Text))
@@ -240,6 +293,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Guarda o modifica una promoción en Shark.
+        /// </summary>
         public void guardarModificarPromocion()
         {
             if (validarDatos() == true)
@@ -318,6 +374,11 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Elimina la promoción seleccionada.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void eliminarPromocion_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblPromociones.SelectedItem;
@@ -339,11 +400,10 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        ImageSource GetImage(string path)
-        {
-            return new BitmapImage(new Uri(path, UriKind.Relative));
-        }
 
+        /// <summary>
+        /// Limpia los campos de promociones.
+        /// </summary>
         void clearFieldsPromo()
         {
 
@@ -363,7 +423,10 @@ namespace SharkAdministrativo.Vista
             tblPromociones.SelectedItem = false;
             groupPromocion.Header = "Nueva Promoción";
         }
-
+        /// <summary>
+        /// Valida que estén ingresados todos los datos en la promoción a crear
+        /// </summary>
+        /// <returns></returns>
         public bool validarDatos()
         {
             bool validacion = false;
@@ -374,17 +437,32 @@ namespace SharkAdministrativo.Vista
             return validacion;
         }
 
-        private void BarButtonItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        /// <summary>
+        /// Manda llamar el método para guardar o modificar una promoción.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPromocion_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             guardarModificarPromocion();
         }
 
+        /// <summary>
+        /// Convierte a byte una imágen.
+        /// </summary>
+        /// <param name="imagen"></param>
+        /// <returns></returns>
         public byte[] convertirAByte(System.Drawing.Image imagen)
         {
             System.Drawing.ImageConverter imgCon = new System.Drawing.ImageConverter();
             return (byte[])imgCon.ConvertTo(imagen, typeof(byte[]));
         }
 
+        /// <summary>
+        /// Convierte a Imagen un arreglo de bytes.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public System.Windows.Media.Imaging.BitmapImage convertirAImagen(byte[] bytes)
         {
             using (MemoryStream mStream = new MemoryStream(bytes))
@@ -397,6 +475,11 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Captura el evento en la tabla promociones para ponerla en edición.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblPromociones_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblPromociones.SelectedItem;
@@ -438,6 +521,10 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Valida los campos de detalles.
+        /// </summary>
+        /// <returns></returns>
         private bool validarCamposDetalle()
         {
             bool validacion = false;
@@ -449,7 +536,9 @@ namespace SharkAdministrativo.Vista
         }
 
 
-
+        /// <summary>
+        /// Carga cada uno de los productos que conforma la promoción.
+        /// </summary>
         public void cargarDetallePromocion()
         {
             dtProductos.Rows.Clear();
@@ -466,6 +555,9 @@ namespace SharkAdministrativo.Vista
             txtTotal.Text = "Total Promoción: $" + this.promocion.ultimoPrecio + ", Total En Producto: $" + total;
         }
 
+        /// <summary>
+        /// Limpia los campos de detalle.
+        /// </summary>
         void clearFieldDetalle()
         {
             txtCantidadP.Clear();
@@ -473,6 +565,11 @@ namespace SharkAdministrativo.Vista
             tblProductos.SelectedItem = false;
         }
 
+        /// <summary>
+        /// Agrega un producto a la relación de detalles de la promoción.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addProduct_Click(object sender, RoutedEventArgs e)
         {
             if (validarCamposDetalle())
@@ -504,13 +601,21 @@ namespace SharkAdministrativo.Vista
             }
 
         }
-
+        /// <summary>
+        /// Manda llamar el método para limpiar los campos de promoción.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NuevoPromo_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             clearFieldsPromo();
         }
 
-
+        /// <summary>
+        /// Detecta el evento en la tabla de productos y los pone en edición.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tblProductos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
@@ -523,6 +628,11 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Elimina un producto en el detalle  de la promoción.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void eliminarProductoDePromocion_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             System.Data.DataRowView seleccion = (System.Data.DataRowView)tblProductos.SelectedItem;
@@ -543,12 +653,21 @@ namespace SharkAdministrativo.Vista
                 MessageBox.Show("EN NECESARIO QUE SELECCIONE EL PRODUCTO QUE DESEA ELIMINAR");
             }
         }
-
+        /// <summary>
+        /// Manda llamar el método para limpiar los campos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nuevoProducto_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             clearFieldDetalle();
         }
 
+        /// <summary>
+        /// Manda llamar el frame de los reportes de promociones.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PromotionsReport_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             ReportsView.PromotionView vista = new ReportsView.PromotionView();

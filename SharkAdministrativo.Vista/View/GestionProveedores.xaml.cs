@@ -26,8 +26,8 @@ namespace SharkAdministrativo.Vista
         Categoria categoria = new Categoria();
         Empresa empresa = new Empresa();
         Proveedor proveedor = new Proveedor();
-        string exit = "No";
-        string hasChanged = "No";
+        string exit = "No"; // Variable para detectar si saldrá despues de guardar o no.
+        string hasChanged = "No"; //Variable para detectar cambios.
 
         public GestionProveedores()
         {
@@ -37,6 +37,11 @@ namespace SharkAdministrativo.Vista
 
         }
 
+        /// <summary>
+        /// Agrega todos los campos correspondientes en cuanto al proveedor seleccionado.
+        /// </summary>
+        /// <param name="name">nombre del proveedor</param>
+        /// <param name="empresa">empresa a la que proveerá</param>
         public void addProveedor(string name, string empresa)
         {
             hasChanged = "Yes";
@@ -75,7 +80,9 @@ namespace SharkAdministrativo.Vista
 
 
         }
-
+        /// <summary>
+        /// Llena los combobox con todos los grupos disponibles para proveedor.
+        /// </summary>
         public void llenarGrupos()
         {
             int i = 13;
@@ -113,6 +120,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Obtiene las empresas disponibles.
+        /// </summary>
         public void llenarEmpresas()
         {
             List<Empresa> empresas = empresa.obtenerTodos();
@@ -122,112 +132,35 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        private void cbxGrupos_SelectedIndexChanged(object sender, RoutedEventArgs e)
-        {
-            if (cbxGrupos.SelectedItem == "Nuevo")
-            {
-                txtnombreGrupo.Clear();
-                cbxCategoria.Clear();
-                cargarvista("grupo");
-            }
-            else
-            {
-                groupGrupo.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        public void cargarvista(string vista)
-        {
-
-            if (vista == "grupo")
-            {
-                cbxCategoria.Items.Clear();
-                groupGrupo.Visibility = Visibility.Visible;
-                List<Categoria> categorias = categoria.obtenerTodos();
-                cbxCategoria.Items.Add("Nuevo");
-                foreach (var category in categorias)
-                {
-                    cbxCategoria.Items.Add(category.nombre);
-                }
-                if (categoria.id > 0)
-                {
-                    cbxCategoria.SelectedItem = categoria.nombre;
-                }
-            }
-            else if (vista == "categoria")
-            {
-                groupCategoria.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void btnGuardarGrupo_Click(object sender, RoutedEventArgs e)
-        {
-            if (txtnombreGrupo.Text != "" && cbxCategoria.SelectedItem.ToString() != "" && cbxCategoria.SelectedItem != null)
-            {
-                Grupo grupo = new Grupo();
-                grupo.nombre = txtnombreGrupo.Text;
-                grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
-                grupo.registrar(grupo);
-                if (grupo.id > 0)
-                {
-                    llenarGrupos();
-                    cbxGrupos.SelectedItem = grupo.nombre;
-                }
-                groupGrupo.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void cbxCategoria_SelectedIndexChanged(object sender, RoutedEventArgs e)
-        {
-            if (cbxCategoria.SelectedItem == "Nuevo")
-            {
-                btnGuardarGrupo.Visibility = Visibility.Collapsed;
-                cargarvista("categoria");
-                groupGrupo.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                btnGuardarGrupo.Visibility = Visibility.Visible;
-                cargarvista("grupo");
-                groupCategoria.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void btnGuardarCategoria_Click(object sender, RoutedEventArgs e)
-        {
-            if (txtCategoria.Text != "")
-            {
-                categoria.nombre = txtCategoria.Text;
-                categoria.registrar(categoria);
-                if (categoria.id > 0)
-                {
-                    cargarvista("grupo");
-                }
-                groupCategoria.Visibility = Visibility.Collapsed;
-            }
-        }
-
+        /// <summary>
+        /// Manda llamar método para guardar o modificar, informa que hay que salir despues de guardar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGuardar_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             exit = "Yes";
             guardarModificar();
         }
 
+        /// <summary>
+        /// Guarda o Modifica el proveedor.
+        /// </summary>
         public void guardarModificar()
         {
             List<string> cIDClasificacionesGrupos = new List<string>();
             if (!String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtRFC.Text) && cbxGrupos.SelectedItem != null && !String.IsNullOrEmpty(txtRazonP.Text) && cbxEmpresa.SelectedItem != null)
             {
                 
+                //Inicialización de objeto Contpaqi.
                 SDK.CteProv cProveedor = new SDK.CteProv();
-
                 cProveedor.cCodigoCliente = txtCodigo.Text;
                 cProveedor.cRazonSocial = txtRazonP.Text;
                 cProveedor.cRFC = txtRFC.Text;
                 cProveedor.cDenComercial = txtNombreP.Text;
                 cProveedor.cEstatus = 1;
-                
 
+                //Inicialización de objeto Shark.
                 Proveedor proveedor = new Proveedor();
                 proveedor.codigo = txtCodigo.Text;
                 proveedor.nombre = txtNombreP.Text;
@@ -256,6 +189,7 @@ namespace SharkAdministrativo.Vista
                 }
                 if (hasChanged == "Yes")
                 {
+                    //Modifica el proveedor en Contpaqi.
                     SDK.fBuscaCteProv(proveedor.codigo);
                     SDK.fEditaCteProv();
                     SDK.fSetDatoCteProv("CRAZONSOCIAL", cProveedor.cRazonSocial);
@@ -267,15 +201,13 @@ namespace SharkAdministrativo.Vista
                         SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
                         i++;
                     }
-
-
-                    int error = SDK.fBuscaCteProv(proveedor.codigo);
+                    int error = SDK.fGuardaCteProv();
                     if (error == 0)
                     {
+                        //Modifica proveedor en Shark.
                         proveedor.id = this.proveedor.id;
                         proveedor.modificar(proveedor);
                         MessageBox.Show("ÉXITO, SE MODIFICÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
-
                         if (exit == "No")
                         {
                             ClearField();
@@ -288,10 +220,12 @@ namespace SharkAdministrativo.Vista
                 }
                 else
                 {
+                    //Da de alta un proveedor en Contpaqi.
                     int cIDCteProv = 0;
                     int error = SDK.fAltaCteProv(ref cIDCteProv,ref  cProveedor);
                     if (error == 0)
                     {
+                        //Da de alta un proveedor en Shark.
                         proveedor.registrar(proveedor);
                         MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
                         SDK.fBuscaIdCteProv(cIDCteProv);
@@ -342,6 +276,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
+        /// <summary>
+        /// Limpia los campos del proveedor.
+        /// </summary>
         public void ClearField()
         {
             txtCodigo.Clear();
@@ -363,6 +300,7 @@ namespace SharkAdministrativo.Vista
 
         }
 
+        //Manda llamar el método modificar indicando que solo debe guardar y no salir.
         private void BarButtonItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             exit = "No";

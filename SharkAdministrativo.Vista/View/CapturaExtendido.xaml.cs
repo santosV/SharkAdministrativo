@@ -373,14 +373,13 @@ namespace SharkAdministrativo.Vista
                 SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
                 ltMovimiento.aCodAlmacen = codigo.ToString();
                 ltMovimiento.aConsecutivo = 1;
-
                 ltMovimiento.aCodProdSer = presentacion.codigo;
 
                 ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
 
 
                 ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
-
+                ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
 
                 lError = 0;
                 lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
@@ -657,6 +656,8 @@ namespace SharkAdministrativo.Vista
             txtCostoUnitario.Clear();
             txtRendimiento.Clear();
             txtCantidad.Clear();
+            txtCodigo.Clear();
+            
         }
 
         public void addToList()
