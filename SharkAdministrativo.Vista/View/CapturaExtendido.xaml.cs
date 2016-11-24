@@ -44,8 +44,28 @@ namespace SharkAdministrativo.Vista
         public void bloquearCajas()
         {
             validacion = proveedor.validar(proveedor);
+            proveedor = proveedor.obtener(proveedor.nombre);
             if (validacion != "unico")
             {
+                int error = SDK.fBuscaCteProv(proveedor.codigo);
+                if (error == 0)
+                {
+                    String[] grupos = proveedor.tipos_proveedor.Split(';');
+                    int i = 1;
+                    foreach (string group in grupos)
+                    {
+                        if (!String.IsNullOrEmpty(group))
+                        {
+                            StringBuilder cIdValorClasificacionProv = new StringBuilder(5);
+                            SDK.fLeeDatoCteProv("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
+                            i++;
+                            cbxGrupos.SelectedItems.Add(cIdValorClasificacionProv + " | " + group);
+                        }
+                    }
+                    txtcodigoProveedor.Text = proveedor.codigo;
+                }
+                cbxGrupos.IsReadOnly = true;
+                txtcodigoProveedor.IsReadOnly = true;
                 txtRazonSocialP.IsReadOnly = true;
                 txtRfcP.IsReadOnly = true;
                 txtLocalidadP.IsReadOnly = true;
@@ -322,7 +342,7 @@ namespace SharkAdministrativo.Vista
             lDocto.aDescuentoDoc2 = 0;
             lDocto.aAfecta = 0;
             lDocto.aSistemaOrigen = 205;
-            lDocto.aCodigoCteProv = "P0333";
+            lDocto.aCodigoCteProv = proveedor.codigo;
             lDocto.aFolio = folio;
             lDocto.aSistemaOrigen = 205;
             lDocto.aSerie = factura.folio;
@@ -337,7 +357,7 @@ namespace SharkAdministrativo.Vista
             if (lError != 0)
             {
                 SDK.rError(lError);
-                
+
                 return;
             }
 
@@ -350,14 +370,14 @@ namespace SharkAdministrativo.Vista
 
                 SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
                 StringBuilder codigo = new StringBuilder(20);
-                SDK.fLeeDatoAlmacen("CCODIGOALMACEN",codigo,20);
+                SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
                 ltMovimiento.aCodAlmacen = codigo.ToString();
                 ltMovimiento.aConsecutivo = 1;
 
                 ltMovimiento.aCodProdSer = presentacion.codigo;
 
                 ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
-                
+
 
                 ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
 
@@ -390,7 +410,7 @@ namespace SharkAdministrativo.Vista
 
             if (lError == 0)
             {
-                System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor e Insumo!");
+                System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor y productos!");
             }
 
 

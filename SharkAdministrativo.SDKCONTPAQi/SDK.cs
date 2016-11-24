@@ -606,11 +606,5 @@ namespace SharkAdministrativo.SDKCONTPAQi
             fCierraEmpresa();
             fTerminaSDK();
         }
-
-
-
-
-
-
     }//Fin clase SDK
 }//Fin namespace

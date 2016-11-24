@@ -62,13 +62,12 @@ namespace SharkAdministrativo.Vista
             if (!String.IsNullOrEmpty(proveedor.tipos_proveedor))
             {
 
-                SDK.rError(error); 
                 String[] grupos = proveedor.tipos_proveedor.Split(';');
                 int i = 1;
                 foreach (string group in grupos)
                 {
                     StringBuilder cIdValorClasificacionProv = new StringBuilder(5);
-                    SDK.fLeeDatoValorClasif("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
+                    SDK.fLeeDatoCteProv("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
                     i++;
                     cbxGrupos.SelectedItems.Add(cIdValorClasificacionProv+" | "+group);
                 }
@@ -121,7 +120,6 @@ namespace SharkAdministrativo.Vista
             {
                 cbxEmpresa.Items.Add(item.nombre);
             }
-
         }
 
         private void cbxGrupos_SelectedIndexChanged(object sender, RoutedEventArgs e)
