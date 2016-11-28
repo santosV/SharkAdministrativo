@@ -96,8 +96,8 @@ namespace SharkAdministrativo.Vista
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
-                SDK.fLeeDatoCteProv("CIDVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoCteProv("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 if (nomValorClasificacion.ToString() != "(Ninguna)")
                 {
@@ -501,8 +501,8 @@ namespace SharkAdministrativo.Vista
                 SDK.fBuscaIdValorClasif(Convert.ToInt32(idValorClasificacion.ToString()));
                 StringBuilder codValorClasificacion = new StringBuilder(11);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
-                SDK.fLeeDatoCteProv("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
-                SDK.fLeeDatoCteProv("CVALORCLASIFICACION", nomValorClasificacion, 30);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 11);
+                SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 cbxValoresDeClasificaciones.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
 
