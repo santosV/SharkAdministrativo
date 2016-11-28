@@ -121,11 +121,20 @@
     <Compile Include="DataReports\Barcode.Designer.cs">
       <DependentUpon>Barcode.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataReports\SuppliesData.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataReports\SuppliesData.Designer.cs">
+      <DependentUpon>SuppliesData.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportsView\BarcodeView.xaml.cs">
       <DependentUpon>BarcodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportsView\InputsView.xaml.cs">
       <DependentUpon>InputsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsView\SuppliesView.xaml.cs">
+      <DependentUpon>SuppliesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="View.Contpaqi\StartWindow.xaml.cs">
@@ -217,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReportsView\InputsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportsView\SuppliesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -338,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataReports\RecipeData.resx">
       <DependentUpon>RecipeData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataReports\SuppliesData.resx">
+      <DependentUpon>SuppliesData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

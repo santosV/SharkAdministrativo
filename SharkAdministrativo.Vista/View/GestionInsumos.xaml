@@ -21,7 +21,7 @@
                             
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Mostrar">
-                            <dxb:BarButtonItem Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/NewOpportunities_32x32.png"/>
+                            <dxb:BarButtonItem ItemClick="btnSuppliesReport_ItemClick" Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/NewOpportunities_32x32.png"/>
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Exportar">
                             <dxb:BarButtonItem ItemClick="insumos_ExportToExcel_ItemClick" Content="Excel" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}"/>

@@ -74,11 +74,6 @@
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
             <dxr:RibbonDefaultPageCategory Caption="Default Category"/>
-            <dxr:RibbonPageCategory Caption="Usuarios" Color="#FF91C3FF">
-                <dxr:RibbonPage x:Name="vista_perfiles" Caption="Perfiles De Usuarios">
-                    <dxr:RibbonPageGroup Caption="Ribbon Page Group"/>
-                </dxr:RibbonPage>
-            </dxr:RibbonPageCategory>
             <dxr:RibbonPageCategory Caption="Oficina" Color="#FF003C56">
                 <dxr:RibbonPage x:Name="vista_oficina" Caption="Administrativo">
                     <dxr:RibbonPageGroup Caption="{x:Null}">

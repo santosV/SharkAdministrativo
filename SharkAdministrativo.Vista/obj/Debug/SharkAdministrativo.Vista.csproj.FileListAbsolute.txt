@@ -199,3 +199,6 @@ C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAd
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Modelo.pdb
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.pdb
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\EntityFramework.xml
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.baml
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.g.cs
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.SuppliesData.resources

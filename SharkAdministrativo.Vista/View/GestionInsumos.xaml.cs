@@ -673,6 +673,12 @@ namespace SharkAdministrativo.Vista
 
         }
 
+        private void btnSuppliesReport_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            ReportsView.SuppliesView vista = new ReportsView.SuppliesView();
+            vista.Show();
+        }
+
 
 
 

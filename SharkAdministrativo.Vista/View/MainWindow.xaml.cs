@@ -336,7 +336,7 @@ namespace SharkAdministrativo.Vista
                 {
                     Vista1_facturas.Visibility = Visibility.Visible;
                 }
-                else if (Control_menu.SelectedPage == vista_oficina || Control_menu.SelectedPage == vista_perfiles)
+                else if (Control_menu.SelectedPage == vista_oficina)
                 {
                     vista3_shark.Visibility = Visibility.Visible;
                 }
