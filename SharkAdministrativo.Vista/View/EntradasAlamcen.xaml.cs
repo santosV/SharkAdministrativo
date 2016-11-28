@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SharkAdministrativo.Modelo;
+using SharkAdministrativo.SDKCONTPAQi;
 
 namespace SharkAdministrativo.Vista.View
 {
@@ -20,6 +21,7 @@ namespace SharkAdministrativo.Vista.View
     /// </summary>
     public partial class EntradasAlamcen : Window
     {
+        Proveedor proveedor = new Proveedor();
         Presentacion presentacion = new Presentacion();
         Almacen almacen = new Almacen();
         public EntradasAlamcen()
@@ -28,7 +30,8 @@ namespace SharkAdministrativo.Vista.View
             loadComboBoxes();
         }
 
-        private void loadComboBoxes() {
+        private void loadComboBoxes()
+        {
             List<Almacen> almacenes = almacen.obtenerTodos();
             foreach (var storage in almacenes)
             {
@@ -37,37 +40,116 @@ namespace SharkAdministrativo.Vista.View
             List<Presentacion> presentaciones = presentacion.getAll();
             foreach (var presentation in presentaciones)
             {
-                cbxPresentaciones.Items.Add(presentation.descripcion );
+                cbxPresentaciones.Items.Add(presentation.descripcion);
             }
         }
 
-        private void save() {
-            if (cbxPresentaciones.SelectedItem!=null && cbxAlmacenes.SelectedItem!=null && !String.IsNullOrEmpty(txtCantidad.Text))
+        private void save()
+        {
+            if (cbxPresentaciones.SelectedItem != null && cbxAlmacenes.SelectedItem != null && !String.IsNullOrEmpty(txtCantidad.Text))
             {
-                EntradaPresentacion entrada = new EntradaPresentacion();
-                DateTime thisDay = DateTime.Today;
-                entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                entrada.Presentacion = presentacion.get(cbxPresentaciones.SelectedItem.ToString());
-                entrada.Almacen = almacen.obtener(cbxAlmacenes.SelectedItem.ToString());
-                entrada.cantidad = Convert.ToDouble(txtCantidad.Text);
-                entrada.registrar(entrada);
-                presentacion.sumarEntrada(entrada.Presentacion.id, Convert.ToDouble(entrada.cantidad));
-                MessageBoxResult dialogResult = MessageBox.Show("Se registró con exito la entrada de almacén, ¿Desea obtener el código de barras para monitorear dicha entrada?", "Confirmación", MessageBoxButton.YesNo);
-                if (dialogResult == MessageBoxResult.Yes)
+
+                
+                double folio = 0;
+
+                StringBuilder serie = new StringBuilder(12);
+
+                SDK.fSiguienteFolio("21", serie, ref folio);
+
+
+                SDK.tDocumento lDocto = new SDK.tDocumento();
+
+                lDocto.aCodConcepto = "21";
+                lDocto.aCodigoAgente = "(Ninguno)";
+                lDocto.aNumMoneda = 1;
+                lDocto.aTipoCambio = 1;
+
+                //obtiene el codigo del proveedor
+                Presentacion pre = presentacion.get(cbxPresentaciones.SelectedItem.ToString());
+                Proveedor pro = proveedor.obtenerPorID(pre.proveedor_id);
+                lDocto.aCodigoCteProv = pro.codigo;
+
+                lDocto.aImporte = 0;
+                lDocto.aDescuentoDoc1 = 0;
+                lDocto.aDescuentoDoc2 = 0;
+                lDocto.aAfecta = 0;
+                lDocto.aSistemaOrigen = 205;
+                lDocto.aFolio = folio;
+                lDocto.aSistemaOrigen = 205;
+                lDocto.aSerie = "";
+                lDocto.aGasto1 = 0;
+                lDocto.aGasto2 = 0;
+                lDocto.aGasto3 = 0;
+                lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
+                int lError = 0;
+                Int32 lIdDocumento = 0;
+                lError = SDK.fAltaDocumento(ref lIdDocumento, ref lDocto);
+
+                if (lError != 0)
                 {
-                    ReportsView.BarcodeView vista = new ReportsView.BarcodeView();
-                    vista.loadReport(entrada.id);
-                    vista.Show();
+                    SDK.rError(lError);
+                    clearFields();
+                    return;
                 }
-                clearFields();
+
+                SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
+                int lIdMovimiento = 0;
+
+                SDK.fBuscaAlmacen(pre.almacen_id.ToString());
+                StringBuilder codigo = new StringBuilder(20);
+                SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
+                ltMovimiento.aCodAlmacen = codigo.ToString();
+                ltMovimiento.aConsecutivo = 1;
+                ltMovimiento.aCodProdSer = pre.codigo;
+
+                ltMovimiento.aUnidades = Double.Parse(txtCantidad.Text);
+
+
+                ltMovimiento.aCosto = Double.Parse(Convert.ToString(pre.costo_unitario));
+                ltMovimiento.aPrecio = Double.Parse(Convert.ToString(pre.costo_unitario));
+
+                lError = 0;
+                lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
+
+                if (lError != 0)
+                {
+                    SDK.rError(lError);
+                    clearFields();
+                    return;
+                }
+                else
+                {
+                    //entrada almacen shark
+                    EntradaPresentacion entrada = new EntradaPresentacion();
+                    DateTime thisDay = DateTime.Today;
+                    entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                    entrada.Presentacion = presentacion.get(cbxPresentaciones.SelectedItem.ToString());
+                    entrada.Almacen = almacen.obtener(cbxAlmacenes.SelectedItem.ToString());
+                    entrada.cantidad = Convert.ToDouble(txtCantidad.Text);
+                    entrada.registrar(entrada);
+                    presentacion.sumarEntrada(entrada.Presentacion.id, Convert.ToDouble(entrada.cantidad));
+                    MessageBoxResult dialogResult = MessageBox.Show("Se registró con exito la entrada de almacén, ¿Desea obtener el código de barras para monitorear dicha entrada?", "Confirmación", MessageBoxButton.YesNo);
+                    if (dialogResult == MessageBoxResult.Yes)
+                    {
+                        ReportsView.BarcodeView vista = new ReportsView.BarcodeView();
+                        vista.loadReport(entrada.id);
+                        vista.Show();
+                    }
+                    clearFields();
+                }
+
+
+
+
             }
         }
 
-        private void clearFields() {
+        private void clearFields()
+        {
             cbxAlmacenes.SelectedItem = null;
             cbxPresentaciones.SelectedItem = null;
             txtCantidad.Clear();
-                
+
         }
 
         private void btnSave_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)

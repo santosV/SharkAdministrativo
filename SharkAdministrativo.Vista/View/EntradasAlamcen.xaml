@@ -25,7 +25,7 @@
         <dxlc:LayoutControl Margin="0,150,0,0" Padding="0" StretchContentHorizontally="True" Orientation="Vertical">
             <TextBlock x:Name="Title" TextWrapping="Wrap" Text="Gestión De Entradas De Almacén" Padding="5" UseLayoutRounding="True" TextAlignment="Center" Background="#FF046AA6" Foreground="White" FontSize="16" Margin="0" VerticalAlignment="Top"/>
             <dxlc:LayoutGroup Header="NUEVA ENTRADA DE ALMACÉN" View="GroupBox" Orientation="Vertical" VerticalAlignment="Center">
-                <dxlc:LayoutItem Label="Precentación:">
+                <dxlc:LayoutItem Label="Presentación:">
                     <dxe:ComboBoxEdit x:Name="cbxPresentaciones" AutoComplete="True"/>
                 </dxlc:LayoutItem>
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">

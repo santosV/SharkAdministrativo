@@ -191,19 +191,93 @@ namespace SharkAdministrativo.Vista
 
                 if (Convert.ToDouble(txtCantidad.Text) > 0)
                 {
-                    EntradaPresentacion entrada = new EntradaPresentacion();
-                    DateTime thisDay = DateTime.Today;
-                    entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                    entrada.Presentacion = presentacion;
-                    entrada.Almacen = presentacion.Almacen;
-                    entrada.cantidad = presentacion.cantidad;
-                    entrada.registrar(entrada);
+                    error = 0;
+                    double folio = 0;
+
+                    StringBuilder serie = new StringBuilder(12);
+
+                    SDK.fSiguienteFolio("21", serie, ref folio);
+
+                    if (presentacion.verificarRegistro(presentacion) == false)
+                    {
+                        SDK.tDocumento lDocto = new SDK.tDocumento();
+
+
+                        lDocto.aCodConcepto = "21";
+                        lDocto.aCodigoAgente = "(Ninguno)";
+                        lDocto.aNumMoneda = 1;
+                        lDocto.aTipoCambio = 1;
+
+                        lDocto.aImporte = 0;
+                        lDocto.aDescuentoDoc1 = 0;
+                        lDocto.aDescuentoDoc2 = 0;
+                        lDocto.aAfecta = 0;
+                        lDocto.aSistemaOrigen = 205;
+                        Proveedor pro = proveedor.obtener(cbxProveedor.SelectedItem.ToString());
+                        lDocto.aCodigoCteProv = pro.codigo;
+                        lDocto.aFolio = folio;
+                        lDocto.aSistemaOrigen = 205;
+                        lDocto.aSerie = "";
+                        lDocto.aGasto1 = 0;
+                        lDocto.aGasto2 = 0;
+                        lDocto.aGasto3 = 0;
+                        lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
+                        int lError = 0;
+                        Int32 lIdDocumento = 0;
+                        lError = SDK.fAltaDocumento(ref lIdDocumento, ref lDocto);
+
+                        if (lError != 0)
+                        {
+                            SDK.rError(lError);
+
+                            return;
+                        }
+
+                        SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
+                        int lIdMovimiento = 0;
+
+                        SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
+                        StringBuilder codigo = new StringBuilder(20);
+                        SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
+                        ltMovimiento.aCodAlmacen = codigo.ToString();
+                        ltMovimiento.aConsecutivo = 1;
+                        ltMovimiento.aCodProdSer = presentacion.codigo;
+
+                        ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
+
+
+                        ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_unitario));
+                        ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_unitario));
+
+                        lError = 0;
+                        lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
+
+                        if (lError != 0)
+                        {
+                            SDK.rError(lError);
+                            return;
+                        }
+                        else
+                        {
+                            //entrada almacen shark
+
+                            EntradaPresentacion entrada = new EntradaPresentacion();
+                            DateTime thisDay = DateTime.Today;
+                            entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                            Presentacion presentacionR = presentacion.obtener(presentacion);
+                            entrada.Presentacion = presentacionR;
+
+                            entrada.Almacen = almacen.obtener(presentacion.Almacen.nombre);
+                            entrada.cantidad = presentacion.cantidad;
+                            entrada.registrar(entrada);
+                        }
+
+                    }
+
+                    hasChanged = "Yes";
+                    clearFields();
+                    dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
                 }
-                hasChanged = "Yes";
-                clearFields();
-                dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
-
-
             }
             else
             {
@@ -223,12 +297,14 @@ namespace SharkAdministrativo.Vista
             txtCCImpuesto.Clear();
             txtCPromedio.Clear();
             txtRendimiento.Clear();
+            txtDescripcion.Clear();
             txtUcosto.Clear();
             cbxAlmacen.SelectedItem = null;
             tblPresentaciones.SelectedItem = false;
             cbxInsumoBase.SelectedItem = insumo.descripcion;
             cbxValoresDeClasificaciones.SelectedItem = null;
             cbxProveedor.SelectedItem = null;
+            addPresentacion.IsEnabled = true;
         }
 
         private void EliminarPresentacion_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -521,8 +597,14 @@ namespace SharkAdministrativo.Vista
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
 
                 cbxValoresDeClasificaciones.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
+                addPresentacion.IsEnabled = false;
 
             }
+        }
+
+        private void BarButtonItem_ItemClick_1(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            clearFields();
         }
 
 

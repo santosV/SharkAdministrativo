@@ -13,7 +13,7 @@
                             <dxb:BarButtonItem x:Name="GuardarSalir" Content="Guardar &amp; Cerrar" ItemClick="AddList_ItemClick" IsVisible="True" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png"/>
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Archivo">
-                            <dxb:BarButtonItem Content="Cancelar Operación" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/ViewReset_32x32.png"/>
+                            <dxb:BarButtonItem Content="Cancelar Operación" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/ViewReset_32x32.png" ItemClick="BarButtonItem_ItemClick_1"/>
                             <dxb:BarButtonItem Content="Eliminar"  ItemClick="EliminarPresentacion_ItemClick" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png" Glyph="{dx:DXImage Image=Close_16x16.png}"/>
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Mostrar">

@@ -378,8 +378,8 @@ namespace SharkAdministrativo.Vista
                 ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
 
 
-                ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
-                ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
+                ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_unitario));
+                ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_unitario));
 
                 lError = 0;
                 lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
@@ -392,7 +392,7 @@ namespace SharkAdministrativo.Vista
                 else
                 {
                     //entrada almacen shark
-
+                    //para que agarre el comit
                     EntradaPresentacion entrada = new EntradaPresentacion();
                     DateTime thisDay = DateTime.Today;
                     entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
