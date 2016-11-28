@@ -85,6 +85,11 @@ namespace SharkAdministrativo.Vista.View
             cbxMovimiento.SelectedItem = null;
         }
 
+        private void esconderComboBoxes() {
+            vista_Alamcenes.Visibility = Visibility.Collapsed;
+            vista_salida.Visibility = Visibility.Collapsed;
+        }
+
         /// <summary>
         /// Provee la vista dependiendo el movimiento seleccionado.
         /// </summary>
@@ -92,6 +97,7 @@ namespace SharkAdministrativo.Vista.View
         /// <param name="e"></param>
         private void cbxMovimiento_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
+            esconderComboBoxes();
             if (cbxMovimiento.SelectedItem != null)
             {
                 if (cbxMovimiento.SelectedItem.ToString() == "TRASPASO")
@@ -112,8 +118,7 @@ namespace SharkAdministrativo.Vista.View
                 }
             }
             else {
-                vista_Alamcenes.Visibility = Visibility.Collapsed;
-                vista_salida.Visibility = Visibility.Collapsed;
+                
                 vista_almacenAfectado.Visibility = Visibility.Visible;
             }
         }
@@ -139,11 +144,12 @@ namespace SharkAdministrativo.Vista.View
                     if (cbxAlamcenAfectado.SelectedItem!=null && cbxInsumo.SelectedItem!=null && !String.IsNullOrEmpty(txtCantidad.Text) && !String.IsNullOrEmpty(txtDescripcion.Text))
                     {
                         Salida_almacen salida = new Salida_almacen();
-                        
+                        Insumo _insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
+                     
 
                         salida.Almacen = almacen.obtener(cbxAlamcenAfectado.SelectedItem.ToString());
                         salida.cantidad = Double.Parse(txtCantidad.Text);
-                        salida.Insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
+                        salida.Insumo = _insumo;
                         salida.Tipo_movimiento = tipo.obtener(cbxMovimiento.SelectedItem.ToString());
                         List<Presentacion> presentaciones = presentacion.obtenerPorInsumoAlmacen(salida.Insumo.id,salida.Almacen.id);
                         int cont = 0;
@@ -173,7 +179,7 @@ namespace SharkAdministrativo.Vista.View
                         salida.registrar(salida);
                         if (salida.id>0)
                         {
-                            
+                            MessageBox.Show("SE REGISTRO LA SALIDA DE: "+salida.cantidad+" "+unidad.nombre+" \nDEL INSUMO: "+_insumo.descripcion+" POR LA RAZÓN: "+salida.descripcion);
                         }
                     }
                 }
