@@ -32,10 +32,10 @@ namespace SharkAdministrativo.Vista
         List<Presentacion> presentaciones = new List<Presentacion>();
         Presentacion presentacion = new Presentacion();
         string route = "";
-        string hasChanged="No";
+        string hasChanged = "No";
         public GestionPresentaciones()
         {
-            
+
             InitializeComponent();
             titlesPresentacionesLista();
             llenarAlmacenes();
@@ -45,18 +45,20 @@ namespace SharkAdministrativo.Vista
         }
 
 
-        public void llenarPresentaciones() {
+        public void llenarPresentaciones()
+        {
             dtPLista.Rows.Clear();
             presentaciones = presentacionIns.obtenerTodosPorInsumo(insumo.id);
             foreach (var item in presentaciones)
             {
                 this.presentacionIns = item;
-                dtPLista.Rows.Add(item.id, item.descripcion, item.rendimiento, item.Insumo.Unidad_Medida.nombre, item.Proveedor.nombre,presentacionIns.codigo); 
+                dtPLista.Rows.Add(item.id, item.descripcion, item.rendimiento, item.Insumo.Unidad_Medida.nombre, item.Proveedor.nombre, presentacionIns.codigo);
             }
         }
 
 
-        public void llenarAlmacenes() {
+        public void llenarAlmacenes()
+        {
             cbxAlmacen.Items.Clear();
             List<Almacen> almacenes = almacen.obtenerTodos();
             cbxAlmacen.Items.Add("Nuevo");
@@ -95,21 +97,26 @@ namespace SharkAdministrativo.Vista
             while (error == 0)
             {
                 StringBuilder codValorClasificacion = new StringBuilder(11);
+                StringBuilder cIdClasificacion = new StringBuilder(5);
                 StringBuilder nomValorClasificacion = new StringBuilder(30);
                 SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
-
-                if (nomValorClasificacion.ToString() != "(Ninguna)")
+                SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cIdClasificacion, 5);
+                if (Convert.ToInt32(cIdClasificacion.ToString())==25)
                 {
-
-                    cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                    if (nomValorClasificacion.ToString() != "(Ninguna)")
+                    {
+                        cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                    }
                 }
+
                 error = SDK.fPosSiguienteValorClasif();
             }
 
         }
 
-        public void llenarInsumos() {
+        public void llenarInsumos()
+        {
             List<Insumo> insumos = insumo.obtenerTodos();
             foreach (var item in insumos)
             {
@@ -117,8 +124,9 @@ namespace SharkAdministrativo.Vista
             }
         }
 
-        
-        public void addInsumo( Insumo insumo){
+
+        public void addInsumo(Insumo insumo)
+        {
             route = "InsumosFirst";
             this.insumo = insumo;
             this.presentacionIns.Insumo = this.insumo;
@@ -127,7 +135,8 @@ namespace SharkAdministrativo.Vista
             cbxInsumoBase.SelectedItem = insumo.descripcion;
         }
 
-        public void indicarInsumoBase() {
+        public void indicarInsumoBase()
+        {
             title.Text = "AGREGA LAS PRESENTACIONES DEL INSUMO '" + insumo.descripcion + "'";
             Unidad_Medida unidad = new Unidad_Medida();
             unidad = unidad.obtenerPorId(insumo.unidad_id);
@@ -151,8 +160,8 @@ namespace SharkAdministrativo.Vista
                 presentacion.Insumo = insumo.obtener(cbxInsumoBase.SelectedItem.ToString());
                 presentacion.Almacen = almacen.obtener(cbxAlmacen.SelectedItem.ToString());
                 presentacion.Proveedor = proveedor.obtener(cbxProveedor.SelectedItem.ToString());
-                presentacion.existencia = presentacion.rendimiento*presentacion.cantidad;
-               
+                presentacion.existencia = presentacion.rendimiento * presentacion.cantidad;
+
 
                 SDK.tProduto cProducto = new SDK.tProduto();
                 cProducto.cCodigoProducto = txtCodigoPr.Text;
@@ -180,7 +189,7 @@ namespace SharkAdministrativo.Vista
                     SDK.rError(error);
                 }
 
-                if (Convert.ToDouble(txtCantidad.Text)>0)
+                if (Convert.ToDouble(txtCantidad.Text) > 0)
                 {
                     EntradaPresentacion entrada = new EntradaPresentacion();
                     DateTime thisDay = DateTime.Today;
@@ -192,18 +201,20 @@ namespace SharkAdministrativo.Vista
                 }
                 hasChanged = "Yes";
                 clearFields();
-                dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre,presentacion.codigo);
-                
-                
+                dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
+
+
             }
-            else {
+            else
+            {
                 MessageBox.Show("¡AVISO! \n > Falta Ingresar Algunos Campos Importantes \n    Es Necesario Ingresarlos");
             }
         }
 
 
 
-        private void clearFields() {
+        private void clearFields()
+        {
             txtCodigoPr.Clear();
             txtIVA.Clear();
             txtRendimiento.Clear();
@@ -228,13 +239,14 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar la presentación '" + seleccion.Row.ItemArray[1] + "' de la lista?", "Eliminación de Presentación", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    
+
                     Presentacion presentacion = new Presentacion();
                     presentacion.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
                     if (presentacion.id > 0)
                     {
                         int error = SDK.fEliminarCteProv(txtCodigoPr.Text);
-                        if(error==0){
+                        if (error == 0)
+                        {
                             presentacion.eliminar(presentacion);
                             seleccion.Delete();
                             clearFields();
@@ -245,16 +257,18 @@ namespace SharkAdministrativo.Vista
                             SDK.rError(error);
                         }
 
-                       
+
                     }
-                    else{
+                    else
+                    {
                         seleccion.Delete();
                         clearFields();
                     }
 
-                    
+
                 }
-                else {
+                else
+                {
                     clearFields();
                 }
             }
@@ -267,9 +281,9 @@ namespace SharkAdministrativo.Vista
         private void AddList_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
 
-            if (hasChanged=="Yes")
+            if (hasChanged == "Yes")
             {
-                MessageBox.Show("SE GUARDARON LOS CAMBIOS EN EL INSUMO '"+insumo.descripcion+"'");
+                MessageBox.Show("SE GUARDARON LOS CAMBIOS EN EL INSUMO '" + insumo.descripcion + "'");
             }
             if (route == "InsumosFirst")
             {
@@ -277,13 +291,13 @@ namespace SharkAdministrativo.Vista
                 vista.Show();
             }
             this.Close();
-  
+
         }
 
         private void SoloNumeros_KeyDown(object sender, KeyEventArgs e)
         {
 
-        
+
             if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.OemComma || e.Key == Key.Tab)
                 e.Handled = false;
             else
@@ -331,7 +345,8 @@ namespace SharkAdministrativo.Vista
                 llenarPresentaciones();
                 indicarInsumoBase();
             }
-            else {
+            else
+            {
                 dtPLista.Rows.Clear();
                 txtDescripcion.Clear();
                 txtUnidadDeMedida.Text = "...";
@@ -345,7 +360,7 @@ namespace SharkAdministrativo.Vista
                 Almacen almacen = new Almacen();
                 almacen.nombre = txtAlmacen.Text;
                 almacen.codigo = txtCodigoAl.Text;
-                
+
 
                 SDK.tAlmacen cAlmacen = new SDK.tAlmacen();
                 cAlmacen.cCodigoAlmacen = txtCodigoAl.Text;
@@ -371,7 +386,7 @@ namespace SharkAdministrativo.Vista
                     SDK.rError(error);
                 }
 
-                if (error!=0)
+                if (error != 0)
                 {
                     llenarAlmacenes();
                     cbxAlmacen.SelectedItem = almacen.nombre;
@@ -399,7 +414,8 @@ namespace SharkAdministrativo.Vista
                     groupAlmacen.Visibility = Visibility.Collapsed;
                 }
             }
-            else {
+            else
+            {
                 addPresentacion.Visibility = Visibility.Visible;
                 groupAlmacen.Visibility = Visibility.Collapsed;
             }
@@ -456,7 +472,7 @@ namespace SharkAdministrativo.Vista
 
         private void presentaciones_ExportToExcel_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-            exportTo(".xsls",  tablaPresentaciones, "Presentaciones");
+            exportTo(".xsls", tablaPresentaciones, "Presentaciones");
         }
 
         private void proveedores_ExportToPDF_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -486,13 +502,13 @@ namespace SharkAdministrativo.Vista
                 title.Text = "En proceso de eliminacion de presentacion '" + seleccion.Row.ItemArray[1].ToString() + "'";
                 txtCodigoPr.Text = nPre.codigo;
                 txtDescripcion.Text = nPre.descripcion;
-                txtUcosto.Text=nPre.ultimo_costo.ToString();
-                txtCPromedio.Text=nPre.costo_promedio.ToString();
-                txtIVA.Text=nPre.IVA.ToString();
-                txtCCImpuesto.Text=nPre.costo_con_impuesto.ToString();
-                txtRendimiento.Text=nPre.rendimiento.ToString();
-                txtCantidad.Text=nPre.cantidad.ToString();
-                cbxProveedor.SelectedItem=this.presentacionIns.Proveedor.nombre;
+                txtUcosto.Text = nPre.ultimo_costo.ToString();
+                txtCPromedio.Text = nPre.costo_promedio.ToString();
+                txtIVA.Text = nPre.IVA.ToString();
+                txtCCImpuesto.Text = nPre.costo_con_impuesto.ToString();
+                txtRendimiento.Text = nPre.rendimiento.ToString();
+                txtCantidad.Text = nPre.cantidad.ToString();
+                cbxProveedor.SelectedItem = this.presentacionIns.Proveedor.nombre;
                 cbxAlmacen.SelectedItem = this.presentacionIns.Almacen.nombre;
 
                 SDK.fBuscaProducto(seleccion.Row.ItemArray[5].ToString());

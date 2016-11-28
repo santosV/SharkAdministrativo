@@ -137,6 +137,7 @@ namespace SharkAdministrativo.Vista
                     if (nomValorClasificacion.ToString() != "(Ninguna)")
                     {
                         cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
+                        cbxValoresDeClasificacionesP.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
                     }
                 }
                 error = SDK.fPosSiguienteValorClasif();
