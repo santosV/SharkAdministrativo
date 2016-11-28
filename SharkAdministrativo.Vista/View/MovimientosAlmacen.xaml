@@ -33,12 +33,17 @@
                     </dxlc:LayoutItem>
                     <Button Content="Guardar" Panel.ZIndex="5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup x:Name="vista_Alamcenes" View="GroupBox" Visibility="Collapsed" Header="Traspaso De Alamcén" HorizontalAlignment="Stretch">
-                    <dxlc:LayoutItem Label="Almacén origen:">
-                        <dxe:ComboBoxEdit x:Name="cbxAOrigen" AutoComplete="True"/>
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="Almacén destino:">
-                        <dxe:ComboBoxEdit x:Name="cbxADestino" AutoComplete="True"/>
+                <dxlc:LayoutGroup x:Name="vista_Alamcenes" View="GroupBox" Visibility="Visible" Header="Traspaso De Alamcén" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
+                        <dxlc:LayoutItem Label="Almacén origen:">
+                            <dxe:ComboBoxEdit x:Name="cbxAOrigen" AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Almacén destino:">
+                            <dxe:ComboBoxEdit x:Name="cbxADestino" AutoComplete="True"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="Presentación base: ">
+                        <dxe:ComboBoxEdit x:Name="cbxPresentaciones" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup x:Name="vista_salida" View="GroupBox" Visibility="Collapsed" Header="DETALLES DE SALIDA" HorizontalAlignment="Stretch">

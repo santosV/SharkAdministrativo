@@ -28,6 +28,7 @@ namespace SharkAdministrativo.Vista.View
         {
             InitializeComponent();
             loadMovements();
+            loadPresentations();
         }
 
 
@@ -35,7 +36,8 @@ namespace SharkAdministrativo.Vista.View
         /// <summary>
         /// Carga la información necesaria para cada combobox como almacenes, tipos de movimientos, etc.
         /// </summary>
-        private void loadMovements(){
+        private void loadMovements()
+        {
             List<Tipo_movimiento> movimientos = movimiento.obtenerTodos();
             List<Insumo> insumos = insumo.obtenerTodos();
             List<Almacen> almacenes = almacen.obtenerTodos();
@@ -62,7 +64,7 @@ namespace SharkAdministrativo.Vista.View
         /// <param name="e"></param>
         private void cbxInsumo_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
-            if (cbxInsumo.SelectedItem!=null)
+            if (cbxInsumo.SelectedItem != null)
             {
                 this.insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
                 unidad = unidad.obtenerPorId(insumo.unidad_id);
@@ -73,7 +75,8 @@ namespace SharkAdministrativo.Vista.View
         /// <summary>
         /// Limpia los campos de movmientos.
         /// </summary>
-        private void clearFields() {
+        private void clearFields()
+        {
             txtCantidad.Clear();
             txtDescripcion.Clear();
             txtMedida.Text = "...";
@@ -85,7 +88,8 @@ namespace SharkAdministrativo.Vista.View
             cbxMovimiento.SelectedItem = null;
         }
 
-        private void esconderComboBoxes() {
+        private void esconderComboBoxes()
+        {
             vista_Alamcenes.Visibility = Visibility.Collapsed;
             vista_salida.Visibility = Visibility.Collapsed;
         }
@@ -106,7 +110,7 @@ namespace SharkAdministrativo.Vista.View
                     vista_almacenAfectado.Visibility = Visibility.Collapsed;
                     vista_salida.Visibility = Visibility.Collapsed;
                 }
-                else if(cbxMovimiento.SelectedItem.ToString() == "SALIDA")
+                else if (cbxMovimiento.SelectedItem.ToString() == "SALIDA")
                 {
                     vista_salida.Visibility = Visibility.Visible;
                 }
@@ -117,8 +121,9 @@ namespace SharkAdministrativo.Vista.View
 
                 }
             }
-            else {
-                
+            else
+            {
+
                 vista_almacenAfectado.Visibility = Visibility.Visible;
             }
         }
@@ -133,25 +138,34 @@ namespace SharkAdministrativo.Vista.View
             clearFields();
         }
 
+        private void loadPresentations() {
+            Presentacion presentacion = new Presentacion();
+            List<Presentacion> presentaciones = presentacion.getAll();
+            foreach (var presentation in presentaciones)
+            {
+                cbxPresentaciones.Items.Add(presentation.descripcion);
+            }
+        }
+
         private void btnguardarMovimiento_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             if (cbxMovimiento.SelectedItem != null)
             {
+                Tipo_movimiento tipo = new Tipo_movimiento();
+                Presentacion presentacion = new Presentacion();
                 if (cbxMovimiento.SelectedItem.ToString() == "SALIDA")
                 {
-                    Tipo_movimiento tipo = new Tipo_movimiento();
-                    Presentacion presentacion = new Presentacion();
-                    if (cbxAlamcenAfectado.SelectedItem!=null && cbxInsumo.SelectedItem!=null && !String.IsNullOrEmpty(txtCantidad.Text) && !String.IsNullOrEmpty(txtDescripcion.Text))
+                    if (cbxAlamcenAfectado.SelectedItem != null && cbxInsumo.SelectedItem != null && !String.IsNullOrEmpty(txtCantidad.Text) && !String.IsNullOrEmpty(txtDescripcion.Text))
                     {
                         Salida_almacen salida = new Salida_almacen();
                         Insumo _insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
-                     
 
                         salida.Almacen = almacen.obtener(cbxAlamcenAfectado.SelectedItem.ToString());
                         salida.cantidad = Double.Parse(txtCantidad.Text);
                         salida.Insumo = _insumo;
                         salida.Tipo_movimiento = tipo.obtener(cbxMovimiento.SelectedItem.ToString());
-                        List<Presentacion> presentaciones = presentacion.obtenerPorInsumoAlmacen(salida.Insumo.id,salida.Almacen.id);
+                        salida.descripcion = txtDescripcion.Text;
+                        List<Presentacion> presentaciones = presentacion.obtenerPorInsumoAlmacen(salida.Insumo.id, salida.Almacen.id);
                         int cont = 0;
                         double resultado = 0;
                         foreach (var pExistente in presentaciones)
@@ -161,7 +175,8 @@ namespace SharkAdministrativo.Vista.View
                             {
                                 resultado = Double.Parse(Convert.ToString(pExistente.existencia)) - Double.Parse(txtCantidad.Text);
                             }
-                            else {
+                            else
+                            {
                                 resultado = Double.Parse(Convert.ToString(pExistente.existencia)) - resultado;
                             }
                             if (resultado < 0)
@@ -170,24 +185,50 @@ namespace SharkAdministrativo.Vista.View
                                 pExistente.existencia = 0;
                                 pExistente.modificar(pExistente);
                             }
-                            else {
+                            else
+                            {
                                 pExistente.existencia = resultado;
                                 pExistente.modificar(pExistente);
                                 break;
                             }
                         }
                         salida.registrar(salida);
-                        if (salida.id>0)
+                        if (salida.id > 0)
                         {
-                            MessageBox.Show("SE REGISTRO LA SALIDA DE: "+salida.cantidad+" "+unidad.nombre+" \nDEL INSUMO: "+_insumo.descripcion+" POR LA RAZÓN: "+salida.descripcion);
+                            MessageBox.Show("SE REGISTRO LA SALIDA DE: " + salida.cantidad + " " + unidad.nombre + " \nDEL INSUMO: " + _insumo.descripcion + " POR LA RAZÓN: " + salida.descripcion);
                         }
                     }
                 }
-                else { 
-                
+                else
+                {
+                    Salida_almacen salida = new Salida_almacen();
+                    Insumo _insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
+
+                    salida.Almacen = almacen.obtener(cbxAOrigen.SelectedItem.ToString());
+                    salida.cantidad = Double.Parse(txtCantidad.Text);
+                    salida.Insumo = _insumo;
+                    salida.Tipo_movimiento = tipo.obtener(cbxMovimiento.SelectedItem.ToString());
+                    salida.descripcion = tipo.nombre;
+                    salida.registrar(salida);
+                    
+                    if (salida.id > 0)
+                    {
+                        EntradaPresentacion entrada = new EntradaPresentacion();
+                        DateTime thisDay = DateTime.Today;
+                        entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                        entrada.Presentacion = presentacion.get(cbxPresentaciones.SelectedItem.ToString());
+                        entrada.Almacen = almacen.obtener(cbxADestino.SelectedItem.ToString());
+                        entrada.cantidad = Double.Parse(txtCantidad.Text);
+                        entrada.registrar(entrada);
+                        if (entrada.id>0)
+                        {
+                            MessageBox.Show("SE TRASPASÓ: "+txtCantidad.Text+" "+unidad.nombre+ "\nDEL INSUMO: "+_insumo.descripcion+"\nDEL ALMACÉN: "+cbxAOrigen.SelectedItem.ToString()+"\nAL ALMACÉN: "+cbxADestino.SelectedItem.ToString());
+                        }
+                    }
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Es Necesario especificar el tipo de movimiento que desea hacer");
             }
         }

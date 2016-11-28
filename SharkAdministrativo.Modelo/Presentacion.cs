@@ -102,6 +102,19 @@ namespace SharkAdministrativo.Modelo
             return presentaciones;
         }
 
+        /// <summary>
+        /// Obtiene una presentación por su número de identificación.
+        /// </summary>
+        /// <returns>EL objeto presentación encontrado.</returns>
+        public Presentacion getForID(int id) {
+            Presentacion presentacion = new Presentacion();
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+                presentacion = db.Presentaciones.Find(id);
+            }
+            return presentacion;
+        }
+
 
         /// <summary>
         /// Obtiene una lista de presentaciones de acuerdo al insumo especificado.
