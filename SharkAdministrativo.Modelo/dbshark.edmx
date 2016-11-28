@@ -219,6 +219,7 @@
           <Property Name="cantidad" Type="float" />
           <Property Name="tipo_movimiento_id" Type="int" Nullable="false" />
           <Property Name="almacen_salida" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tipo_movimientos">
           <Key>
@@ -615,6 +616,7 @@
           <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Salida_almacen" ToRole="Insumo" />
           <NavigationProperty Name="Tipo_movimiento" Relationship="bdsharkModel.Tipo_movimientoSalida_almacen" FromRole="Salida_almacen" ToRole="Tipo_movimiento" />
           <NavigationProperty Name="Almacen" Relationship="bdsharkModel.AlmacenSalida_almacen" FromRole="Salida_almacen" ToRole="Almacen" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tipo_movimiento">
           <Key>
@@ -1114,6 +1116,7 @@
           <EntitySetMapping Name="Salidas_almacen">
             <EntityTypeMapping TypeName="bdsharkModel.Salida_almacen">
               <MappingFragment StoreEntitySet="Salidas_almacen">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="almacen_salida" ColumnName="almacen_salida" />
                 <ScalarProperty Name="tipo_movimiento_id" ColumnName="tipo_movimiento_id" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />

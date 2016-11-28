@@ -13,14 +13,14 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
-    
+
     public partial class Presentacion
     {
         public Presentacion()
         {
             this.EntradaPresentacion = new HashSet<EntradaPresentacion>();
         }
-    
+
         public int id { get; set; }
         public string descripcion { get; set; }
         public Nullable<double> ultimo_costo { get; set; }
@@ -38,7 +38,7 @@ namespace SharkAdministrativo.Modelo
         public Nullable<double> cantidad { get; set; }
         public Nullable<double> existencia { get; set; }
         public string codigo { get; set; }
-    
+
         public virtual Almacen Almacen { get; set; }
         public virtual ICollection<EntradaPresentacion> EntradaPresentacion { get; set; }
         public virtual Proveedor Proveedor { get; set; }
@@ -67,6 +67,39 @@ namespace SharkAdministrativo.Modelo
                 db.Presentaciones.Add(presentacion);
                 db.SaveChanges();
             }
+        }
+
+        public void modificar(Presentacion presentation)
+        {
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+                Presentacion presentacion = db.Presentaciones.Find(presentation.id);
+                presentacion.existencia = presentation.existencia;
+                db.Presentaciones.Attach(presentacion);
+                db.Entry(presentacion).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Obtiene una lista de presentaciones de acuerdo al insumo especificado y almacén.
+        /// </summary>
+        /// <param name="insumo_clave">Parámetro de búsqueda.</param>
+        /// <returns>La lista de objetos obtenida.</returns>
+        public List<Presentacion> obtenerPorInsumoAlmacen(int insumo_clave, int almacen)
+        {
+            List<Presentacion> presentaciones = new List<Presentacion>();
+
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+                db.Configuration.LazyLoadingEnabled = true;
+                var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave where presentacion.almacen_id == almacen select presentacion;
+                foreach (var presentacion in presentacionesQuery)
+                {
+                    presentaciones.Add(presentacion);
+                }
+            }
+            return presentaciones;
         }
 
 

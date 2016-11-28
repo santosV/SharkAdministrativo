@@ -214,6 +214,7 @@
     <Property Name="cantidad" Type="float" />
     <Property Name="tipo_movimiento_id" Type="int" Nullable="false" />
     <Property Name="almacen_salida" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tipo_movimientos">
     <Key>

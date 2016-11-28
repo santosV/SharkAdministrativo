@@ -11,6 +11,8 @@ namespace SharkAdministrativo.Modelo
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     
     public partial class Salida_almacen
     {
@@ -19,9 +21,22 @@ namespace SharkAdministrativo.Modelo
         public Nullable<double> cantidad { get; set; }
         public int tipo_movimiento_id { get; set; }
         public int almacen_salida { get; set; }
-    
+        public string descripcion { get; set; }
         public virtual Insumo Insumo { get; set; }
         public virtual Tipo_movimiento Tipo_movimiento { get; set; }
         public virtual Almacen Almacen { get; set; }
+
+        public void registrar(Salida_almacen salida) {
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+                db.Configuration.LazyLoadingEnabled = true;
+                db.Tipo_movimientos.Attach(salida.Tipo_movimiento);
+                db.Insumos.Attach(salida.Insumo);
+                db.Almacenes.Attach(salida.Almacen);
+                db.Salidas_almacen.Add(salida);
+                db.SaveChanges();
+            }        
+        
+        }
     }
 }

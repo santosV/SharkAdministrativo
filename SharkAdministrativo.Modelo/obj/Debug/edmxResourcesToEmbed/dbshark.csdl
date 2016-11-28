@@ -357,6 +357,7 @@
     <NavigationProperty Name="Insumo" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Salida_almacen" ToRole="Insumo" />
     <NavigationProperty Name="Tipo_movimiento" Relationship="bdsharkModel.Tipo_movimientoSalida_almacen" FromRole="Salida_almacen" ToRole="Tipo_movimiento" />
     <NavigationProperty Name="Almacen" Relationship="bdsharkModel.AlmacenSalida_almacen" FromRole="Salida_almacen" ToRole="Almacen" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Tipo_movimiento">
     <Key>

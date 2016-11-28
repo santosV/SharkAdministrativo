@@ -30,6 +30,8 @@ namespace SharkAdministrativo.Vista.View
             loadMovements();
         }
 
+
+
         /// <summary>
         /// Carga la información necesaria para cada combobox como almacenes, tipos de movimientos, etc.
         /// </summary>
@@ -124,6 +126,64 @@ namespace SharkAdministrativo.Vista.View
         private void btnNuevo_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             clearFields();
+        }
+
+        private void btnguardarMovimiento_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            if (cbxMovimiento.SelectedItem != null)
+            {
+                if (cbxMovimiento.SelectedItem.ToString() == "SALIDA")
+                {
+                    Tipo_movimiento tipo = new Tipo_movimiento();
+                    Presentacion presentacion = new Presentacion();
+                    if (cbxAlamcenAfectado.SelectedItem!=null && cbxInsumo.SelectedItem!=null && !String.IsNullOrEmpty(txtCantidad.Text) && !String.IsNullOrEmpty(txtDescripcion.Text))
+                    {
+                        Salida_almacen salida = new Salida_almacen();
+                        
+
+                        salida.Almacen = almacen.obtener(cbxAlamcenAfectado.SelectedItem.ToString());
+                        salida.cantidad = Double.Parse(txtCantidad.Text);
+                        salida.Insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
+                        salida.Tipo_movimiento = tipo.obtener(cbxMovimiento.SelectedItem.ToString());
+                        List<Presentacion> presentaciones = presentacion.obtenerPorInsumoAlmacen(salida.Insumo.id,salida.Almacen.id);
+                        int cont = 0;
+                        double resultado = 0;
+                        foreach (var pExistente in presentaciones)
+                        {
+                            cont++;
+                            if (cont == 1)
+                            {
+                                resultado = Double.Parse(Convert.ToString(pExistente.existencia)) - Double.Parse(txtCantidad.Text);
+                            }
+                            else {
+                                resultado = Double.Parse(Convert.ToString(pExistente.existencia)) - resultado;
+                            }
+                            if (resultado < 0)
+                            {
+                                resultado = resultado * -1;
+                                pExistente.existencia = 0;
+                                pExistente.modificar(pExistente);
+                            }
+                            else {
+                                pExistente.existencia = resultado;
+                                pExistente.modificar(pExistente);
+                                break;
+                            }
+                        }
+                        salida.registrar(salida);
+                        if (salida.id>0)
+                        {
+                            
+                        }
+                    }
+                }
+                else { 
+                
+                }
+            }
+            else {
+                MessageBox.Show("Es Necesario especificar el tipo de movimiento que desea hacer");
+            }
         }
     }
 }

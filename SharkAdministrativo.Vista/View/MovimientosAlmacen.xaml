@@ -12,7 +12,7 @@
                         <dxb:BarButtonItem Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="{x:Null}">
-                        <dxb:BarButtonItem Content="Guardar &amp; Nuevo" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick="btnguardarMovimiento_ItemClick" Content="Guardar &amp; Nuevo" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}"/>
                         <dxb:BarButtonItem ItemClick="btnNuevo_ItemClick" Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=AddFile_32x32.png}"/>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>

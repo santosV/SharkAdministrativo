@@ -224,6 +224,7 @@
     <EntitySetMapping Name="Salidas_almacen">
       <EntityTypeMapping TypeName="bdsharkModel.Salida_almacen">
         <MappingFragment StoreEntitySet="Salidas_almacen">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
           <ScalarProperty Name="almacen_salida" ColumnName="almacen_salida" />
           <ScalarProperty Name="tipo_movimiento_id" ColumnName="tipo_movimiento_id" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />

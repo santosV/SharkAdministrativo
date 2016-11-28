@@ -40,5 +40,28 @@ namespace SharkAdministrativo.Modelo
             }
             return movimientos;
         }
+
+        /// <summary>
+        /// Obtiene un objeto tipo_movimiento específico.
+        /// </summary>
+        /// <param name="descripcion">Parámetro de búsqueda.</param>
+        /// <returns>El objeto encontrado.</returns>
+        public Tipo_movimiento obtener(string name)
+        {
+            Tipo_movimiento _tipo = new Tipo_movimiento();
+            using (bdsharkEntities db = new bdsharkEntities())
+            {
+
+                db.Configuration.LazyLoadingEnabled = true;
+                var Query = from tipo in db.Tipo_movimientos where tipo.nombre == name select tipo;
+
+                foreach (var tipo in Query)
+                {
+                    _tipo = tipo;
+                }
+            }
+
+            return _tipo;
+        }
     }
 }
