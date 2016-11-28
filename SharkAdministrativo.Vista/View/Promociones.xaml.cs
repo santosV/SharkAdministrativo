@@ -24,6 +24,7 @@ namespace SharkAdministrativo.Vista
     /// </summary>
     public partial class Promociones : Window
     {
+        int CerrarNuevo;
         AreaProduccion area = new AreaProduccion();
         Promocion promocion = new Promocion();
         DataTable dtPromociones = new DataTable();
@@ -372,6 +373,16 @@ namespace SharkAdministrativo.Vista
                 cargarPromociones();
                 clearFieldsPromo();
             }
+
+            if (CerrarNuevo == 1)
+            {
+                this.Close();
+            }
+            else
+            {
+                clearFieldsPromo();
+                clearFieldDetalle();
+            }
         }
 
         /// <summary>
@@ -444,6 +455,18 @@ namespace SharkAdministrativo.Vista
         /// <param name="e"></param>
         private void btnPromocion_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            CerrarNuevo = 0;
+            guardarModificarPromocion();
+        }
+
+        /// <summary>
+        /// Manda llamar el método para guardar o modificar una promoción y cerrar la ventana.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPromocionCerrar_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            CerrarNuevo = 1;
             guardarModificarPromocion();
         }
 

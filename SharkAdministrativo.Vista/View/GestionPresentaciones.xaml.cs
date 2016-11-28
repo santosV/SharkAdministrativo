@@ -102,7 +102,7 @@ namespace SharkAdministrativo.Vista
                 SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", codValorClasificacion, 11);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", nomValorClasificacion, 30);
                 SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cIdClasificacion, 5);
-                if (Convert.ToInt32(cIdClasificacion.ToString())==25)
+                if (Convert.ToInt32(cIdClasificacion.ToString()) == 25)
                 {
                     if (nomValorClasificacion.ToString() != "(Ninguna)")
                     {
@@ -145,138 +145,143 @@ namespace SharkAdministrativo.Vista
 
         private void addPresentacion_Click(object sender, RoutedEventArgs e)
         {
+            Boolean maximo = verificaMaximos();
+
             if (!String.IsNullOrEmpty(txtCodigoPr.Text) && !String.IsNullOrEmpty(txtDescripcion.Text) && cbxInsumoBase.SelectedItem != null && cbxProveedor.SelectedItem != null && cbxAlmacen.SelectedItem != null && !String.IsNullOrEmpty(txtCPromedio.Text) && !String.IsNullOrEmpty(txtCCImpuesto.Text) && !String.IsNullOrEmpty(txtUcosto.Text) && !String.IsNullOrEmpty(txtRendimiento.Text) && !String.IsNullOrEmpty(txtCantidad.Text))
             {
-                Presentacion presentacion = new Presentacion();
-                presentacion.codigo = txtCodigoPr.Text;
-                presentacion.cantidad = Double.Parse(txtCantidad.Text);
-                presentacion.costo_con_impuesto = Double.Parse(txtCCImpuesto.Text);
-                presentacion.costo_promedio = Double.Parse(txtCPromedio.Text);
-                presentacion.ultimo_costo = Double.Parse(txtUcosto.Text);
-                presentacion.rendimiento = Double.Parse(txtRendimiento.Text);
-                presentacion.IVA = Double.Parse(txtIVA.Text);
-                presentacion.costo_unitario = Double.Parse(txtUcosto.Text);
-                presentacion.descripcion = txtDescripcion.Text;
-                presentacion.Insumo = insumo.obtener(cbxInsumoBase.SelectedItem.ToString());
-                presentacion.Almacen = almacen.obtener(cbxAlmacen.SelectedItem.ToString());
-                presentacion.Proveedor = proveedor.obtener(cbxProveedor.SelectedItem.ToString());
-                presentacion.existencia = presentacion.rendimiento * presentacion.cantidad;
-
-
-                SDK.tProduto cProducto = new SDK.tProduto();
-                cProducto.cCodigoProducto = txtCodigoPr.Text;
-                cProducto.cNombreProducto = txtDescripcion.Text;
-                cProducto.cDescripcionProducto = txtDescripcion.Text;
-                String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
-                string codigoClasificacion = clasificacion[0].Trim();
-                cProducto.cPrecio1 = Double.Parse(txtUcosto.Text);
-                cProducto.cImpuesto1 = Double.Parse(txtIVA.Text);
-                cProducto.cTipoProducto = 1;
-                cProducto.cMetodoCosteo = 1;
-
-                Int32 aldProducto = 0;
-                int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
-                if (error == 0)
+                if (maximo == false)
                 {
-                    SDK.fEditaProducto();
-                    SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
-                    SDK.fGuardaProducto();
-                    presentacion.registrar(presentacion);
+                    Presentacion presentacion = new Presentacion();
+                    presentacion.codigo = txtCodigoPr.Text;
+                    presentacion.cantidad = Double.Parse(txtCantidad.Text);
+                    presentacion.costo_con_impuesto = Double.Parse(txtCCImpuesto.Text);
+                    presentacion.costo_promedio = Double.Parse(txtCPromedio.Text);
+                    presentacion.ultimo_costo = Double.Parse(txtUcosto.Text);
+                    presentacion.rendimiento = Double.Parse(txtRendimiento.Text);
+                    presentacion.IVA = Double.Parse(txtIVA.Text);
+                    presentacion.costo_unitario = Double.Parse(txtUcosto.Text);
+                    presentacion.descripcion = txtDescripcion.Text;
+                    presentacion.Insumo = insumo.obtener(cbxInsumoBase.SelectedItem.ToString());
+                    presentacion.Almacen = almacen.obtener(cbxAlmacen.SelectedItem.ToString());
+                    presentacion.Proveedor = proveedor.obtener(cbxProveedor.SelectedItem.ToString());
+                    presentacion.existencia = presentacion.rendimiento * presentacion.cantidad;
 
-                }
-                else
-                {
-                    SDK.rError(error);
-                }
 
-                if (Convert.ToDouble(txtCantidad.Text) > 0)
-                {
-                    error = 0;
-                    double folio = 0;
+                    SDK.tProduto cProducto = new SDK.tProduto();
+                    cProducto.cCodigoProducto = txtCodigoPr.Text;
+                    cProducto.cNombreProducto = txtDescripcion.Text;
+                    cProducto.cDescripcionProducto = txtDescripcion.Text;
+                    String[] clasificacion = cbxValoresDeClasificaciones.SelectedItem.ToString().Split('|');
+                    string codigoClasificacion = clasificacion[0].Trim();
+                    cProducto.cPrecio1 = Double.Parse(txtUcosto.Text);
+                    cProducto.cImpuesto1 = Double.Parse(txtIVA.Text);
+                    cProducto.cTipoProducto = 1;
+                    cProducto.cMetodoCosteo = 1;
 
-                    StringBuilder serie = new StringBuilder(12);
-
-                    SDK.fSiguienteFolio("21", serie, ref folio);
-
-                    if (presentacion.verificarRegistro(presentacion) == false)
+                    Int32 aldProducto = 0;
+                    int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
+                    if (error == 0)
                     {
-                        SDK.tDocumento lDocto = new SDK.tDocumento();
-
-
-                        lDocto.aCodConcepto = "21";
-                        lDocto.aCodigoAgente = "(Ninguno)";
-                        lDocto.aNumMoneda = 1;
-                        lDocto.aTipoCambio = 1;
-
-                        lDocto.aImporte = 0;
-                        lDocto.aDescuentoDoc1 = 0;
-                        lDocto.aDescuentoDoc2 = 0;
-                        lDocto.aAfecta = 0;
-                        lDocto.aSistemaOrigen = 205;
-                        Proveedor pro = proveedor.obtener(cbxProveedor.SelectedItem.ToString());
-                        lDocto.aCodigoCteProv = pro.codigo;
-                        lDocto.aFolio = folio;
-                        lDocto.aSistemaOrigen = 205;
-                        lDocto.aSerie = "";
-                        lDocto.aGasto1 = 0;
-                        lDocto.aGasto2 = 0;
-                        lDocto.aGasto3 = 0;
-                        lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
-                        int lError = 0;
-                        Int32 lIdDocumento = 0;
-                        lError = SDK.fAltaDocumento(ref lIdDocumento, ref lDocto);
-
-                        if (lError != 0)
-                        {
-                            SDK.rError(lError);
-
-                            return;
-                        }
-
-                        SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
-                        int lIdMovimiento = 0;
-
-                        SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
-                        StringBuilder codigo = new StringBuilder(20);
-                        SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
-                        ltMovimiento.aCodAlmacen = codigo.ToString();
-                        ltMovimiento.aConsecutivo = 1;
-                        ltMovimiento.aCodProdSer = presentacion.codigo;
-
-                        ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
-
-
-                        ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_unitario));
-                        ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_unitario));
-
-                        lError = 0;
-                        lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
-
-                        if (lError != 0)
-                        {
-                            SDK.rError(lError);
-                            return;
-                        }
-                        else
-                        {
-                            //entrada almacen shark
-
-                            EntradaPresentacion entrada = new EntradaPresentacion();
-                            DateTime thisDay = DateTime.Today;
-                            entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                            Presentacion presentacionR = presentacion.obtener(presentacion);
-                            entrada.Presentacion = presentacionR;
-
-                            entrada.Almacen = almacen.obtener(presentacion.Almacen.nombre);
-                            entrada.cantidad = presentacion.cantidad;
-                            entrada.registrar(entrada);
-                        }
+                        SDK.fEditaProducto();
+                        SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
+                        SDK.fGuardaProducto();
+                        presentacion.registrar(presentacion);
 
                     }
+                    else
+                    {
+                        SDK.rError(error);
+                    }
 
-                    hasChanged = "Yes";
-                    clearFields();
-                    dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
+                    if (Convert.ToDouble(txtCantidad.Text) > 0)
+                    {
+                        error = 0;
+                        double folio = 0;
+
+                        StringBuilder serie = new StringBuilder(12);
+
+                        SDK.fSiguienteFolio("21", serie, ref folio);
+
+                        if (presentacion.verificarRegistro(presentacion) == false)
+                        {
+                            SDK.tDocumento lDocto = new SDK.tDocumento();
+
+
+                            lDocto.aCodConcepto = "21";
+                            lDocto.aCodigoAgente = "(Ninguno)";
+                            lDocto.aNumMoneda = 1;
+                            lDocto.aTipoCambio = 1;
+
+                            lDocto.aImporte = 0;
+                            lDocto.aDescuentoDoc1 = 0;
+                            lDocto.aDescuentoDoc2 = 0;
+                            lDocto.aAfecta = 0;
+                            lDocto.aSistemaOrigen = 205;
+                            Proveedor pro = proveedor.obtener(cbxProveedor.SelectedItem.ToString());
+                            lDocto.aCodigoCteProv = pro.codigo;
+                            lDocto.aFolio = folio;
+                            lDocto.aSistemaOrigen = 205;
+                            lDocto.aSerie = "";
+                            lDocto.aGasto1 = 0;
+                            lDocto.aGasto2 = 0;
+                            lDocto.aGasto3 = 0;
+                            lDocto.aFecha = DateTime.Today.ToString("MM/dd/yyyy");
+                            int lError = 0;
+                            Int32 lIdDocumento = 0;
+                            lError = SDK.fAltaDocumento(ref lIdDocumento, ref lDocto);
+
+                            if (lError != 0)
+                            {
+                                SDK.rError(lError);
+
+                                return;
+                            }
+
+                            SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
+                            int lIdMovimiento = 0;
+
+                            SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
+                            StringBuilder codigo = new StringBuilder(20);
+                            SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
+                            ltMovimiento.aCodAlmacen = codigo.ToString();
+                            ltMovimiento.aConsecutivo = 1;
+                            ltMovimiento.aCodProdSer = presentacion.codigo;
+
+                            ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
+
+
+                            ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_unitario));
+                            ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_unitario));
+
+                            lError = 0;
+                            lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
+
+                            if (lError != 0)
+                            {
+                                SDK.rError(lError);
+                                return;
+                            }
+                            else
+                            {
+                                //entrada almacen shark
+
+                                EntradaPresentacion entrada = new EntradaPresentacion();
+                                DateTime thisDay = DateTime.Today;
+                                entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                                Presentacion presentacionR = presentacion.obtener(presentacion);
+                                entrada.Presentacion = presentacionR;
+
+                                entrada.Almacen = almacen.obtener(presentacion.Almacen.nombre);
+                                entrada.cantidad = presentacion.cantidad;
+                                entrada.registrar(entrada);
+                            }
+
+                        }
+
+                        hasChanged = "Yes";
+                        clearFields();
+                        dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
+                    }
                 }
             }
             else
@@ -607,6 +612,38 @@ namespace SharkAdministrativo.Vista
             clearFields();
         }
 
+        public bool verificaMaximos()
+        {
+            bool maximo = true;
 
+            double cantidad = Double.Parse(txtCantidad.Text);
+
+            Insumo insumon = insumo.obtener(cbxInsumoBase.SelectedItem.ToString());
+            presentaciones = presentacionIns.obtenerTodosPorInsumo(insumon.id);
+
+            foreach (var item in presentaciones)
+            {
+                cantidad = Double.Parse(Convert.ToString(item.existencia));
+
+
+            }
+            if (cantidad < insumon.maximo)
+            {
+                maximo = false;
+            }
+            else
+            {
+                MessageBoxResult dialogResult = MessageBox.Show("Esta exediendo la cantidad maxima del insumo, desea continuar?", "Advertencia", MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.No)
+                {
+                    maximo = true;
+                }
+                else {
+                    maximo = false;
+                }
+            }
+            return maximo;
+        }
     }
 }
+    

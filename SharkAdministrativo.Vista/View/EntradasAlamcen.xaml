@@ -9,11 +9,11 @@
             <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
                 <dxr:RibbonPage Caption="General">
                     <dxr:RibbonPageGroup Caption="{x:Null}">
-                        <dxb:BarButtonItem Content="Guardar &amp; Salir" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png"/>
+                        <dxb:BarButtonItem Content="Guardar &amp; Salir" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/SaveClose_32x32.png" ItemClick="BarButtonItem_ItemClick"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="{x:Null}">
                         <dxb:BarButtonItem ItemClick="btnSave_ItemClick" Content="Guardar &amp; Nuevo" LargeGlyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}" Glyph="{dx:DXImageOffice2013 Image=SaveAndNew_32x32.png}" RibbonStyle="SmallWithText"/>
-                        <dxb:BarButtonItem Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=New_32x32.png}"/>
+                        <dxb:BarButtonItem ItemClick ="btnNuevo" Content="Nuevo" Glyph="{dx:DXImageOffice2013 Image=New_32x32.png}"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="Mostrar">
                         <dxb:BarButtonItem ItemClick="btnInputsReport_ItemClick" Content="Reportes" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/View/Opportunities_32x32.png"/>

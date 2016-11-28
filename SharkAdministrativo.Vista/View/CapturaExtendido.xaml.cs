@@ -31,6 +31,8 @@ namespace SharkAdministrativo.Vista
         Unidad_Medida unidad = new Unidad_Medida();
         DataTable dt = new DataTable();
         string validacion;
+        int CerrarNuevo;
+
         public CapturaExtendido()
         {
             InitializeComponent();
@@ -131,97 +133,8 @@ namespace SharkAdministrativo.Vista
         /// <param name="e">Acción DevExpress</param>
         private void btnSaveAndClose_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-
-            string folio = "";
-            //folio = factura.validarRegistro(factura.folio);
-            if (factura.folio != folio)
-            {
-                if (validacion == "unico")
-                {
-                    if (txtRazonSocialP.Text != "" && txtCalleP.Text != "" && txtCodigoPostalP.Text != ""
-                    && txtPaisP.Text != "" && txtMunicipioP.Text != "" &&
-                    txtEstadoP.Text != "" && txtRfcP.Text != "" && txtNoExteriorP.Text != "" && !String.IsNullOrEmpty(txtcodigoProveedor.Text) && cbxGrupos.SelectedItem != null)
-                    {
-                        SDK.CteProv cProveedor = new SDK.CteProv();
-
-                        cProveedor.cCodigoCliente = txtcodigoProveedor.Text;
-                        cProveedor.cRazonSocial = txtRazonSocialP.Text;
-                        cProveedor.cRFC = txtRfcP.Text;
-                        cProveedor.cDenComercial = txtRazonSocialP.Text;
-                        cProveedor.cEstatus = 1;
-
-                        Empresa empresa = new Empresa();
-                        Proveedor proveedor = new Proveedor();
-                        proveedor.codigo = txtcodigoProveedor.Text;
-                        proveedor.nombre = txtRazonSocialP.Text;
-                        proveedor.razon_social = txtRazonSocialP.Text;
-                        proveedor.RFC = txtRfcP.Text;
-                        proveedor.sucursal = txtSucursalP.Text;
-                        proveedor.calle = txtCalleP.Text;
-                        proveedor.codigo_postal = txtCodigoPostalP.Text;
-                        proveedor.colonia = txtColoniaP.Text;
-                        proveedor.Empresa = empresa.obtenerPorNombre("Baja Salads");
-                        proveedor.empresa_id = proveedor.Empresa.id;
-                        proveedor.localidad = txtLocalidadP.Text;
-                        proveedor.municipio = txtMunicipioP.Text;
-                        proveedor.estado = txtEstadoP.Text;
-                        proveedor.NoExterior = txtNoExteriorP.Text;
-                        proveedor.pais = txtPaisP.Text;
-                        DateTime thisDay = DateTime.Today;
-                        proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                        List<string> cIDClasificacionesGrupos = new List<string>();
-
-                        foreach (var grupos in cbxGrupos.SelectedItems)
-                        {
-                            String[] groups = grupos.ToString().Split('|');
-                            cIDClasificacionesGrupos.Add(groups[0].ToString().Trim());
-                            proveedor.tipos_proveedor += groups[1].ToString().Trim() + ";";
-                        }
-                        int cIDCteProv = 0;
-                        int error = SDK.fAltaCteProv(ref cIDCteProv, ref  cProveedor);
-                        if (error == 0)
-                        {
-                            proveedor.registrar(proveedor);
-                            MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
-                            SDK.fBuscaIdCteProv(cIDCteProv);
-                            SDK.fEditaCteProv();
-                            SDK.fSetDatoCteProv("CTIPOCLIENTE", "3");
-                            SDK.fSetDatoCteProv("CIDMONEDA", "1");
-                            int i = 1;
-                            foreach (var item in cIDClasificacionesGrupos)
-                            {
-                                SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
-                                i++;
-                            }
-                            SDK.fGuardaCteProv();
-                        }
-                        else
-                        {
-                            SDK.rError(error);
-                        }
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("Hay campos importantes que están vacíos, pueden ser en la tabla de productos o en los campos de proveedor");
-                    }
-                }
-                else if (validacion == "sucursal")
-                {
-                    if (txtSucursalP.Text != "")
-                    {
-                        proveedor.registrar(proveedor);
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("Datos del actual proveedor: \nSe tiene registrado este proveedor con el RFC: \n" + proveedor.RFC + "Pero hay datos que difieren con el registro existente, En caso de tratarse de otra sucursal ingrese la sucursal por favor");
-                    }
-                }
-                obtenerConceptos();
-            }
-            else
-            {
-                MessageBox.Show("ERROR EN FACTURA FOLIO - " + factura.folio + "\nYa ha sido utilizada / registrada.");
-            }
+            CerrarNuevo = 1;
+            guardar();
         }
 
         /// <summary>
@@ -412,8 +325,14 @@ namespace SharkAdministrativo.Vista
                 System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor y productos!");
             }
 
-
-            this.Close();
+            if(CerrarNuevo==1){
+                this.Close();
+            }
+            else
+            {
+                clearFields();
+            }
+            
         }
 
         /// <summary>
@@ -693,17 +612,111 @@ namespace SharkAdministrativo.Vista
             addToList();
         }
 
-        public void guardarTodo()
-        {
-
-        }
-
         private void btnGuardarList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 addToList();
             }
+        }
+
+        public void guardar() {
+            string folio = "";
+            //folio = factura.validarRegistro(factura.folio);
+            if (factura.folio != folio)
+            {
+                if (validacion == "unico")
+                {
+                    if (txtRazonSocialP.Text != "" && txtCalleP.Text != "" && txtCodigoPostalP.Text != ""
+                    && txtPaisP.Text != "" && txtMunicipioP.Text != "" &&
+                    txtEstadoP.Text != "" && txtRfcP.Text != "" && txtNoExteriorP.Text != "" && !String.IsNullOrEmpty(txtcodigoProveedor.Text) && cbxGrupos.SelectedItem != null)
+                    {
+                        SDK.CteProv cProveedor = new SDK.CteProv();
+
+                        cProveedor.cCodigoCliente = txtcodigoProveedor.Text;
+                        cProveedor.cRazonSocial = txtRazonSocialP.Text;
+                        cProveedor.cRFC = txtRfcP.Text;
+                        cProveedor.cDenComercial = txtRazonSocialP.Text;
+                        cProveedor.cEstatus = 1;
+
+                        Empresa empresa = new Empresa();
+                        Proveedor proveedor = new Proveedor();
+                        proveedor.codigo = txtcodigoProveedor.Text;
+                        proveedor.nombre = txtRazonSocialP.Text;
+                        proveedor.razon_social = txtRazonSocialP.Text;
+                        proveedor.RFC = txtRfcP.Text;
+                        proveedor.sucursal = txtSucursalP.Text;
+                        proveedor.calle = txtCalleP.Text;
+                        proveedor.codigo_postal = txtCodigoPostalP.Text;
+                        proveedor.colonia = txtColoniaP.Text;
+                        proveedor.Empresa = empresa.obtenerPorNombre("Baja Salads");
+                        proveedor.empresa_id = proveedor.Empresa.id;
+                        proveedor.localidad = txtLocalidadP.Text;
+                        proveedor.municipio = txtMunicipioP.Text;
+                        proveedor.estado = txtEstadoP.Text;
+                        proveedor.NoExterior = txtNoExteriorP.Text;
+                        proveedor.pais = txtPaisP.Text;
+                        DateTime thisDay = DateTime.Today;
+                        proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                        List<string> cIDClasificacionesGrupos = new List<string>();
+
+                        foreach (var grupos in cbxGrupos.SelectedItems)
+                        {
+                            String[] groups = grupos.ToString().Split('|');
+                            cIDClasificacionesGrupos.Add(groups[0].ToString().Trim());
+                            proveedor.tipos_proveedor += groups[1].ToString().Trim() + ";";
+                        }
+                        int cIDCteProv = 0;
+                        int error = SDK.fAltaCteProv(ref cIDCteProv, ref  cProveedor);
+                        if (error == 0)
+                        {
+                            proveedor.registrar(proveedor);
+                            MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
+                            SDK.fBuscaIdCteProv(cIDCteProv);
+                            SDK.fEditaCteProv();
+                            SDK.fSetDatoCteProv("CTIPOCLIENTE", "3");
+                            SDK.fSetDatoCteProv("CIDMONEDA", "1");
+                            int i = 1;
+                            foreach (var item in cIDClasificacionesGrupos)
+                            {
+                                SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
+                                i++;
+                            }
+                            SDK.fGuardaCteProv();
+                        }
+                        else
+                        {
+                            SDK.rError(error);
+                        }
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Hay campos importantes que están vacíos, pueden ser en la tabla de productos o en los campos de proveedor");
+                    }
+                }
+                else if (validacion == "sucursal")
+                {
+                    if (txtSucursalP.Text != "")
+                    {
+                        proveedor.registrar(proveedor);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Datos del actual proveedor: \nSe tiene registrado este proveedor con el RFC: \n" + proveedor.RFC + "Pero hay datos que difieren con el registro existente, En caso de tratarse de otra sucursal ingrese la sucursal por favor");
+                    }
+                }
+                obtenerConceptos();
+            }
+            else
+            {
+                MessageBox.Show("ERROR EN FACTURA FOLIO - " + factura.folio + "\nYa ha sido utilizada / registrada.");
+            }
+        }
+
+        private void biNew_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            CerrarNuevo = 0;
+            guardar();
         }
 
     }

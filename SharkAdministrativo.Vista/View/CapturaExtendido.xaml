@@ -19,7 +19,7 @@
                     <dxr:RibbonPage Caption="General">
                         <dxr:RibbonPageGroup Caption="Archivos">
                             <dxb:BarButtonItem x:Name="btnSaveAndClose" ItemClick="btnSaveAndClose_ItemClick" Content="Guardar &amp; Cerrar" Glyph="{dx:DXImage Image=SaveAndClose_32x32.png}" LargeGlyph="{dx:DXImage Image=SaveAndClose_32x32.png}"/>
-                            <dxb:BarButtonItem x:Name="biNew" Content="Guardar &amp; nuevo" Glyph="{dx:DXImage Image=SaveAndNew_32x32.png}" LargeGlyph="{dx:DXImage Image=SaveAndNew_32x32.png}" RibbonStyle="SmallWithText"/>
+                            <dxb:BarButtonItem x:Name="biNew" Content="Guardar &amp; nuevo" Glyph="{dx:DXImage Image=SaveAndNew_32x32.png}" LargeGlyph="{dx:DXImage Image=SaveAndNew_32x32.png}" RibbonStyle="SmallWithText" ItemClick="biNew_ItemClick"/>
                             <dxb:BarButtonItem Content="Copiar a nuevo" RibbonStyle="Large" Glyph="{dx:DXImage Image=Copy_32x32.png}" LargeGlyph="{dx:DXImage Image=Copy_32x32.png}"/>
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Mostrar">

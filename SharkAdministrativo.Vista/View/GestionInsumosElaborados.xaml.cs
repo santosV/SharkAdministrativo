@@ -25,6 +25,7 @@ namespace SharkAdministrativo.Vista
     /// </summary>
     public partial class GestionInsumosElaborados : Window
     {
+        int CerrarNuevo;
         Categoria categoria = new Categoria();
         Grupo grupo = new Grupo();
         Unidad_Medida unidad = new Unidad_Medida();
@@ -347,6 +348,15 @@ namespace SharkAdministrativo.Vista
                 cargarInsumosElaborados();
             }
 
+            if(CerrarNuevo == 1){
+                this.Close();
+            }
+            else
+            {
+                clearFields();
+            }
+
+
         }
 
         private void cbxGrupos_SelectedIndexChanged(object sender, RoutedEventArgs e)
@@ -504,6 +514,13 @@ namespace SharkAdministrativo.Vista
 
         private void SaveAndNew_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            CerrarNuevo = 0;
+            guardarModificar();
+        }
+
+        private void btnGuardarCerrar(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            CerrarNuevo = 1;
             guardarModificar();
         }
 
@@ -954,6 +971,23 @@ namespace SharkAdministrativo.Vista
         {
             if (validarDatosProducto() == true)
             {
+
+                CerrarNuevo = 0;
+                guardarModificarProducto();
+            }
+            else
+            {
+                MessageBox.Show("EXISTEN CAMPOS IMPORTANTES SIN INGRESAR");
+            }
+
+        }
+
+        private void GuardarYCerrar_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            if (validarDatosProducto() == true)
+            {
+
+                CerrarNuevo = 1;
                 guardarModificarProducto();
             }
             else
@@ -1081,6 +1115,12 @@ namespace SharkAdministrativo.Vista
                 }
                 cargarProductos();
                 clearFieldsProducts();
+            }
+
+            if(CerrarNuevo == 1){
+                this.Close();
+            }else{
+                clearFields();
             }
         }
 

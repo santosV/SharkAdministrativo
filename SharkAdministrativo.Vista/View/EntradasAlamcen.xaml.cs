@@ -21,6 +21,7 @@ namespace SharkAdministrativo.Vista.View
     /// </summary>
     public partial class EntradasAlamcen : Window
     {
+        int CerrarNuevo;
         Proveedor proveedor = new Proveedor();
         Presentacion presentacion = new Presentacion();
         Almacen almacen = new Almacen();
@@ -138,7 +139,9 @@ namespace SharkAdministrativo.Vista.View
                     clearFields();
                 }
 
-
+                if(CerrarNuevo ==1){
+                    this.Close();
+                }
 
 
             }
@@ -162,6 +165,17 @@ namespace SharkAdministrativo.Vista.View
             ReportsView.InputsView vista = new ReportsView.InputsView();
             vista.Show();
 
+        }
+
+        private void BarButtonItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            CerrarNuevo = 1;
+            save();
+        }
+
+        private void btnNuevo(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            clearFields();
         }
 
     }
