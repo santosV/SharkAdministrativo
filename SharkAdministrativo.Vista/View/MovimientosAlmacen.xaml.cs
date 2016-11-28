@@ -85,6 +85,7 @@ namespace SharkAdministrativo.Vista.View
             cbxAlamcenAfectado.SelectedItem = null;
             cbxAOrigen.SelectedItem = null;
             cbxInsumo.SelectedItem = null;
+            cbxPresentaciones.SelectedItem = null;
             cbxMovimiento.SelectedItem = null;
         }
 
@@ -138,7 +139,8 @@ namespace SharkAdministrativo.Vista.View
             clearFields();
         }
 
-        private void loadPresentations() {
+        private void loadPresentations()
+        {
             Presentacion presentacion = new Presentacion();
             List<Presentacion> presentaciones = presentacion.getAll();
             foreach (var presentation in presentaciones)
@@ -201,28 +203,32 @@ namespace SharkAdministrativo.Vista.View
                 }
                 else
                 {
-                    Salida_almacen salida = new Salida_almacen();
-                    Insumo _insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
-
-                    salida.Almacen = almacen.obtener(cbxAOrigen.SelectedItem.ToString());
-                    salida.cantidad = Double.Parse(txtCantidad.Text);
-                    salida.Insumo = _insumo;
-                    salida.Tipo_movimiento = tipo.obtener(cbxMovimiento.SelectedItem.ToString());
-                    salida.descripcion = tipo.nombre;
-                    salida.registrar(salida);
-                    
-                    if (salida.id > 0)
+                    if (cbxPresentaciones.SelectedItem!=null && cbxInsumo.SelectedItem!=null && cbxAOrigen.SelectedItem!=null)
                     {
-                        EntradaPresentacion entrada = new EntradaPresentacion();
-                        DateTime thisDay = DateTime.Today;
-                        entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                        entrada.Presentacion = presentacion.get(cbxPresentaciones.SelectedItem.ToString());
-                        entrada.Almacen = almacen.obtener(cbxADestino.SelectedItem.ToString());
-                        entrada.cantidad = Double.Parse(txtCantidad.Text);
-                        entrada.registrar(entrada);
-                        if (entrada.id>0)
+                        Salida_almacen salida = new Salida_almacen();
+                        Insumo _insumo = insumo.obtener(cbxInsumo.SelectedItem.ToString());
+
+                        salida.Almacen = almacen.obtener(cbxAOrigen.SelectedItem.ToString());
+                        salida.cantidad = Double.Parse(txtCantidad.Text);
+                        salida.Insumo = _insumo;
+                        salida.Tipo_movimiento = tipo.obtener(cbxMovimiento.SelectedItem.ToString());
+                        salida.descripcion = tipo.nombre;
+                        salida.registrar(salida);
+
+                        if (salida.id > 0)
                         {
-                            MessageBox.Show("SE TRASPASÓ: "+txtCantidad.Text+" "+unidad.nombre+ "\nDEL INSUMO: "+_insumo.descripcion+"\nDEL ALMACÉN: "+cbxAOrigen.SelectedItem.ToString()+"\nAL ALMACÉN: "+cbxADestino.SelectedItem.ToString());
+                            EntradaPresentacion entrada = new EntradaPresentacion();
+                            DateTime thisDay = DateTime.Today;
+                            entrada.fecha_registro = Convert.ToDateTime(thisDay.ToString());
+                            entrada.Presentacion = presentacion.get(cbxPresentaciones.SelectedItem.ToString());
+                            entrada.Almacen = almacen.obtener(cbxADestino.SelectedItem.ToString());
+                            entrada.cantidad = Double.Parse(txtCantidad.Text);
+                            entrada.registrar(entrada);
+                            if (entrada.id > 0)
+                            {
+                                MessageBox.Show("SE TRASPASÓ: " + txtCantidad.Text + " " + unidad.nombre + "\nDEL INSUMO: " + _insumo.descripcion + "\nDEL ALMACÉN: " + cbxAOrigen.SelectedItem.ToString() + "\nAL ALMACÉN: " + cbxADestino.SelectedItem.ToString());
+                                clearFields();
+                            }
                         }
                     }
                 }
