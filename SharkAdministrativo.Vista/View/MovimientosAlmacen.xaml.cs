@@ -198,6 +198,7 @@ namespace SharkAdministrativo.Vista.View
                         if (salida.id > 0)
                         {
                             MessageBox.Show("SE REGISTRO LA SALIDA DE: " + salida.cantidad + " " + unidad.nombre + " \nDEL INSUMO: " + _insumo.descripcion + " POR LA RAZÓN: " + salida.descripcion);
+                            clearFields();
                         }
                     }
                 }
