@@ -18,7 +18,6 @@
     <EntitySet Name="Recetas" EntityType="bdsharkModel.Receta" />
     <EntitySet Name="Salidas_almacen" EntityType="bdsharkModel.Salida_almacen" />
     <EntitySet Name="Tipo_movimientos" EntityType="bdsharkModel.Tipo_movimiento" />
-    <EntitySet Name="Unidades_Medida" EntityType="bdsharkModel.Unidad_Medida" />
     <AssociationSet Name="AlmacenPresentacion" Association="bdsharkModel.AlmacenPresentacion">
       <End Role="Almacen" EntitySet="Almacenes" />
       <End Role="Presentacion" EntitySet="Presentaciones" />
@@ -39,16 +38,8 @@
       <End Role="Grupo" EntitySet="Grupos" />
       <End Role="Insumo" EntitySet="Insumos" />
     </AssociationSet>
-    <AssociationSet Name="Unidad_MedidaInsumo" Association="bdsharkModel.Unidad_MedidaInsumo">
-      <End Role="Unidad_Medida" EntitySet="Unidades_Medida" />
-      <End Role="Insumo" EntitySet="Insumos" />
-    </AssociationSet>
     <AssociationSet Name="GrupoInsumoElaborado" Association="bdsharkModel.GrupoInsumoElaborado">
       <End Role="Grupo" EntitySet="Grupos" />
-      <End Role="InsumoElaborado" EntitySet="InsumosElaborados" />
-    </AssociationSet>
-    <AssociationSet Name="Unidad_MedidaInsumoElaborado" Association="bdsharkModel.Unidad_MedidaInsumoElaborado">
-      <End Role="Unidad_Medida" EntitySet="Unidades_Medida" />
       <End Role="InsumoElaborado" EntitySet="InsumosElaborados" />
     </AssociationSet>
     <AssociationSet Name="ProveedorPresentacion" Association="bdsharkModel.ProveedorPresentacion">
@@ -102,6 +93,15 @@
     <AssociationSet Name="AlmacenSalida_almacen" Association="bdsharkModel.AlmacenSalida_almacen">
       <End Role="Almacen" EntitySet="Almacenes" />
       <End Role="Salida_almacen" EntitySet="Salidas_almacen" />
+    </AssociationSet>
+    <EntitySet Name="Unidades_Medida" EntityType="bdsharkModel.Unidad_Medida" />
+    <AssociationSet Name="Unidad_MedidaInsumo" Association="bdsharkModel.Unidad_MedidaInsumo">
+      <End Role="Unidad_Medida" EntitySet="Unidades_Medida" />
+      <End Role="Insumo" EntitySet="Insumos" />
+    </AssociationSet>
+    <AssociationSet Name="Unidad_MedidaInsumoElaborado" Association="bdsharkModel.Unidad_MedidaInsumoElaborado">
+      <End Role="Unidad_Medida" EntitySet="Unidades_Medida" />
+      <End Role="InsumoElaborado" EntitySet="InsumosElaborados" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Almacen">
@@ -204,11 +204,11 @@
     <Property Name="grupo_id" Type="Int32" Nullable="false" />
     <Property Name="unidad_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Grupo" Relationship="bdsharkModel.GrupoInsumo" FromRole="Insumo" ToRole="Grupo" />
-    <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Insumo" ToRole="Unidad_Medida" />
     <NavigationProperty Name="Presentacion" Relationship="bdsharkModel.InsumoPresentacion" FromRole="Insumo" ToRole="Presentacion" />
     <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoReceta" FromRole="Insumo" ToRole="Receta" />
     <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.InsumoSalida_almacen" FromRole="Insumo" ToRole="Salida_almacen" />
     <Property Name="codigoInsumo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Insumo" ToRole="Unidad_Medida" />
   </EntityType>
   <EntityType Name="InsumoElaborado">
     <Key>
@@ -227,9 +227,9 @@
     <Property Name="entrada_automatica" Type="Int32" />
     <Property Name="existencia" Type="Double" />
     <NavigationProperty Name="Grupo" Relationship="bdsharkModel.GrupoInsumoElaborado" FromRole="InsumoElaborado" ToRole="Grupo" />
-    <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="InsumoElaborado" ToRole="Unidad_Medida" />
     <NavigationProperty Name="Receta" Relationship="bdsharkModel.InsumoElaboradoReceta" FromRole="InsumoElaborado" ToRole="Receta" />
     <Property Name="codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Unidad_Medida" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="InsumoElaborado" ToRole="Unidad_Medida" />
   </EntityType>
   <EntityType Name="Presentacion">
     <Key>
@@ -367,15 +367,6 @@
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Salida_almacen" Relationship="bdsharkModel.Tipo_movimientoSalida_almacen" FromRole="Tipo_movimiento" ToRole="Salida_almacen" />
   </EntityType>
-  <EntityType Name="Unidad_Medida">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Insumo" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Unidad_Medida" ToRole="Insumo" />
-    <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="Unidad_Medida" ToRole="InsumoElaborado" />
-  </EntityType>
   <Association Name="AlmacenPresentacion">
     <End Type="bdsharkModel.Almacen" Role="Almacen" Multiplicity="1" />
     <End Type="bdsharkModel.Presentacion" Role="Presentacion" Multiplicity="*" />
@@ -436,18 +427,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="Unidad_MedidaInsumo">
-    <End Type="bdsharkModel.Unidad_Medida" Role="Unidad_Medida" Multiplicity="1" />
-    <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Unidad_Medida">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Insumo">
-        <PropertyRef Name="unidad_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="GrupoInsumoElaborado">
     <End Type="bdsharkModel.Grupo" Role="Grupo" Multiplicity="1" />
     <End Type="bdsharkModel.InsumoElaborado" Role="InsumoElaborado" Multiplicity="*" />
@@ -457,18 +436,6 @@
       </Principal>
       <Dependent Role="InsumoElaborado">
         <PropertyRef Name="grupo_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Unidad_MedidaInsumoElaborado">
-    <End Type="bdsharkModel.Unidad_Medida" Role="Unidad_Medida" Multiplicity="1" />
-    <End Type="bdsharkModel.InsumoElaborado" Role="InsumoElaborado" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Unidad_Medida">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="InsumoElaborado">
-        <PropertyRef Name="unidad_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -625,6 +592,39 @@
       </Principal>
       <Dependent Role="Salida_almacen">
         <PropertyRef Name="almacen_salida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Unidad_Medida">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Insumo" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Unidad_Medida" ToRole="Insumo" />
+    <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="Unidad_Medida" ToRole="InsumoElaborado" />
+  </EntityType>
+  <Association Name="Unidad_MedidaInsumo">
+    <End Type="bdsharkModel.Unidad_Medida" Role="Unidad_Medida" Multiplicity="1" />
+    <End Type="bdsharkModel.Insumo" Role="Insumo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unidad_Medida">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Insumo">
+        <PropertyRef Name="unidad_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Unidad_MedidaInsumoElaborado">
+    <End Type="bdsharkModel.Unidad_Medida" Role="Unidad_Medida" Multiplicity="1" />
+    <End Type="bdsharkModel.InsumoElaborado" Role="InsumoElaborado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unidad_Medida">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="InsumoElaborado">
+        <PropertyRef Name="unidad_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

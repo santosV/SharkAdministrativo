@@ -22,15 +22,12 @@
         <EntityTypeShape EntityType="bdsharkModel.Receta" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="bdsharkModel.Salida_almacen" Width="1.5" PointX="10.75" PointY="3.75" />
         <EntityTypeShape EntityType="bdsharkModel.Tipo_movimiento" Width="1.5" PointX="10.75" PointY="6.75" />
-        <EntityTypeShape EntityType="bdsharkModel.Unidad_Medida" Width="1.5" PointX="10.75" PointY="9.75" />
         <AssociationConnector Association="bdsharkModel.AlmacenPresentacion" />
         <AssociationConnector Association="bdsharkModel.AlmacenEntradaPresentacion" />
         <AssociationConnector Association="bdsharkModel.PresentacionEntradaPresentacion" />
         <AssociationConnector Association="bdsharkModel.CategoriaGrupo" />
         <AssociationConnector Association="bdsharkModel.GrupoInsumo" />
-        <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumo" />
         <AssociationConnector Association="bdsharkModel.GrupoInsumoElaborado" />
-        <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumoElaborado" />
         <AssociationConnector Association="bdsharkModel.ProveedorPresentacion" />
         <AssociationConnector Association="bdsharkModel.InsumoPresentacion" />
         <AssociationConnector Association="bdsharkModel.FacturaPresentacion" />
@@ -44,6 +41,9 @@
         <AssociationConnector Association="bdsharkModel.InsumoSalida_almacen" />
         <AssociationConnector Association="bdsharkModel.Tipo_movimientoSalida_almacen" />
         <AssociationConnector Association="bdsharkModel.AlmacenSalida_almacen" />
+        <EntityTypeShape EntityType="bdsharkModel.Unidad_Medida" Width="1.5" PointX="5.375" PointY="12.75" />
+        <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumo" />
+        <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumoElaborado" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

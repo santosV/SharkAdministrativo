@@ -50,7 +50,7 @@ namespace SharkAdministrativo.Vista.View
             if (cbxPresentaciones.SelectedItem != null && cbxAlmacenes.SelectedItem != null && !String.IsNullOrEmpty(txtCantidad.Text))
             {
 
-                
+
                 double folio = 0;
 
                 StringBuilder serie = new StringBuilder(12);
@@ -139,7 +139,8 @@ namespace SharkAdministrativo.Vista.View
                     clearFields();
                 }
 
-                if(CerrarNuevo ==1){
+                if (CerrarNuevo == 1)
+                {
                     this.Close();
                 }
 

@@ -406,7 +406,8 @@ namespace SharkAdministrativo.Vista
                             clearFields();
                         }
                     }
-                    else {
+                    else
+                    {
                         SDK.rError(error);
                     }
 
@@ -665,7 +666,7 @@ namespace SharkAdministrativo.Vista
                     if (nomValorClasificacion.ToString() != "(Ninguna)")
                     {
                         cbxValoresDeClasificaciones.Items.Add(codValorClasificacion + " | " + nomValorClasificacion);
-                        
+
                     }
                 }
                 error = SDK.fPosSiguienteValorClasif();

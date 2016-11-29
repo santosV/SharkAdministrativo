@@ -63,7 +63,7 @@ namespace SharkAdministrativo.Vista
             txtCodigo.Text = proveedor.codigo;
             int error = SDK.fBuscaCteProv(proveedor.codigo);
             txtCodigo.IsReadOnly = true;
-            
+
             if (!String.IsNullOrEmpty(proveedor.tipos_proveedor))
             {
 
@@ -72,9 +72,9 @@ namespace SharkAdministrativo.Vista
                 foreach (string group in grupos)
                 {
                     StringBuilder cIdValorClasificacionProv = new StringBuilder(5);
-                    SDK.fLeeDatoCteProv("CIDVALORCLASIFPROVEEDOR"+i, cIdValorClasificacionProv, 5);
+                    SDK.fLeeDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, cIdValorClasificacionProv, 5);
                     i++;
-                    cbxGrupos.SelectedItems.Add(cIdValorClasificacionProv+" | "+group);
+                    cbxGrupos.SelectedItems.Add(cIdValorClasificacionProv + " | " + group);
                 }
             }
 
@@ -104,9 +104,10 @@ namespace SharkAdministrativo.Vista
                         error = SDK.fPosSiguienteValorClasif();
                         i++;
                     }
-                    else {
+                    else
+                    {
                         error = 1;
-                    }  
+                    }
                 }
             }
             cbxGrupos.Items.Clear();
@@ -151,7 +152,7 @@ namespace SharkAdministrativo.Vista
             List<string> cIDClasificacionesGrupos = new List<string>();
             if (!String.IsNullOrEmpty(txtNombreP.Text) && !String.IsNullOrEmpty(txtRFC.Text) && cbxGrupos.SelectedItem != null && !String.IsNullOrEmpty(txtRazonP.Text) && cbxEmpresa.SelectedItem != null)
             {
-                
+
                 //Inicialización de objeto Contpaqi.
                 SDK.CteProv cProveedor = new SDK.CteProv();
                 cProveedor.cCodigoCliente = txtCodigo.Text;
@@ -180,7 +181,7 @@ namespace SharkAdministrativo.Vista
                 proveedor.pais = txtPaisP.Text;
                 DateTime thisDay = DateTime.Today;
                 proveedor.fecha_registro = Convert.ToDateTime(thisDay.ToString());
-                
+
                 foreach (var grupos in cbxGrupos.SelectedItems)
                 {
                     String[] groups = grupos.ToString().Split('|');
@@ -222,7 +223,7 @@ namespace SharkAdministrativo.Vista
                 {
                     //Da de alta un proveedor en Contpaqi.
                     int cIDCteProv = 0;
-                    int error = SDK.fAltaCteProv(ref cIDCteProv,ref  cProveedor);
+                    int error = SDK.fAltaCteProv(ref cIDCteProv, ref  cProveedor);
                     if (error == 0)
                     {
                         //Da de alta un proveedor en Shark.
@@ -230,14 +231,14 @@ namespace SharkAdministrativo.Vista
                         MessageBox.Show("ÉXITO, SE REGISTRÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
                         SDK.fBuscaIdCteProv(cIDCteProv);
                         SDK.fEditaCteProv();
-                        SDK.fSetDatoCteProv("CTIPOCLIENTE","3");
+                        SDK.fSetDatoCteProv("CTIPOCLIENTE", "3");
                         SDK.fSetDatoCteProv("CIDMONEDA", "1");
                         int i = 1;
-                            foreach (var item in cIDClasificacionesGrupos)
-                            {
-                                SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
-                                i++;
-                            }
+                        foreach (var item in cIDClasificacionesGrupos)
+                        {
+                            SDK.fSetDatoCteProv("CIDVALORCLASIFPROVEEDOR" + i, item);
+                            i++;
+                        }
 
 
                         SDK.fGuardaCteProv();
@@ -251,7 +252,8 @@ namespace SharkAdministrativo.Vista
                         }
 
                     }
-                    else {
+                    else
+                    {
                         SDK.rError(error);
                     }
 

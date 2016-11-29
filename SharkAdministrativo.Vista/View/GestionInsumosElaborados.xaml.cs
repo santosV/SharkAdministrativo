@@ -176,7 +176,7 @@ namespace SharkAdministrativo.Vista
                     }
                 }
 
-                dtProductos.Rows.Add(item.id, item.descripcion, item.nombre, item.ultimoPrecio, item.IVA, item.precioConImpuesto, areasPreparacion, areasDisponibles,item.codigo);
+                dtProductos.Rows.Add(item.id, item.descripcion, item.nombre, item.ultimoPrecio, item.IVA, item.precioConImpuesto, areasPreparacion, areasDisponibles, item.codigo);
             }
         }
 
@@ -348,7 +348,8 @@ namespace SharkAdministrativo.Vista
                 cargarInsumosElaborados();
             }
 
-            if(CerrarNuevo == 1){
+            if (CerrarNuevo == 1)
+            {
                 this.Close();
             }
             else
@@ -1107,19 +1108,23 @@ namespace SharkAdministrativo.Vista
                             producto.id = p.id;
                             producto.modificar(producto);
                         }
-                        else {
+                        else
+                        {
                             SDK.rError(error);
                         }
                     }
-                    
+
                 }
                 cargarProductos();
                 clearFieldsProducts();
             }
 
-            if(CerrarNuevo == 1){
+            if (CerrarNuevo == 1)
+            {
                 this.Close();
-            }else{
+            }
+            else
+            {
                 clearFields();
             }
         }
@@ -1271,7 +1276,8 @@ namespace SharkAdministrativo.Vista
                         cargarProductos();
                         clearFieldsProducts();
                     }
-                    else {
+                    else
+                    {
                         SDK.rError(error);
                     }
                 }

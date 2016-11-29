@@ -170,7 +170,7 @@ namespace SharkAdministrativo.Vista.View
                 }
                 else if (cbxAOrigen.SelectedItem != null)
                 {
-                    salida.Almacen = almacen.obtener(cbxAOrigen.SelectedItem.ToString()); 
+                    salida.Almacen = almacen.obtener(cbxAOrigen.SelectedItem.ToString());
                 }
                 List<Presentacion> presentaciones = presentacion.obtenerPorInsumoAlmacen(salida.Insumo.id, salida.Almacen.id);
                 foreach (var item in presentaciones)
@@ -251,7 +251,8 @@ namespace SharkAdministrativo.Vista.View
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             MessageBox.Show("LA CANTIDAD QUE DESEA MARCAR COMO SALIDA ES MAYOR AL NÚMERO DE EXISTENCIA EN SU ALMACÉN");
                         }
                     }

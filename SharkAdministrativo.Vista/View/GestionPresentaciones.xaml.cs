@@ -638,7 +638,8 @@ namespace SharkAdministrativo.Vista
                 {
                     maximo = true;
                 }
-                else {
+                else
+                {
                     maximo = false;
                 }
             }
@@ -646,4 +647,4 @@ namespace SharkAdministrativo.Vista
         }
     }
 }
-    
+

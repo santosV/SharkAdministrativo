@@ -77,7 +77,7 @@ namespace SharkAdministrativo.Vista
                     {
 
 
-                        dtClasificaciones.Rows.Add(idValorClasificacion,codValorClasificacion, cValorClasificacion);
+                        dtClasificaciones.Rows.Add(idValorClasificacion, codValorClasificacion, cValorClasificacion);
 
                     }
                     SDK.fPosSiguienteValorClasif();
@@ -748,7 +748,7 @@ namespace SharkAdministrativo.Vista
                 txtAbre.IsReadOnly = true;
                 txtAbre.Text = seleccion.Row.ItemArray[1].ToString();
                 txtNombreC.Text = seleccion.Row.ItemArray[2].ToString();
-            
+
             }
         }
         /// <summary>
