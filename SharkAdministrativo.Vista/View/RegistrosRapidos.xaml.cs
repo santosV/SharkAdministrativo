@@ -368,6 +368,18 @@ namespace SharkAdministrativo.Vista
             {
                 if (tblClasificaciones.SelectedItem == null)
                 {
+                    int erro = SDK.fPosPrimerValorClasif();
+                    while (erro == 0)
+                    {
+                        StringBuilder valorCla = new StringBuilder(4);
+                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION",valorCla,4);
+                        if(valorCla.Equals(txtAbreviatura.Text)){
+                            MessageBox.Show("La abreviatura ya existe");
+                            return;
+                        }
+                    }
+
+
                     int error = SDK.fInsertaValorClasif();
                     if (error == 0)
                     {

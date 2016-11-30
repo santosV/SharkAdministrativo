@@ -222,11 +222,16 @@ namespace SharkAdministrativo.Vista
                     cProducto.cTipoProducto = 1;
                     cProducto.cMetodoCosteo = 1;
 
+                    int unidadid = presentacion.Insumo.unidad_id;
+
                     Int32 aldProducto = 0;
                     error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
                     if (error == 0)
                     {
                         SDK.fEditaProducto();
+                        SDK.fSetDatoProducto("CBANUNIDADES", unidad.ToString());
+                        SDK.fSetDatoProducto("CIDUNIDADBASE", unidad.ToString());
+                        SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
                         SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
                         SDK.fGuardaProducto();
                         presentacion.registrar(presentacion);
@@ -235,6 +240,7 @@ namespace SharkAdministrativo.Vista
                     else
                     {
                         SDK.rError(error);
+                        return;
                     }
 
 
@@ -281,7 +287,7 @@ namespace SharkAdministrativo.Vista
                 SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
                 int lIdMovimiento = 0;
 
-                SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
+                SDK.fBuscaAlmacen(presentacion.Almacen.codigo);
                 StringBuilder codigo = new StringBuilder(20);
                 SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
                 ltMovimiento.aCodAlmacen = codigo.ToString();
@@ -291,8 +297,8 @@ namespace SharkAdministrativo.Vista
                 ltMovimiento.aUnidades = Double.Parse(Convert.ToString(presentacion.cantidad));
 
 
-                ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
-                ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_con_impuesto));
+                ltMovimiento.aCosto = Double.Parse(Convert.ToString(presentacion.costo_unitario));
+                ltMovimiento.aPrecio = Double.Parse(Convert.ToString(presentacion.costo_unitario));
 
                 lError = 0;
                 lError = SDK.fAltaMovimiento(lIdDocumento, ref lIdMovimiento, ref ltMovimiento);
@@ -524,6 +530,7 @@ namespace SharkAdministrativo.Vista
                 txtRendimiento.Text = seleccion.Row.ItemArray[10].ToString();
                 txtCCimpuesto.Text = seleccion.Row.ItemArray[9].ToString();
                 txtCpromedio.Text = seleccion.Row.ItemArray[8].ToString();
+                txtCodigo.Text = seleccion.Row.ItemArray[13].ToString();
             }
         }
 
@@ -622,7 +629,7 @@ namespace SharkAdministrativo.Vista
 
         public void guardar() {
             string folio = "";
-            //folio = factura.validarRegistro(factura.folio);
+            folio = factura.validarRegistro(factura.folio);
             if (factura.folio != folio)
             {
                 if (validacion == "unico")

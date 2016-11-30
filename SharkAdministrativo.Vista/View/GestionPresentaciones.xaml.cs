@@ -178,11 +178,16 @@ namespace SharkAdministrativo.Vista
                     cProducto.cTipoProducto = 1;
                     cProducto.cMetodoCosteo = 1;
 
+                    int unidad = presentacion.Insumo.unidad_id;
+
                     Int32 aldProducto = 0;
                     int error = SDK.fAltaProducto(ref aldProducto, ref cProducto);
                     if (error == 0)
                     {
                         SDK.fEditaProducto();
+                        SDK.fSetDatoProducto("CBANUNIDADES", unidad.ToString());
+                        SDK.fSetDatoProducto("CIDUNIDADBASE", unidad.ToString());
+                        SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
                         SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
                         SDK.fGuardaProducto();
                         presentacion.registrar(presentacion);
@@ -240,7 +245,7 @@ namespace SharkAdministrativo.Vista
                             SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
                             int lIdMovimiento = 0;
 
-                            SDK.fBuscaAlmacen(presentacion.Almacen.id.ToString());
+                            SDK.fBuscaAlmacen(presentacion.Almacen.codigo);
                             StringBuilder codigo = new StringBuilder(20);
                             SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
                             ltMovimiento.aCodAlmacen = codigo.ToString();
@@ -280,7 +285,8 @@ namespace SharkAdministrativo.Vista
 
                         hasChanged = "Yes";
                         clearFields();
-                        dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
+                        llenarPresentaciones();
+                        //dtPLista.Rows.Add(presentacion.id, presentacion.descripcion, presentacion.rendimiento, this.presentacionIns.Insumo.Unidad_Medida.nombre, presentacion.Proveedor.nombre, presentacion.codigo);
                     }
                 }
             }
@@ -623,7 +629,7 @@ namespace SharkAdministrativo.Vista
 
             foreach (var item in presentaciones)
             {
-                cantidad = Double.Parse(Convert.ToString(item.existencia));
+                cantidad = cantidad+Double.Parse(Convert.ToString(item.existencia));
 
 
             }

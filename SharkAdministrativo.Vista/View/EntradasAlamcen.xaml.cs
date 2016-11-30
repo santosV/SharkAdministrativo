@@ -95,11 +95,9 @@ namespace SharkAdministrativo.Vista.View
 
                 SDK.tMovimiento ltMovimiento = new SDK.tMovimiento();
                 int lIdMovimiento = 0;
-
-                SDK.fBuscaAlmacen(pre.almacen_id.ToString());
-                StringBuilder codigo = new StringBuilder(20);
-                SDK.fLeeDatoAlmacen("CCODIGOALMACEN", codigo, 20);
-                ltMovimiento.aCodAlmacen = codigo.ToString();
+                pre.Almacen = almacen.obtener(cbxAlmacenes.SelectedItem.ToString());
+                
+                ltMovimiento.aCodAlmacen = pre.Almacen.codigo;
                 ltMovimiento.aConsecutivo = 1;
                 ltMovimiento.aCodProdSer = pre.codigo;
 

@@ -133,12 +133,23 @@ C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkA
 C:\Users\santos\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.pdb
 C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.dll
 C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.pdb
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.baml
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.g.cs
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.SuppliesData.resources
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Vista.exe.config
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.exe
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.pdb
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Vista.exe
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Vista.pdb
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\DevExpress.Images.v16.1.dll
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\EntityFramework.dll
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Modelo.dll
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.dll
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Modelo.pdb
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.pdb
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\EntityFramework.xml
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.csprojResolveAssemblyReference.cache
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\BarcodeView.baml
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\InputsView.baml
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.baml
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View.Contpaqi\StartWindow.baml
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View\CapturaExtendido.baml
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View\EntradasAlamcen.baml
@@ -159,6 +170,7 @@ C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAd
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\RecipeView.baml
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\BarcodeView.g.cs
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\InputsView.g.cs
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.g.cs
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View.Contpaqi\StartWindow.g.cs
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View\CapturaExtendido.g.cs
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\View\EntradasAlamcen.g.cs
@@ -187,18 +199,9 @@ C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAd
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.PromotionData.resources
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.ProviderData.resources
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.RecipeData.resources
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.SuppliesData.resources
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.Properties.Resources.resources
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.csproj.GenerateResource.Cache
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.exe.licenses
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Vista.exe
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Vista.pdb
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\DevExpress.Images.v16.1.dll
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\EntityFramework.dll
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Modelo.dll
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.dll
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.Modelo.pdb
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\SharkAdministrativo.SDKCONTPAQi.pdb
-C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\bin\Debug\EntityFramework.xml
-C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.baml
-C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\ReportsView\SuppliesView.g.cs
-C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.DataReports.SuppliesData.resources
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.exe
+C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.Vista\obj\Debug\SharkAdministrativo.Vista.pdb
