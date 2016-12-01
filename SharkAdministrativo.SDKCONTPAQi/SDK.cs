@@ -55,6 +55,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static string systemRoute = @"C:\Program Files (x86)\Compac\COMERCIAL";
         public static string systemName = "CONTPAQ I COMERCIAL";
 
+        public static string companyConnection = "";
+
+
 
         // Declaración de la estructura del proveedor
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
@@ -360,6 +363,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern int fAbreEmpresa(string Directorio);
         [DllImport("MGWSERVICIOS.dll")]
         public static extern void fCierraEmpresa();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern int fPosPrimerEmpresa(int aIdEmpresa, string aNombreEmpresa, string aDirectorioEmpresa);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern int fPosSiguienteEmpresa(int aIdEmpresa, string aNombreEmpresa, string aDirectorioEmpresa); 
 
 
         //funciones de Valores de clasificaciones

@@ -77,6 +77,7 @@
     <Compile Include="AreaProduccion.cs">
       <DependentUpon>dbshark.tt</DependentUpon>
     </Compile>
+    <Compile Include="bdsharkEntities.cs" />
     <Compile Include="Categoria.cs">
       <DependentUpon>dbshark.tt</DependentUpon>
     </Compile>
@@ -179,7 +180,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SharkAdministrativo.SDKCONTPAQi\SharkAdministrativo.SDKCONTPAQi.csproj">
+      <Project>{13b6d2f7-764c-480e-a580-2938c5f16144}</Project>
+      <Name>SharkAdministrativo.SDKCONTPAQi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -41,7 +41,7 @@
         <AssociationConnector Association="bdsharkModel.InsumoSalida_almacen" />
         <AssociationConnector Association="bdsharkModel.Tipo_movimientoSalida_almacen" />
         <AssociationConnector Association="bdsharkModel.AlmacenSalida_almacen" />
-        <EntityTypeShape EntityType="bdsharkModel.Unidad_Medida" Width="1.5" PointX="5.375" PointY="12.75" />
+        <EntityTypeShape EntityType="bdsharkModel.Unidad_Medida" Width="1.5" PointX="5.5" PointY="12.875" />
         <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumo" />
         <AssociationConnector Association="bdsharkModel.Unidad_MedidaInsumoElaborado" />
       </Diagram>

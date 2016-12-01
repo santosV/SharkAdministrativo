@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
+    using SDKCONTPAQi;
     
     public partial class Insumo
     {
@@ -48,7 +49,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="insumo">Objeto a registrar.</param>
         public void registrar(Insumo insumo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
 
@@ -68,7 +69,7 @@ namespace SharkAdministrativo.Modelo
         public Insumo obtenerPorID(int id)
         {
             Insumo insumo = new Insumo();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 insumo = db.Insumos.Find(id);
             }
@@ -81,7 +82,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_insumo">Objeto a eliminar.</param>
         public void eliminar(Insumo d_insumo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 var insumosQuery = from insumo in db.Insumos where insumo.id == d_insumo.id select insumo;
 
@@ -100,7 +101,7 @@ namespace SharkAdministrativo.Modelo
         public List<Insumo> obtenerTodos()
         {
             List<Insumo> insumos = new List<Insumo>();
-            bdsharkEntities db = new bdsharkEntities();
+            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
 
             db.Configuration.LazyLoadingEnabled = true;
             var insumosQuery = from insumo in db.Insumos select insumo;
@@ -120,7 +121,7 @@ namespace SharkAdministrativo.Modelo
         public Insumo obtener(string descripcion)
         {
             Insumo insu = new Insumo();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -142,7 +143,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Insumo insumo)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 Insumo n_insumo = db.Insumos.Find(insumo.id);
                 n_insumo.descripcion = insumo.descripcion;

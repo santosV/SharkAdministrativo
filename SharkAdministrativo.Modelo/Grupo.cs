@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
+    using SDKCONTPAQi;
     
     public partial class Grupo
     {
@@ -36,7 +37,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="grupo">El objeto a registrar.</param>
         public void registrar(Grupo grupo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Categorias.Attach(grupo.Categoria);
@@ -52,7 +53,7 @@ namespace SharkAdministrativo.Modelo
         public void Modify(Grupo grupo)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 Grupo group = db.Grupos.Find(grupo.id);
                 group.nombre = grupo.nombre;
@@ -71,7 +72,7 @@ namespace SharkAdministrativo.Modelo
         public Grupo getForID(int id)
         {
             Grupo grupo = new Grupo();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 grupo = db.Grupos.Find(id);
             }
@@ -85,7 +86,7 @@ namespace SharkAdministrativo.Modelo
         public List<Grupo> obtenerTodos()
         {
             List<Grupo> grupos = new List<Grupo>();
-            bdsharkEntities db = new bdsharkEntities();
+            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
 
             db.Configuration.LazyLoadingEnabled = true;
             var gruposQuery = from grupo in db.Grupos select grupo;
@@ -105,7 +106,7 @@ namespace SharkAdministrativo.Modelo
         public Grupo obtener(string name)
         {
             Grupo group = new Grupo();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var grupoQuery = from grupo in db.Grupos where grupo.nombre == name select grupo;
@@ -120,7 +121,7 @@ namespace SharkAdministrativo.Modelo
 
         public void delete(Grupo d_grupo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 var Query = from grupo in db.Grupos where grupo.id == d_grupo.id select grupo;
                 foreach (var grupo in Query)

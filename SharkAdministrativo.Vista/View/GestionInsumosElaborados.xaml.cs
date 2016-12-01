@@ -195,6 +195,7 @@ namespace SharkAdministrativo.Vista
             foreach (var item in almacenes)
             {
                 cbxAlmacenes.Items.Add(item.nombre);
+
             }
         }
 

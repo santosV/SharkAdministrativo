@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using SDKCONTPAQi;
     
     public partial class Salida_almacen
     {
@@ -27,7 +28,7 @@ namespace SharkAdministrativo.Modelo
         public virtual Almacen Almacen { get; set; }
 
         public void registrar(Salida_almacen salida) {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Tipo_movimientos.Attach(salida.Tipo_movimiento);

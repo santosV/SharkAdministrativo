@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using SDKCONTPAQi;
     
     public partial class Factura
     {
@@ -45,7 +46,7 @@ namespace SharkAdministrativo.Modelo
         {
             string o_folio = "";
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -68,7 +69,7 @@ namespace SharkAdministrativo.Modelo
         /// <returns>El objeto agregado.</returns>
         public Factura registrar(Factura factura)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 try

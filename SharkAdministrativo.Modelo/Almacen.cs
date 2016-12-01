@@ -13,7 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    
+    using SDKCONTPAQi;
     public partial class Almacen
     {
         public Almacen()
@@ -40,7 +40,7 @@ namespace SharkAdministrativo.Modelo
         public List<Almacen> obtenerTodos()
         {
             List<Almacen> almacenes = new List<Almacen>();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var almacenesQuery = from almacen in db.Almacenes select almacen;
@@ -61,7 +61,7 @@ namespace SharkAdministrativo.Modelo
         /// <returns>El objeto único encontrado.</returns>
         public Almacen getForId(int id)
         {
-            bdsharkEntities db = new bdsharkEntities();
+            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
             return db.Almacenes.Find(id);
         }
 
@@ -73,7 +73,7 @@ namespace SharkAdministrativo.Modelo
         public Almacen obtener(string Name)
         {
             Almacen almacen = new Almacen();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -97,7 +97,7 @@ namespace SharkAdministrativo.Modelo
         public int obtenerID(string Name)
         {
             Almacen almacen = new Almacen();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -120,7 +120,7 @@ namespace SharkAdministrativo.Modelo
         public Almacen obtenerCodigo(string codigo)
         {
             Almacen almacen = new Almacen();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -141,7 +141,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="almacen">Objeto a registrar.</param>
         public void registrar(Almacen almacen)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Almacenes.Add(almacen);
@@ -156,7 +156,7 @@ namespace SharkAdministrativo.Modelo
         public void Modify(Almacen almacen)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 Almacen storage = obtenerCodigo(almacen.codigo);
                 storage.nombre = almacen.nombre;
@@ -167,7 +167,7 @@ namespace SharkAdministrativo.Modelo
 
         public void delete(String codigo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 var Query = from almacen in db.Almacenes where almacen.codigo == codigo select almacen;
                 foreach (var almacen in Query)

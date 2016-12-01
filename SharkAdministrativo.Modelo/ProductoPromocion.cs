@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
+    using SDKCONTPAQi;
     
     public partial class ProductoPromocion
     {
@@ -30,7 +31,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="detalle">el objeto a registrar.</param>
         public void registrar(ProductoPromocion detalle)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Productos.Attach(detalle.Producto);
@@ -48,7 +49,7 @@ namespace SharkAdministrativo.Modelo
         public ProductoPromocion obtener(int id)
         {
             ProductoPromocion detalle = new ProductoPromocion();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 detalle = db.ProductoPromocion.Find(id);
 
@@ -64,7 +65,7 @@ namespace SharkAdministrativo.Modelo
         public List<ProductoPromocion> obtenerTodos(int id)
         {
             List<ProductoPromocion> detalles = new List<ProductoPromocion>();
-            bdsharkEntities db = new bdsharkEntities();
+            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
 
             db.Configuration.LazyLoadingEnabled = true;
             var detallesQuery = from detalle in db.ProductoPromocion where detalle.promocion_id == id select detalle;
@@ -83,7 +84,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(ProductoPromocion detalle)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 ProductoPromocion n_detalle = db.ProductoPromocion.Find(detalle.id);
                 n_detalle.cantidad = detalle.cantidad;
@@ -102,7 +103,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_detalle">El objeto a eliminar.</param>
         public void eliminar(ProductoPromocion _detalle)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 var Query = from detalle in db.ProductoPromocion where detalle.id == _detalle.id select detalle;
 

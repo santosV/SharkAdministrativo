@@ -21,3 +21,4 @@ C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAd
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.csprojResolveAssemblyReference.cache
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.dll
 C:\Users\adanp\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.pdb
+C:\Users\Santos Vega\Documents\Visual Studio 2013\Projects\SharkAdministrativo\SharkAdministrativo.SDKCONTPAQi\obj\Debug\SharkAdministrativo.SDKCONTPAQi.csprojResolveAssemblyReference.cache

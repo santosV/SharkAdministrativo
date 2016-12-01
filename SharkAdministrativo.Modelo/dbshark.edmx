@@ -42,6 +42,7 @@
           <Property Name="municipio" Type="varchar" MaxLength="50" />
           <Property Name="estado" Type="varchar" MaxLength="50" />
           <Property Name="pais" Type="varchar" MaxLength="50" />
+          <Property Name="datasource" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="EntradasPresentaciones">
           <Key>
@@ -228,12 +229,12 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Unidad_Medida">
+        <EntityType Name="Unidades_Medida">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityContainer Name="bdsharkModelStoreContainer">
           <EntitySet Name="Almacenes" EntityType="Self.Almacenes" Schema="dbo" store:Type="Tables" />
@@ -253,7 +254,7 @@
           <EntitySet Name="Recetas" EntityType="Self.Recetas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salidas_almacen" EntityType="Self.Salidas_almacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tipo_movimientos" EntityType="Self.Tipo_movimientos" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Unidad_Medida" EntityType="Self.Unidad_Medida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidades_Medida" EntityType="Self.Unidades_Medida" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -406,6 +407,7 @@
           <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Proveedor" Relationship="bdsharkModel.EmpresaProveedor" FromRole="Empresa" ToRole="Proveedor" />
+          <Property Name="datasource" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EntradaPresentacion">
           <Key>
@@ -859,7 +861,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Insumo" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Unidad_Medida" ToRole="Insumo" />
           <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="Unidad_Medida" ToRole="InsumoElaborado" />
         </EntityType>
@@ -921,6 +923,7 @@
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="bdsharkModel.Empresa">
               <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="datasource" ColumnName="datasource" />
                 <ScalarProperty Name="pais" ColumnName="pais" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="municipio" ColumnName="municipio" />
@@ -1135,7 +1138,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Unidades_Medida">
             <EntityTypeMapping TypeName="bdsharkModel.Unidad_Medida">
-              <MappingFragment StoreEntitySet="Unidad_Medida">
+              <MappingFragment StoreEntitySet="Unidades_Medida">
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

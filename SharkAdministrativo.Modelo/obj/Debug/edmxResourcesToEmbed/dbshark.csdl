@@ -147,6 +147,7 @@
     <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Proveedor" Relationship="bdsharkModel.EmpresaProveedor" FromRole="Empresa" ToRole="Proveedor" />
+    <Property Name="datasource" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="EntradaPresentacion">
     <Key>
@@ -600,7 +601,7 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Insumo" Relationship="bdsharkModel.Unidad_MedidaInsumo" FromRole="Unidad_Medida" ToRole="Insumo" />
     <NavigationProperty Name="InsumoElaborado" Relationship="bdsharkModel.Unidad_MedidaInsumoElaborado" FromRole="Unidad_Medida" ToRole="InsumoElaborado" />
   </EntityType>

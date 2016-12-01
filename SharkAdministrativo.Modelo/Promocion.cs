@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
+    using SDKCONTPAQi;
     
     public partial class Promocion
     {
@@ -43,7 +44,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="promocion">Objeto a reistrar.</param>
         public void registrar(Promocion promocion)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Promociones.Add(promocion);
                 db.SaveChanges();
@@ -57,7 +58,7 @@ namespace SharkAdministrativo.Modelo
         public List<Promocion> obtenerTodos()
         {
             List<Promocion> promociones = new List<Promocion>();
-            bdsharkEntities db = new bdsharkEntities();
+            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
 
             db.Configuration.LazyLoadingEnabled = true;
             var promocionesQuery = from promocion in db.Promociones select promocion;
@@ -77,7 +78,7 @@ namespace SharkAdministrativo.Modelo
         public Promocion obtenerPorId(int id)
         {
             Promocion promocion = new Promocion();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 promocion = db.Promociones.Find(id);
             }
@@ -91,7 +92,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Promocion promocion)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 Promocion n_promocion = db.Promociones.Find(promocion.id);
                 n_promocion.descripcion = promocion.descripcion;
@@ -124,7 +125,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_promocion">El objeto a elimianr.</param>
         public void eliminar(Promocion _promocion)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 var promocionQuery = from promocion in db.Promociones where promocion.id == _promocion.id select promocion;
 

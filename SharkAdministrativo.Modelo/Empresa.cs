@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
+    using SDKCONTPAQi;
     
     public partial class Empresa
     {
@@ -32,6 +33,8 @@ namespace SharkAdministrativo.Modelo
         public string municipio { get; set; }
         public string estado { get; set; }
         public string pais { get; set; }
+        public string datasource { get; set; }
+    
     
         public virtual ICollection<Proveedor> Proveedor { get; set; }
 
@@ -46,7 +49,7 @@ namespace SharkAdministrativo.Modelo
             Empresa company = new Empresa();
 
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -72,7 +75,7 @@ namespace SharkAdministrativo.Modelo
             Empresa company = new Empresa();
 
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -95,7 +98,7 @@ namespace SharkAdministrativo.Modelo
         {
 
             List<Empresa> empresas = new List<Empresa>();
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
 
                 db.Configuration.LazyLoadingEnabled = true;

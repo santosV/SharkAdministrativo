@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Linq;
     using System.Data;
+    using SDKCONTPAQi;
     
     public partial class EntradaPresentacion
     {
@@ -27,7 +28,7 @@ namespace SharkAdministrativo.Modelo
 
         public void registrar(EntradaPresentacion entrada)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Presentaciones.Attach(entrada.Presentacion);
