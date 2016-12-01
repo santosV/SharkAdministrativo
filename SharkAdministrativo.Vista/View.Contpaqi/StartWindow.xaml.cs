@@ -97,8 +97,9 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                 string server = cbxServers.SelectedItem.ToString();
                 configurarEntorno(dataBase, server);
             }
-            else {
-                MessageBox.Show("ES NECESARIO QUE SELECCIONES TU SERVIDOR PARA LA CONFIGURACIÓN","AVISO SHARK");
+            else
+            {
+                MessageBox.Show("ES NECESARIO QUE SELECCIONES TU SERVIDOR PARA LA CONFIGURACIÓN", "AVISO SHARK");
             }
 
         }
@@ -123,7 +124,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                     }
                     else
                     {
-                        MessageBox.Show("ERORR: error al obtener la empresa :(","AVISO SHARK");
+                        MessageBox.Show("ERORR: error al obtener la empresa :(", "AVISO SHARK");
                         this.Close();
                     }
                     exist = true;
@@ -146,11 +147,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         }
 
-        private static string createDataSource(string server, string database)
+        private string createDataSource(string server, string database)
         {
             EntityConnectionStringBuilder constructorConexion = new EntityConnectionStringBuilder();
             constructorConexion.Provider = "System.Data.SqlClient";
-            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + database + ";user id=sa;password=123456;MultipleActiveResultSets=True;App=EntityFramework";
+            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + database + ";user id=" + txtUser.Text + ";password=" + txtPassword.Text + ";MultipleActiveResultSets=True;App=EntityFramework";
             constructorConexion.Metadata = "res://*/dbshark.csdl|res://*/dbshark.ssdl|res://*/dbshark.msl";
             return constructorConexion.ToString();
         }
@@ -199,7 +200,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             conexion.SaveChanges();
             if (nEmpresa.id > 0)
             {
-                MessageBox.Show("Hola, bienvenido a Shark POS " + SDK.companyName + ", Se ha configurado el entorno correctamente!","BIENVENIDA A SHARK");
+                MessageBox.Show("Hola, bienvenido a Shark POS " + SDK.companyName + ", Se ha configurado el entorno correctamente!", "BIENVENIDA A SHARK");
             }
             else
             {
@@ -709,7 +710,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al obtener las bases de datos :(","AVISO SHARK");
+                MessageBox.Show("Error al obtener las bases de datos :(", "AVISO SHARK");
             }
             return null;
         }

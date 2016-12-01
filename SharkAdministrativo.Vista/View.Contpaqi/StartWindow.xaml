@@ -2,23 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="SharkAdministrativo.Vista.View.Contpaqi.StartWindow"
-        Title="Conexión Shark POS" Height="210" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/SharkAdministrativo.Vista;component/Assets/061ba27 (1).png">
-    <Grid>
+        Title="Conexión Shark POS" Width="411" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/SharkAdministrativo.Vista;component/Assets/061ba27 (1).png" Height="245" VerticalAlignment="Top">
+   
 
         <dxlc:LayoutGroup Margin="0" Padding="0">
-            <dxlc:LayoutGroup Header="CONEXIÓN A CONTPAQi COMERCIAL" View="GroupBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="354" Height="177">
-                <dxlc:LayoutItem Label="Empresa  ">
-                    <dxe:TextEdit x:Name="txtRutaEmpresa" IsReadOnly="True"/>
-                </dxlc:LayoutItem>
-                <Button x:Name="btnSeleccionar" Click="btnSeleccionar_Click" Content="Seleccionar " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,-10,0"/>
-                <Button x:Name="btnIngresar" IsEnabled="false" Click="btnIngresar_Click" Content="Entrar" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-427,112,372,28"/>
-                <dxlc:LayoutGroup x:Name="groupConexion" Header="SERVIDORES SQL" View="GroupBox" Margin="-324,27,226,-92" HorizontalAlignment="Stretch" Background="#FF006AD4">
-                    <dxlc:LayoutItem Label="Servidor: " Height="22" Width="306" Foreground="White">
-                        <dxe:ComboBoxEdit x:Name="cbxServers" AutoComplete="True"/>
+            <dxlc:LayoutControl HorizontalAlignment="Left" VerticalAlignment="Top" Width="405" Margin="0,0,-381,-275" Padding="0,0,0,10">
+                <dxlc:LayoutGroup Header="Conexíon con  Contpaqi Comercial" View="GroupBox" Orientation="Vertical" VerticalAlignment="Top" Margin="0" Padding="0">
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="Empresa:">
+                        <dxe:TextEdit x:Name="txtRutaEmpresa"/>
                     </dxlc:LayoutItem>
+                    <Button x:Name="btnSeleccionar" Click="btnSeleccionar_Click" Content="Seleccionar Empresa" HorizontalAlignment="Center"/>
                 </dxlc:LayoutGroup>
-            </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Header="Conexión SQL" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
+                        <dxlc:LayoutItem Label="Servidor: ">
+                            <dxe:ComboBoxEdit x:Name="cbxServers"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Usuario:">
+                            <dxe:TextEdit x:Name="txtUser"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Contraseña: ">
+                            <dxe:PasswordBoxEdit x:Name="txtPassword"/>
+                        </dxlc:LayoutItem>
+                        <Button x:Name="btnIngresar" Content="Ingresar" Click="btnIngresar_Click" HorizontalAlignment="Center"/>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutControl>
         </dxlc:LayoutGroup>
 
-    </Grid>
 </Window>
