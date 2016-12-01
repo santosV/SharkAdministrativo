@@ -141,7 +141,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             {
                 if (generarScript(server, companyName) != true)
                 {
-                    configurarEmpresa(createDataSource(server, "Shark_" + companyName));
+                    configurarEmpresa(createDataSource(server, "Shark_" + companyName),server);
                 }
 
             }
@@ -171,7 +171,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// Crea la empresa y los datos por default en la base de datos.
         /// </summary>
         /// <param name="connection">La conexión de entity framework.</param>
-        private static void configurarEmpresa(string connection)
+        private static void configurarEmpresa(string connection, string server)
         {
 
             bdsharkEntities conexion = new bdsharkEntities(connection);
@@ -193,6 +193,20 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             area3.nombre = "COCINA";
             AreaProduccion area4 = new AreaProduccion();
             area4.nombre = "SERVICIO";
+
+            System.Data.SqlClient.SqlConnection sqlConnection1 = new System.Data.SqlClient.SqlConnection("Data Source=" + server + ";Integrated Security=SSPI;Initial Catalog=ad" + SDK.companyName);
+
+            //Crea los valores 
+            for (int i = 13; i <=18; i++)
+            {
+                System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand();
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandText = "INSERT admClasificacionesValores (CVALORCLASIFICACION, CIDCLASIFICACION) VALUES ('(Ninguna)', '"+i+"')";
+                cmd.Connection = sqlConnection1;
+                sqlConnection1.Open();
+                cmd.ExecuteNonQuery();
+                sqlConnection1.Close();
+            }
 
             conexion.Tipo_movimientos.Add(mvto1);
             conexion.Tipo_movimientos.Add(mvto2);
