@@ -61,7 +61,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             carpeta.SelectedPath = @"C:\Compac\Empresas\";
             carpeta.ShowDialog();
             txtRutaEmpresa.Text = carpeta.SelectedPath;
-            
+
             try
             {
 
@@ -71,9 +71,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                     int error = SDK.startSDK();
                     if (error == 0)
                     {
-                       
                         btnIngresar.IsEnabled = true;
-
                     }
                 }
                 /*
@@ -91,12 +89,18 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// <param name="e"></param>
         private void btnIngresar_Click(object sender, RoutedEventArgs e)
         {
-            
-            SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
-            string dataBase = SDK.companyName;
-            string server = cbxServers.SelectedItem.ToString();
-            configurarEntorno(dataBase,server);
-            
+
+            if (cbxServers.SelectedItem != null)
+            {
+                SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
+                string dataBase = SDK.companyName;
+                string server = cbxServers.SelectedItem.ToString();
+                configurarEntorno(dataBase, server);
+            }
+            else {
+                MessageBox.Show("ES NECESARIO QUE SELECCIONES TU SERVIDOR PARA LA CONFIGURACIÓN","AVISO SHARK");
+            }
+
         }
 
         public void configurarEntorno(string companyName, string server)
@@ -117,8 +121,9 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                     {
                         SDK.companyConnection = company.datasource;
                     }
-                    else {
-                        MessageBox.Show("ERORR: error al obtener la empresa :(");
+                    else
+                    {
+                        MessageBox.Show("ERORR: error al obtener la empresa :(","AVISO SHARK");
                         this.Close();
                     }
                     exist = true;
@@ -128,11 +133,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
             if (exist != true)
             {
-                if (generarScript(server,companyName) != true)
+                if (generarScript(server, companyName) != true)
                 {
-                    configurarEmpresa(createDataSource(server,"Shark_"+companyName));
+                    configurarEmpresa(createDataSource(server, "Shark_" + companyName));
                 }
-                
+
             }
             MainWindow view = new MainWindow();
             view.lblEmpresa.Text = "@" + SDK.companyName;
@@ -141,17 +146,18 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         }
 
-        private static string createDataSource(string server, string database) {
+        private static string createDataSource(string server, string database)
+        {
             EntityConnectionStringBuilder constructorConexion = new EntityConnectionStringBuilder();
             constructorConexion.Provider = "System.Data.SqlClient";
-            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + database + ";user id=sa;password=123456;MultipleActiveResultSets=True;App=EntityFramework";
+            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + database + ";MultipleActiveResultSets=True;App=EntityFramework";
             constructorConexion.Metadata = "res://*/dbshark.csdl|res://*/dbshark.ssdl|res://*/dbshark.msl";
             return constructorConexion.ToString();
         }
 
         private static void configurarEmpresa(string connection)
         {
-            
+
             bdsharkEntities conexion = new bdsharkEntities(connection);
             Empresa nEmpresa = new Empresa();
             nEmpresa.datasource = connection;
@@ -193,12 +199,13 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             conexion.SaveChanges();
             if (nEmpresa.id > 0)
             {
-                MessageBox.Show("Hola, bienvenido a Shark POS " + SDK.companyName + ", Se ha configurado el entorno correctamente!");
+                MessageBox.Show("Hola, bienvenido a Shark POS " + SDK.companyName + ", Se ha configurado el entorno correctamente!","BIENVENIDA A SHARK");
             }
-            else {
+            else
+            {
                 MessageBox.Show("Lo sentimos, existen errores de configuración :(");
             }
-            
+
 
         }
 
@@ -217,7 +224,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             try
             {
                 System.IO.File.WriteAllText(@"C:\SharkCreateDB_" + companyName + ".sql", line);
-                ProcessStartInfo cmd = new ProcessStartInfo("sqlcmd", "-S "+server+" -i C:\\SharkCreateDB_" + companyName + ".sql");
+                ProcessStartInfo cmd = new ProcessStartInfo("sqlcmd", "-S " + server + " -i C:\\SharkCreateDB_" + companyName + ".sql");
                 cmd.UseShellExecute = false;
                 cmd.CreateNoWindow = true;
                 cmd.RedirectStandardOutput = true;
@@ -560,33 +567,33 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                             "\n)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]" +
                             "\n) ON [PRIMARY]" +
                             "\nGO" +
-                            "\nSET ANSI_NULLS ON"+
-                            "\nGO"+
-                            "\nSET QUOTED_IDENTIFIER ON"+
-                            "\nGO"+
-                            "\nSET ANSI_PADDING ON"+
-                            "\nGO"+
-                            "\nCREATE TABLE [dbo].[Empresas]("+
-	                            "\n[id] [int] IDENTITY(1,1) NOT NULL,"+
-	                            "\n[nombre] [varchar](100) NULL,"+
-	                            "\n[rfc] [nchar](15) NULL,"+
-	                            "\n[calle] [varchar](50) NULL,"+
-	                            "\n[noExterior] [nchar](10) NULL,"+
-	                            "\n[codigo_postal] [nchar](10) NULL,"+
-	                            "\n[colonia] [varchar](50) NULL,"+
-	                            "\n[localidad] [varchar](50) NULL,"+
-	                            "\n[municipio] [varchar](50) NULL,"+
-	                            "\n[estado] [varchar](50) NULL,"+
-	                            "\n[pais] [varchar](50) NULL,"+
-	                            "\n[datasource] [varchar](500) NULL,"+
-                                "\nCONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED"+ 
-                            "\n("+
-	                            "\n[id] ASC"+
-                            "\n)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]"+
-                            "\n) ON [PRIMARY]"+
-                            "\nGO"+
-                            "\nSET ANSI_PADDING OFF"+
-                            "\nGO"+
+                            "\nSET ANSI_NULLS ON" +
+                            "\nGO" +
+                            "\nSET QUOTED_IDENTIFIER ON" +
+                            "\nGO" +
+                            "\nSET ANSI_PADDING ON" +
+                            "\nGO" +
+                            "\nCREATE TABLE [dbo].[Empresas](" +
+                                "\n[id] [int] IDENTITY(1,1) NOT NULL," +
+                                "\n[nombre] [varchar](100) NULL," +
+                                "\n[rfc] [nchar](15) NULL," +
+                                "\n[calle] [varchar](50) NULL," +
+                                "\n[noExterior] [nchar](10) NULL," +
+                                "\n[codigo_postal] [nchar](10) NULL," +
+                                "\n[colonia] [varchar](50) NULL," +
+                                "\n[localidad] [varchar](50) NULL," +
+                                "\n[municipio] [varchar](50) NULL," +
+                                "\n[estado] [varchar](50) NULL," +
+                                "\n[pais] [varchar](50) NULL," +
+                                "\n[datasource] [varchar](500) NULL," +
+                                "\nCONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED" +
+                            "\n(" +
+                                "\n[id] ASC" +
+                            "\n)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]" +
+                            "\n) ON [PRIMARY]" +
+                            "\nGO" +
+                            "\nSET ANSI_PADDING OFF" +
+                            "\nGO" +
                             "\nSET ANSI_NULLS ON " +
                             "\nGO " +
                             "\nSET QUOTED_IDENTIFIER ON " +
@@ -702,7 +709,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al obtener las bases de datos :(");
+                MessageBox.Show("Error al obtener las bases de datos :(","AVISO SHARK");
             }
             return null;
         }
