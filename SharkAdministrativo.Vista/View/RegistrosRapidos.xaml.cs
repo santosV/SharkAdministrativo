@@ -296,6 +296,17 @@ namespace SharkAdministrativo.Vista
             }
             else if (!String.IsNullOrEmpty(txtAlmacen.Text) && (!String.IsNullOrEmpty(txtCodigo.Text)))
             {
+                for (int i = 0; i < dtAlmacenes.Rows.Count; i++)
+                {
+                    DataRow row = dtAlmacenes.Rows[i];
+                    String abreV = row[0].ToString();
+                    if (abreV.ToString().Contains(txtCodigo.Text))
+                    {
+                        MessageBox.Show("EL CÓDIGO DEL ALMACÉN YA EXISTE","AVISO SHARK");
+                        return;
+                    }
+                }
+
                 almacen.codigo = txtCodigo.Text;
                 almacen.nombre = txtAlmacen.Text;
 
@@ -368,18 +379,16 @@ namespace SharkAdministrativo.Vista
             {
                 if (tblClasificaciones.SelectedItem == null)
                 {
-                    int erro = SDK.fPosPrimerValorClasif();
-                    while (erro == 0)
+                    for (int i = 0; i < dtClasificaciones.Rows.Count; i++)
                     {
-                        StringBuilder valorCla = new StringBuilder(4);
-                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION",valorCla,4);
-                        if(valorCla.Equals(txtAbreviatura.Text)){
-                            MessageBox.Show("La abreviatura ya existe");
+                        DataRow row = dtClasificaciones.Rows[i];
+                        String abreV = row[1].ToString();
+                        if (abreV.ToString().Contains(txtAbre.Text))
+                        {
+                            MessageBox.Show("LA ABREVIATURA YA EXISTE", "AVISO SHARK");
                             return;
                         }
                     }
-
-
                     int error = SDK.fInsertaValorClasif();
                     if (error == 0)
                     {
