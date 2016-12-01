@@ -104,12 +104,17 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         }
 
+        /// <summary>
+        /// Valida que empresa se está abriendo y si no está registrada manda llamar los métodos de configuración de entorno.
+        /// </summary>
+        /// <param name="companyName">Nombre de la empresa</param>
+        /// <param name="server">Servidor de SQL</param>
         public void configurarEntorno(string companyName, string server)
         {
             //omite espacios en nombre de la empresa.
             companyName = companyName.Replace(" ", "_");
 
-            string[] companyDataBases = obtenerBasesDeDatos(server);
+            string[] companyDataBases = obtenerBasesDeDatos(server);//Obtiene todas las bases de datos del servidor especificado.
             bool exist = false;
             Empresa company = new Empresa();
             foreach (var empresa in companyDataBases)
@@ -147,6 +152,12 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         }
 
+        /// <summary>
+        /// Crea la cadena de conexión con los estandares de Entity framework.
+        /// </summary>
+        /// <param name="server">Nombre del servidor.</param>
+        /// <param name="database">Nombre de la base de datos.</param>
+        /// <returns>El datasource para la conexión.</returns>
         private string createDataSource(string server, string database)
         {
             EntityConnectionStringBuilder constructorConexion = new EntityConnectionStringBuilder();
@@ -156,6 +167,10 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             return constructorConexion.ToString();
         }
 
+        /// <summary>
+        /// Crea la empresa y los datos por default en la base de datos.
+        /// </summary>
+        /// <param name="connection">La conexión de entity framework.</param>
         private static void configurarEmpresa(string connection)
         {
 
@@ -669,6 +684,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             return error;
         }
 
+        /// <summary>
+        /// Obtiene todas las bases de datos disponibles en el servidor / instancia seleccionada.
+        /// </summary>
+        /// <param name="instancia">servidor / instancia de donde se buscara o añadirá la base de datos.</param>
+        /// <returns>un arreglo de las bases de datos.</returns>
         public static String[] obtenerBasesDeDatos(string instancia)
         {
             // Las bases de datos propias de SQL Server
