@@ -12,8 +12,8 @@
                 </dxlc:LayoutItem>
                 <Button x:Name="btnSeleccionar" Click="btnSeleccionar_Click" Content="Seleccionar " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,-10,0"/>
                 <Button x:Name="btnIngresar" IsEnabled="false" Click="btnIngresar_Click" Content="Entrar" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-427,112,372,28"/>
-                <dxlc:LayoutGroup x:Name="groupConexion" Header="SERVIDORES SQL" View="GroupBox" Margin="-324,27,226,-92" HorizontalAlignment="Stretch">
-                    <dxlc:LayoutItem Label="Servidor: " Height="22" Width="306">
+                <dxlc:LayoutGroup x:Name="groupConexion" Header="SERVIDORES SQL" View="GroupBox" Margin="-324,27,226,-92" HorizontalAlignment="Stretch" Background="#FF006AD4">
+                    <dxlc:LayoutItem Label="Servidor: " Height="22" Width="306" Foreground="White">
                         <dxe:ComboBoxEdit x:Name="cbxServers" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>

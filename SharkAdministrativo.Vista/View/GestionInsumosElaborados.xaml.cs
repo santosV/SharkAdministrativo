@@ -534,7 +534,7 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿Está seguro de eliminar el insumo '" + seleccion.Row.ItemArray[1] + "'?", "Eliminación de Insumo Elaborado", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    int error = SDK.fEliminarCteProv(txtCodigo.Text);
+                    int error = SDK.fEliminarProducto(txtCodigo.Text);
 
                     if (error == 0)
                     {
@@ -679,7 +679,7 @@ namespace SharkAdministrativo.Vista
             }
             else
             {
-                MessageBox.Show("La andas cagando papu :V");
+                MessageBox.Show("ERROR: SELECCIONE EL INSUMO ELABORADO DEL CUAL QUIERE CREAR LA RECTA","AVISO SHARK");
             }
         }
 
@@ -1267,7 +1267,7 @@ namespace SharkAdministrativo.Vista
                 MessageBoxResult dialogResult = MessageBox.Show("¿ESTÁ SEGURO DE ELIMINAR EL PRODUCTO '" + seleccion.Row.ItemArray[1] + "'?", "ELIMINACIÓN DE PRODUCTO", MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    int error = SDK.fEliminarCteProv(txtCodigoP.Text);
+                    int error = SDK.fEliminarProducto(txtCodigoP.Text);
 
                     if (error == 0)
                     {

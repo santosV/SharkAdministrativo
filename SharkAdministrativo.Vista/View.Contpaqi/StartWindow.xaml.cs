@@ -150,7 +150,7 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         {
             EntityConnectionStringBuilder constructorConexion = new EntityConnectionStringBuilder();
             constructorConexion.Provider = "System.Data.SqlClient";
-            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + database + ";MultipleActiveResultSets=True;App=EntityFramework";
+            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + database + ";user id=sa;password=123456;MultipleActiveResultSets=True;App=EntityFramework";
             constructorConexion.Metadata = "res://*/dbshark.csdl|res://*/dbshark.ssdl|res://*/dbshark.msl";
             return constructorConexion.ToString();
         }

@@ -331,7 +331,7 @@ namespace SharkAdministrativo.Vista
                     presentacion.id = Convert.ToInt32(seleccion.Row.ItemArray[0].ToString());
                     if (presentacion.id > 0)
                     {
-                        int error = SDK.fEliminarCteProv(txtCodigoPr.Text);
+                        int error = SDK.fEliminarProducto(txtCodigoPr.Text);
                         if (error == 0)
                         {
                             presentacion.eliminar(presentacion);
