@@ -227,7 +227,7 @@ namespace SharkAdministrativo.Vista
 
                     medida.registrar(medida);
                     llenarUnidades();
-                    cbxUmedida.SelectedItem = unidadDeMedida.cNombreUnidad;
+                    cbxUmedida.SelectedItem = cIdUnidadDeMedida + " | " + unidadDeMedida.cNombreUnidad;
                     groupUnidades.Visibility = Visibility.Collapsed;
                 }
                 else
