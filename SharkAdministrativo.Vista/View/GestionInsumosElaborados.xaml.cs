@@ -705,7 +705,7 @@ namespace SharkAdministrativo.Vista
             }
             else
             {
-                MessageBox.Show("La andas cagando papu :V");
+                MessageBox.Show("ERROR: SELECCIONE EL PRODUCTO DEL CUAL QUIERE CREAR LA RECTA", "AVISO SHARK");
             }
         }
 
