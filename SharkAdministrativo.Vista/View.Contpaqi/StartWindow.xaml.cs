@@ -185,13 +185,6 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             Tipo_movimiento mvto2 = new Tipo_movimiento();
             mvto2.nombre = "TRASPASO";
 
-            Almacen almacen1 = new Almacen();
-            Almacen almacen2 = new Almacen();
-            Almacen almacen3 = new Almacen();
-            almacen1.nombre = "REFRIGERADOR";
-            almacen2.nombre = "CONGELADOR";
-            almacen3.nombre = "PRODUCTO SECO";
-
             AreaProduccion area1 = new AreaProduccion();
             area1.nombre = "RESTAURTANTE";
             AreaProduccion area2 = new AreaProduccion();
@@ -203,9 +196,6 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
             conexion.Tipo_movimientos.Add(mvto1);
             conexion.Tipo_movimientos.Add(mvto2);
-            conexion.Almacenes.Add(almacen1);
-            conexion.Almacenes.Add(almacen2);
-            conexion.Almacenes.Add(almacen3);
             conexion.AreasProduccion.Add(area1);
             conexion.AreasProduccion.Add(area2);
             conexion.AreasProduccion.Add(area3);
