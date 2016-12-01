@@ -36,7 +36,9 @@ namespace SharkAdministrativo.Modelo
         {
             using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
             {
+
                 db.Configuration.LazyLoadingEnabled = true;
+                db.Insumos.Attach(ingrediente.Insumo);
                 if (ingrediente.InsumoElaborado != null)
                 {
                     db.InsumosElaborados.Attach(ingrediente.InsumoElaborado);
