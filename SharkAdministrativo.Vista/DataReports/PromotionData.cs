@@ -11,7 +11,9 @@ namespace SharkAdministrativo.Vista.DataReports
         public PromotionData()
         {
             InitializeComponent();
+            
         }
 
+        
     }
 }

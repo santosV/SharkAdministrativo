@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SharkAdministrativo.Modelo;
 
 namespace SharkAdministrativo.Vista.ReportsView
 {
@@ -27,6 +28,8 @@ namespace SharkAdministrativo.Vista.ReportsView
 
         public void loadReport() {
             DataReports.PromotionData report = new DataReports.PromotionData();
+            bdsharkEntities db = new bdsharkEntities(SDKCONTPAQi.SDK.companyConnection);
+            report.DataSource = db.Promociones;
             promotionViewer.DocumentSource = report;
             report.CreateDocument();
         }
