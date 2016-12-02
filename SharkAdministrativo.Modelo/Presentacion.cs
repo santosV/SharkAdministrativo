@@ -70,6 +70,10 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        /// <summary>
+        /// Modifica un objeto de tipo Presentación en Shark.
+        /// </summary>
+        /// <param name="presentation"></param>
         public void modificar(Presentacion presentation)
         {
             using (bdsharkEntities db = new bdsharkEntities())
@@ -196,6 +200,11 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        /// <summary>
+        /// Obtiene una presentación de acuerdo a las cuencidencias de un objeto de la base de datos encontrada y el ingresado por parámetro.
+        /// </summary>
+        /// <param name="presentation"></param>
+        /// <returns></returns>
         public Presentacion obtener(Presentacion presentation)
         {
             Presentacion r_presentacion = new Presentacion();
@@ -217,6 +226,11 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        /// <summary>
+        /// Obtiene un objeto presentación a través de su identificador.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Presentacion obtener(int id)
         {
             Presentacion r_presentacion = new Presentacion();
@@ -235,7 +249,11 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
-
+        /// <summary>
+        /// Obtiene un objeto presentación a través de su descripción.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Presentacion get(string name)
         {
             Presentacion r_presentacion = new Presentacion();
@@ -252,6 +270,11 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        /// <summary>
+        /// Suma la cantidad de entradas que se generan a la existencia de la presentación.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cantidad"></param>
         public void sumarEntrada(int id, double cantidad)
         {
             Presentacion presentacion = new Presentacion();
@@ -266,6 +289,10 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        /// <summary>
+        /// Obtiene todos los objetos de tipo presentación registrados.
+        /// </summary>
+        /// <returns></returns>
         public List<Presentacion> getAll()
         {
             List<Presentacion> presentaciones = new List<Presentacion>();

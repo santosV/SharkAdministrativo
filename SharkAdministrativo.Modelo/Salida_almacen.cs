@@ -27,6 +27,10 @@ namespace SharkAdministrativo.Modelo
         public virtual Tipo_movimiento Tipo_movimiento { get; set; }
         public virtual Almacen Almacen { get; set; }
 
+        /// <summary>
+        /// Registra una salida de almacén
+        /// </summary>
+        /// <param name="salida">el objeto salida</param>
         public void registrar(Salida_almacen salida) {
             using (bdsharkEntities db = new bdsharkEntities())
             {

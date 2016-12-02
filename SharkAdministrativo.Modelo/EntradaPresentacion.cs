@@ -26,6 +26,10 @@ namespace SharkAdministrativo.Modelo
         public virtual Almacen Almacen { get; set; }
         public virtual Presentacion Presentacion { get; set; }
 
+        /// <summary>
+        /// Registra una entrada de almacén en Shark.
+        /// </summary>
+        /// <param name="entrada"></param>
         public void registrar(EntradaPresentacion entrada)
         {
             using (bdsharkEntities db = new bdsharkEntities())

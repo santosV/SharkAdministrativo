@@ -101,6 +101,10 @@ namespace SharkAdministrativo.Modelo
             }
         }
 
+        /// <summary>
+        /// Elimina una categoría creada en shark.
+        /// </summary>
+        /// <param name="id"></param>
         public void delete(int id)
         {
             using (bdsharkEntities db = new bdsharkEntities())

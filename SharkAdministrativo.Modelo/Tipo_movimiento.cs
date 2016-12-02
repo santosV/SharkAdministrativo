@@ -27,6 +27,10 @@ namespace SharkAdministrativo.Modelo
     
         public virtual ICollection<Salida_almacen> Salida_almacen { get; set; }
 
+        /// <summary>
+        /// Obtiene una lista con todos los movimientos.
+        /// </summary>
+        /// <returns></returns>
         public List<Tipo_movimiento> obtenerTodos()
         {
             List<Tipo_movimiento> movimientos = new List<Tipo_movimiento>();

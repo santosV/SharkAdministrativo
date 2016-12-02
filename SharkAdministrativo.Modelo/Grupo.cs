@@ -119,6 +119,10 @@ namespace SharkAdministrativo.Modelo
             return group;
         }
 
+        /// <summary>
+        /// Elimina un grupo creado en shark.
+        /// </summary>
+        /// <param name="d_grupo"></param>
         public void delete(Grupo d_grupo)
         {
             using (bdsharkEntities db = new bdsharkEntities())
