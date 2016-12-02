@@ -71,6 +71,10 @@ namespace SharkAdministrativo.Modelo
             return area;
         }
 
+        /// <summary>
+        /// Obtiene todas las áreas de produccion creadas en shark.
+        /// </summary>
+        /// <returns></returns>
         public List<AreaProduccion> obtenerTodos()
         {
             List<AreaProduccion> areas = new List<AreaProduccion>();

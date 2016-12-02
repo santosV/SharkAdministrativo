@@ -761,7 +761,10 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
 
         private void txtPassword_KeyUp(object sender, KeyEventArgs e)
         {
-            ingresarAShark();
+            if (e.Key == Key.Enter)
+            {
+                ingresarAShark();
+            }
         }
 
 
