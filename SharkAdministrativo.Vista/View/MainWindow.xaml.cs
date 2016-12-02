@@ -130,38 +130,19 @@ namespace SharkAdministrativo.Vista
             bool error = true;
             foreach (XmlElement nodo in receptor)
             {
-                empresa = empresa.obtenerPorRFC(nodo.GetAttribute("rfc"));
-                if (empresa.rfc != null)
+                string nombreEmpresa = nodo.GetAttribute("nombre");
+                nombreEmpresa = nombreEmpresa.Replace(" ", "_");
+                empresa = empresa.obtenerPorNombre(nombreEmpresa);
+
+                foreach (XmlElement domicilio in domicilio_fiscal_receptor)
                 {
-                    if (empresa.nombre.Trim() == nodo.GetAttribute("nombre"))
-                    {
-                        foreach (XmlElement domicilio in domicilio_fiscal_receptor)
-                        {
-                            /* if (empresa.calle.Trim() != domicilio.GetAttribute("calle")) { razon = "calle"; }
-                            else if (empresa.colonia.Trim() != domicilio.GetAttribute("colonia")) { razon = "colonia"; }
-                            else if (empresa.codigo_postal.Trim() != domicilio.GetAttribute("codigoPostal")) { razon = "código postal"; }
-                            else if (empresa.municipio.Trim() != domicilio.GetAttribute("municipio")) { razon = "municipio"; }
-                            else if (empresa.estado.Trim() != domicilio.GetAttribute("estado")) { razon = "estado"; }
-                            else if (empresa.pais.Trim() != domicilio.GetAttribute("pais")) { razon = "país"; }
-                            else if (empresa.noExterior.Trim() != domicilio.GetAttribute("noExterior")) { razon = "número exterior"; }
-                            else {  }
-                             */
-                            proveedor.Empresa = empresa;
-                            obtenerProveedor(xml_factura, url); error = false;
-                        }
-                        if (error == true)
-                        {
-                            MessageBox.Show("ERROR EN FACTURA CON EL FOLIO " + factura.folio + "\nEl campo " + razon + " receptor capturado en la factura no coincide con su empresa, se canceló la operación");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("ERROR EN FACTURA CON EL FOLIO " + factura.folio + "\nEl nombre receptor de la factura está mal capturado, no coincide con su empresa, se canceló la operación");
-                    }
+
+                    proveedor.Empresa = empresa;
+                    obtenerProveedor(xml_factura, url); error = false;
                 }
-                else
+                if (error == true)
                 {
-                    MessageBox.Show("ERROR EN FACTURA CON EL FOLIO " + factura.folio + "\nEl RFC receptor de la factura no coincide con ninguna de sus empresas registradas, se canceló la operación");
+                    MessageBox.Show("ERROR EN FACTURA CON EL FOLIO " + factura.folio + "\nEl campo " + razon + " receptor capturado en la factura no coincide con su empresa, se canceló la operación");
                 }
 
             }//foreach

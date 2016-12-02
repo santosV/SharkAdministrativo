@@ -229,8 +229,8 @@ namespace SharkAdministrativo.Vista
                     if (error == 0)
                     {
                         SDK.fEditaProducto();
-                        SDK.fSetDatoProducto("CBANUNIDADES", unidad.ToString());
-                        SDK.fSetDatoProducto("CIDUNIDADBASE", unidad.ToString());
+                        SDK.fSetDatoProducto("CBANUNIDADES", unidadid.ToString());
+                        SDK.fSetDatoProducto("CIDUNIDADBASE", unidadid.ToString());
                         SDK.fSetDatoProducto("CCONTROLEXISTENCIA", "1");
                         SDK.fSetDatoProducto("CIDVALORCLASIFICACION1", codigoClasificacion);
                         SDK.fGuardaProducto();
@@ -261,7 +261,7 @@ namespace SharkAdministrativo.Vista
             lDocto.aDescuentoDoc2 = 0;
             lDocto.aAfecta = 0;
             lDocto.aSistemaOrigen = 205;
-            lDocto.aCodigoCteProv = proveedor.codigo;
+            lDocto.aCodigoCteProv = txtcodigoProveedor.Text;
             lDocto.aFolio = folio;
             lDocto.aSistemaOrigen = 205;
             lDocto.aSerie = factura.folio;
@@ -575,6 +575,7 @@ namespace SharkAdministrativo.Vista
 
         void clearFields()
         {
+            txtCCimpuesto.Clear();
             cbxInsumos.SelectedItem = null;
             cbxAlmacen.SelectedItem = null;
             txtDescripcion.Clear();
@@ -656,7 +657,7 @@ namespace SharkAdministrativo.Vista
                         proveedor.calle = txtCalleP.Text;
                         proveedor.codigo_postal = txtCodigoPostalP.Text;
                         proveedor.colonia = txtColoniaP.Text;
-                        proveedor.Empresa = empresa.obtenerPorNombre("Baja Salads");
+                        proveedor.Empresa = empresa.obtenerPorNombre(SDK.companyName);
                         proveedor.empresa_id = proveedor.Empresa.id;
                         proveedor.localidad = txtLocalidadP.Text;
                         proveedor.municipio = txtMunicipioP.Text;

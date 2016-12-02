@@ -54,9 +54,7 @@
 
                 </dxr:RibbonPage>
                 <dxr:RibbonPage x:Name="vista_proveedores" Caption="Proveedores">
-                    <dxr:RibbonPageGroup Caption="{x:Null}">
-                        <dxb:BarButtonItem Content="Cargar XML" LargeGlyph="{dx:DXImageGrayscale Image=ExportToXML_32x32.png}" Glyph="{dx:DXImage Image=ExportToXML_16x16.png}"/>
-                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="{x:Null}"/>
                     <dxr:RibbonPageGroup Caption="Gestión De Proveedores">
                         <dxb:BarButtonItem Content="Actualizar Proveedores" ItemClick="Actualizar_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Refresh_32x32.png}" RibbonStyle="Large"/>
                         <dxb:BarButtonItem x:Name="registrarProveedor" ItemClick="registrarProveedor_ItemClick" Content="Registrar"  LargeGlyph="{dx:DXImageGrayscale Image=Add_32x32.png}" Glyph="{dx:DXImageGrayscale Image=Add_32x32.png}" RibbonStyle="Large"/>

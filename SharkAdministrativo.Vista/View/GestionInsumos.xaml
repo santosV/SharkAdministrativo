@@ -18,7 +18,7 @@
                             <dxb:BarButtonItem Content="Nuevo" ItemClick="BarButtonItem_ItemClick_1" Glyph="{dx:DXImageOffice2013 Image=Add_32x32.png}"/>
                             <dxb:BarButtonItem Content="Guardar &amp; nuevo" ItemClick="SaveAndNew_ItemClick_2" Glyph="{dx:DXImageOffice2013 Image=SaveAs_32x32.png}"/>
                             <dxb:BarButtonItem ItemClick="EliminarPresentacion_ItemClick" Content="Eliminar" Glyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/Close_32x32.png"/>
-                            
+
                         </dxr:RibbonPageGroup>
                         <dxr:RibbonPageGroup Caption="Mostrar">
                             <dxb:BarButtonItem ItemClick="btnSuppliesReport_ItemClick" Content="Reporte" LargeGlyph="pack://application:,,,/DevExpress.Images.v16.1;component/DevAV/Actions/NewOpportunities_32x32.png"/>
@@ -49,7 +49,13 @@
                         <dxe:TextEdit x:Name="txtCodigoInsumo"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
-                        <dxlc:LayoutItem Label="Ingresa El Nombre:">
+                        <dxlc:LayoutGroup.Background>
+                            <SolidColorBrush Color="#FF707BE8" Opacity="0.5"/>
+                        </dxlc:LayoutGroup.Background>
+                        <dxlc:LayoutItem Label="Abreviatura:">
+                            <dxe:TextEdit x:Name="txtAbreviatura"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="Nombre:">
                             <dxe:TextEdit x:Name="txtnombreGrupo"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Categoria: ">
@@ -91,6 +97,9 @@
                         <dxe:ComboBoxEdit x:Name="cbxInventariable" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupUnidades" Visibility="Collapsed" Header="Nueva Unidad De Medida" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutGroup.Background>
+                            <SolidColorBrush Color="#FF707BE8" Opacity="0.5"/>
+                        </dxlc:LayoutGroup.Background>
                         <dxlc:LayoutItem Label="Nombre:">
                             <dxe:TextEdit x:Name="txtNombreUnidad"/>
                         </dxlc:LayoutItem>

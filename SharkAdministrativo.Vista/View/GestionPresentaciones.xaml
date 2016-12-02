@@ -76,6 +76,9 @@
                         <dxe:ComboBoxEdit x:Name="cbxAlmacen" SelectedIndexChanged="cbxAlmacen_SelectedIndexChanged" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupAlmacen" Header="Nuevo Almacén" Visibility="Collapsed" View="GroupBox" HorizontalAlignment="Stretch">
+                        <dxlc:LayoutGroup.Background>
+                            <SolidColorBrush Color="#FF707BE8" Opacity="0.5"/>
+                        </dxlc:LayoutGroup.Background>
                         <dxlc:LayoutItem Label="Codigo:">
                             <dxe:TextEdit x:Name="txtCodigoAl"/>
                         </dxlc:LayoutItem>

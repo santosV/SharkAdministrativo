@@ -316,6 +316,7 @@ namespace SharkAdministrativo.Vista
             cbxValoresDeClasificaciones.SelectedItem = null;
             cbxProveedor.SelectedItem = null;
             addPresentacion.IsEnabled = true;
+            txtCodigoPr.IsReadOnly = false;
         }
 
         private void EliminarPresentacion_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -445,6 +446,18 @@ namespace SharkAdministrativo.Vista
             if (!String.IsNullOrEmpty(txtAlmacen.Text) && !String.IsNullOrEmpty(txtCodigoAl.Text))
             {
                 Almacen almacen = new Almacen();
+
+                List<Almacen> almacenes = new List<Almacen>();
+                almacenes = almacen.obtenerTodos();
+                foreach(var almacenN in almacenes){
+                    if(almacenN.codigo.Equals(txtCodigoAl.Text)){
+                         MessageBox.Show("EL CÓDIGO DEL ALMACÉN YA EXISTE","AVISO SHARK");
+                        return;
+                    }
+                }
+                
+
+               
                 almacen.nombre = txtAlmacen.Text;
                 almacen.codigo = txtCodigoAl.Text;
 
@@ -609,6 +622,7 @@ namespace SharkAdministrativo.Vista
 
                 cbxValoresDeClasificaciones.SelectedItem = codValorClasificacion + " | " + nomValorClasificacion;
                 addPresentacion.IsEnabled = false;
+                txtCodigoPr.IsReadOnly = true;
 
             }
         }

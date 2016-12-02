@@ -66,10 +66,10 @@ namespace SharkAdministrativo.Vista
                 int idClasificacion = Convert.ToInt32(cIdValorClasificacion.ToString());
                 StringBuilder cValorClasificacion = new StringBuilder(60);
                 StringBuilder idValorClasificacion = new StringBuilder(3);
-                StringBuilder codValorClasificacion = new StringBuilder(3);
+                StringBuilder codValorClasificacion = new StringBuilder(40);
                 SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
                 SDK.fLeeDatoValorClasif("CIDVALORCLASIFICACION", idValorClasificacion, 3);
-                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 3);
+                SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", codValorClasificacion, 40);
 
                 if (codigo != idValorClasificacion.ToString())
                 {
@@ -214,10 +214,10 @@ namespace SharkAdministrativo.Vista
 
                             StringBuilder cClasificacion = new StringBuilder(11);
                             StringBuilder cValorClasificacion = new StringBuilder(60);
-                            StringBuilder cValorAbreviatura = new StringBuilder(3);
+                            StringBuilder cValorAbreviatura = new StringBuilder(40);
                             SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
                             SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
-                            SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                            SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 40);
                             grupo.nombre = txtGrupo.Text;
                             grupo.Categoria = categoria.obtener(cbxCategoria.SelectedItem.ToString());
                             grupo.categoria_id = grupo.Categoria.id;
@@ -281,6 +281,16 @@ namespace SharkAdministrativo.Vista
             }
             else if (!String.IsNullOrEmpty(txtCategoria.Text))
             {
+                List<Categoria>categorias = categoria.obtenerTodos();
+                foreach (var categoriaN in categorias)
+                {
+                    if(categoriaN.nombre.Equals(txtCategoria.Text)){
+                        MessageBox.Show("La categoria ya existe", "AVISO SHARK");
+                        return;
+                    }
+
+                }
+
                 categoria.nombre = txtCategoria.Text;
                 if (tblCategory.SelectedItem == null)
                 {
@@ -493,6 +503,7 @@ namespace SharkAdministrativo.Vista
         /// </summary>
         private void clearFields()
         {
+            txtCodigo.IsReadOnly = false;
             txtCodigo.Clear();
             txtAlmacen.Clear();
             txtCategoria.Clear();
@@ -529,15 +540,16 @@ namespace SharkAdministrativo.Vista
             {
                 txtAbreviatura.IsReadOnly = true;
 
+
                 int error = SDK.fPosPrimerValorClasif();
                 while (error == 0)
                 {
                     StringBuilder cClasificacion = new StringBuilder(11);
                     StringBuilder cValorClasificacion = new StringBuilder(60);
-                    StringBuilder cValorAbreviatura = new StringBuilder(3);
+                    StringBuilder cValorAbreviatura = new StringBuilder(40);
                     SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
                     SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
-                    SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                    SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 40);
 
                     if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
                     {
@@ -572,10 +584,10 @@ namespace SharkAdministrativo.Vista
                     {
                         StringBuilder cClasificacion = new StringBuilder(11);
                         StringBuilder cValorClasificacion = new StringBuilder(60);
-                        StringBuilder cValorAbreviatura = new StringBuilder(3);
+                        StringBuilder cValorAbreviatura = new StringBuilder(40);
                         SDK.fLeeDatoValorClasif("CIDCLASIFICACION", cClasificacion, 11);
                         SDK.fLeeDatoValorClasif("CVALORCLASIFICACION", cValorClasificacion, 60);
-                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 3);
+                        SDK.fLeeDatoValorClasif("CCODIGOVALORCLASIFICACION", cValorAbreviatura, 40);
 
                         if (cValorClasificacion.ToString().Equals(seleccion.Row.ItemArray[1].ToString()))
                         {

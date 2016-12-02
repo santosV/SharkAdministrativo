@@ -41,12 +41,18 @@ namespace SharkAdministrativo.Vista {
     /// </summary>
     public partial class App : System.Windows.Application {
         
+        private bool _contentLoaded;
+        
         /// <summary>
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
         public void InitializeComponent() {
+            if (_contentLoaded) {
+                return;
+            }
+            _contentLoaded = true;
             
             #line 4 "..\..\App.xaml"
             this.Startup += new System.Windows.StartupEventHandler(this.OnAppStartup_UpdateThemeName);
@@ -56,6 +62,13 @@ namespace SharkAdministrativo.Vista {
             
             #line 4 "..\..\App.xaml"
             this.StartupUri = new System.Uri("View.Contpaqi/StartWindow.xaml", System.UriKind.Relative);
+            
+            #line default
+            #line hidden
+            System.Uri resourceLocater = new System.Uri("/SharkAdministrativo.Vista;component/app.xaml", System.UriKind.Relative);
+            
+            #line 1 "..\..\App.xaml"
+            System.Windows.Application.LoadComponent(this, resourceLocater);
             
             #line default
             #line hidden
