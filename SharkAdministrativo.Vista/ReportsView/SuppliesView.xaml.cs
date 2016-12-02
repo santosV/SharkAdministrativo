@@ -25,6 +25,9 @@ namespace SharkAdministrativo.Vista.ReportsView
             loadReport();
         }
 
+        /// <summary>
+        /// Carga el reporte de insumos.
+        /// </summary>
         public void loadReport()
         {
             DataReports.SuppliesData report = new DataReports.SuppliesData();

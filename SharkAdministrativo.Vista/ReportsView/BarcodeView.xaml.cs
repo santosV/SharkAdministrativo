@@ -24,6 +24,10 @@ namespace SharkAdministrativo.Vista.ReportsView
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Carga el reporte de código de barra de entradas.
+        /// </summary>
+        /// <param name="id"></param>
         public void loadReport(int id)
         {
             DataReports.Barcode report = new DataReports.Barcode();

@@ -25,7 +25,9 @@ namespace SharkAdministrativo.Vista.ReportsView
             loadReport();
         }
 
-
+        /// <summary>
+        /// Carga el reporte de la receta especificada.
+        /// </summary>
         public void loadReport()
         {
             DataReports.RecipeData report = new DataReports.RecipeData();

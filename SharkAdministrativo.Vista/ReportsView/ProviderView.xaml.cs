@@ -24,7 +24,9 @@ namespace SharkAdministrativo.Vista.ReportsView
             InitializeComponent();
             loadReport();
         }
-
+        /// <summary>
+        /// Carga el reporte de proveedores.
+        /// </summary>
         public void loadReport()
         {
             DataReports.ProviderData report = new DataReports.ProviderData();

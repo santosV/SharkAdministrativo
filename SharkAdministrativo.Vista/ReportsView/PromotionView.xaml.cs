@@ -25,7 +25,9 @@ namespace SharkAdministrativo.Vista.ReportsView
             InitializeComponent();
             loadReport();
         }
-
+        /// <summary>
+        /// Carga el reporte de promociones.
+        /// </summary>
         public void loadReport() {
             DataReports.PromotionData report = new DataReports.PromotionData();
 

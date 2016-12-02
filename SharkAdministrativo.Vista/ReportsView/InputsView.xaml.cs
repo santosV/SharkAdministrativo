@@ -25,7 +25,9 @@ namespace SharkAdministrativo.Vista.ReportsView
             InitializeComponent();
             loadReport();
         }
-
+        /// <summary>
+        /// Carga el reporte de entradas de almacén.
+        /// </summary>
         public void loadReport()
         {
             DataReports.InputData report = new DataReports.InputData();

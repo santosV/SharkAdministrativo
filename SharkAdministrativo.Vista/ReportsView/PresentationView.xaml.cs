@@ -24,7 +24,9 @@ namespace SharkAdministrativo.Vista.ReportsView
             InitializeComponent();
             loadReport();
         }
-
+        /// <summary>
+        /// Carga el reporte de Presentación.
+        /// </summary>
         public void loadReport()
         {
             DataReports.PresaentationData report = new DataReports.PresaentationData();
