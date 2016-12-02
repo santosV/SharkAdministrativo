@@ -16,13 +16,13 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Header="Conexión SQL" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                         <dxlc:LayoutItem Label="Servidor: ">
-                            <dxe:ComboBoxEdit x:Name="cbxServers"/>
+                            <dxe:ComboBoxEdit x:Name="cbxServers" AutoComplete="True"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Usuario:">
                             <dxe:TextEdit x:Name="txtUser"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Contraseña: ">
-                            <dxe:PasswordBoxEdit x:Name="txtPassword"/>
+                            <dxe:PasswordBoxEdit KeyUp="txtPassword_KeyUp" x:Name="txtPassword"/>
                         </dxlc:LayoutItem>
                         <Button x:Name="btnIngresar" Content="Ingresar" Click="btnIngresar_Click" HorizontalAlignment="Center"/>
                     </dxlc:LayoutGroup>

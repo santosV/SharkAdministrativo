@@ -82,15 +82,14 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             catch (Exception ex) { }
         }
 
+
         /// <summary>
         /// Accede o niega el acceso al sistema, probando la conexión con contpaqi comercial.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnIngresar_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (cbxServers.SelectedItem != null)
+        private void ingresarAShark() {
+            if (cbxServers.SelectedItem != null && !String.IsNullOrEmpty(txtUser.Text))
             {
                 SDK.companyName = txtRutaEmpresa.Text.Remove(0, 21);
                 string dataBase = SDK.companyName;
@@ -99,8 +98,15 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             }
             else
             {
-                MessageBox.Show("ES NECESARIO QUE SELECCIONES TU SERVIDOR PARA LA CONFIGURACIÓN", "AVISO SHARK");
+                MessageBox.Show("ES NECESARIO QUE SELECCIONES TU SERVIDOR PARA LA CONFIGURACIÓN E INGRESES TU USUARIO DE SQL", "AVISO SHARK");
             }
+        }
+
+        
+        private void btnIngresar_Click(object sender, RoutedEventArgs e)
+        {
+            ingresarAShark();
+            
 
         }
 
@@ -751,6 +757,11 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
                 MessageBox.Show("Error al obtener las bases de datos :(", "AVISO SHARK");
             }
             return null;
+        }
+
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            ingresarAShark();
         }
 
 
