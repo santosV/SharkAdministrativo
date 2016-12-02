@@ -454,6 +454,13 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static extern Int32 fGuardaClasificacion();
         [DllImport("MGWSERVICIOS.dll")]
         public static extern Int32 fLeeDatoClasificacion(string aCampo, StringBuilder aVal, int aLen);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fActualizaClasificacion(int aClasificacionDe, int aNumClasificacion, string aNombreClasificacion);
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fEditaClasificacion();
+        [DllImport("MGWSERVICIOS.dll")]
+        public static extern Int32 fSetDatoClasificacion(string aCampo, string aValor);
+
 
 
 

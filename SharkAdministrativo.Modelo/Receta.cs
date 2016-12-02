@@ -34,7 +34,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="ingrediente">Objeto a registrar.</param>
         public void registrar(Receta ingrediente)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -59,7 +59,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Receta ingrediente)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Receta n_ingrediente = db.Recetas.Find(ingrediente.id);
                 n_ingrediente.almacenes_id = ingrediente.almacenes_id;
@@ -83,7 +83,7 @@ namespace SharkAdministrativo.Modelo
         public List<Receta> obtenerIngredientesDeReceta(string indicador, int id)
         {
             List<Receta> ingredientes = new List<Receta>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
             var Query = from receta in db.Recetas select receta;
             if (indicador == "IE")
             {
@@ -107,7 +107,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_ingrediente">El objeto a eliminar</param>
         public void eliminarIngrediente(Receta _ingrediente)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var RecetaQuery = from ingrediente in db.Recetas where ingrediente.id == _ingrediente.id select ingrediente;
 

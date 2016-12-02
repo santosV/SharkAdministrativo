@@ -53,7 +53,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="presentacion">Parámetro de búsqueda.</param>
         public void registrar(Presentacion presentacion)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -72,7 +72,7 @@ namespace SharkAdministrativo.Modelo
 
         public void modificar(Presentacion presentation)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Presentacion presentacion = db.Presentaciones.Find(presentation.id);
                 presentacion.existencia = presentation.existencia;
@@ -91,7 +91,7 @@ namespace SharkAdministrativo.Modelo
         {
             List<Presentacion> presentaciones = new List<Presentacion>();
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave where presentacion.almacen_id == almacen select presentacion;
@@ -109,7 +109,7 @@ namespace SharkAdministrativo.Modelo
         /// <returns>EL objeto presentación encontrado.</returns>
         public Presentacion getForID(int id) {
             Presentacion presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 presentacion = db.Presentaciones.Find(id);
             }
@@ -125,7 +125,7 @@ namespace SharkAdministrativo.Modelo
         public List<Presentacion> obtenerTodosPorInsumo(int insumo_clave)
         {
             List<Presentacion> presentaciones = new List<Presentacion>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
 
             db.Configuration.LazyLoadingEnabled = true;
             var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave select presentacion;
@@ -146,7 +146,7 @@ namespace SharkAdministrativo.Modelo
         {
             bool registrado = false;
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 try
                 {
@@ -184,7 +184,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_presentacion">Parámetro de búsqueda.</param>
         public void eliminar(Presentacion d_presentacion)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var presentacionQuery = from presentacion in db.Presentaciones where presentacion.id == d_presentacion.id select presentacion;
 
@@ -199,7 +199,7 @@ namespace SharkAdministrativo.Modelo
         public Presentacion obtener(Presentacion presentation)
         {
             Presentacion r_presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var insumoQuery = from presentacion in db.Presentaciones
@@ -220,7 +220,7 @@ namespace SharkAdministrativo.Modelo
         public Presentacion obtener(int id)
         {
             Presentacion r_presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var insumoQuery = from presentacion in db.Presentaciones
@@ -239,7 +239,7 @@ namespace SharkAdministrativo.Modelo
         public Presentacion get(string name)
         {
             Presentacion r_presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var insumoQuery = from presentacion in db.Presentaciones where presentacion.descripcion == name select presentacion;
@@ -255,7 +255,7 @@ namespace SharkAdministrativo.Modelo
         public void sumarEntrada(int id, double cantidad)
         {
             Presentacion presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 presentacion = db.Presentaciones.Find(id);
                 presentacion.cantidad = cantidad + presentacion.cantidad;
@@ -269,7 +269,7 @@ namespace SharkAdministrativo.Modelo
         public List<Presentacion> getAll()
         {
             List<Presentacion> presentaciones = new List<Presentacion>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
 
             db.Configuration.LazyLoadingEnabled = true;
             var presentacionesQuery = from presentacion in db.Presentaciones select presentacion;

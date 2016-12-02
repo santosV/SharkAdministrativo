@@ -46,7 +46,7 @@ namespace SharkAdministrativo.Modelo
         {
             string o_folio = "";
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -69,7 +69,7 @@ namespace SharkAdministrativo.Modelo
         /// <returns>El objeto agregado.</returns>
         public Factura registrar(Factura factura)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 try

@@ -34,7 +34,7 @@ namespace SharkAdministrativo.Modelo
         public List<Categoria> obtenerTodos()
         {
             List<Categoria> categorias = new List<Categoria>();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var categoriaQuery = from categoria in db.Categorias select categoria;
@@ -55,7 +55,7 @@ namespace SharkAdministrativo.Modelo
         public Categoria obtener(string Name)
         {
             Categoria categoria = new Categoria();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -77,7 +77,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="categoria">el objeto a registrar.</param>
         public void registrar(Categoria categoria)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Categorias.Add(categoria);
@@ -92,7 +92,7 @@ namespace SharkAdministrativo.Modelo
         public void Modify(Categoria categoria)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Categoria category = db.Categorias.Find(categoria.id);
                 category.nombre = categoria.nombre;
@@ -103,7 +103,7 @@ namespace SharkAdministrativo.Modelo
 
         public void delete(int id)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var Query = from categoria in db.Categorias where categoria.id == id select categoria;
                 foreach (var categoria in Query)

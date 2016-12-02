@@ -28,7 +28,7 @@ namespace SharkAdministrativo.Modelo
         public virtual Almacen Almacen { get; set; }
 
         public void registrar(Salida_almacen salida) {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Tipo_movimientos.Attach(salida.Tipo_movimiento);

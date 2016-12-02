@@ -30,7 +30,7 @@ namespace SharkAdministrativo.Modelo
         public List<Tipo_movimiento> obtenerTodos()
         {
             List<Tipo_movimiento> movimientos = new List<Tipo_movimiento>();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var Query = from movimiento in db.Tipo_movimientos select movimiento;
@@ -50,7 +50,7 @@ namespace SharkAdministrativo.Modelo
         public Tipo_movimiento obtener(string name)
         {
             Tipo_movimiento _tipo = new Tipo_movimiento();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;

@@ -141,7 +141,8 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             {
                 if (generarScript(server, companyName) != true)
                 {
-                    configurarEmpresa(createDataSource(server, "Shark_" + companyName),server);
+                    SDK.companyConnection = createDataSource(server, "Shark_" + companyName);
+                    configurarEmpresa(server);
                 }
 
             }
@@ -171,14 +172,13 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
         /// Crea la empresa y los datos por default en la base de datos.
         /// </summary>
         /// <param name="connection">La conexión de entity framework.</param>
-        private static void configurarEmpresa(string connection, string server)
+        private static void configurarEmpresa(string server)
         {
 
-            bdsharkEntities conexion = new bdsharkEntities(connection);
+            bdsharkEntities conexion = new bdsharkEntities();
             Empresa nEmpresa = new Empresa();
-            nEmpresa.datasource = connection;
+            nEmpresa.datasource = SDK.companyConnection;
             nEmpresa.nombre = SDK.companyName;
-            SDK.companyConnection = nEmpresa.datasource;
 
             Tipo_movimiento mvto1 = new Tipo_movimiento();
             mvto1.nombre = "SALIDA";
@@ -194,19 +194,33 @@ namespace SharkAdministrativo.Vista.View.Contpaqi
             AreaProduccion area4 = new AreaProduccion();
             area4.nombre = "SERVICIO";
 
-            System.Data.SqlClient.SqlConnection sqlConnection1 = new System.Data.SqlClient.SqlConnection("Data Source=" + server + ";Integrated Security=SSPI;Initial Catalog=ad" + SDK.companyName);
+            int error = SDK.fBuscaClasificacion(5, 1);
+            error = SDK.fEditaClasificacion();
+            error = SDK.fSetDatoClasificacion("CNOMBRECLASIFICACION", "TIPO DE PRODUCTO");
+            error = SDK.fGuardaClasificacion();
 
-            //Crea los valores 
-            for (int i = 13; i <=18; i++)
+            for (int i = 1; i <=6; i++)
             {
-                System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "INSERT admClasificacionesValores (CVALORCLASIFICACION, CIDCLASIFICACION) VALUES ('(Ninguna)', '"+i+"')";
-                cmd.Connection = sqlConnection1;
-                sqlConnection1.Open();
-                cmd.ExecuteNonQuery();
-                sqlConnection1.Close();
+                error = SDK.fBuscaClasificacion(3, i);
+                error = SDK.fEditaClasificacion();
+                error = SDK.fSetDatoClasificacion("CNOMBRECLASIFICACION", "GRUPO "+i+" DE PROVEEDOR");
+                error = SDK.fGuardaClasificacion();
             }
+            int id = 0;
+            for (int i= 13; i<=18; i++)
+            {
+                error = SDK.fInsertaValorClasif();
+                error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION","(Ninguna)");
+                error = SDK.fSetDatoValorClasif("CIDCLASIFICACION", i.ToString());
+                error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", 0.ToString());
+                error = SDK.fGuardaValorClasif();
+            }
+
+            if (error != 0)
+            {
+                SDK.rError(error);
+            }
+
 
             conexion.Tipo_movimientos.Add(mvto1);
             conexion.Tipo_movimientos.Add(mvto2);

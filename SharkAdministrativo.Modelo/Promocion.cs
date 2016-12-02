@@ -44,7 +44,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="promocion">Objeto a reistrar.</param>
         public void registrar(Promocion promocion)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Promociones.Add(promocion);
                 db.SaveChanges();
@@ -58,7 +58,7 @@ namespace SharkAdministrativo.Modelo
         public List<Promocion> obtenerTodos()
         {
             List<Promocion> promociones = new List<Promocion>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
 
             db.Configuration.LazyLoadingEnabled = true;
             var promocionesQuery = from promocion in db.Promociones select promocion;
@@ -78,7 +78,7 @@ namespace SharkAdministrativo.Modelo
         public Promocion obtenerPorId(int id)
         {
             Promocion promocion = new Promocion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 promocion = db.Promociones.Find(id);
             }
@@ -92,7 +92,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Promocion promocion)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Promocion n_promocion = db.Promociones.Find(promocion.id);
                 n_promocion.descripcion = promocion.descripcion;
@@ -125,7 +125,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_promocion">El objeto a elimianr.</param>
         public void eliminar(Promocion _promocion)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var promocionQuery = from promocion in db.Promociones where promocion.id == _promocion.id select promocion;
 

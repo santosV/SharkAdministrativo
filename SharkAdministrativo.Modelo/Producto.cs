@@ -44,7 +44,7 @@ namespace SharkAdministrativo.Modelo
         public List<Producto> obtenerTodos()
         {
             List<Producto> productos = new List<Producto>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
 
             db.Configuration.LazyLoadingEnabled = true;
             var productosQuery = from producto in db.Productos select producto;
@@ -62,7 +62,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="producto">Objeto a registrar.</param>
         public void registrar(Producto producto)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Productos.Add(producto);
                 db.SaveChanges();
@@ -76,7 +76,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Producto producto)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Producto n_producto = db.Productos.Find(producto.id);
                 n_producto.areasPreparacion = producto.areasPreparacion;
@@ -106,7 +106,7 @@ namespace SharkAdministrativo.Modelo
         public Producto obtenerPorID(int id)
         {
             Producto producto = new Producto();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 producto = db.Productos.Find(id);
             }
@@ -121,7 +121,7 @@ namespace SharkAdministrativo.Modelo
         public Producto obtener(string name)
         {
             Producto product = new Producto();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var productosQuery = from producto in db.Productos where producto.nombre == name select producto;
@@ -139,7 +139,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_producto">Óbjeto a eliminar.</param>
         public void eliminar(Producto _producto)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var productosQuery = from producto in db.Productos where producto.id == _producto.id select producto;
 

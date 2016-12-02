@@ -49,7 +49,7 @@ namespace SharkAdministrativo.Modelo
             Empresa company = new Empresa();
 
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -75,7 +75,7 @@ namespace SharkAdministrativo.Modelo
             Empresa company = new Empresa();
 
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -98,7 +98,7 @@ namespace SharkAdministrativo.Modelo
         {
 
             List<Empresa> empresas = new List<Empresa>();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;

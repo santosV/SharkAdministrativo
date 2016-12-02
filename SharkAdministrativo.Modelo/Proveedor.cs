@@ -49,7 +49,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="proveedor">El objeto a registrar.</param>
         public void registrar(Proveedor proveedor)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Empresas.Attach(proveedor.Empresa);
@@ -66,7 +66,7 @@ namespace SharkAdministrativo.Modelo
         public Proveedor obtenerPorID(int id)
         {
             Proveedor proveedor = new Proveedor();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 proveedor = db.Proveedores.Find(id);
             }
@@ -80,7 +80,7 @@ namespace SharkAdministrativo.Modelo
         public List<Proveedor> obtenerTodos()
         {
             List<Proveedor> proveedores = new List<Proveedor>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
 
             db.Configuration.LazyLoadingEnabled = true;
             var proveedoresQuery = from proveedor in db.Proveedores select proveedor;
@@ -98,7 +98,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_proveedor">El objeto a eliminar.</param>
         public void eliminar(Proveedor d_proveedor)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var proveedorQuery = from proveedor in db.Proveedores where proveedor.id == d_proveedor.id select proveedor;
 
@@ -118,7 +118,7 @@ namespace SharkAdministrativo.Modelo
         public Proveedor obtener(string name)
         {
             Proveedor provee = new Proveedor();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
 
@@ -142,7 +142,7 @@ namespace SharkAdministrativo.Modelo
         public Proveedor obtenerPorRFC(string RFC)
         {
             Proveedor p_proveedor = new Proveedor();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -169,7 +169,7 @@ namespace SharkAdministrativo.Modelo
             //Variables temporales
             string opcion = "";
             bool result = false;
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var proveedorQuery = from proveedor in db.Proveedores where proveedor.RFC == param_proveedor.RFC select proveedor;
                 foreach (var proveedor in proveedorQuery)
@@ -199,7 +199,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Proveedor proveedor)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Proveedor n_proveedor = db.Proveedores.Find(proveedor.id);
                 n_proveedor.calle = proveedor.calle;

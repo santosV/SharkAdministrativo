@@ -28,7 +28,7 @@ namespace SharkAdministrativo.Modelo
 
         public void registrar(EntradaPresentacion entrada)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Presentaciones.Attach(entrada.Presentacion);

@@ -26,7 +26,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="area">El objeto a registrar.</param>
         public void registrar(AreaProduccion area)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.AreasProduccion.Add(area);
                 db.SaveChanges();
@@ -41,7 +41,7 @@ namespace SharkAdministrativo.Modelo
         public AreaProduccion obtener(string name)
         {
             AreaProduccion _area = new AreaProduccion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -64,7 +64,7 @@ namespace SharkAdministrativo.Modelo
         public AreaProduccion obtenerPorID(int id)
         {
             AreaProduccion area = new AreaProduccion();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 area = db.AreasProduccion.Find(id);
             }
@@ -74,7 +74,7 @@ namespace SharkAdministrativo.Modelo
         public List<AreaProduccion> obtenerTodos()
         {
             List<AreaProduccion> areas = new List<AreaProduccion>();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var areasQuery = from area in db.AreasProduccion select area;

@@ -36,7 +36,7 @@ namespace SharkAdministrativo.Modelo
         public List<Unidad_Medida> obtenerTodos()
         {
             List<Unidad_Medida> unidades = new List<Unidad_Medida>();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var unidadesQuery = from unidad in db.Unidades_Medida select unidad;
@@ -54,7 +54,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="unidad">El objeto a registrar</param>
         public void registrar(Unidad_Medida unidad)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 db.Unidades_Medida.Add(unidad);
@@ -70,7 +70,7 @@ namespace SharkAdministrativo.Modelo
         public Unidad_Medida obtener(string name)
         {
             Unidad_Medida medida = new Unidad_Medida();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
                 var unidadesQuery = from unidad in db.Unidades_Medida where unidad.nombre.Trim() == name.Trim() select unidad;
@@ -91,7 +91,7 @@ namespace SharkAdministrativo.Modelo
         public Unidad_Medida obtenerPorId(int id)
         {
             Unidad_Medida unidad = new Unidad_Medida();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 unidad = db.Unidades_Medida.Find(id);
             }

@@ -49,7 +49,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="insumo">Objeto a registrar.</param>
         public void registrar(Insumo insumo)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 db.Configuration.LazyLoadingEnabled = true;
 
@@ -69,7 +69,7 @@ namespace SharkAdministrativo.Modelo
         public Insumo obtenerPorID(int id)
         {
             Insumo insumo = new Insumo();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 insumo = db.Insumos.Find(id);
             }
@@ -82,7 +82,7 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_insumo">Objeto a eliminar.</param>
         public void eliminar(Insumo d_insumo)
         {
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 var insumosQuery = from insumo in db.Insumos where insumo.id == d_insumo.id select insumo;
 
@@ -101,7 +101,7 @@ namespace SharkAdministrativo.Modelo
         public List<Insumo> obtenerTodos()
         {
             List<Insumo> insumos = new List<Insumo>();
-            bdsharkEntities db = new bdsharkEntities(SDK.companyConnection);
+            bdsharkEntities db = new bdsharkEntities();
 
             db.Configuration.LazyLoadingEnabled = true;
             var insumosQuery = from insumo in db.Insumos select insumo;
@@ -121,7 +121,7 @@ namespace SharkAdministrativo.Modelo
         public Insumo obtener(string descripcion)
         {
             Insumo insu = new Insumo();
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
 
                 db.Configuration.LazyLoadingEnabled = true;
@@ -143,7 +143,7 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Insumo insumo)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities(SDK.companyConnection))
+            using (bdsharkEntities db = new bdsharkEntities())
             {
                 Insumo n_insumo = db.Insumos.Find(insumo.id);
                 n_insumo.descripcion = insumo.descripcion;
