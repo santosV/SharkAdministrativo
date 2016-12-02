@@ -12,11 +12,12 @@ namespace SharkAdministrativo.Modelo
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using SharkAdministrativo.SDKCONTPAQi;
     
     public partial class bdsharkEntities : DbContext
     {
         public bdsharkEntities()
-            : base("name=bdsharkEntities")
+            : base(SDK.companyConnection)
         {
         }
     

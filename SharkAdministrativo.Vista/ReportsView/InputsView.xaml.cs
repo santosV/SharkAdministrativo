@@ -29,13 +29,6 @@ namespace SharkAdministrativo.Vista.ReportsView
         public void loadReport()
         {
             DataReports.InputData report = new DataReports.InputData();
-            bdsharkEntities db = new bdsharkEntities(SDKCONTPAQi.SDK.companyConnection);
-            var query = from entrada in db.EntradasPresentaciones select entrada;
-            foreach (var item in query)
-            {
-                db.EntradasPresentaciones.Add(item);
-            }
-            report.DataSource = db.EntradasPresentaciones;
             inputsViewer.DocumentSource = report;
             report.CreateDocument();
         }

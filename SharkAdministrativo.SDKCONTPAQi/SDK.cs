@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.EntityClient;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -54,10 +55,25 @@ namespace SharkAdministrativo.SDKCONTPAQi
         public static string companyName { get; set; }
         public static string systemRoute = @"C:\Program Files (x86)\Compac\COMERCIAL";
         public static string systemName = "CONTPAQ I COMERCIAL";
+        public static string userID { get; set; }
+        public static string password { get; set; }
+        public static string companyConnection { get; set; }
+        public static string server { get; set; }
 
-        public static string companyConnection = "";
-
-
+        /// <summary>
+        /// Crea la cadena de conexión con los estandares de Entity framework.
+        /// </summary>
+        /// <param name="server">Nombre del servidor.</param>
+        /// <param name="database">Nombre de la base de datos.</param>
+        /// <returns>El datasource para la conexión.</returns>
+        public static string createDataSource()
+        {
+            EntityConnectionStringBuilder constructorConexion = new EntityConnectionStringBuilder();
+            constructorConexion.Provider = "System.Data.SqlClient";
+            constructorConexion.ProviderConnectionString = @"data source=" + server + ";initial catalog=" + "Shark_" + companyName + ";user id=" + userID + ";password=" + password + ";MultipleActiveResultSets=True;App=EntityFramework";
+            constructorConexion.Metadata = "res://*/dbshark.csdl|res://*/dbshark.ssdl|res://*/dbshark.msl";
+            return constructorConexion.ToString();
+        }
 
         // Declaración de la estructura del proveedor
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
