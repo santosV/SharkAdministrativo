@@ -51,13 +51,39 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
     public class SDK
     {
+
+        /// <summary>
+        /// Ruta de la empresa.
+        /// </summary>
         public static string companyRoute { get; set; }
+        /// <summary>
+        /// Nombre de la empresa.
+        /// </summary>
         public static string companyName { get; set; }
+        /// <summary>
+        /// Ruta del sistema Contaqi Comercial.
+        /// </summary>
         public static string systemRoute = @"C:\Program Files (x86)\Compac\COMERCIAL";
+        /// <summary>
+        /// Nombre del sistema Contpaqi.
+        /// </summary>
         public static string systemName = "CONTPAQ I COMERCIAL";
+        /// <summary>
+        /// Usuario de SQL Server.
+        /// </summary>
         public static string userID { get; set; }
+        /// <summary>
+        /// Contraseña de Usuario SQL Server;
+        /// </summary>
         public static string password { get; set; }
+
+        /// <summary>
+        /// Variable de conexion de la empresa.
+        /// </summary>
         public static string companyConnection { get; set; }
+        /// <summary>
+        /// Nombre de la instancia / servidor de SQL Server.
+        /// </summary>
         public static string server { get; set; }
 
         /// <summary>
@@ -75,7 +101,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             return constructorConexion.ToString();
         }
 
-        // Declaración de la estructura del proveedor
+        /// <summary>
+        /// Estructura de proveedor Conpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct CteProv
         {
@@ -176,8 +204,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public double cImporteExtra4;
         }
 
-        // Declaración de la estructura del producto
-
+        /// <summary>
+        /// Estructura de producto Conpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tProduto
         {
@@ -247,7 +276,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public double cImporteExtra4;
         }
 
-        //Declaración de la estructura del almacen
+        /// <summary>
+        /// Estructura de Almacén Contpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tAlmacen
         {
@@ -271,6 +302,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public string cCodigoValorClasificacion6;//[ kLongCodValorClasif + 1 ];
         }
 
+        /// <summary>
+        /// Estructura de documento Conpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tDocumento
         {
@@ -300,7 +334,11 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public double aGasto3;
 
         }
-
+        /// <summary>
+        /// /// <summary>
+        /// Estructura de valor de clasificación Conpaqi Comercial.
+        /// </summary>
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct ValorClasificacion
         {
@@ -312,7 +350,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public string cValorClasificacion;
         }
 
-
+        /// <summary>
+        /// Estructura de unidad  de medida y peso Conpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tUnidad
         {
@@ -324,7 +364,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             public string cDespliegue;
         }
 
-
+        /// <summary>
+        /// Estructura de movimiento Conpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tMovimiento
         {
@@ -341,7 +383,9 @@ namespace SharkAdministrativo.SDKCONTPAQi
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = constantes.kLongCodigo)]
             public String aCodClasificacion;
         }
-
+        /// <summary>
+        /// Estructura de series Conpaqi Comercial.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 4)]
         public struct tSeriesCapas
         {
@@ -364,8 +408,6 @@ namespace SharkAdministrativo.SDKCONTPAQi
 
 
         }
-
-
         //Funciones De Conexión.
         [DllImport("KERNEL32")]
         public static extern int SetCurrentDirectory(string pPtrDirActual);
