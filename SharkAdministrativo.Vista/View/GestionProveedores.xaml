@@ -33,7 +33,7 @@
             <dxlc:LayoutGroup Header="General" View="GroupBox" Orientation="Vertical" HorizontalAlignment="Stretch" Padding="0" Margin="0,15,0,0">
                 <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Serialization:SerializableItem.TypeName="LayoutGroup">
                     <dxlc:LayoutItem Label="Código:">
-                        <dxe:TextEdit x:Name="txtCodigo"/>
+                        <dxe:TextEdit x:Name="txtCodigo" KeyDown="txtCodigo_KeyDown"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Nombre:">
                         <dxe:TextEdit x:Name="txtNombreP"/>

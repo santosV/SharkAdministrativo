@@ -37,7 +37,7 @@
                 </dxg:GridControl>
                 <dxlc:LayoutGroup View="GroupBox" Header="Nueva Presentación" Margin="0" Orientation="Vertical" Padding="13,10,10,10">
                     <dxlc:LayoutItem Label="Codigo:">
-                        <dxe:TextEdit x:Name="txtCodigoPr"/>
+                        <dxe:TextEdit x:Name="txtCodigoPr" KeyDown="txtCodigo_KeyDown"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Insumo:">
                         <dxe:ComboBoxEdit x:Name="cbxInsumoBase" SelectedIndexChanged="cbxInsumoBase_SelectedIndexChanged" AutoComplete="True"/>

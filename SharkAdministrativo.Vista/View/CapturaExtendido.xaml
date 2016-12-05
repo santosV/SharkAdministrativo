@@ -38,7 +38,7 @@
                 <dxlc:LayoutGroup Header="Insumos" Orientation="Vertical">
                     <dxlc:LayoutGroup Header="Detalles de Insumo" View="GroupBox" Orientation="Vertical">
                         <dxlc:LayoutItem Label="Codigo:">
-                            <dxe:TextEdit x:Name="txtCodigo"/>
+                            <dxe:TextEdit x:Name="txtCodigo" KeyDown="txtCodigo_KeyDown"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Insumo Base:">
                             <dxe:ComboBoxEdit x:Name="cbxInsumos" SelectedIndexChanged="cbxInsumos_SelectedIndexChanged" KeyDown="ObtenerCostos_KeyUp" AutoComplete="True"/>
@@ -91,7 +91,7 @@
                             <dxe:TextEdit x:Name="txtRazonSocialP"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Código">
-                            <dxe:TextEdit x:Name="txtcodigoProveedor"/>
+                            <dxe:TextEdit x:Name="txtcodigoProveedor" KeyDown="txtCodigoP_KeyDown"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="Grupos Que Provee">
                             <dxe:ComboBoxEdit x:Name="cbxGrupos" Grid.Column="1" Grid.Row="1" SeparatorString=";" AutoComplete="True">

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 
 namespace SharkAdministrativo.SDKCONTPAQi
@@ -666,9 +667,10 @@ namespace SharkAdministrativo.SDKCONTPAQi
                 }
                 throw new Exception("Ignora los FPu");
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Console.Write(ex); }
             return success;
         }
+
 
         /// <summary>
         /// Cierra la empresa y el SDK.
@@ -678,5 +680,6 @@ namespace SharkAdministrativo.SDKCONTPAQi
             fCierraEmpresa();
             fTerminaSDK();
         }
+
     }//Fin clase SDK
 }//Fin namespace

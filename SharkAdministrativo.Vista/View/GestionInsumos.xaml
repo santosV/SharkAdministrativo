@@ -46,7 +46,7 @@
                         <dxe:ComboBoxEdit x:Name="cbxGrupos"  SelectedIndexChanged="cbxGrupos_SelectedIndexChanged" AutoComplete="True"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Código">
-                        <dxe:TextEdit x:Name="txtCodigoInsumo"/>
+                        <dxe:TextEdit x:Name="txtCodigoInsumo" KeyDown="txtCodigo_KeyDown"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup x:Name="groupGrupo" Visibility="Collapsed" Header="Nuevo Registro De Grupo" View="GroupBox" HorizontalAlignment="Stretch" Orientation="Vertical">
                         <dxlc:LayoutGroup.Background>

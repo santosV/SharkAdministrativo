@@ -44,6 +44,14 @@ namespace SharkAdministrativo.Vista
             cargarClasificaciones();
         }
 
+        private void txtCodigo_KeyDown(object sender, KeyEventArgs e)
+        {
+            int c = txtCodigoPr.Text.Length;
+            if (c >= 3)
+            {
+                e.Handled = true;
+            }
+        }
 
         public void llenarPresentaciones()
         {

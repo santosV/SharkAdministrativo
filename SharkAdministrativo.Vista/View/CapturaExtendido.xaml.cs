@@ -40,6 +40,23 @@ namespace SharkAdministrativo.Vista
             llenarGrupos();
         }
 
+        private void txtCodigo_KeyDown(object sender, KeyEventArgs e)
+        {
+            int c = txtCodigo.Text.Length;
+            if (c >= 3)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtCodigoP_KeyDown(object sender, KeyEventArgs e)
+        {
+            int c = txtcodigoProveedor.Text.Length;
+            if (c >= 3)
+            {
+                e.Handled = true;
+            }
+        }
         /// <summary>
         /// Bloquea los textfields cuando el proveedor ya está registrado.
         /// </summary>
