@@ -281,11 +281,12 @@ namespace SharkAdministrativo.Vista
             }
             else if (!String.IsNullOrEmpty(txtCategoria.Text))
             {
-                List<Categoria>categorias = categoria.obtenerTodos();
+                List<Categoria> categorias = categoria.obtenerTodos();
                 foreach (var categoriaN in categorias)
                 {
-                    if(categoriaN.nombre.Equals(txtCategoria.Text)){
-                        MessageBox.Show("La categoria ya existe", "AVISO SHARK");
+                    if (categoriaN.nombre.Equals(txtCategoria.Text))
+                    {
+                        MessageBox.Show("LA CATEGORÍA YA EXISTE", "AVISO SHARK");
                         return;
                     }
 
@@ -310,9 +311,10 @@ namespace SharkAdministrativo.Vista
                 {
                     DataRow row = dtAlmacenes.Rows[i];
                     String abreV = row[0].ToString();
-                    if (abreV.ToString().Contains(txtCodigo.Text))
+                    String nombreAlmacen = row[1].ToString();
+                    if (abreV.ToString().Contains(txtCodigo.Text) || nombreAlmacen.ToString().Contains(txtAlmacen.Text))
                     {
-                        MessageBox.Show("EL CÓDIGO DEL ALMACÉN YA EXISTE","AVISO SHARK");
+                        MessageBox.Show("EL CÓDIGO O EL NOMBRE DEL ALMACÉN YA EXISTE", "AVISO SHARK");
                         return;
                     }
                 }
@@ -327,25 +329,56 @@ namespace SharkAdministrativo.Vista
 
                 if (tblStorage.SelectedItem == null)
                 {
-                    int error = SDK.fInsertaAlmacen();
-                    if (error == 0)
-                    {
-                        error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
-                        error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+                        int error = SDK.fPosPrimerAlmacen();
+                        error = SDK.fPosSiguienteAlmacen();
+                        string codigo = "0";
+                        while (error == 0)
+                        {
+                            StringBuilder nombreAlmacen = new StringBuilder(30);
+                            SDK.fLeeDatoAlmacen("CNOMBREALMACEN", nombreAlmacen, 30);
+                            if (codigo.Equals(nombreAlmacen))
+                            {
+                                break;
+                            }
+                            if (nombreAlmacen.ToString().Equals("(Ninguno)"))
+                            {
+                                error = 1;
+                                break;
+                            }
+                            else {
+                                codigo = nombreAlmacen.ToString();
+                                SDK.fPosSiguienteAlmacen();
+                            }
+                        }
                         if (error == 0)
-                        {
-                            error = SDK.fGuardaAlmacen();
-                            //Creación de almacén en Shark.
-                            almacen.registrar(almacen);
-                        }
-                        else
-                        {
-                            SDK.rError(error);
-                        }
-                    }
-                    else
-                    {
-                        SDK.rError(error);
+	                    {
+                            error = SDK.fInsertaAlmacen();
+		                    error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
+                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+                            if (error == 0)
+                            {
+                                error = SDK.fGuardaAlmacen();
+                                //Creación de almacén en Shark.
+                                almacen.registrar(almacen);
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
+	                    }else if(error == 1){
+                            error = SDK.fEditaAlmacen();
+		                    error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", cAlmacen.cCodigoAlmacen);
+                            error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", cAlmacen.cNombreAlmacen);
+                            if (error == 0)
+                            {
+                                error = SDK.fGuardaAlmacen();
+                                //Creación de almacén en Shark.
+                                almacen.registrar(almacen);
+                            }
+                            else
+                            {
+                                SDK.rError(error);
+                            }
                     }
                 }
                 else
@@ -597,7 +630,6 @@ namespace SharkAdministrativo.Vista
                                 this.grupo = grupo.getForID(Convert.ToInt32(seleccion.Row.ItemArray[0]));
                                 SDK.fEditaValorClasif();
                                 error = SDK.fSetDatoValorClasif("CVALORCLASIFICACION", "(Ninguna)");
-                                error = SDK.fSetDatoValorClasif("CCODIGOVALORCLASIFICACION", "0");
                                 error = SDK.fGuardaValorClasif();
                                 if (error == 0)
                                 {
@@ -655,6 +687,7 @@ namespace SharkAdministrativo.Vista
                             if (error == 0)
                             {
                                 error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", "(Ninguno)");
+                                error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", "(Ninguno)");
 
                                 if (error == 0)
                                 {
