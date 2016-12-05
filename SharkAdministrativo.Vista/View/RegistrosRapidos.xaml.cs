@@ -336,7 +336,7 @@ namespace SharkAdministrativo.Vista
                         {
                             StringBuilder nombreAlmacen = new StringBuilder(30);
                             SDK.fLeeDatoAlmacen("CNOMBREALMACEN", nombreAlmacen, 30);
-                            if (codigo.Equals(nombreAlmacen))
+                            if (codigo.Equals(nombreAlmacen) || String.IsNullOrEmpty(nombreAlmacen.ToString()))
                             {
                                 break;
                             }
@@ -687,7 +687,6 @@ namespace SharkAdministrativo.Vista
                             if (error == 0)
                             {
                                 error = SDK.fSetDatoAlmacen("CNOMBREALMACEN", "(Ninguno)");
-                                error = SDK.fSetDatoAlmacen("CCODIGOALMACEN", "(Ninguno)");
 
                                 if (error == 0)
                                 {
