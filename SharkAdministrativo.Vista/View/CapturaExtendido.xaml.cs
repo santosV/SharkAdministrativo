@@ -424,8 +424,6 @@ namespace SharkAdministrativo.Vista
                 {
 
                     Presentacion presentacion = new Presentacion();
-                    //presentacion.costo_unitario = float.Parse(item.GetAttribute("importe").ToString(), System.Globalization.CultureInfo.InvariantCulture);
-                    //insumo.costo_referenc = float.Parse(item.GetAttribute("importe").ToString(), System.Globalization.CultureInfo.InvariantCulture);
                     presentacion.ultimo_costo = float.Parse(item.GetAttribute("valorUnitario").ToString(), System.Globalization.CultureInfo.InvariantCulture);
                     presentacion.noIdentificacion = item.GetAttribute("noIdentificacion");
 
@@ -629,10 +627,6 @@ namespace SharkAdministrativo.Vista
         }
 
         public void guardar() {
-            string folio = "";
-            folio = factura.validarRegistro(factura.folio);
-            if (factura.folio != folio)
-            {
                 if (validacion == "unico")
                 {
                     if (txtRazonSocialP.Text != "" && txtCalleP.Text != "" && txtCodigoPostalP.Text != ""
@@ -714,11 +708,6 @@ namespace SharkAdministrativo.Vista
                     }
                 }
                 obtenerConceptos();
-            }
-            else
-            {
-                MessageBox.Show("ERROR EN FACTURA FOLIO - " + factura.folio + "\nYa ha sido utilizada / registrada.");
-            }
         }
 
         private void biNew_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
