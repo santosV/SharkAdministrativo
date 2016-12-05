@@ -208,7 +208,6 @@ namespace SharkAdministrativo.Vista
                         //Modifica proveedor en Shark.
                         proveedor.id = this.proveedor.id;
                         proveedor.modificar(proveedor);
-                        MessageBox.Show("ÉXITO, SE MODIFICÓ AL PROVEEDOR '" + proveedor.razon_social + "'");
                         if (exit == "No")
                         {
                             ClearField();
@@ -241,7 +240,11 @@ namespace SharkAdministrativo.Vista
                         }
 
 
-                        SDK.fGuardaCteProv();
+                        error = SDK.fGuardaCteProv();
+                        if (error != 0)
+                        {
+                            SDK.rError(error);
+                        }
                         if (exit == "No")
                         {
                             ClearField();

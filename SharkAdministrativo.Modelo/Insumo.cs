@@ -14,7 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
-    
+    using System.Windows.Forms;
     public partial class Insumo
     {
         public Insumo()
@@ -49,15 +49,18 @@ namespace SharkAdministrativo.Modelo
         /// <param name="insumo">Objeto a registrar.</param>
         public void registrar(Insumo insumo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
                 db.Configuration.LazyLoadingEnabled = true;
 
                 db.Grupos.Attach(insumo.Grupo);
                 db.Unidades_Medida.Attach(insumo.Unidad_Medida);
                 db.Insumos.Add(insumo);
                 db.SaveChanges();
-
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -69,9 +72,13 @@ namespace SharkAdministrativo.Modelo
         public Insumo obtenerPorID(int id)
         {
             Insumo insumo = new Insumo();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
                 insumo = db.Insumos.Find(id);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return insumo;
         }
@@ -82,15 +89,19 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_insumo">Objeto a eliminar.</param>
         public void eliminar(Insumo d_insumo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var insumosQuery = from insumo in db.Insumos where insumo.id == d_insumo.id select insumo;
-
-                foreach (var insumo in insumosQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    db.Entry(insumo).State = EntityState.Deleted;
+                    var insumosQuery = from insumo in db.Insumos where insumo.id == d_insumo.id select insumo;
+
+                    foreach (var insumo in insumosQuery)
+                    {
+                        db.Entry(insumo).State = EntityState.Deleted;
+                    }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -101,13 +112,17 @@ namespace SharkAdministrativo.Modelo
         public List<Insumo> obtenerTodos()
         {
             List<Insumo> insumos = new List<Insumo>();
-            bdsharkEntities db = new bdsharkEntities();
+            try{
+                bdsharkEntities db = new bdsharkEntities();
 
-            db.Configuration.LazyLoadingEnabled = true;
-            var insumosQuery = from insumo in db.Insumos select insumo;
-            foreach (var insumo in insumosQuery)
-            {
-                insumos.Add(insumo);
+                db.Configuration.LazyLoadingEnabled = true;
+                var insumosQuery = from insumo in db.Insumos select insumo;
+                foreach (var insumo in insumosQuery)
+                {
+                    insumos.Add(insumo);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return insumos;
@@ -121,16 +136,20 @@ namespace SharkAdministrativo.Modelo
         public Insumo obtener(string descripcion)
         {
             Insumo insu = new Insumo();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var insumosQuery = from insumo in db.Insumos where insumo.descripcion == descripcion select insumo;
-
-                foreach (var insumo in insumosQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    insu = insumo;
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var insumosQuery = from insumo in db.Insumos where insumo.descripcion == descripcion select insumo;
+
+                    foreach (var insumo in insumosQuery)
+                    {
+                        insu = insumo;
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return insu;
@@ -143,24 +162,30 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Insumo insumo)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Insumo n_insumo = db.Insumos.Find(insumo.id);
-                n_insumo.descripcion = insumo.descripcion;
-                n_insumo.costo_promedio = insumo.costo_promedio;
-                n_insumo.costo_con_impuesto = insumo.costo_con_impuesto;
-                n_insumo.grupo_id = insumo.grupo_id;
-                n_insumo.inventariable = insumo.inventariable;
-                n_insumo.IVA = insumo.IVA;
-                n_insumo.maximo = insumo.maximo;
-                n_insumo.minimo = insumo.minimo;
-                n_insumo.ultimo_costo = insumo.ultimo_costo;
-                n_insumo.unidad_id = insumo.unidad_id;
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     Insumo n_insumo = db.Insumos.Find(insumo.id);
+                     n_insumo.descripcion = insumo.descripcion;
+                     n_insumo.costo_promedio = insumo.costo_promedio;
+                     n_insumo.costo_con_impuesto = insumo.costo_con_impuesto;
+                     n_insumo.grupo_id = insumo.grupo_id;
+                     n_insumo.inventariable = insumo.inventariable;
+                     n_insumo.IVA = insumo.IVA;
+                     n_insumo.maximo = insumo.maximo;
+                     n_insumo.minimo = insumo.minimo;
+                     n_insumo.ultimo_costo = insumo.ultimo_costo;
+                     n_insumo.unidad_id = insumo.unidad_id;
 
-                db.Insumos.Attach(n_insumo);
-                db.Entry(n_insumo).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+                     db.Insumos.Attach(n_insumo);
+                     db.Entry(n_insumo).State = EntityState.Modified;
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
         }
 
 

@@ -14,7 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Data;
     using System.Linq;
     using SDKCONTPAQi;
-    
+    using System.Windows.Forms;
     public partial class Salida_almacen
     {
         public int id { get; set; }
@@ -32,15 +32,21 @@ namespace SharkAdministrativo.Modelo
         /// </summary>
         /// <param name="salida">el objeto salida</param>
         public void registrar(Salida_almacen salida) {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Tipo_movimientos.Attach(salida.Tipo_movimiento);
-                db.Insumos.Attach(salida.Insumo);
-                db.Almacenes.Attach(salida.Almacen);
-                db.Salidas_almacen.Add(salida);
-                db.SaveChanges();
-            }        
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     db.Configuration.LazyLoadingEnabled = true;
+                     db.Tipo_movimientos.Attach(salida.Tipo_movimiento);
+                     db.Insumos.Attach(salida.Insumo);
+                     db.Almacenes.Attach(salida.Almacen);
+                     db.Salidas_almacen.Add(salida);
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }   
         
         }
     }

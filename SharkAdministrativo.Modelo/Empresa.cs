@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class Empresa
     {
@@ -49,16 +50,20 @@ namespace SharkAdministrativo.Modelo
             Empresa company = new Empresa();
 
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var empresaQuery = from empresa in db.Empresas where empresa.rfc.Trim() == RFC select empresa;
-                // Iterate through the results of the parameterized query.
-                foreach (var empresa in empresaQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    company = empresa;
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var empresaQuery = from empresa in db.Empresas where empresa.rfc.Trim() == RFC select empresa;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var empresa in empresaQuery)
+                    {
+                        company = empresa;
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return company;
@@ -73,18 +78,19 @@ namespace SharkAdministrativo.Modelo
         {
 
             Empresa company = new Empresa();
-
-
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var empresaQuery = from empresa in db.Empresas where empresa.nombre.Trim() == Name select empresa;
-                // Iterate through the results of the parameterized query.
-                foreach (var empresa in empresaQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    company = empresa;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var empresaQuery = from empresa in db.Empresas where empresa.nombre.Trim() == Name select empresa;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var empresa in empresaQuery)
+                    {
+                        company = empresa;
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return company;
@@ -98,17 +104,23 @@ namespace SharkAdministrativo.Modelo
         {
 
             List<Empresa> empresas = new List<Empresa>();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
 
-                db.Configuration.LazyLoadingEnabled = true;
-                var empresaQuery = from empresa in db.Empresas select empresa;
-                // Iterate through the results of the parameterized query.
-                foreach (var empresa in empresaQuery)
-                {
-                    empresas.Add(empresa);
-                }
-            }
+                     db.Configuration.LazyLoadingEnabled = true;
+                     var empresaQuery = from empresa in db.Empresas select empresa;
+                     // Iterate through the results of the parameterized query.
+                     foreach (var empresa in empresaQuery)
+                     {
+                         empresas.Add(empresa);
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
 
             return empresas;
         }

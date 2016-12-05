@@ -25,7 +25,6 @@ namespace SharkAdministrativo.Modelo
         {
             throw new UnintentionalCodeFirstException();
         }
-    
         public DbSet<Almacen> Almacenes { get; set; }
         public DbSet<AreaProduccion> AreasProduccion { get; set; }
         public DbSet<Categoria> Categorias { get; set; }

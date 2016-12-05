@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Data;
     using System.Linq;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     public partial class Producto
     {
         public Producto()
@@ -44,15 +45,18 @@ namespace SharkAdministrativo.Modelo
         public List<Producto> obtenerTodos()
         {
             List<Producto> productos = new List<Producto>();
-            bdsharkEntities db = new bdsharkEntities();
+            try{
+                bdsharkEntities db = new bdsharkEntities();
 
-            db.Configuration.LazyLoadingEnabled = true;
-            var productosQuery = from producto in db.Productos select producto;
-            foreach (var producto in productosQuery)
-            {
-                productos.Add(producto);
+                db.Configuration.LazyLoadingEnabled = true;
+                var productosQuery = from producto in db.Productos select producto;
+                foreach (var producto in productosQuery)
+                {
+                    productos.Add(producto);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
-
             return productos;
         }
 
@@ -62,10 +66,14 @@ namespace SharkAdministrativo.Modelo
         /// <param name="producto">Objeto a registrar.</param>
         public void registrar(Producto producto)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Productos.Add(producto);
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.Productos.Add(producto);
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -76,25 +84,29 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Producto producto)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Producto n_producto = db.Productos.Find(producto.id);
-                n_producto.areasPreparacion = producto.areasPreparacion;
-                n_producto.descripcion = producto.descripcion;
-                n_producto.disponlibleEn = producto.disponlibleEn;
-                n_producto.IVA = producto.IVA;
-                n_producto.nombre = producto.nombre;
-                n_producto.precioConImpuesto = producto.precioConImpuesto;
-                n_producto.ultimoPrecio = producto.ultimoPrecio;
-                if (producto.imagen != null)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    n_producto.imagen = producto.imagen;
+                    Producto n_producto = db.Productos.Find(producto.id);
+                    n_producto.areasPreparacion = producto.areasPreparacion;
+                    n_producto.descripcion = producto.descripcion;
+                    n_producto.disponlibleEn = producto.disponlibleEn;
+                    n_producto.IVA = producto.IVA;
+                    n_producto.nombre = producto.nombre;
+                    n_producto.precioConImpuesto = producto.precioConImpuesto;
+                    n_producto.ultimoPrecio = producto.ultimoPrecio;
+                    if (producto.imagen != null)
+                    {
+                        n_producto.imagen = producto.imagen;
+                    }
+
+
+                    db.Productos.Attach(n_producto);
+                    db.Entry(n_producto).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
-
-
-                db.Productos.Attach(n_producto);
-                db.Entry(n_producto).State = EntityState.Modified;
-                db.SaveChanges();
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -106,9 +118,13 @@ namespace SharkAdministrativo.Modelo
         public Producto obtenerPorID(int id)
         {
             Producto producto = new Producto();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                producto = db.Productos.Find(id);
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    producto = db.Productos.Find(id);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return producto;
         }
@@ -121,14 +137,18 @@ namespace SharkAdministrativo.Modelo
         public Producto obtener(string name)
         {
             Producto product = new Producto();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var productosQuery = from producto in db.Productos where producto.nombre == name select producto;
-                foreach (var producto in productosQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    product = producto;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var productosQuery = from producto in db.Productos where producto.nombre == name select producto;
+                    foreach (var producto in productosQuery)
+                    {
+                        product = producto;
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return product;
         }
@@ -139,16 +159,22 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_producto">Óbjeto a eliminar.</param>
         public void eliminar(Producto _producto)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var productosQuery = from producto in db.Productos where producto.id == _producto.id select producto;
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     var productosQuery = from producto in db.Productos where producto.id == _producto.id select producto;
 
-                foreach (var producto in productosQuery)
-                {
-                    db.Entry(producto).State = EntityState.Deleted;
-                }
-                db.SaveChanges();
-            }
+                     foreach (var producto in productosQuery)
+                     {
+                         db.Entry(producto).State = EntityState.Deleted;
+                     }
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
         }
 
     }

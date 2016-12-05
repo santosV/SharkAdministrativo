@@ -14,7 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
-    
+    using System.Windows.Forms;
     public partial class Receta
     {
         public int id { get; set; }
@@ -34,21 +34,25 @@ namespace SharkAdministrativo.Modelo
         /// <param name="ingrediente">Objeto a registrar.</param>
         public void registrar(Receta ingrediente)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
 
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Insumos.Attach(ingrediente.Insumo);
-                if (ingrediente.InsumoElaborado != null)
-                {
-                    db.InsumosElaborados.Attach(ingrediente.InsumoElaborado);
+                    db.Configuration.LazyLoadingEnabled = true;
+                    db.Insumos.Attach(ingrediente.Insumo);
+                    if (ingrediente.InsumoElaborado != null)
+                    {
+                        db.InsumosElaborados.Attach(ingrediente.InsumoElaborado);
+                    }
+                    else
+                    {
+                        db.Productos.Attach(ingrediente.Producto);
+                    }
+                    db.Recetas.Add(ingrediente);
+                    db.SaveChanges();
                 }
-                else
-                {
-                    db.Productos.Attach(ingrediente.Producto);
-                }
-                db.Recetas.Add(ingrediente);
-                db.SaveChanges();
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -59,18 +63,22 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Receta ingrediente)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Receta n_ingrediente = db.Recetas.Find(ingrediente.id);
-                n_ingrediente.almacenes_id = ingrediente.almacenes_id;
-                n_ingrediente.cantidad = ingrediente.cantidad;
-                n_ingrediente.insumo_id = ingrediente.insumo_id;
-                n_ingrediente.insumoElaborado_id = ingrediente.insumoElaborado_id;
-                n_ingrediente.producto_id = ingrediente.producto_id;
+             try{
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    Receta n_ingrediente = db.Recetas.Find(ingrediente.id);
+                    n_ingrediente.almacenes_id = ingrediente.almacenes_id;
+                    n_ingrediente.cantidad = ingrediente.cantidad;
+                    n_ingrediente.insumo_id = ingrediente.insumo_id;
+                    n_ingrediente.insumoElaborado_id = ingrediente.insumoElaborado_id;
+                    n_ingrediente.producto_id = ingrediente.producto_id;
 
-                db.Recetas.Attach(n_ingrediente);
-                db.Entry(n_ingrediente).State = EntityState.Modified;
-                db.SaveChanges();
+                    db.Recetas.Attach(n_ingrediente);
+                    db.Entry(n_ingrediente).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -83,19 +91,23 @@ namespace SharkAdministrativo.Modelo
         public List<Receta> obtenerIngredientesDeReceta(string indicador, int id)
         {
             List<Receta> ingredientes = new List<Receta>();
-            bdsharkEntities db = new bdsharkEntities();
-            var Query = from receta in db.Recetas select receta;
-            if (indicador == "IE")
-            {
-                Query = from receta in db.Recetas where receta.insumoElaborado_id == id select receta;
-            }
-            else
-            {
-                Query = from receta in db.Recetas where receta.producto_id == id select receta;
-            }
-            foreach (var ingrediente in Query)
-            {
-                ingredientes.Add(ingrediente);
+            try{
+                bdsharkEntities db = new bdsharkEntities();
+                var Query = from receta in db.Recetas select receta;
+                if (indicador == "IE")
+                {
+                    Query = from receta in db.Recetas where receta.insumoElaborado_id == id select receta;
+                }
+                else
+                {
+                    Query = from receta in db.Recetas where receta.producto_id == id select receta;
+                }
+                foreach (var ingrediente in Query)
+                {
+                    ingredientes.Add(ingrediente);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return ingredientes;
         }
@@ -107,16 +119,22 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_ingrediente">El objeto a eliminar</param>
         public void eliminarIngrediente(Receta _ingrediente)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var RecetaQuery = from ingrediente in db.Recetas where ingrediente.id == _ingrediente.id select ingrediente;
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     var RecetaQuery = from ingrediente in db.Recetas where ingrediente.id == _ingrediente.id select ingrediente;
 
-                foreach (var ingrediente in RecetaQuery)
-                {
-                    db.Entry(ingrediente).State = EntityState.Deleted;
-                }
-                db.SaveChanges();
-            }
+                     foreach (var ingrediente in RecetaQuery)
+                     {
+                         db.Entry(ingrediente).State = EntityState.Deleted;
+                     }
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
         }
 
     }

@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
 
     public partial class Presentacion
     {
@@ -53,20 +54,24 @@ namespace SharkAdministrativo.Modelo
         /// <param name="presentacion">Parámetro de búsqueda.</param>
         public void registrar(Presentacion presentacion)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-
-                db.Almacenes.Attach(presentacion.Almacen);
-                db.Proveedores.Attach(presentacion.Proveedor);
-                db.Insumos.Attach(presentacion.Insumo);
-                if (presentacion.Factura != null)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    db.Facturas.Attach(presentacion.Factura);
+
+                    db.Configuration.LazyLoadingEnabled = true;
+
+                    db.Almacenes.Attach(presentacion.Almacen);
+                    db.Proveedores.Attach(presentacion.Proveedor);
+                    db.Insumos.Attach(presentacion.Insumo);
+                    if (presentacion.Factura != null)
+                    {
+                        db.Facturas.Attach(presentacion.Factura);
+                    }
+                    db.Presentaciones.Add(presentacion);
+                    db.SaveChanges();
                 }
-                db.Presentaciones.Add(presentacion);
-                db.SaveChanges();
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -76,13 +81,17 @@ namespace SharkAdministrativo.Modelo
         /// <param name="presentation"></param>
         public void modificar(Presentacion presentation)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Presentacion presentacion = db.Presentaciones.Find(presentation.id);
-                presentacion.existencia = presentation.existencia;
-                db.Presentaciones.Attach(presentacion);
-                db.Entry(presentacion).State = EntityState.Modified;
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    Presentacion presentacion = db.Presentaciones.Find(presentation.id);
+                    presentacion.existencia = presentation.existencia;
+                    db.Presentaciones.Attach(presentacion);
+                    db.Entry(presentacion).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -95,14 +104,18 @@ namespace SharkAdministrativo.Modelo
         {
             List<Presentacion> presentaciones = new List<Presentacion>();
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave where presentacion.almacen_id == almacen select presentacion;
-                foreach (var presentacion in presentacionesQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    presentaciones.Add(presentacion);
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave where presentacion.almacen_id == almacen select presentacion;
+                    foreach (var presentacion in presentacionesQuery)
+                    {
+                        presentaciones.Add(presentacion);
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return presentaciones;
         }
@@ -113,9 +126,13 @@ namespace SharkAdministrativo.Modelo
         /// <returns>EL objeto presentación encontrado.</returns>
         public Presentacion getForID(int id) {
             Presentacion presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                presentacion = db.Presentaciones.Find(id);
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    presentacion = db.Presentaciones.Find(id);
+                }
+             }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return presentacion;
         }
@@ -129,13 +146,16 @@ namespace SharkAdministrativo.Modelo
         public List<Presentacion> obtenerTodosPorInsumo(int insumo_clave)
         {
             List<Presentacion> presentaciones = new List<Presentacion>();
-            bdsharkEntities db = new bdsharkEntities();
-
-            db.Configuration.LazyLoadingEnabled = true;
-            var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave select presentacion;
-            foreach (var presentacion in presentacionesQuery)
-            {
-                presentaciones.Add(presentacion);
+            try{
+                bdsharkEntities db = new bdsharkEntities();
+                db.Configuration.LazyLoadingEnabled = true;
+                var presentacionesQuery = from presentacion in db.Presentaciones where presentacion.insumo_id == insumo_clave select presentacion;
+                foreach (var presentacion in presentacionesQuery)
+                {
+                    presentaciones.Add(presentacion);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return presentaciones;
@@ -150,7 +170,7 @@ namespace SharkAdministrativo.Modelo
         {
             bool registrado = false;
 
-            using (bdsharkEntities db = new bdsharkEntities())
+            using(bdsharkEntities db = new bdsharkEntities())
             {
                 try
                 {
@@ -188,15 +208,19 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_presentacion">Parámetro de búsqueda.</param>
         public void eliminar(Presentacion d_presentacion)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var presentacionQuery = from presentacion in db.Presentaciones where presentacion.id == d_presentacion.id select presentacion;
-
-                foreach (var presentacion in presentacionQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    db.Entry(presentacion).State = EntityState.Deleted;
+                    var presentacionQuery = from presentacion in db.Presentaciones where presentacion.id == d_presentacion.id select presentacion;
+
+                    foreach (var presentacion in presentacionQuery)
+                    {
+                        db.Entry(presentacion).State = EntityState.Deleted;
+                    }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -208,22 +232,27 @@ namespace SharkAdministrativo.Modelo
         public Presentacion obtener(Presentacion presentation)
         {
             Presentacion r_presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var insumoQuery = from presentacion in db.Presentaciones
-                                  where presentacion.Proveedor.id == presentation.Proveedor.id
-                                  where presentacion.noIdentificacion == presentacion.noIdentificacion
-                                  where presentacion.Almacen.id == presentation.Almacen.id
-                                  where presentacion.Insumo.id == presentation.Insumo.id
-                                  select presentacion;
-                foreach (var presentacionR in insumoQuery)
+             try{
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    r_presentacion = presentacionR;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var insumoQuery = from presentacion in db.Presentaciones
+                                      where presentacion.Proveedor.id == presentation.Proveedor.id
+                                      where presentacion.noIdentificacion == presentacion.noIdentificacion
+                                      where presentacion.Almacen.id == presentation.Almacen.id
+                                      where presentacion.Insumo.id == presentation.Insumo.id
+                                      select presentacion;
+                    foreach (var presentacionR in insumoQuery)
+                    {
+                        r_presentacion = presentacionR;
 
+                    }
                 }
-                return r_presentacion;
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
+                return r_presentacion;
+            
         }
 
         /// <summary>
@@ -234,19 +263,24 @@ namespace SharkAdministrativo.Modelo
         public Presentacion obtener(int id)
         {
             Presentacion r_presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var insumoQuery = from presentacion in db.Presentaciones
-                                  where presentacion.id == id
-                                  select presentacion;
-                foreach (var presentacionR in insumoQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    r_presentacion = presentacionR;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var insumoQuery = from presentacion in db.Presentaciones
+                                      where presentacion.id == id
+                                      select presentacion;
+                    foreach (var presentacionR in insumoQuery)
+                    {
+                        r_presentacion = presentacionR;
 
+                    }
                 }
-                return r_presentacion;
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
+                return r_presentacion;
+            
         }
 
         /// <summary>
@@ -257,17 +291,21 @@ namespace SharkAdministrativo.Modelo
         public Presentacion get(string name)
         {
             Presentacion r_presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var insumoQuery = from presentacion in db.Presentaciones where presentacion.descripcion == name select presentacion;
-                foreach (var presentacionR in insumoQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    r_presentacion = presentacionR;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var insumoQuery = from presentacion in db.Presentaciones where presentacion.descripcion == name select presentacion;
+                    foreach (var presentacionR in insumoQuery)
+                    {
+                        r_presentacion = presentacionR;
 
+                    }
                 }
-                return r_presentacion;
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
+                return r_presentacion;
         }
 
         /// <summary>
@@ -278,14 +316,18 @@ namespace SharkAdministrativo.Modelo
         public void sumarEntrada(int id, double cantidad)
         {
             Presentacion presentacion = new Presentacion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                presentacion = db.Presentaciones.Find(id);
-                presentacion.cantidad = cantidad + presentacion.cantidad;
-                presentacion.existencia = presentacion.cantidad * presentacion.rendimiento;
-                db.Presentaciones.Attach(presentacion);
-                db.Entry(presentacion).State = EntityState.Modified;
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    presentacion = db.Presentaciones.Find(id);
+                    presentacion.cantidad = cantidad + presentacion.cantidad;
+                    presentacion.existencia = presentacion.cantidad * presentacion.rendimiento;
+                    db.Presentaciones.Attach(presentacion);
+                    db.Entry(presentacion).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -296,13 +338,20 @@ namespace SharkAdministrativo.Modelo
         public List<Presentacion> getAll()
         {
             List<Presentacion> presentaciones = new List<Presentacion>();
-            bdsharkEntities db = new bdsharkEntities();
-
-            db.Configuration.LazyLoadingEnabled = true;
-            var presentacionesQuery = from presentacion in db.Presentaciones select presentacion;
-            foreach (var presentacion in presentacionesQuery)
+            try
             {
-                presentaciones.Add(presentacion);
+                bdsharkEntities db = new bdsharkEntities();
+
+                db.Configuration.LazyLoadingEnabled = true;
+                var presentacionesQuery = from presentacion in db.Presentaciones select presentacion;
+                foreach (var presentacion in presentacionesQuery)
+                {
+                    presentaciones.Add(presentacion);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
             }
 
             return presentaciones;

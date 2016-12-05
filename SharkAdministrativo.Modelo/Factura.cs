@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Data;
     using System.Linq;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class Factura
     {
@@ -46,16 +47,20 @@ namespace SharkAdministrativo.Modelo
         {
             string o_folio = "";
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var facturaQuery = from factura in db.Facturas where factura.folio == folio select factura.folio;
-                // Iterate through the results of the parameterized query.
-                foreach (var factura in facturaQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    o_folio = factura;
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var facturaQuery = from factura in db.Facturas where factura.folio == folio select factura.folio;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var factura in facturaQuery)
+                    {
+                        o_folio = factura;
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return o_folio;
@@ -69,20 +74,26 @@ namespace SharkAdministrativo.Modelo
         /// <returns>El objeto agregado.</returns>
         public Factura registrar(Factura factura)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
 
-                try
-                {
-                    db.Configuration.LazyLoadingEnabled = true;
-                    db.Facturas.Add(factura);
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    Console.Write("ERROR: " + e);
-                }
-            }
+                     try
+                     {
+                         db.Configuration.LazyLoadingEnabled = true;
+                         db.Facturas.Add(factura);
+                         db.SaveChanges();
+                     }
+                     catch (Exception e)
+                     {
+                         Console.Write("ERROR: " + e);
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
 
 
             return factura;

@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class AreaProduccion
     {
@@ -26,10 +27,14 @@ namespace SharkAdministrativo.Modelo
         /// <param name="area">El objeto a registrar.</param>
         public void registrar(AreaProduccion area)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.AreasProduccion.Add(area);
-                db.SaveChanges();
+             try{ 
+                 using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.AreasProduccion.Add(area);
+                    db.SaveChanges();
+                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -41,16 +46,19 @@ namespace SharkAdministrativo.Modelo
         public AreaProduccion obtener(string name)
         {
             AreaProduccion _area = new AreaProduccion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var areaQuery = from area in db.AreasProduccion where area.nombre.Trim() == name select area;
-                // Iterate through the results of the parameterized query.
-                foreach (var area in areaQuery)
+             try{ 
+                 using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    _area = area;
-                }
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var areaQuery = from area in db.AreasProduccion where area.nombre.Trim() == name select area;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var area in areaQuery)
+                    {
+                        _area = area;
+                    }
+                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return _area;
@@ -64,10 +72,16 @@ namespace SharkAdministrativo.Modelo
         public AreaProduccion obtenerPorID(int id)
         {
             AreaProduccion area = new AreaProduccion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                area = db.AreasProduccion.Find(id);
-            }
+             try{ 
+                 using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    area = db.AreasProduccion.Find(id);
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
             return area;
         }
 
@@ -78,15 +92,19 @@ namespace SharkAdministrativo.Modelo
         public List<AreaProduccion> obtenerTodos()
         {
             List<AreaProduccion> areas = new List<AreaProduccion>();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var areasQuery = from area in db.AreasProduccion select area;
-                // Iterate through the results of the parameterized query.
-                foreach (var area in areasQuery)
-                {
-                    areas.Add(area);
-                }
+             try{ 
+                 using(bdsharkEntities db = new bdsharkEntities())
+                 {
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var areasQuery = from area in db.AreasProduccion select area;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var area in areasQuery)
+                    {
+                        areas.Add(area);
+                    }
+                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return areas;
         }

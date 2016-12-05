@@ -14,7 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Data;
     using System.Linq;
     using SDKCONTPAQi;
-    
+    using System.Windows.Forms;
     public partial class Unidad_Medida
     {
         public Unidad_Medida()
@@ -36,14 +36,18 @@ namespace SharkAdministrativo.Modelo
         public List<Unidad_Medida> obtenerTodos()
         {
             List<Unidad_Medida> unidades = new List<Unidad_Medida>();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var unidadesQuery = from unidad in db.Unidades_Medida select unidad;
-                foreach (var unidad in unidadesQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    unidades.Add(unidad);
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var unidadesQuery = from unidad in db.Unidades_Medida select unidad;
+                    foreach (var unidad in unidadesQuery)
+                    {
+                        unidades.Add(unidad);
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return unidades;
         }
@@ -54,11 +58,15 @@ namespace SharkAdministrativo.Modelo
         /// <param name="unidad">El objeto a registrar</param>
         public void registrar(Unidad_Medida unidad)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Unidades_Medida.Add(unidad);
-                db.SaveChanges();
+             try{
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = true;
+                    db.Unidades_Medida.Add(unidad);
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -70,15 +78,18 @@ namespace SharkAdministrativo.Modelo
         public Unidad_Medida obtener(string name)
         {
             Unidad_Medida medida = new Unidad_Medida();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var unidadesQuery = from unidad in db.Unidades_Medida where unidad.nombre.Trim() == name.Trim() select unidad;
-                foreach (var unidad in unidadesQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    medida = unidad;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var unidadesQuery = from unidad in db.Unidades_Medida where unidad.nombre.Trim() == name.Trim() select unidad;
+                    foreach (var unidad in unidadesQuery)
+                    {
+                        medida = unidad;
+                    }
                 }
-
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return medida;
         }
@@ -91,10 +102,16 @@ namespace SharkAdministrativo.Modelo
         public Unidad_Medida obtenerPorId(int id)
         {
             Unidad_Medida unidad = new Unidad_Medida();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                unidad = db.Unidades_Medida.Find(id);
-            }
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    unidad = db.Unidades_Medida.Find(id);
+                }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
             return unidad;
         }
 

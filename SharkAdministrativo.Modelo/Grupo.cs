@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class Grupo
     {
@@ -37,12 +38,16 @@ namespace SharkAdministrativo.Modelo
         /// <param name="grupo">El objeto a registrar.</param>
         public void registrar(Grupo grupo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Categorias.Attach(grupo.Categoria);
-                db.Grupos.Add(grupo);
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = true;
+                    db.Categorias.Attach(grupo.Categoria);
+                    db.Grupos.Add(grupo);
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -53,14 +58,18 @@ namespace SharkAdministrativo.Modelo
         public void Modify(Grupo grupo)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Grupo group = db.Grupos.Find(grupo.id);
-                group.nombre = grupo.nombre;
-                group.categoria_id = grupo.categoria_id;
-                db.Grupos.Attach(group);
-                db.Entry(group).State = EntityState.Modified;
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    Grupo group = db.Grupos.Find(grupo.id);
+                    group.nombre = grupo.nombre;
+                    group.categoria_id = grupo.categoria_id;
+                    db.Grupos.Attach(group);
+                    db.Entry(group).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -72,9 +81,13 @@ namespace SharkAdministrativo.Modelo
         public Grupo getForID(int id)
         {
             Grupo grupo = new Grupo();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
                 grupo = db.Grupos.Find(id);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return grupo;
         }
@@ -86,13 +99,17 @@ namespace SharkAdministrativo.Modelo
         public List<Grupo> obtenerTodos()
         {
             List<Grupo> grupos = new List<Grupo>();
-            bdsharkEntities db = new bdsharkEntities();
+            try{
+                bdsharkEntities db = new bdsharkEntities();
 
-            db.Configuration.LazyLoadingEnabled = true;
-            var gruposQuery = from grupo in db.Grupos select grupo;
-            foreach (var grupo in gruposQuery)
-            {
-                grupos.Add(grupo);
+                db.Configuration.LazyLoadingEnabled = true;
+                var gruposQuery = from grupo in db.Grupos select grupo;
+                foreach (var grupo in gruposQuery)
+                {
+                    grupos.Add(grupo);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
 
             return grupos;
@@ -106,16 +123,20 @@ namespace SharkAdministrativo.Modelo
         public Grupo obtener(string name)
         {
             Grupo group = new Grupo();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var grupoQuery = from grupo in db.Grupos where grupo.nombre == name select grupo;
-                foreach (var grupo in grupoQuery)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    group = grupo;
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var grupoQuery = from grupo in db.Grupos where grupo.nombre == name select grupo;
+                    foreach (var grupo in grupoQuery)
+                    {
+                        group = grupo;
+                    }
                 }
-
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
+           
             return group;
         }
 
@@ -125,15 +146,21 @@ namespace SharkAdministrativo.Modelo
         /// <param name="d_grupo"></param>
         public void delete(Grupo d_grupo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var Query = from grupo in db.Grupos where grupo.id == d_grupo.id select grupo;
-                foreach (var grupo in Query)
-                {
-                    db.Entry(grupo).State = EntityState.Deleted;
-                }
-                db.SaveChanges();
-            }
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     var Query = from grupo in db.Grupos where grupo.id == d_grupo.id select grupo;
+                     foreach (var grupo in Query)
+                     {
+                         db.Entry(grupo).State = EntityState.Deleted;
+                     }
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
         }
     }
 }

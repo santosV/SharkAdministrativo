@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class EntradaPresentacion
     {
@@ -32,14 +33,20 @@ namespace SharkAdministrativo.Modelo
         /// <param name="entrada"></param>
         public void registrar(EntradaPresentacion entrada)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Presentaciones.Attach(entrada.Presentacion);
-                db.Almacenes.Attach(entrada.Almacen);
-                db.EntradasPresentaciones.Add(entrada);
-                db.SaveChanges();
-            }
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     db.Configuration.LazyLoadingEnabled = true;
+                     db.Presentaciones.Attach(entrada.Presentacion);
+                     db.Almacenes.Attach(entrada.Almacen);
+                     db.EntradasPresentaciones.Add(entrada);
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
 
         }
     }

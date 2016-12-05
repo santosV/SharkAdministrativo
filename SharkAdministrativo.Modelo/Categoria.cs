@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class Categoria
     {
@@ -34,17 +35,21 @@ namespace SharkAdministrativo.Modelo
         public List<Categoria> obtenerTodos()
         {
             List<Categoria> categorias = new List<Categoria>();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var categoriaQuery = from categoria in db.Categorias select categoria;
-
-                foreach (var categoria in categoriaQuery)
+             try{ 
+                 using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    categorias.Add(categoria);
-                }
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var categoriaQuery = from categoria in db.Categorias select categoria;
 
+                    foreach (var categoria in categoriaQuery)
+                    {
+                        categorias.Add(categoria);
+                    }
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
+            
             return categorias;
         }
 
@@ -55,17 +60,22 @@ namespace SharkAdministrativo.Modelo
         public Categoria obtener(string Name)
         {
             Categoria categoria = new Categoria();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var categoriasQuery = from category in db.Categorias where category.nombre.Trim() == Name select category;
-                // Iterate through the results of the parameterized query.
-                foreach (var category in categoriasQuery)
+             try{ 
+                 using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    categoria = category;
-                }
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var categoriasQuery = from category in db.Categorias where category.nombre.Trim() == Name select category;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var category in categoriasQuery)
+                    {
+                        categoria = category;
+                    }
+                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
+            
 
             return categoria;
 
@@ -77,11 +87,15 @@ namespace SharkAdministrativo.Modelo
         /// <param name="categoria">el objeto a registrar.</param>
         public void registrar(Categoria categoria)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Categorias.Add(categoria);
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = true;
+                    db.Categorias.Add(categoria);
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -92,12 +106,17 @@ namespace SharkAdministrativo.Modelo
         public void Modify(Categoria categoria)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Categoria category = db.Categorias.Find(categoria.id);
-                category.nombre = categoria.nombre;
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    Categoria category = db.Categorias.Find(categoria.id);
+                    category.nombre = categoria.nombre;
+                    db.Entry(category).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -107,15 +126,21 @@ namespace SharkAdministrativo.Modelo
         /// <param name="id"></param>
         public void delete(int id)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var Query = from categoria in db.Categorias where categoria.id == id select categoria;
-                foreach (var categoria in Query)
-                {
-                    db.Entry(categoria).State = EntityState.Deleted;
-                }
-                db.SaveChanges();
-            }
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     var Query = from categoria in db.Categorias where categoria.id == id select categoria;
+                     foreach (var categoria in Query)
+                     {
+                         db.Entry(categoria).State = EntityState.Deleted;
+                     }
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
         }
     }
 }

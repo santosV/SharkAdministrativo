@@ -14,7 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Data;
     using System.Linq;
     using SDKCONTPAQi;
-    
+    using System.Windows.Forms;
     public partial class Tipo_movimiento
     {
         public Tipo_movimiento()
@@ -34,14 +34,18 @@ namespace SharkAdministrativo.Modelo
         public List<Tipo_movimiento> obtenerTodos()
         {
             List<Tipo_movimiento> movimientos = new List<Tipo_movimiento>();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Configuration.LazyLoadingEnabled = true;
-                var Query = from movimiento in db.Tipo_movimientos select movimiento;
-                foreach (var movimiento in Query)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    movimientos.Add(movimiento);
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var Query = from movimiento in db.Tipo_movimientos select movimiento;
+                    foreach (var movimiento in Query)
+                    {
+                        movimientos.Add(movimiento);
+                    }
                 }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return movimientos;
         }
@@ -54,17 +58,23 @@ namespace SharkAdministrativo.Modelo
         public Tipo_movimiento obtener(string name)
         {
             Tipo_movimiento _tipo = new Tipo_movimiento();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
 
-                db.Configuration.LazyLoadingEnabled = true;
-                var Query = from tipo in db.Tipo_movimientos where tipo.nombre == name select tipo;
+                     db.Configuration.LazyLoadingEnabled = true;
+                     var Query = from tipo in db.Tipo_movimientos where tipo.nombre == name select tipo;
 
-                foreach (var tipo in Query)
-                {
-                    _tipo = tipo;
-                }
-            }
+                     foreach (var tipo in Query)
+                     {
+                         _tipo = tipo;
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
 
             return _tipo;
         }

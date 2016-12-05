@@ -328,7 +328,7 @@ namespace SharkAdministrativo.Vista
 
             if (lError == 0)
             {
-                System.Windows.Forms.MessageBox.Show("Se registraron correctamente los datos de proveedor y productos!");
+                System.Windows.Forms.MessageBox.Show("SE REGISTRARON TODOS LOS DATOS CORRECTAMENTE" , "Aviso Shark");
             }
 
             if(CerrarNuevo==1){

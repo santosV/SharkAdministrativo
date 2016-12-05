@@ -13,6 +13,7 @@ namespace SharkAdministrativo.Modelo
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using System.Windows.Forms;
     public partial class Almacen
     {
         public Almacen()
@@ -39,16 +40,21 @@ namespace SharkAdministrativo.Modelo
         public List<Almacen> obtenerTodos()
         {
             List<Almacen> almacenes = new List<Almacen>();
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
-                db.Configuration.LazyLoadingEnabled = true;
-                var almacenesQuery = from almacen in db.Almacenes select almacen;
-
-                foreach (var almacen in almacenesQuery)
+                using (bdsharkEntities db = new bdsharkEntities())
                 {
-                    almacenes.Add(almacen);
-                }
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var almacenesQuery = from almacen in db.Almacenes select almacen;
 
+                    foreach (var almacen in almacenesQuery)
+                    {
+                        almacenes.Add(almacen);
+                    }
+
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return almacenes;
         }
@@ -60,8 +66,9 @@ namespace SharkAdministrativo.Modelo
         /// <returns>El objeto único encontrado.</returns>
         public Almacen getForId(int id)
         {
-            bdsharkEntities db = new bdsharkEntities();
-            return db.Almacenes.Find(id);
+                bdsharkEntities db = new bdsharkEntities();
+                return db.Almacenes.Find(id);
+           
         }
 
         /// <summary>
@@ -72,18 +79,25 @@ namespace SharkAdministrativo.Modelo
         public Almacen obtener(string Name)
         {
             Almacen almacen = new Almacen();
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
 
-                db.Configuration.LazyLoadingEnabled = true;
-                var almacenesQuery = from storage in db.Almacenes where storage.nombre.Trim() == Name select storage;
-                // Iterate through the results of the parameterized query.
-                foreach (var storage in almacenesQuery)
+                using (bdsharkEntities db = new bdsharkEntities())
                 {
-                    almacen = storage;
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var almacenesQuery = from storage in db.Almacenes where storage.nombre.Trim() == Name select storage;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var storage in almacenesQuery)
+                    {
+                        almacen = storage;
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+            }
             return almacen;
 
         }
@@ -96,18 +110,24 @@ namespace SharkAdministrativo.Modelo
         public int obtenerID(string Name)
         {
             Almacen almacen = new Almacen();
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var almacenesQuery = from storage in db.Almacenes where storage.nombre.Trim() == Name select storage;
-                // Iterate through the results of the parameterized query.
-                foreach (var storage in almacenesQuery)
+                using (bdsharkEntities db = new bdsharkEntities())
                 {
-                    almacen = storage;
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var almacenesQuery = from storage in db.Almacenes where storage.nombre.Trim() == Name select storage;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var storage in almacenesQuery)
+                    {
+                        almacen = storage;
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+            }
             return almacen.id;
         }
 
@@ -119,16 +139,23 @@ namespace SharkAdministrativo.Modelo
         public Almacen obtenerCodigo(string codigo)
         {
             Almacen almacen = new Almacen();
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
-
-                db.Configuration.LazyLoadingEnabled = true;
-                var almacenesQuery = from storage in db.Almacenes where storage.codigo == codigo select storage;
-                // Iterate through the results of the parameterized query.
-                foreach (var storage in almacenesQuery)
+                using (bdsharkEntities db = new bdsharkEntities())
                 {
-                    almacen = storage;
+
+                    db.Configuration.LazyLoadingEnabled = true;
+                    var almacenesQuery = from storage in db.Almacenes where storage.codigo == codigo select storage;
+                    // Iterate through the results of the parameterized query.
+                    foreach (var storage in almacenesQuery)
+                    {
+                        almacen = storage;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
             }
 
             return almacen;
@@ -140,11 +167,18 @@ namespace SharkAdministrativo.Modelo
         /// <param name="almacen">Objeto a registrar.</param>
         public void registrar(Almacen almacen)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
-                db.Configuration.LazyLoadingEnabled = true;
-                db.Almacenes.Add(almacen);
-                db.SaveChanges();
+                using (bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.Configuration.LazyLoadingEnabled = true;
+                    db.Almacenes.Add(almacen);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
             }
         }
 
@@ -154,13 +188,19 @@ namespace SharkAdministrativo.Modelo
         /// <param name="almacen"></param>
         public void Modify(Almacen almacen)
         {
-
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
-                Almacen storage = obtenerCodigo(almacen.codigo);
-                storage.nombre = almacen.nombre;
-                db.Entry(storage).State = EntityState.Modified;
-                db.SaveChanges();
+                using (bdsharkEntities db = new bdsharkEntities())
+                {
+                    Almacen storage = obtenerCodigo(almacen.codigo);
+                    storage.nombre = almacen.nombre;
+                    db.Entry(storage).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
             }
         }
 
@@ -170,14 +210,19 @@ namespace SharkAdministrativo.Modelo
         /// <param name="codigo"></param>
         public void delete(String codigo)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
+            try
             {
-                var Query = from almacen in db.Almacenes where almacen.codigo == codigo select almacen;
-                foreach (var almacen in Query)
+                using (bdsharkEntities db = new bdsharkEntities())
                 {
-                    db.Entry(almacen).State = EntityState.Deleted;
+                    var Query = from almacen in db.Almacenes where almacen.codigo == codigo select almacen;
+                    foreach (var almacen in Query)
+                    {
+                        db.Entry(almacen).State = EntityState.Deleted;
+                    }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 

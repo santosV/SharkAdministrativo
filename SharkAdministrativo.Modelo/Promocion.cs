@@ -14,6 +14,7 @@ namespace SharkAdministrativo.Modelo
     using System.Linq;
     using System.Data;
     using SDKCONTPAQi;
+    using System.Windows.Forms;
     
     public partial class Promocion
     {
@@ -44,10 +45,14 @@ namespace SharkAdministrativo.Modelo
         /// <param name="promocion">Objeto a reistrar.</param>
         public void registrar(Promocion promocion)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                db.Promociones.Add(promocion);
-                db.SaveChanges();
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
+                    db.Promociones.Add(promocion);
+                    db.SaveChanges();
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -58,15 +63,18 @@ namespace SharkAdministrativo.Modelo
         public List<Promocion> obtenerTodos()
         {
             List<Promocion> promociones = new List<Promocion>();
+            try{
             bdsharkEntities db = new bdsharkEntities();
 
-            db.Configuration.LazyLoadingEnabled = true;
-            var promocionesQuery = from promocion in db.Promociones select promocion;
-            foreach (var promocion in promocionesQuery)
-            {
-                promociones.Add(promocion);
+                db.Configuration.LazyLoadingEnabled = true;
+                var promocionesQuery = from promocion in db.Promociones select promocion;
+                foreach (var promocion in promocionesQuery)
+                {
+                    promociones.Add(promocion);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
-
             return promociones;
         }
 
@@ -78,9 +86,13 @@ namespace SharkAdministrativo.Modelo
         public Promocion obtenerPorId(int id)
         {
             Promocion promocion = new Promocion();
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
+                {
                 promocion = db.Promociones.Find(id);
+                }
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
             return promocion;
         }
@@ -92,30 +104,33 @@ namespace SharkAdministrativo.Modelo
         public void modificar(Promocion promocion)
         {
 
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                Promocion n_promocion = db.Promociones.Find(promocion.id);
-                n_promocion.descripcion = promocion.descripcion;
-                n_promocion.areasDisponibles = promocion.areasDisponibles;
-                n_promocion.diasDisponibles = promocion.diasDisponibles;
-                n_promocion.IVA = promocion.IVA;
-                n_promocion.nombre = promocion.nombre;
-                n_promocion.precioConImpuesto = promocion.precioConImpuesto;
-                n_promocion.ultimoPrecio = promocion.ultimoPrecio;
-                n_promocion.fecha_inicio = promocion.fecha_inicio;
-                n_promocion.fecha_fin = promocion.fecha_fin;
-                n_promocion.hora_inicio = promocion.hora_inicio;
-                n_promocion.hora_fin = promocion.hora_fin;
-
-                if (promocion.imagen != null)
+             try{ 
+                using(bdsharkEntities db = new bdsharkEntities())
                 {
-                    n_promocion.imagen = promocion.imagen;
+                    Promocion n_promocion = db.Promociones.Find(promocion.id);
+                    n_promocion.descripcion = promocion.descripcion;
+                    n_promocion.areasDisponibles = promocion.areasDisponibles;
+                    n_promocion.diasDisponibles = promocion.diasDisponibles;
+                    n_promocion.IVA = promocion.IVA;
+                    n_promocion.nombre = promocion.nombre;
+                    n_promocion.precioConImpuesto = promocion.precioConImpuesto;
+                    n_promocion.ultimoPrecio = promocion.ultimoPrecio;
+                    n_promocion.fecha_inicio = promocion.fecha_inicio;
+                    n_promocion.fecha_fin = promocion.fecha_fin;
+                    n_promocion.hora_inicio = promocion.hora_inicio;
+                    n_promocion.hora_fin = promocion.hora_fin;
+
+                    if (promocion.imagen != null)
+                    {
+                        n_promocion.imagen = promocion.imagen;
+                    }
+
+                    db.Promociones.Attach(n_promocion);
+                    db.Entry(n_promocion).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
-
-                db.Promociones.Attach(n_promocion);
-                db.Entry(n_promocion).State = EntityState.Modified;
-                db.SaveChanges();
-
+            }catch(Exception ex){
+                MessageBox.Show("Error: "+ex+"\nError en la autenticación con la base de datos", "Aviso Shark" );
             }
         }
 
@@ -125,16 +140,22 @@ namespace SharkAdministrativo.Modelo
         /// <param name="_promocion">El objeto a elimianr.</param>
         public void eliminar(Promocion _promocion)
         {
-            using (bdsharkEntities db = new bdsharkEntities())
-            {
-                var promocionQuery = from promocion in db.Promociones where promocion.id == _promocion.id select promocion;
+             try{
+                 using (bdsharkEntities db = new bdsharkEntities())
+                 {
+                     var promocionQuery = from promocion in db.Promociones where promocion.id == _promocion.id select promocion;
 
-                foreach (var promocion in promocionQuery)
-                {
-                    db.Entry(promocion).State = EntityState.Deleted;
-                }
-                db.SaveChanges();
-            }
+                     foreach (var promocion in promocionQuery)
+                     {
+                         db.Entry(promocion).State = EntityState.Deleted;
+                     }
+                     db.SaveChanges();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error: " + ex + "\nError en la autenticación con la base de datos", "Aviso Shark");
+             }
         }
     }
 }
